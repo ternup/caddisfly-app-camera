@@ -46,7 +46,6 @@ maven-eclipse.xml
 
 # Android Studio
 .gradle
-gradle/
 /*/out
 /*/build
 build/
