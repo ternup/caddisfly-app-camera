@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+
+<resources>
+    <color name="labelTextColor">#555</color>
+    <color name="window_background_light">#ccffffff</color>
+    <color name="window_background_dark">#ff000000</color>
+    <color name="textColorLight">#ff193a42</color>
+    <color name="textColorDark">#ffa0a0a0</color>
+    <color name="actionbar_background_light">#ccffffff</color>
+    <color name="actionbar_background_dark">#cc000000</color>
+    <color name="drag_active_color">#80cccccc</color>
+    <color name="backgroundColor">#122228</color>
+    <color name="listSelectedColor">#27495A</color>
+    <color name="listFocusedColor">#1A313C</color>
+    <color name="resetButtonBackground">#55691212</color>
+    <color name="textGradientStart">#1C353F</color>
+    <color name="textGradientEnd">#2C5567</color>
+    // Dark theme colors
+    <color name="panel_dark">#c111</color>
+    <color name="dark_text">#bbb</color>
+    // Light theme colors
+    <color name="panel_light">#ddfdf0d9</color>
+    <color name="light_text">#000</color>
+    <color name="button_default_dark">#6000</color>
+    <color name="button_default_light">#ff278fac</color>
+    <color name="list_button_default_dark">#66000000</color>
+    <color name="list_button_default_light">#11ff9c05</color>
+    <color name="drawerItemInactiveLight">#bb21ad99</color>
+    <color name="drawerItemSelectedLight">#cc21ad99</color>
+    <color name="listSelectedColorLight">#eee</color>
+    <color name="listFocusedColorLight">#fff</color>
+    <color name="red_button_pressed">#ff954136</color>
+    <color name="red_button">#ba5243</color>
+    <color name="orange_button_pressed">#ff8c600c</color>
+    <color name="orange_button">#aa750e</color>
+    <color name="blue_button_pressed">#ff066b72</color>
+    <color name="blue_button">#078790</color>
+    <color name="green_button_pressed">#ff3b935d</color>
+    <color name="green_button">#45ac6d</color>
+    <color name="yellow_button_pressed">#ff8a8c11</color>
+    <color name="yellow_button">#a9ac15</color>
+    <color name="black_overlay">#66000000</color>
+
+</resources>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:custom="http://schemas.android.com/apk/res-auto"
+                  android:key="preferenceScreen">
+    <PreferenceCategory android:title="@string/bacteriaTest">
+        <com.ternup.caddisfly.component.NumberPickerPreference
+                android:defaultValue="1"
+                android:dialogMessage="@string/interval_info"
+                android:dialogTitle="@string/intervalMinutes"
+                android:key="analysis_interval"
+                android:max="60"
+                android:summary="@string/minutes"
+                android:title="@string/interval"
+                custom:interval="1"
+                custom:min="1"/>
+        <com.ternup.caddisfly.component.NumberPickerPreference
+                android:defaultValue="3"
+                android:dialogMessage="@string/selectNumberOfTests"
+                android:dialogTitle="@string/analysisCount"
+                android:key="timer_test_count"
+                android:max="100"
+                android:title="@string/analysisCount"
+                custom:min="2"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/camera">
+        <com.ternup.caddisfly.component.NumberPickerPreference
+                android:defaultValue="80"
+                android:dialogTitle="Minimum Photo Quality"
+                android:summary="%"
+                android:key="min_photo_quality"
+                android:max="100"
+                android:title="Minimum Photo Quality"
+                custom:min="0"
+                custom:interval="5"/>
+        <com.ternup.caddisfly.component.CameraZoomPreference
+                android:dialogTitle="@string/cameraZoom"
+                android:title="@string/zoom"
+                android:key="camera_zoom"
+                android:defaultValue="100"
+                />
+        <CheckBoxPreference
+                android:title="Cloudy"
+                android:key="camera_cloudy"
+                />
+        <CheckBoxPreference
+                android:title="Torch Mode"
+                android:key="camera_torch"
+                />
+        <CheckBoxPreference
+                android:title="Infinity"
+                android:key="camera_infinity"
+                />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/general">
+        <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="shake_device"
+                android:title="@string/shakeDevice"
+                android:summary="@string/shakeDeviceSummary"/>
+        <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="sound_alarm"
+                android:title="@string/soundAlarm"
+                android:summary="@string/soundAlarmSummary"
+                android:dependency="shake_device"/>
+        <!--
+                <CheckBoxPreference
+                    android:defaultValue="true"
+                    android:key="camera_sound"
+                    android:title="@string/playCameraSound" />
+        -->
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/locale">
+        <ListPreference
+                android:defaultValue="en"
+                android:title="@string/language"
+                android:dialogTitle="@string/language"
+                android:entries="@array/languages"
+                android:entryValues="@array/language_codes"
+                android:key="@string/currentLocale"
+                android:negativeButtonText="@string/cancel"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

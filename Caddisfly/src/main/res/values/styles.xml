@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+
+<resources>
+
+    <style name="ActionBar" parent="@android:style/Widget.Holo.ActionBar"/>
+
+    <style name="ActionBar.Light" parent="@style/ActionBar">
+        <item name="android:background">@color/panel_light</item>
+        <item name="android:spinnerItemStyle">@style/spinnerItemStyle</item>
+    </style>
+
+    <style name="ActionBar.Dark" parent="@style/ActionBar">
+        <item name="android:background">@drawable/ab_transparent</item>
+    </style>
+
+    <style name="AppTheme.Light" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/ActionBar.Light</item>
+        <item name="backgroundColor">@color/window_background_light</item>
+        <item name="windowBackground">@drawable/gradient</item>
+        <item name="drawerBackground">@color/panel_light</item>
+        <item name="textColor">@color/textColorLight</item>
+        <item name="drawerText">@color/list_text_light</item>
+        <item name="drawerSelector">@drawable/drawer_item_light</item>
+        <item name="listSelector">@drawable/list_selector_light</item>
+        <item name="cardBackground">@drawable/card</item>
+        <item name="subtitleTextStyle">@color/subtitle_light</item>
+        <item name="buttonStyle">@drawable/button_style_light</item>
+        <item name="listButton">@drawable/list_button_style_light</item>
+        <item name="arrowRight">@drawable/arrow_right_light</item>
+        <item name="drink">@drawable/drink_light</item>
+        <item name="cook">@drawable/cook_light</item>
+        <item name="bath">@drawable/bath_light</item>
+        <item name="wash">@drawable/wash_light</item>
+        <item name="alarm">@drawable/alarm_light</item>
+        <item name="listCard">@drawable/list_card_light</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="@android:style/Theme.Holo">
+        <item name="android:actionBarStyle">@style/ActionBar.Dark</item>
+        <item name="backgroundColor">@color/window_background_dark</item>
+        <item name="windowBackground">@drawable/ab_transparent</item>
+        <item name="drawerBackground">@color/panel_dark</item>
+        <item name="textColor">@color/textColorDark</item>
+        <item name="drawerText">@color/list_text_dark</item>
+        <item name="drawerSelector">@drawable/list_selector_dark</item>
+        <item name="listSelector">@drawable/list_selector_dark</item>
+        <item name="cardBackground">@drawable/card_dark</item>
+        <item name="subtitleTextStyle">@color/subtitle_dark</item>
+        <item name="buttonStyle">@drawable/button_style_dark</item>
+        <item name="listButton">@drawable/button_style_dark</item>
+        <item name="arrowRight">@drawable/arrow_right</item>
+        <item name="drink">@drawable/drink</item>
+        <item name="cook">@drawable/cook</item>
+        <item name="bath">@drawable/bath</item>
+        <item name="wash">@drawable/wash</item>
+        <item name="alarm">@android:drawable/ic_lock_idle_alarm</item>
+        <item name="listCard">@drawable/list_card_dark</item>
+    </style>
+
+    <color name="subtitle_light">#ff333333</color>
+    <color name="subtitle_dark">#ffaed4d0</color>
+
+    <style name="spinnerItemStyle">
+        <item name="android:padding">10dp</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">@style/ButtonBar</item>
+        <item name="metaButtonBarButtonStyle">@style/ButtonBarButton</item>
+    </style>
+
+    <style name="ButtonBar">
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:background">@android:drawable/bottom_bar</item>
+    </style>
+
+    <style name="ButtonBarButton"/>
+
+</resources>
