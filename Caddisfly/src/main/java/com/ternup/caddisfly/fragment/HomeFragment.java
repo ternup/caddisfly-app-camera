@@ -18,10 +18,13 @@ package com.ternup.caddisfly.fragment;
 
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.activity.MainActivity;
+import com.ternup.caddisfly.activity.SurveyActivity;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +33,8 @@ import android.widget.Button;
 
 @SuppressWarnings("WeakerAccess")
 public class HomeFragment extends Fragment {
+
+    private static final int REQUEST_LOCATION = 2;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -53,7 +58,7 @@ public class HomeFragment extends Fragment {
         addLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                addLocation();
             }
         });
 
@@ -91,6 +96,46 @@ public class HomeFragment extends Fragment {
         }
         return view;
     }
+
+    private void addLocation() {
+        Intent intent = new Intent(getActivity(), SurveyActivity.class);
+        startActivityForResult(intent, REQUEST_LOCATION);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_LOCATION) {
+            if (resultCode == Activity.RESULT_OK) {
+                long id = data.getLongExtra(getString(R.string.currentLocationId), -1);
+                if (id > -1) {
+                    displayLocation(id);
+                }
+            }
+        }
+    }
+
+    private void displayLocation(long id) {
+/*
+        Fragment fragment = new LocationDetailsFragment();
+        if (fragment != null) {
+            Bundle args = new Bundle();
+            args.putLong(getString(R.string.currentLocationId, id);
+            fragment.setArguments(args);
+
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.executePendingTransactions();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.replace(R.id.container, fragment, Globals.RESULT_SCREEN_TAG);
+            ft.addToBackStack(null);
+            ft.commit();
+            fragmentManager.executePendingTransactions();
+        }
+*/
+    }
+
 
     @Override
     public void onStart() {

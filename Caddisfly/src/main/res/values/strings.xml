@@ -151,13 +151,6 @@
     <string name="next">Next</string>
     <string name="newTest">New Test</string>
 
-    <string name="title_section1">Location</string>
-    <string name="title_section2">Photo</string>
-    <string name="title_section3">Address</string>
-    <string name="title_section4">Source</string>
-    <string name="title_section5">Notes</string>
-    <string name="title_section6">Finish</string>
-
     <string name="other">Other</string>
     <string name="locations">Locations</string>
     <string name="startNewTest">Start New Test</string>
@@ -186,5 +179,6 @@
     </string>
     <string name="getLocation">Get Location</string>
     <string name="gettingLocation">Getting location…</string>
+    <string name="takeSourcePhoto">Take Photo of Water Source</string>
 
 </resources>

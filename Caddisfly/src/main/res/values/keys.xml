@@ -32,4 +32,6 @@
     <string name="minPhotoQuality">minPhotoQuality</string>
     <string name="cameraZoomPref">cameraZoomPref</string>
 
+    <string name="locationUpdatesRequested">locationUpdatesRequested</string>
+
 </resources>

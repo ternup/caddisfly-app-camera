@@ -71,6 +71,8 @@ public class Globals {
 
     public static final String CALIBRATE_FOLDER = "calibrate";
 
+    public static final String RESULT_SCREEN_TAG = "resultFragment";
+
     protected Globals() {
         // prevents calls from subclass
         throw new UnsupportedOperationException();

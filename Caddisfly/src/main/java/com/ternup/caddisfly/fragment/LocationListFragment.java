@@ -17,6 +17,7 @@
 package com.ternup.caddisfly.fragment;
 
 import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.activity.SurveyActivity;
 import com.ternup.caddisfly.adapter.CheckboxSimpleCursorAdapter;
 import com.ternup.caddisfly.database.LocationTable;
 import com.ternup.caddisfly.provider.LocationContentProvider;
@@ -109,11 +110,10 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
     }
 
     private void displayAddLocation() {
-/*
+
         Intent intent = new Intent(getActivity(), SurveyActivity.class);
-        intent.putExtra(Globals.CURRENT_LOCATION_ID_KEY, 0);
+        intent.putExtra(getString(R.string.currentLocationId), 0);
         startActivityForResult(intent, REQUEST_LOCATION);
-*/
     }
 
     @Override
@@ -176,7 +176,6 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
         switch (item.getItemId()) {
             case R.id.menu_addLocation:
                 displayAddLocation();
-
                 return true;
             case R.id.menu_delete:
                 AlertUtils
@@ -249,19 +248,6 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
 
     private void fillData() {
 
-        // Fields from the database (projection)
-        // Must include the _id column for the adapter to work
-/*
-        String[] from = new String[]{LocationTable.COLUMN_DATE,
-                LocationTable.COLUMN_NAME,
-                LocationTable.COLUMN_TOWN,
-                LocationTable.COLUMN_STREET,
-                LocationTable.COLUMN_STATE,
-                LocationTable.COLUMN_CITY,
-                LocationTable.COLUMN_COUNTRY,
-                LocationTable.COLUMN_SOURCE};
-*/
-
         // Fields on the UI to which we map
         int[] to = new int[]{R.id.dateText, R.id.placeText, R.id.addressText, R.id.resultText};
 
@@ -314,8 +300,6 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
             }
         });
         setListAdapter(adapter);
-
-
     }
 
     // creates a new loader after the initLoader () call
@@ -326,20 +310,6 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
                 LocationTable.COLUMN_DATE + " desc");
     }
 
-/*
-    private final Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-
-            if (getArguments() != null && getArguments().getInt(Globals.CURRENT_TEST_TYPE_KEY) > -1
-                    && getListView().getCount() == 0) {
-
-                displayAddLocation();
-            }
-        }
-    };
-*/
-
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         adapter.swapCursor(data);
@@ -349,7 +319,6 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
         if (data != null) {
             data.moveToPosition(-1);
         }
-
     }
 
     @Override
@@ -371,27 +340,4 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
 
         return false;
     }
-
-
 }
-/*
-                        TextView resultText = (TextView) aView;
-                        String testType;
-
-                        if (aCursor.getInt(aColumnIndex) == 0) {
-                            testType = getString(R.string.fluoride);
-                        } else {
-                            testType = getString(R.string.bacteria);
-                        }
-
-                        double result = aCursor.getDouble(aCursor.getColumnIndex(TestTable.COLUMN_RESULT));
-
-                        if (result < 0) {
-                            resultText.setText(String.format("%s: %s", testType, getActivity().getString(R.string.error)));
-                        } else {
-                            resultText.setText(String.format("%s: %.1f", testType, result));
-                        }
-
-                        return true;
-
- */

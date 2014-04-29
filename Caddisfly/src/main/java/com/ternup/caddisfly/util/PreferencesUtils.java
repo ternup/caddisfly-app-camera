@@ -200,4 +200,10 @@ public class PreferencesUtils {
         editor.remove(getKey(context, keyId));
         editor.commit();
     }
+
+    public static boolean contains(Context context, int keyId) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        return sharedPreferences.contains(getKey(context, keyId));
+    }
 }
