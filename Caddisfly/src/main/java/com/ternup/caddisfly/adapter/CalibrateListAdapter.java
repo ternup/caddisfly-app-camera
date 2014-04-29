@@ -17,7 +17,6 @@
 package com.ternup.caddisfly.adapter;
 
 import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.util.PreferencesUtils;
 
@@ -31,14 +30,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CalibrateListAdapter extends ArrayAdapter<Double> {
 
     private final Activity activity;
-
-    private final DecimalFormat doubleFormat = new DecimalFormat("0.0");
 
     private int mTestType = 0;
 
@@ -65,16 +61,18 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
             ImageView errorImage = (ImageView) rowView.findViewById(R.id.error);
             Button button = (Button) rowView.findViewById(R.id.button);
 
-            final int index = position * Globals.INDEX_INCREMENT_STEP;
+            final int index = position * mainApp.rangeIncrementStep;
 
             // paint the button with the color
             button.setBackgroundColor(colorRange.get(index));
 
             // display ppm value
-            ppmText.setText(doubleFormat.format(position * (0.1 * Globals.INDEX_INCREMENT_STEP)));
+            ppmText.setText(mainApp.doubleFormat
+                    .format((position + mainApp.rangeStartIncrement) * (mainApp.rangeIncrementValue
+                            * mainApp.rangeIncrementStep)));
 
             // display color name
-            // colorNameText.setText(colorNames.get(position));
+            // colorNameText.setText(colorNames.get(currentPosition));
             // display rgb value
             int color = colorRange.get(index);
             rgbText.setText(String.format("%s: %s  %s  %s", mainApp.getString(R.string.rgb),

@@ -49,14 +49,9 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class CalibrateItemFragment extends Fragment {
-
-    private static final int INDEX_INCREMENT_STEP = 5;
-
-    private final DecimalFormat doubleFormat = new DecimalFormat("0.0");
 
     private final PhotoTakenHandler mPhotoTakenHandler = new PhotoTakenHandler(this);
 
@@ -211,17 +206,17 @@ public class CalibrateItemFragment extends Fragment {
     }
 
     void displayInfo(boolean animate) {
-        final MainApp context = ((MainApp) getActivity().getApplicationContext());
+        final MainApp mainApp = ((MainApp) getActivity().getApplicationContext());
 
         final int position = getArguments().getInt(getString(R.string.swatchIndex));
-        final int index = position * INDEX_INCREMENT_STEP;
-        ArrayList<Integer> colorRange = context.colorList;
+        final int index = position * mainApp.rangeIncrementStep;
+        ArrayList<Integer> colorRange = mainApp.colorList;
 
-        int color = PreferencesUtils.getInt(context,
+        int color = PreferencesUtils.getInt(mainApp,
                 String.format("%s-%s", String.valueOf(mTestType), String.valueOf(index)),
                 -1);
 
-        int accuracy = Math.max(0, PreferencesUtils.getInt(context,
+        int accuracy = Math.max(0, PreferencesUtils.getInt(mainApp,
                 String.format("%s-a-%s", String.valueOf(mTestType), String.valueOf(index)),
                 101));
 
@@ -246,7 +241,7 @@ public class CalibrateItemFragment extends Fragment {
 
         speedometer.setSpeed(accuracy, animate);
 
-        int minAccuracy = PreferencesUtils.getInt(context, R.string.minPhotoQuality, 0);
+        int minAccuracy = PreferencesUtils.getInt(mainApp, R.string.minPhotoQuality, 0);
 
         mQualityTextView.setText(accuracy + "%");
         if (accuracy < minAccuracy) {
@@ -263,7 +258,9 @@ public class CalibrateItemFragment extends Fragment {
 
         mColorButton.setBackgroundColor(color);
 
-        mValueButton.setText(doubleFormat.format(position * (0.1 * INDEX_INCREMENT_STEP)));
+        mValueButton.setText(mainApp.doubleFormat
+                .format((position + mainApp.rangeStartIncrement) * (mainApp.rangeIncrementValue
+                        * mainApp.rangeIncrementValue)));
 
         mStartButton.setEnabled(true);
     }
@@ -332,7 +329,7 @@ public class CalibrateItemFragment extends Fragment {
             // ArrayList<String> colorNames = mainApp.colorNames;
             //ArrayList<String> presetColorNames = mainApp.presetColorNames;
             //position = position * INDEX_INCREMENT_STEP;
-            int index = position * INDEX_INCREMENT_STEP;
+            int index = position * mainApp.rangeIncrementStep;
             colorList.set(index, presetColorList.get(index));
 
             //colorNames.set(position, presetColorNames.get(position));
@@ -352,7 +349,8 @@ public class CalibrateItemFragment extends Fragment {
             file.delete();
 
             mPhotoImageView.setImageBitmap(null);
-            autoGenerateColors(index, colorList.get(index), colorList, editor);
+            autoGenerateColors(index, colorList.get(index), colorList, mainApp.rangeIncrementStep,
+                    editor);
 
             editor.commit();
         }
@@ -369,9 +367,9 @@ public class CalibrateItemFragment extends Fragment {
                 Context context = getActivity().getApplicationContext();
 
                 if (context != null) {
-
+                    MainApp mainApp = ((MainApp) context.getApplicationContext());
                     ArrayList<Integer> colorList = ((MainApp) context).colorList;
-                    int index = position * INDEX_INCREMENT_STEP;
+                    int index = position * mainApp.rangeIncrementStep;
 
                     colorList.set(index, resultColor);
 
@@ -384,7 +382,8 @@ public class CalibrateItemFragment extends Fragment {
                     editor.putInt(String.format("%d-a-%s", mTestType, String.valueOf(index)),
                             accuracy);
 
-                    autoGenerateColors(index, colorList.get(index), colorList, editor);
+                    autoGenerateColors(index, colorList.get(index), colorList,
+                            mainApp.rangeIncrementStep, editor);
                     editor.commit();
                 }
                 return null;
@@ -406,13 +405,13 @@ public class CalibrateItemFragment extends Fragment {
     }
 
     void autoGenerateColors(int index, int startColor,
-            ArrayList<Integer> colorList,
+            ArrayList<Integer> colorList, int incrementStep,
             SharedPreferences.Editor editor) {
 
         if (index < 30) {
-            for (int i = 1; i < INDEX_INCREMENT_STEP; i++) {
+            for (int i = 1; i < incrementStep; i++) {
                 int nextColor = ColorUtils.getGradientColor(startColor,
-                        colorList.get(index + INDEX_INCREMENT_STEP), INDEX_INCREMENT_STEP,
+                        colorList.get(index + incrementStep), incrementStep,
                         i);
                 colorList.set(index + i, nextColor);
 
@@ -421,9 +420,9 @@ public class CalibrateItemFragment extends Fragment {
         }
 
         if (index > 0) {
-            for (int i = 1; i < INDEX_INCREMENT_STEP; i++) {
+            for (int i = 1; i < incrementStep; i++) {
                 int nextColor = ColorUtils.getGradientColor(startColor,
-                        colorList.get(index - INDEX_INCREMENT_STEP), INDEX_INCREMENT_STEP,
+                        colorList.get(index - incrementStep), incrementStep,
                         i);
                 colorList.set(index - i, nextColor);
                 editor.putInt(mTestType + "-" + String.valueOf(index - i), nextColor);

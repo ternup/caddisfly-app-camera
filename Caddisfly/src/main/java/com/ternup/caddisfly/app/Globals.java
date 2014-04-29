@@ -67,8 +67,6 @@ public class Globals {
     // width and height of cropped image
     public static final int IMAGE_SAMPLE_LENGTH = 600;
 
-    public static final int INDEX_INCREMENT_STEP = 5;
-
     public static final String CALIBRATE_FOLDER = "calibrate";
 
     public static final String RESULT_SCREEN_TAG = "resultFragment";

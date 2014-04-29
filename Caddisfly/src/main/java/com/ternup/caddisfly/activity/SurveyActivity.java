@@ -257,9 +257,9 @@ public class SurveyActivity extends Activity implements LocationFragment.OnCompl
 
     }
 
+    //TODO: rewrite this function
     private boolean isFormEmpty() {
         return true;
-
     }
 
     private boolean isFormIncomplete() {

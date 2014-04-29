@@ -134,6 +134,7 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
         Activity activity = getActivity();
         MainApp mainApp = (MainApp) activity.getApplicationContext();
 
+        assert mainApp != null;
         ArrayList<Double> rangeIntervals = mainApp.rangeIntervals;
         Double[] rangeArray = rangeIntervals.toArray(new Double[rangeIntervals.size()]);
 

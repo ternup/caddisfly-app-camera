@@ -27,6 +27,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.preference.PreferenceManager;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -36,6 +37,10 @@ public class MainApp extends Application {
     public final ArrayList<Integer> presetColorList = new ArrayList<Integer>();
 
     public final ArrayList<Double> rangeIntervals = new ArrayList<Double>();
+
+    public int rangeIncrementStep = 5;
+
+    public int rangeStartIncrement = 0;
 
     public Camera camera;
 
@@ -47,9 +52,27 @@ public class MainApp extends Application {
 
     public Location location = new Location(LocationManager.GPS_PROVIDER);
 
+    public double rangeIncrementValue = 0.1;
+
+    public DecimalFormat doubleFormat = new DecimalFormat("0.0");
+
     public MainApp() {
 
         //Factory preset color range (0.0 to 3.0 with increments of 0.1)
+    }
+
+    /**
+     * Factory preset values for Fluoride
+     */
+    public void setFluorideSwatches() {
+        presetColorList.clear();
+        rangeIntervals.clear();
+
+        rangeIncrementStep = 5;
+        rangeIncrementValue = 0.1;
+        rangeStartIncrement = 0;
+        doubleFormat = new DecimalFormat("0.0");
+
         rangeIntervals.add(0.0);
         rangeIntervals.add(0.5);
         rangeIntervals.add(1.0);
@@ -58,13 +81,6 @@ public class MainApp extends Application {
         rangeIntervals.add(2.5);
         rangeIntervals.add(3.0);
 
-    }
-
-    /**
-     * Factory preset values for Fluoride
-     */
-    public void setFluorideSwatches() {
-        presetColorList.clear();
         //TODO: Move preset colors to raw file
         presetColorList.add(Color.rgb(207, 90, 179));
         presetColorList.add(Color.rgb(209, 98, 180));
@@ -107,6 +123,28 @@ public class MainApp extends Application {
      */
     public void setPhSwatches() {
         presetColorList.clear();
+        rangeIntervals.clear();
+
+        rangeIncrementStep = 1;
+        rangeIncrementValue = 1;
+        rangeStartIncrement = 1;
+        doubleFormat = new DecimalFormat("0");
+
+        rangeIntervals.add(1.0);
+        rangeIntervals.add(2.0);
+        rangeIntervals.add(3.0);
+        rangeIntervals.add(4.0);
+        rangeIntervals.add(5.0);
+        rangeIntervals.add(6.0);
+        rangeIntervals.add(7.0);
+        rangeIntervals.add(8.0);
+        rangeIntervals.add(9.0);
+        rangeIntervals.add(10.0);
+        rangeIntervals.add(11.0);
+        rangeIntervals.add(12.0);
+        rangeIntervals.add(13.0);
+        rangeIntervals.add(14.0);
+
         //TODO: Move preset colors to raw file
         presetColorList.add(Color.rgb(255, 246, 246));
         presetColorList.add(Color.rgb(255, 238, 238));
