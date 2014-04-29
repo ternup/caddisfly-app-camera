@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:stretchColumns="0"
+             android:shrinkColumns="0"
+             android:paddingLeft="@dimen/activity_horizontal_margin"
+             android:paddingRight="@dimen/activity_horizontal_margin"
+             android:background="?listSelector">
+
+    <TableRow
+            tools:ignore="UselessParent"
+            android:rowCount="1"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_column="0"
+                >
+
+            <TextView
+                    android:id="@+id/dateText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:textSize="13sp"
+                    android:textIsSelectable="false"
+                    android:lineSpacingExtra="4dp"
+                    android:textAllCaps="true"/>
+
+            <TextView
+                    android:id="@+id/placeText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textIsSelectable="false"
+                    android:lineSpacingExtra="4dp"/>
+
+            <TextView
+                    android:id="@+id/addressText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:focusable="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textIsSelectable="false"
+                    android:lineSpacingExtra="4dp"/>
+
+            <TextView
+                    android:id="@+id/resultText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="false"
+                    android:focusable="false"
+                    android:textSize="16sp"
+                    android:textIsSelectable="false"
+                    android:lineSpacingExtra="4dp"/>
+        </LinearLayout>
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_column="1">
+
+            <ImageView
+                    android:id="@+id/moreArrow"
+                    android:src="?arrowRight"
+                    android:layout_gravity="center_vertical|right"
+                    android:contentDescription="@null"
+                    android:visibility="visible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+            <CheckBox
+                    android:layout_gravity="center_vertical|right"
+                    android:id="@+id/checkBox"
+                    android:checked="false"
+                    android:visibility="visible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+        </FrameLayout>
+
+    </TableRow>
+</TableLayout>

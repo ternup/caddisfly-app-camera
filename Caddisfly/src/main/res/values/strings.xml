@@ -179,5 +179,12 @@
     <string name="noInternet">Internet connection not found</string>
     <string name="photoQuality">Photo quality</string>
     <string name="photoQualityError">Error: Photo quality too low</string>
+    <string name="waterSourceLocation">Water Source Location</string>
+    <string name="standNearWaterSource">Stand near the water source.</string>
+    <string name="ensureClearViewForGPS">Ensure that there is a clear view of the sky to receive GPS
+        signals
+    </string>
+    <string name="getLocation">Get Location</string>
+    <string name="gettingLocation">Getting location…</string>
 
 </resources>

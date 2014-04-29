@@ -105,13 +105,7 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        //if (getArguments() != null && getArguments().getInt(Globals.CURRENT_TEST_TYPE_KEY) > -1) {
         inflater.inflate(R.menu.calibrate, menu);
-        //} else {
-//            inflater.inflate(R.menu.history, menu);
-        //      }
-
-        //mMenu = menu;
     }
 
 

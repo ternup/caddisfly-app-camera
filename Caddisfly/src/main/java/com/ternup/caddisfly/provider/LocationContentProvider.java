@@ -39,6 +39,9 @@ public class LocationContentProvider extends ContentProvider {
 
     private static final String BASE_PATH = "location";
 
+    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
+            + "/" + BASE_PATH);
+
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {

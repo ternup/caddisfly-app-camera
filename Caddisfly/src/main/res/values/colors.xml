@@ -47,13 +47,13 @@
     <color name="red_button_pressed">#ff954136</color>
     <color name="red_button">#ba5243</color>
     <color name="orange_button_pressed">#ff8c600c</color>
-    <color name="orange_button">#aa750e</color>
+    <color name="orange_button">#ffb4722e</color>
     <color name="blue_button_pressed">#ff066b72</color>
     <color name="blue_button">#078790</color>
     <color name="green_button_pressed">#ff3b935d</color>
     <color name="green_button">#45ac6d</color>
     <color name="yellow_button_pressed">#ff8a8c11</color>
-    <color name="yellow_button">#a9ac15</color>
+    <color name="yellow_button">#ffba9d0d</color>
     <color name="black_overlay">#66000000</color>
 
 </resources>

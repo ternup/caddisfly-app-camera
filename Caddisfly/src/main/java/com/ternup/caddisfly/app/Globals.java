@@ -49,7 +49,7 @@ public class Globals {
     // Index of screens that gets displayed in the app
     public static final int HOME_SCREEN_INDEX = 0;
 
-    public static final int HISTORY_SCREEN_INDEX = 1;
+    public static final int LOCATION_LIST_SCREEN_INDEX = 1;
 
     public static final int CALIBRATE_SCREEN_INDEX = 2;
 

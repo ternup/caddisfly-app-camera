@@ -28,7 +28,7 @@ import android.net.NetworkInfo;
 import android.provider.Settings;
 
 
-class NetworkUtils {
+public class NetworkUtils {
 
     protected NetworkUtils() {
         // prevents calls from subclass

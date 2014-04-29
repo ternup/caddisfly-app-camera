@@ -43,21 +43,14 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-
+                ((MainActivity) getActivity())
+                        .displayView(Globals.LOCATION_LIST_SCREEN_INDEX, true);
             }
         });
 
         Button addLocationButton = (Button) view.findViewById(R.id.addLocationButton);
 
         addLocationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        Button historyButton = (Button) view.findViewById(R.id.historyButton);
-        historyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -88,13 +81,11 @@ public class HomeFragment extends Fragment {
                 == R.style.AppTheme_Dark) {
             selectLocationButton.setAlpha(0.6f);
             addLocationButton.setAlpha(0.6f);
-            historyButton.setAlpha(0.6f);
             calibrateButton.setAlpha(0.6f);
             helpButton.setAlpha(0.6f);
         } else {
             selectLocationButton.setAlpha(1f);
             addLocationButton.setAlpha(1f);
-            historyButton.setAlpha(1f);
             calibrateButton.setAlpha(1f);
             helpButton.setAlpha(1f);
         }

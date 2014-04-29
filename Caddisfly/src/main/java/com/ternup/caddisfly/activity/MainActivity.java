@@ -23,6 +23,7 @@ import com.ternup.caddisfly.fragment.AboutFragment;
 import com.ternup.caddisfly.fragment.CalibrateFragment;
 import com.ternup.caddisfly.fragment.HelpFragment;
 import com.ternup.caddisfly.fragment.HomeFragment;
+import com.ternup.caddisfly.fragment.LocationListFragment;
 import com.ternup.caddisfly.fragment.NavigationDrawerFragment;
 import com.ternup.caddisfly.fragment.SettingsFragment;
 import com.ternup.caddisfly.util.DateUtils;
@@ -54,6 +55,8 @@ public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private HomeFragment homeFragment = null;
+
+    private LocationListFragment mLocationListFragment = null;
 
     private CalibrateFragment calibrateFragment = null;
 
@@ -183,7 +186,11 @@ public class MainActivity extends Activity
                 }
                 fragment = homeFragment;
                 break;
-            case Globals.HISTORY_SCREEN_INDEX:
+            case Globals.LOCATION_LIST_SCREEN_INDEX:
+                if (mLocationListFragment == null) {
+                    mLocationListFragment = new LocationListFragment();
+                }
+                fragment = mLocationListFragment;
                 break;
             case Globals.CALIBRATE_SCREEN_INDEX:
                 if (calibrateFragment == null) {
@@ -314,14 +321,12 @@ public class MainActivity extends Activity
         try {
             int index = getCurrentFragmentIndex();
 
-/*
-            if (index == Globals.HISTORY_SCREEN_INDEX) {
+            if (index == Globals.LOCATION_LIST_SCREEN_INDEX) {
                 Fragment fragment = getFragmentManager().findFragmentById(R.id.container);
-                if (((HistoryFragment) fragment).backPressHandled()) {
+                if (((LocationListFragment) fragment).backPressHandled()) {
                     return;
                 }
             }
-*/
             // or just go back to main activity
             super.onBackPressed();
 

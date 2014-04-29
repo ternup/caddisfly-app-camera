@@ -19,6 +19,7 @@ package com.ternup.caddisfly.util;
 import android.content.Context;
 
 import java.io.File;
+import java.io.IOException;
 
 public class FileUtils {
 
@@ -58,5 +59,22 @@ public class FileUtils {
 
         return appDir.getPath() + File.separator;
     }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    public static void deleteFolder(Context context, long locationId, String folderName) {
+
+        File file = new File(getStoragePath(context, locationId, folderName, false));
+
+        if (file.exists()) {
+            String deleteCmd = "rm -r " + file.getAbsolutePath();
+            Runtime runtime = Runtime.getRuntime();
+            try {
+                runtime.exec(deleteCmd);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
 }
