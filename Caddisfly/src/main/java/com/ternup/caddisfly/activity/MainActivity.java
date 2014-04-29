@@ -253,6 +253,7 @@ public class MainActivity extends Activity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_update:
+                checkUpdate(false);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -289,7 +290,7 @@ public class MainActivity extends Activity
 
         // Set the locale according to preference
         Locale myLocale = new Locale(
-                PreferencesUtils.getString(this, R.string.currentLocale, "en"));
+                PreferencesUtils.getString(this, R.string.currentLocale, Globals.DEFAULT_LOCALE));
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();

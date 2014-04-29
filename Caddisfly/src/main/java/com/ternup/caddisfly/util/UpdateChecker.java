@@ -20,12 +20,6 @@ import com.ternup.caddisfly.app.Globals;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.pm.ResolveInfo;
-import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,7 +29,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 /**
  * @author Raghav Sood
@@ -54,19 +47,6 @@ class UpdateChecker {
     private boolean useToasts = false;
 
     private DownloadManager downloadManager;
-
-    /**
-     * Constructor that only takes the Activity context.
-     * <p/>
-     * This constructor sets the toast notification functionality to false. Example call:
-     * UpdateChecker updateChecker = new UpdateChecker(this);
-     *
-     * @param context An instance of your Activity's context
-     * @since API 1
-     */
-    public UpdateChecker(Context context) {
-        this(context, false);
-    }
 
     /**
      * Constructor for UpdateChecker
@@ -107,24 +87,22 @@ class UpdateChecker {
                         readCode = Integer.parseInt(readFile(url));
                         // Check if update is available.
                         if (readCode > versionCode) {
-                            updateAvailable = true; //We have an update available
+                            updateAvailable = true;
                         }
                     } catch (NumberFormatException e) {
                         Log.e(Globals.DEBUG_TAG,
-                                "Invalid number online"); //Something wrong with the file content
+                                "Invalid number online");
                     }
 
                 } else {
-                    Log.e(Globals.DEBUG_TAG, "Invalid version code in app"); //Invalid version code
+                    Log.e(Globals.DEBUG_TAG, "Invalid version code in app");
                 }
                 return true;
-            } else {
-                Log.e(Globals.DEBUG_TAG, "Context is null"); //Context was null
             }
             return false;
         } else {
             if (useToasts) {
-                makeToastFromString("App update check failed. No internet connection available")
+                makeToastFromString("Update check failed. No internet connection available")
                         .show();
             }
             return false;
@@ -143,11 +121,8 @@ class UpdateChecker {
             code = mContext.getPackageManager()
                     .getPackageInfo(mContext.getPackageName(), 0).versionCode;
             return code; // Found the code!
-        } catch (NameNotFoundException e) {
-            Log.e(Globals.DEBUG_TAG,
-                    "Version Code not available"); // There was a problem with the code retrieval.
-        } catch (NullPointerException e) {
-            Log.e(Globals.DEBUG_TAG, "Context is null");
+        } catch (Exception e) {
+            Log.e(Globals.DEBUG_TAG, "Version Code not available");
         }
 
         return -1; // There was a problem.
@@ -161,40 +136,11 @@ class UpdateChecker {
      */
     @SuppressWarnings("SameParameterValue")
     public void downloadAndInstall(String apkUrl) {
-        if (isOnline()) {
+        if (NetworkUtils.isOnline(mContext)) {
             downloadManager = new DownloadManager(mContext, true);
             downloadManager.execute(apkUrl);
         } else {
-            //if (useToasts) {
             makeToastFromString("Update failed. No internet connection available").show();
-            //}
-        }
-    }
-
-    /**
-     * Must be called only after download().
-     *
-     * @throws NullPointerException Thrown when download() hasn't been called.
-     * @since API 2
-     */
-    public void install() {
-        downloadManager.install();
-    }
-
-    /**
-     * Downloads the update apk, but does not install it
-     *
-     * @param apkUrl URL at which the update is located.
-     * @since API 2
-     */
-    public void download(String apkUrl) {
-        if (isOnline()) {
-            downloadManager = new DownloadManager(mContext, false);
-            downloadManager.execute(apkUrl);
-        } else {
-            if (useToasts) {
-                makeToastFromString("App update failed. No internet connection available").show();
-            }
         }
     }
 
@@ -210,66 +156,6 @@ class UpdateChecker {
      */
     public boolean isUpdateAvailable() {
         return updateAvailable;
-    }
-
-    /**
-     * Checks to see if an Internet connection is available
-     *
-     * @return True if connected or connecting, false otherwise
-     * @since API 2
-     */
-    boolean isOnline() {
-        if (haveValidContext) {
-            try {
-                ConnectivityManager cm = (ConnectivityManager) mContext
-                        .getSystemService(Context.CONNECTIVITY_SERVICE);
-                return cm.getActiveNetworkInfo().isConnectedOrConnecting();
-            } catch (Exception e) {
-                return false;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Launches your apps page on Google Play if it exists.
-     *
-     * @since API 2
-     */
-    public void launchMarketDetails() {
-        if (haveValidContext) {
-            if (hasGooglePlayInstalled()) {
-                String marketPage = "market://details?id=" + mContext.getPackageName();
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(marketPage));
-                mContext.startActivity(intent);
-            } else {
-                if (useToasts) {
-                    makeToastFromString("Google Play isn't installed on your device.").show();
-                }
-            }
-        }
-    }
-
-    /**
-     * Checks to use if the user's device has Google Play installed
-     *
-     * @return true if Google Play is installed, otherwise false
-     * @since API 2
-     */
-    boolean hasGooglePlayInstalled() {
-        Intent market = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=dummy"));
-        PackageManager manager = mContext.getPackageManager();
-        List<ResolveInfo> list = manager.queryIntentActivities(market, 0);
-
-        if (list != null && list.size() > 0) {
-            for (ResolveInfo aList : list) {
-                if (aList.activityInfo.packageName.startsWith("com.android.vending")) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     /**
@@ -304,13 +190,13 @@ class UpdateChecker {
         } catch (MalformedURLException e) {
             Log.e(Globals.DEBUG_TAG, "Invalid URL");
         } catch (IOException e) {
-            Log.e(Globals.DEBUG_TAG, "There was an IO exception");
+            Log.e(Globals.DEBUG_TAG, "IO exception");
         } catch (Exception e) {
             Log.e(Globals.DEBUG_TAG, e.getMessage());
         }
 
-        Log.e(Globals.DEBUG_TAG, "There was an error reading the file");
-        return "Problem reading the file";
+        Log.e(Globals.DEBUG_TAG, "File read error");
+        return "File read error";
     }
 
     public void cancel() {

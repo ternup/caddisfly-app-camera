@@ -16,6 +16,8 @@
 
 package com.ternup.caddisfly.util;
 
+import com.ternup.caddisfly.R;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -42,9 +44,9 @@ class NetworkUtils {
 
         if (activeNetwork == null || !activeNetwork.isConnectedOrConnecting()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("Internet connection not found");
-            builder.setMessage("Please enable wireless internet or mobile data connection");
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            builder.setTitle(R.string.noInternet);
+            builder.setMessage(R.string.enableInternat);
+            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     Intent intent = new Intent(Settings.ACTION_SETTINGS);
                     context.startActivity(intent);

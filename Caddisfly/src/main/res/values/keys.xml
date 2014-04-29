@@ -18,7 +18,10 @@
 <resources>
     <string name="runningTestFolder">runningTestFolder</string>
     <string name="testType">testType</string>
-    <string name="lastUpdateCheck">lastUpdateCheck</string>
     <string name="currentLocale">currentLocale</string>
     <string name="currentTheme">currentTheme</string>
+
+    <string name="updateAvailable">updateAvailable</string>
+    <string name="lastUpdateCheck">lastUpdateCheck</string>
+
 </resources>

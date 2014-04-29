@@ -55,7 +55,8 @@ public class HelpFragment extends Fragment {
             assert getResources().getConfiguration().locale != null;
             String language = getResources().getConfiguration().locale.getLanguage();
             int id = getActivity().getResources()
-                    .getIdentifier("help_" + language, "raw", getActivity().getPackageName());
+                    .getIdentifier(String.format("help_%s", language), "raw",
+                            getActivity().getPackageName());
             String helpText;
             if (id > 0) {
                 helpText = readRawTextFile(id);

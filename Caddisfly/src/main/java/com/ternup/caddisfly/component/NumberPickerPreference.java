@@ -176,7 +176,7 @@ public class NumberPickerPreference extends DialogPreference {
     public CharSequence getSummary() {
         String summary = String.format("%d", mValue);
         if (mSummary != null) {
-            summary += " " + mSummary;
+            summary = String.format("%s %s", summary, mSummary);
         }
 
         return summary;

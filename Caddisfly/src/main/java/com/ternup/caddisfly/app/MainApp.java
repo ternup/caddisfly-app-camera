@@ -157,7 +157,8 @@ public class MainApp extends Application {
 
         for (int i = 0; i <= 30; i++) {
             int value = sharedPreferences
-                    .getInt(String.valueOf(testType) + "-" + String.valueOf(i), -1);
+                    .getInt(String.format("%s-%s", String.valueOf(testType), String.valueOf(i)),
+                            -1);
             if (value != -1) {
                 colorList.set(i, value);
             }

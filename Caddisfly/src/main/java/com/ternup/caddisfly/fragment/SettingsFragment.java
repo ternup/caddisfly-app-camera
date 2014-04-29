@@ -17,8 +17,10 @@
 package com.ternup.caddisfly.fragment;
 
 import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -72,12 +74,15 @@ public class SettingsFragment extends PreferenceFragment
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-
-        if ("current_locale".equals(s)) {
+        Context context = mActivity.getApplicationContext();
+        assert context != null;
+        //noinspection CallToStringEquals
+        if (context.getString(R.string.currentLocale).equals(s)) {
             if (mActivity != null) {
                 PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext())
                         .unregisterOnSharedPreferenceChangeListener(this);
-                Locale myLocale = new Locale(sharedPreferences.getString(s, "en"));
+                Locale myLocale = new Locale(
+                        sharedPreferences.getString(s, Globals.DEFAULT_LOCALE));
                 Resources res = mActivity.getResources();
                 DisplayMetrics dm = res.getDisplayMetrics();
                 Configuration conf = res.getConfiguration();

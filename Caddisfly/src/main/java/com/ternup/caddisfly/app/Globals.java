@@ -16,7 +16,10 @@
 
 package com.ternup.caddisfly.app;
 
+@SuppressWarnings("HardCodedStringLiteral")
 public class Globals {
+
+    public static final String DEFAULT_LOCALE = "en";
 
     // Link to product web site for about information
     public static final String PRODUCT_WEBSITE = "http://caddisfly.ternup.com";
@@ -29,6 +32,14 @@ public class Globals {
 
     // Tag for debug log filtering
     public static final String DEBUG_TAG = "Caddisfly";
+
+    // Caddisfly update file name
+    public static final String UPDATE_FILE_NAME = "caddisfly_update.apk";
+
+    // Caddisfly update path
+    public static final String UPDATE_URL = "http://caddisfly.ternup.com/ternupapp/v.txt?check=19";
+
+    public static final String DATABASE_NAME = "caddisfly";
 
     // Index of screens that gets displayed in the app
     public static final int HOME_SCREEN_INDEX = 0;

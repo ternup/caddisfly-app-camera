@@ -17,6 +17,7 @@
 package com.ternup.caddisfly.util;
 
 import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -110,10 +111,10 @@ class DownloadManager extends AsyncTask<String, Integer, String> {
                 // this will be useful so that you can show a typical 0-100% progress bar
                 //int fileLength = connection.getContentLength();
 
-                File oldFile = new File(Environment
+                File oldFile = new File(String.format("%s/%s", Environment
                         .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                        .getPath()
-                        + "/caddisfly_update.apk");
+                        .getPath(), Globals.UPDATE_FILE_NAME));
+
                 if (oldFile.exists()) {
                     oldFile.delete();
                 }
@@ -121,10 +122,9 @@ class DownloadManager extends AsyncTask<String, Integer, String> {
                 // download the file
                 InputStream input = new BufferedInputStream(url.openStream());
                 OutputStream output =
-                        new FileOutputStream(Environment
+                        new FileOutputStream(String.format("%s/%s", Environment
                                 .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                                .getPath()
-                                + "/caddisfly_update.apk");
+                                .getPath(), Globals.UPDATE_FILE_NAME));
                 try {
                     byte[] data = new byte[BYTE_ARRAY_LENGTH];
                     //long total = 0;
@@ -209,8 +209,9 @@ class DownloadManager extends AsyncTask<String, Integer, String> {
     public void install() {
         if (downloaded) {
             String filePath =
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-                            .getPath() + "/caddisfly_update.apk";
+                    String.format("%s/%s", Environment
+                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                            .getPath(), Globals.UPDATE_FILE_NAME);
             Uri fileLoc = Uri.fromFile(new File(filePath));
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setDataAndType(fileLoc, "application/vnd.android.package-archive");

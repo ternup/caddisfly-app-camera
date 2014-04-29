@@ -180,4 +180,11 @@ public class PreferencesUtils {
 
     }
 
+    public static void removeKey(Context context, int keyId) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        Editor editor = sharedPreferences.edit();
+        editor.remove(getKey(context, keyId));
+        editor.commit();
+    }
 }

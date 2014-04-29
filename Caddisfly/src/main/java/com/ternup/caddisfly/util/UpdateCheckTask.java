@@ -17,13 +17,12 @@
 package com.ternup.caddisfly.util;
 
 import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 
 import java.util.Calendar;
 
@@ -66,20 +65,16 @@ public class UpdateCheckTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(mContext);
-        boolean updateAvailable = sharedPreferences.getBoolean("updateAvailable", false);
+        boolean updateAvailable = PreferencesUtils
+                .getBoolean(mContext, R.string.updateAvailable, false);
 
         if (!updateAvailable) {
-            //checker.checkForUpdateByVersionCode("http://10.0.2.2/cadapp/v.txt");
-            if (checker.checkForUpdateByVersionCode(
-                    "http://caddisfly.ternup.com/ternupapp/v.txt?check=19")) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putLong("lastUpdateCheck", Calendar.getInstance().getTimeInMillis());
+            if (checker.checkForUpdateByVersionCode(Globals.UPDATE_URL)) {
+                PreferencesUtils.setLong(mContext, R.string.lastUpdateCheck,
+                        Calendar.getInstance().getTimeInMillis());
                 if (checker.isUpdateAvailable()) {
-                    editor.putBoolean("updateAvailable", true);
+                    PreferencesUtils.setBoolean(mContext, R.string.updateAvailable, true);
                 }
-                editor.commit();
             }
         } else {
             checker.setUpdateAvailable();
@@ -97,20 +92,12 @@ public class UpdateCheckTask extends AsyncTask<Void, Void, Void> {
 
         if (checker.isUpdateAvailable()) {
 
-            AlertUtils.askQuestion(mContext, R.string.updateAvailable, R.string.askForUpdate,
+            AlertUtils.askQuestion(mContext, R.string.appUpdate, R.string.askForUpdate,
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-
-                            //checker.downloadAndInstall("http://10.0.2.2/cadapp/cadapp_update.apk");
-                            checker.downloadAndInstall(
-                                    "http://caddisfly.ternup.com/ternupapp/cadapp_update.apk?check=19");
-
-                            SharedPreferences sharedPreferences = PreferenceManager
-                                    .getDefaultSharedPreferences(mContext);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.remove("updateAvailable");
-                            editor.commit();
+                            checker.downloadAndInstall(Globals.UPDATE_URL);
+                            PreferencesUtils.removeKey(mContext, R.string.updateAvailable);
                         }
                     }, null
             );

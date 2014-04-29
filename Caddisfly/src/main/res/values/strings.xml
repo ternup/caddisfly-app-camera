@@ -43,7 +43,7 @@
     <string name="ternup">TernUp</string>
     <string name="researchLabs">Research Labs</string>
     <string name="selectNumberOfTests">Select how many times to analyze</string>
-    <string name="updateAvailable">Caddisfly update</string>
+    <string name="appUpdate">Caddisfly update</string>
     <string name="askForUpdate">An updated version is available, Do you want to update now?</string>
     <string name="reset">Reset</string>
     <string name="seconds">seconds</string>
@@ -179,5 +179,7 @@
     <string name="success">Success</string>
     <string name="send_failed">Send failed due to server problem. Try again later.</string>
     <string name="productName">Akvo FLOW</string>
+    <string name="enableInternat">Please enable wireless internet or mobile data connection</string>
+    <string name="noInternet">Internet connection not found</string>
 
 </resources>
