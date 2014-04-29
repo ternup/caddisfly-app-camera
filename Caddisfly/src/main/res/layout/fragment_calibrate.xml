@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="center_horizontal"
+              android:orientation="vertical"
+        >
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+            >
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="match_parent"
+                  android:text="@string/selectTestType"
+                  android:layout_gravity="center"
+                  android:paddingLeft="20dp"
+                  android:gravity="center"
+                  android:textSize="19sp"/>
+        <Spinner
+                android:id="@+id/testTypeSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:entries="@array/testTypes"
+                android:prompt="@string/selectTestType"
+                android:spinnerMode="dialog"
+                android:layout_marginBottom="2dp"
+                style="?android:spinnerItemStyle"/>
+    </LinearLayout>
+    <ListView
+            android:id="@android:id/list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"/>
+    <TextView
+            android:id="@android:id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="false"/>
+</LinearLayout>

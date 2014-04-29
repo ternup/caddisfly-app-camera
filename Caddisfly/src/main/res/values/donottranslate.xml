@@ -114,11 +114,7 @@
 
     <string-array name="testTypes">
         <item>@string/fluoride</item>
-        <item>@string/eColi</item>
-        <item>@string/turbidity</item>
-        <item>@string/nitrate</item>
-        <item>@string/iron</item>
-        <item>@string/arsenic</item>
+        <item>@string/pH</item>
     </string-array>
 
     <!-- Nav Drawer Menu Items -->

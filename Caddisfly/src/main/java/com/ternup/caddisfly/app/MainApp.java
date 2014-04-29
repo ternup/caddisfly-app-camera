@@ -33,11 +33,11 @@ import java.util.Locale;
 public class MainApp extends Application {
 
     //Global color lists
-    private final ArrayList<Integer> presetColorList = new ArrayList<Integer>();
+    public final ArrayList<Integer> presetColorList = new ArrayList<Integer>();
+
+    public final ArrayList<Double> rangeIntervals = new ArrayList<Double>();
 
     public Camera camera;
-
-    //private final ArrayList<Double> rangeIntervals = new ArrayList<Double>();
 
     public int CurrentTheme = R.style.AppTheme_Light;
 
@@ -50,7 +50,6 @@ public class MainApp extends Application {
     public MainApp() {
 
         //Factory preset color range (0.0 to 3.0 with increments of 0.1)
-/*
         rangeIntervals.add(0.0);
         rangeIntervals.add(0.5);
         rangeIntervals.add(1.0);
@@ -58,7 +57,7 @@ public class MainApp extends Application {
         rangeIntervals.add(2.0);
         rangeIntervals.add(2.5);
         rangeIntervals.add(3.0);
-*/
+
     }
 
     /**

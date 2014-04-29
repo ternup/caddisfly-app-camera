@@ -74,11 +74,12 @@ public class SettingsFragment extends PreferenceFragment
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-        Context context = mActivity.getApplicationContext();
-        assert context != null;
-        //noinspection CallToStringEquals
-        if (context.getString(R.string.currentLocale).equals(s)) {
-            if (mActivity != null) {
+        if (mActivity != null) {
+            Context context = mActivity.getApplicationContext();
+            assert context != null;
+            //noinspection CallToStringEquals
+            if (context.getString(R.string.currentLocale).equals(s)) {
+
                 PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext())
                         .unregisterOnSharedPreferenceChangeListener(this);
                 Locale myLocale = new Locale(

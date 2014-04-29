@@ -15,21 +15,11 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 
-<resources>
-    <string name="currentTheme">currentTheme</string>
-    <string name="currentLocale">currentLocale</string>
-
-    <string name="lastUpdateCheck">lastUpdateCheck</string>
-    <string name="updateAvailable">updateAvailable</string>
-
-    <string name="swatchIndex">swatchIndex</string>
-
-    <string name="folderName">folderName</string>
-    <string name="runningTestFolder">runningTestFolder</string>
-    <string name="currentTestId">currentTestId</string>
-    <string name="currentLocationId">currentLocationId</string>
-    <string name="testType">testType</string>
-    <string name="minPhotoQuality">minPhotoQuality</string>
-    <string name="cameraZoomPref">cameraZoomPref</string>
-
-</resources>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@android:id/text1"
+          android:singleLine="true"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="19sp"
+          android:padding="12dp"
+        />

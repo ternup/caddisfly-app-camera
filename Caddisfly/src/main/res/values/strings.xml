@@ -25,6 +25,7 @@
     <string name="start">Start</string>
     <string name="fluoride">Fluoride</string>
     <string name="bacteria">Bacteria</string>
+    <string name="pH">pH</string>
     <string name="calibrate">Calibrate</string>
     <string name="recent">Recent</string>
     <string name="working">Working</string>
@@ -122,11 +123,6 @@
     </string>
     <string name="testFailedQualityMessage">Photo quality below %d%%. Check cartridge placement.
     </string>
-    <string name="eColi">Bacteria</string>
-    <string name="nitrate">Nitrate</string>
-    <string name="turbidity">Turbidity</string>
-    <string name="iron">Iron</string>
-    <string name="arsenic">Arsenic</string>
     <string name="location">Location</string>
     <string name="address">Address</string>
     <string name="dayTheme">Day Theme</string>
@@ -179,7 +175,9 @@
     <string name="success">Success</string>
     <string name="send_failed">Send failed due to server problem. Try again later.</string>
     <string name="productName">Akvo FLOW</string>
-    <string name="enableInternat">Please enable wireless internet or mobile data connection</string>
+    <string name="enableInternet">Please enable wireless internet or mobile data connection</string>
     <string name="noInternet">Internet connection not found</string>
+    <string name="photoQuality">Photo quality</string>
+    <string name="photoQualityError">Error: Photo quality too low</string>
 
 </resources>

@@ -65,6 +65,7 @@ public class PreferencesUtils {
 
     }
 
+
     /**
      * Gets an integer value from preferences
      *
@@ -73,10 +74,22 @@ public class PreferencesUtils {
      * @param defaultValue the default value
      */
     public static int getInt(Context context, int keyId, int defaultValue) {
+        return PreferencesUtils.getInt(context, getKey(context, keyId), defaultValue);
+    }
+
+    /**
+     * Gets an integer value from preferences
+     *
+     * @param context      the context
+     * @param keyId        the key id
+     * @param defaultValue the default value
+     */
+    public static int getInt(Context context, String keyId, int defaultValue) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        return sharedPreferences.getInt(getKey(context, keyId), defaultValue);
+        return sharedPreferences.getInt(keyId, defaultValue);
     }
+
 
     /**
      * Sets an integer value from preferences

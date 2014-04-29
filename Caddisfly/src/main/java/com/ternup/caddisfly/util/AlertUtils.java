@@ -23,7 +23,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
-class AlertUtils {
+public class AlertUtils {
 
     protected AlertUtils() {
         // prevents calls from subclass

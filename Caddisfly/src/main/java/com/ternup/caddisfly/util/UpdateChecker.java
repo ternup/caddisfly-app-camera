@@ -194,8 +194,6 @@ class UpdateChecker {
         } catch (Exception e) {
             Log.e(Globals.DEBUG_TAG, e.getMessage());
         }
-
-        Log.e(Globals.DEBUG_TAG, "File read error");
         return "File read error";
     }
 

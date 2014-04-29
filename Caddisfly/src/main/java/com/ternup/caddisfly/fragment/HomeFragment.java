@@ -68,7 +68,8 @@ public class HomeFragment extends Fragment {
         calibrateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                assert getActivity() != null;
+                ((MainActivity) getActivity()).displayView(Globals.CALIBRATE_SCREEN_INDEX, true);
             }
         });
 

@@ -45,7 +45,7 @@ class NetworkUtils {
         if (activeNetwork == null || !activeNetwork.isConnectedOrConnecting()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle(R.string.noInternet);
-            builder.setMessage(R.string.enableInternat);
+            builder.setMessage(R.string.enableInternet);
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     Intent intent = new Intent(Settings.ACTION_SETTINGS);

@@ -20,6 +20,7 @@ import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.fragment.AboutFragment;
+import com.ternup.caddisfly.fragment.CalibrateFragment;
 import com.ternup.caddisfly.fragment.HelpFragment;
 import com.ternup.caddisfly.fragment.HomeFragment;
 import com.ternup.caddisfly.fragment.NavigationDrawerFragment;
@@ -53,6 +54,8 @@ public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private HomeFragment homeFragment = null;
+
+    private CalibrateFragment calibrateFragment = null;
 
     private HelpFragment helpFragment = null;
 
@@ -183,6 +186,10 @@ public class MainActivity extends Activity
             case Globals.HISTORY_SCREEN_INDEX:
                 break;
             case Globals.CALIBRATE_SCREEN_INDEX:
+                if (calibrateFragment == null) {
+                    calibrateFragment = new CalibrateFragment();
+                }
+                fragment = calibrateFragment;
                 break;
             case Globals.SETTINGS_SCREEN_INDEX:
                 isSettingsShowing = true;

@@ -41,6 +41,11 @@ public class Globals {
 
     public static final String DATABASE_NAME = "caddisfly";
 
+    public static final String PHOTO_TEMP_FILE = "cad";
+
+    // new folder name using date
+    public static final String FOLDER_NAME_DATE_FORMAT = "yyyyMMddHHmmss";
+
     // Index of screens that gets displayed in the app
     public static final int HOME_SCREEN_INDEX = 0;
 
@@ -57,9 +62,14 @@ public class Globals {
     // Index of test types
     public static final int FLUORIDE_INDEX = 0;
 
-    public static final int BACTERIA_INDEX = 1;
+    public static final int PH_INDEX = 1;
 
-    public static final int PH_INDEX = 2;
+    // width and height of cropped image
+    public static final int IMAGE_SAMPLE_LENGTH = 600;
+
+    public static final int INDEX_INCREMENT_STEP = 5;
+
+    public static final String CALIBRATE_FOLDER = "calibrate";
 
     protected Globals() {
         // prevents calls from subclass
