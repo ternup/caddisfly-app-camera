@@ -24,11 +24,11 @@
 
     <string name="swatchIndex">swatchIndex</string>
 
-    <string name="folderName">folderName</string>
+    <string name="folderName">currentFolderName</string>
     <string name="runningTestFolder">runningTestFolder</string>
     <string name="currentTestId">currentTestId</string>
     <string name="currentLocationId">currentLocationId</string>
-    <string name="testType">testType</string>
+    <string name="currentTestTypeId">currentTestTypeId</string>
     <string name="minPhotoQuality">minPhotoQuality</string>
     <string name="cameraZoomPref">cameraZoomPref</string>
 

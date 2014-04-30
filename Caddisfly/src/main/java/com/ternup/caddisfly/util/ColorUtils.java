@@ -40,11 +40,10 @@ public class ColorUtils {
 
     private static final double MAX_COLOR_DISTANCE = 30.0;
 
-    private static final double RANGE_STEP_UNIT = 0.1;
-
-    public static Bundle getPpmValue(String filePath, ArrayList<Integer> colorRange) {
+    public static Bundle getPpmValue(String filePath, ArrayList<Integer> colorRange,
+            int rangeStepUnit, int rangeStartUnit) {
         ColorInfo photoColor = getColorFromImage(filePath);
-        return analyzeColor(photoColor, colorRange);
+        return analyzeColor(photoColor, colorRange, rangeStepUnit, rangeStartUnit);
     }
 
     /**
@@ -141,32 +140,36 @@ public class ColorUtils {
      * @param colorRange The range of colors to compare against
      * @return A bundle with the results
      */
-    static Bundle analyzeColor(ColorInfo photoColor, ArrayList<Integer> colorRange) {
+    static Bundle analyzeColor(ColorInfo photoColor, ArrayList<Integer> colorRange,
+            int rangeStepUnit, int rangeStartUnit) {
 
         Bundle bundle = new Bundle();
         bundle.putInt("resultColor", photoColor.getColor()); //NON-NLS
 
-        double value = getNearestColorFromSwatchRange(photoColor.getColor(), colorRange);
+        double value = getNearestColorFromSwatchRange(photoColor.getColor(), colorRange,
+                rangeStepUnit);
 
         if (value < 0) {
             bundle.putDouble("resultValue", -1); //NON-NLS
 
         } else {
-
+            value = value + rangeStartUnit;
             bundle.putDouble("resultValue", (double) Math.round(value * 100) / 100); //NON-NLS
-            int color = colorRange.get((int) Math.round(value / RANGE_STEP_UNIT));
+            int color = colorRange.get((int) Math.round(value / rangeStepUnit));
 
             bundle.putInt("standardColor", color); //NON-NLS
 
-            bundle.putString("standardColorRgb", Integer.toString(Color.red(color)) + "  " //NON-NLS
-                    + Integer.toString(Color.green(color)) + "  "
-                    + Integer.toString(Color.blue(color)));
+            bundle.putString("standardColorRgb",
+                    String.format("%s  %s  %s", Integer.toString(Color.red(color)),
+                            Integer.toString(Color.green(color)),
+                            Integer.toString(Color.blue(color)))
+            );
         }
 
         bundle.putString("color",
-                Integer.toString(Color.red(photoColor.getColor())) + "  " //NON-NLS
-                        + Integer.toString(Color.green(photoColor.getColor())) + "  "
-                        + Integer.toString(Color.blue(photoColor.getColor()))
+                String.format("%s  %s  %s", Integer.toString(Color.red(photoColor.getColor())),
+                        Integer.toString(Color.green(photoColor.getColor())),
+                        Integer.toString(Color.blue(photoColor.getColor())))
         );
 
         int colorAccuracy = Math.max(0, 100 - ((photoColor.getCount() / 5)));
@@ -194,7 +197,8 @@ public class ColorUtils {
      * @param colorRange The range of colors from which to return the nearest color
      * @return A parts per million (ppm) value (color index multiplied by a step unit)
      */
-    private static double getNearestColorFromSwatchRange(int color, List<Integer> colorRange) {
+    private static double getNearestColorFromSwatchRange(int color, List<Integer> colorRange,
+            int rangeStepUnit) {
         double distance = MAX_COLOR_DISTANCE;
         double nearest = -1;
 
@@ -210,11 +214,11 @@ public class ColorUtils {
             double temp = Math.sqrt(blue + green + red);
 
             if (temp == 0.0) {
-                nearest = i * RANGE_STEP_UNIT;
+                nearest = i * rangeStepUnit;
                 break;
             } else if (temp < distance) {
                 distance = temp;
-                nearest = i * RANGE_STEP_UNIT;
+                nearest = i * rangeStepUnit;
             }
         }
 

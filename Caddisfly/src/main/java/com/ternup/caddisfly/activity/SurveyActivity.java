@@ -339,23 +339,6 @@ public class SurveyActivity extends Activity implements LocationFragment.OnCompl
                     .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLock");
             wakeLock.acquire();
         }
-
-
-/*
-        if (wakeLock == null || !wakeLock.isHeld()) {
-            if (wakeLock != null && wakeLock.isHeld()) {
-                wakeLock.release();
-            }
-
-            PowerManager pm = (PowerManager) getActivity().getApplicationContext()
-                    .getSystemService(Context.POWER_SERVICE);
-            wakeLock = pm
-                    .newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP
-                            | PowerManager.ON_AFTER_RELEASE, "MyWakeLock");
-            wakeLock.acquire();
-        }
-*/
-
     }
 
     @Override

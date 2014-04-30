@@ -30,6 +30,9 @@ public class Globals {
     // Name of folder where app data will be stored
     public static final String APP_FOLDER_NAME = "com.ternup.caddisfly";
 
+    // For external app connection
+    public static final String ACTION_WATER_TEST = "org.akvo.flow.action.externalsource";
+
     // Tag for debug log filtering
     public static final String DEBUG_TAG = "Caddisfly";
 
@@ -64,10 +67,20 @@ public class Globals {
 
     public static final int PH_INDEX = 1;
 
+    public static final int BACTERIA_INDEX = 2;
+
     // width and height of cropped image
     public static final int IMAGE_SAMPLE_LENGTH = 600;
 
+    // folder for calibration photos
     public static final String CALIBRATE_FOLDER = "calibrate";
+
+    // safety ranges for fluoride
+    public static final double FLUORIDE_MAX_DRINK = 1.0;
+
+    public static final double FLUORIDE_MAX_COOK = 1.5;
+
+    public static final double FLUORIDE_MAX_BATHE = 2.5;
 
     public static final String RESULT_SCREEN_TAG = "resultFragment";
 

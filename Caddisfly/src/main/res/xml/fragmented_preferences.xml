@@ -44,7 +44,7 @@
                 android:defaultValue="80"
                 android:dialogTitle="Minimum Photo Quality"
                 android:summary="%"
-                android:key="min_photo_quality"
+                android:key="minPhotoQuality"
                 android:max="100"
                 android:title="Minimum Photo Quality"
                 custom:min="0"
@@ -72,7 +72,7 @@
     <PreferenceCategory android:title="@string/general">
         <CheckBoxPreference
                 android:defaultValue="true"
-                android:key="shake_device"
+                android:key="requireShakePref"
                 android:title="@string/shakeDevice"
                 android:summary="@string/shakeDeviceSummary"/>
         <CheckBoxPreference
@@ -80,7 +80,7 @@
                 android:key="sound_alarm"
                 android:title="@string/soundAlarm"
                 android:summary="@string/soundAlarmSummary"
-                android:dependency="shake_device"/>
+                android:dependency="requireShakePref"/>
         <!--
                 <CheckBoxPreference
                     android:defaultValue="true"

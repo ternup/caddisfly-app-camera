@@ -30,19 +30,15 @@ android {
     }
 
     signingConfigs {
-        myConfig {
-            storeFile file("C:/Projects/Ternup/Configs/Android Key Store/Caddisfly.jks")
-            storePassword "ternfly"
-            keyAlias "caddisfly"
-            keyPassword "ternfly"
-        }
+        release
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.myConfig
+            signingConfig signingConfigs.release
             runProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            zipAlign true
         }
     }
 
@@ -59,3 +55,10 @@ dependencies {
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5+'
     compile files('libs/graphview-3.1.jar')
 }
+
+def props = new Properties()
+props.load(new FileInputStream(rootProject.file("release.properties")))
+android.signingConfigs.release.storeFile rootProject.file(props.keyStore)
+android.signingConfigs.release.storePassword props.keyStorePassword
+android.signingConfigs.release.keyAlias props.keyAlias
+android.signingConfigs.release.keyPassword props.keyAliasPassword

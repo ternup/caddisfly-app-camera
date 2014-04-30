@@ -31,17 +31,17 @@ import java.util.Set;
 
 public abstract class FormWidget {
 
-    protected View _view;
+    protected final String _property;
 
-    protected String _property;
+    protected final LinearLayout _layout;
+
+    protected final TextView _label;
+
+    protected View _view;
 
     protected String _displayText;
 
     protected int _priority;
-
-    protected LinearLayout _layout;
-
-    protected TextView _label;
     //protected FormActivity.FormWidgetToggleHandler _handler;
 
     protected HashMap<String, ArrayList<String>> _toggles;
@@ -121,7 +121,7 @@ public abstract class FormWidget {
     // -----------------------------------------------
 
     /**
-     * sets the hint for the widget, method should be overriden in sub-class
+     * sets the hint for the widget, method should be overridden in sub-class
      */
     public void setHint(String value) {
         // -- override

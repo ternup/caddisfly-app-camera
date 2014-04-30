@@ -32,13 +32,13 @@ import java.util.Map;
 
 public class FormSpinner extends FormWidget {
 
-    protected JSONObject _options;
+    protected final JSONObject _options;
 
-    protected Spinner _spinner;
+    protected final Spinner _spinner;
 
-    protected Map<String, String> _propmap;
+    protected final Map<String, String> _propertyMap;
 
-    protected ArrayAdapter<String> _adapter;
+    protected final ArrayAdapter<String> _adapter;
 
 
     public FormSpinner(Context context, String property, JSONObject options) {
@@ -52,23 +52,25 @@ public class FormSpinner extends FormWidget {
         String p;
         String name;
 
-        _propmap = new HashMap<String, String>();
+        _propertyMap = new HashMap<String, String>();
         _adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item);
         _adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         _spinner.setAdapter(_adapter);
         _spinner.setSelection(0);
 
         try {
-            JSONArray propertyNames = options.names();
-            for (int i = 0; i < options.length(); i++) {
-                name = propertyNames.getString(i);
-                p = options.getString(name);
+            if (options != null) {
+                JSONArray propertyNames = options.names();
+                for (int i = 0; i < options.length(); i++) {
+                    name = propertyNames.getString(i);
+                    p = options.getString(name);
 
-                _adapter.add(p);
-                _propmap.put(p, name);
+                    _adapter.add(p);
+                    _propertyMap.put(p, name);
+                }
             }
-        } catch (Exception e) {
-
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(
@@ -85,7 +87,7 @@ public class FormSpinner extends FormWidget {
 
     @Override
     public String getValue() {
-        return _propmap.get(_adapter.getItem(_spinner.getSelectedItemPosition()));
+        return _propertyMap.get(_adapter.getItem(_spinner.getSelectedItemPosition()));
     }
 
     @Override
@@ -102,7 +104,7 @@ public class FormSpinner extends FormWidget {
                 }
             }
         } catch (JSONException e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -121,7 +123,7 @@ public class FormSpinner extends FormWidget {
     */
     class SelectionHandler implements AdapterView.OnItemSelectedListener {
 
-        protected FormWidget _widget;
+        protected final FormWidget _widget;
 
         public SelectionHandler(FormWidget widget) {
             _widget = widget;

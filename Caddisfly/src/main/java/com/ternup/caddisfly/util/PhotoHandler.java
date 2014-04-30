@@ -82,12 +82,13 @@ public class PhotoHandler implements PictureCallback {
         if (mFolderName.length() > 0) {
             SimpleDateFormat dateFormat = new SimpleDateFormat(Globals.FOLDER_NAME_DATE_FORMAT,
                     Locale.US);
-            photoFile = "pic-" + dateFormat.format(new Date());
+            photoFile = String.format("pic-%s", dateFormat.format(new Date()));
             pictureFile = new File(photoFolder + photoFile);
         } else {
             pictureFile = new File(
                     FileUtils.getStoragePath(mContext, -1, Globals.CALIBRATE_FOLDER, true)
-                            + photoFile);
+                            + photoFile
+            );
         }
 
         try {
@@ -118,7 +119,9 @@ public class PhotoHandler implements PictureCallback {
         ArrayList<Integer> colorRange = ((MainApp) mContext).colorList;
 
         Bundle bundle;
-        bundle = ColorUtils.getPpmValue(pictureFile.getAbsolutePath(), colorRange);
+        bundle = ColorUtils.getPpmValue(pictureFile.getAbsolutePath(), colorRange,
+                ((MainApp) mContext).rangeIncrementStep,
+                ((MainApp) mContext).rangeStartIncrement);
 
         long id = -1;
         if (mIndex < 1 && mFolderName.length() > 0) {

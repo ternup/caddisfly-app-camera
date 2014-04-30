@@ -24,6 +24,8 @@ import com.ternup.caddisfly.app.MainApp;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -117,11 +119,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void displayLocation(long id) {
-/*
         Fragment fragment = new LocationDetailsFragment();
         if (fragment != null) {
             Bundle args = new Bundle();
-            args.putLong(getString(R.string.currentLocationId, id);
+            args.putLong(getString(R.string.currentLocationId), id);
             fragment.setArguments(args);
 
             FragmentManager fragmentManager = getFragmentManager();
@@ -133,9 +134,7 @@ public class HomeFragment extends Fragment {
             ft.commit();
             fragmentManager.executePendingTransactions();
         }
-*/
     }
-
 
     @Override
     public void onStart() {

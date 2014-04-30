@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/resultFragment"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="center_horizontal"
+              android:orientation="vertical"
+              android:paddingTop="@dimen/activity_vertical_margin">
+
+    <TextView
+            tools:text="10 March 2013, 10:30 AM"
+            android:id="@+id/testDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="15sp"/>
+
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:layout_gravity="center_horizontal"
+            tools:ignore="UseCompoundDrawables"
+            android:layout_marginTop="30dp">
+
+        <ImageView
+                tools:src="@drawable/drink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/resultIcon"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"/>
+
+        <TextView
+                tools:text="0.0"
+                android:id="@+id/result"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:textSize="88sp"
+                android:gravity="center_vertical"/>
+
+        <TextView
+                android:id="@+id/ppmText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp"
+                android:textColor="#555"
+                tools:text="@string/ppm"
+                />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:id="@+id/detailsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            android:paddingBottom="20dp"
+            android:visibility="visible">
+
+        <TextView
+                tools:text="Domestic Tap"
+                android:id="@+id/sourceType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:gravity="center_vertical|center_horizontal"
+                android:maxLines="2"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textSize="20sp"/>
+
+        <TextView
+                tools:text="Trinity Circle, MG Road"
+                android:id="@+id/address1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:gravity="center_vertical|center_horizontal"
+                android:maxLines="2"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:textSize="17sp"/>
+
+        <TextView
+                tools:text="Bangalore, India"
+                android:id="@+id/address2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:gravity="center_vertical|center_horizontal"
+                android:maxLines="2"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:textSize="17sp"/>
+        <TextView
+                tools:text="Bangalore, India"
+                android:id="@+id/address3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ellipsize="end"
+                android:gravity="center_vertical|center_horizontal"
+                android:maxLines="2"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:textSize="17sp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:id="@+id/progress"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:gravity="center_vertical|center_horizontal">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#37819f"
+                android:paddingTop="20dp"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="20dp"
+                android:minWidth="190dp"
+                android:alpha="0.9">
+
+            <TextView
+                    android:id="@+id/progress_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/connecting"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:visibility="visible"/>
+
+            <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="visible">
+            </ProgressBar>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout android:layout_width="match_parent"
+                 android:layout_height="0dp"
+                 android:layout_weight="1">
+    </FrameLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal"
+            android:gravity="bottom"
+            android:paddingTop="10dp">
+
+        <Button
+                android:id="@+id/deleteButton"
+                android:padding="20dp"
+                android:layout_margin="1dp"
+                android:text="@string/delete"
+                android:drawableTop="@android:drawable/ic_menu_delete"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?buttonStyle"
+                style="?android:borderlessButtonStyle"
+                android:textColor="#ddd"/>
+
+        <Button
+                android:id="@+id/sendButton"
+                android:padding="20dp"
+                android:layout_margin="1dp"
+                android:text="@string/send"
+                android:drawableTop="@android:drawable/ic_menu_send"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?buttonStyle"
+                style="?android:borderlessButtonStyle"
+                android:textColor="#ddd"/>
+        <Button
+                android:id="@+id/detailsButton"
+                android:padding="20dp"
+                android:layout_margin="1dp"
+                android:text="@string/details"
+                android:drawableTop="@android:drawable/ic_menu_gallery"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?buttonStyle"
+                style="?android:borderlessButtonStyle"
+                android:textColor="#ddd"/>
+
+    </LinearLayout>
+
+</LinearLayout>

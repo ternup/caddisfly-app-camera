@@ -64,7 +64,7 @@ public class NotesFragment extends BaseFragment {
 
         LinearLayout linearLayout = (LinearLayout) rootView.findViewById(R.id.rootLayout);
 
-        mSourceSpinner = new FormSpinner(getActivity(), "Source Type", null);
+        mSourceSpinner = new FormSpinner(getActivity(), getString(R.string.sourceType), null);
         mSourceSpinner.getInputControl().requestFocus();
         linearLayout.addView(mSourceSpinner.getView());
         ArrayAdapter<CharSequence> sourceAdapter = ArrayAdapter.createFromResource(getActivity(),

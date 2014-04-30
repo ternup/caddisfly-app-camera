@@ -73,7 +73,7 @@
     <string name="analysisCount">Analysis count</string>
     <string name="checkingForUpdates">Checking for updates…</string>
     <string name="place">Place</string>
-    <string name="source_type">Source type</string>
+    <string name="sourceType">Source type</string>
     <string name="selectSourceType">Select Source Type</string>
     <string name="sourceLocation">Source location</string>
     <string name="addressPending">Location details to be added</string>
@@ -180,5 +180,6 @@
     <string name="getLocation">Get Location</string>
     <string name="gettingLocation">Getting location…</string>
     <string name="takeSourcePhoto">Take Photo of Water Source</string>
+    <string name="connecting">Connecting…</string>
 
 </resources>

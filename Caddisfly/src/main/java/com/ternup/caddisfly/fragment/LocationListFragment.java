@@ -27,6 +27,8 @@ import com.ternup.caddisfly.util.PreferencesUtils;
 import com.ternup.caddisfly.util.TimeUtils;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.ContentUris;
@@ -55,13 +57,7 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
 
     private static final int REQUEST_LOCATION = 2;
 
-    private final boolean showCheckbox = false;
-
-    //private LocationDetailsFragment mLocationDetailsFragment;
-
-    int mTestType = 0;
-
-    String[] projection = {
+    final String[] projection = {
             LocationTable.COLUMN_DATE,
             LocationTable.COLUMN_NAME,
             LocationTable.COLUMN_TOWN,
@@ -72,6 +68,12 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
             LocationTable.COLUMN_SOURCE,
             LocationTable.COLUMN_ID
     };
+
+    private final boolean showCheckbox = false;
+
+    int mTestType = 0;
+
+    private LocationDetailsFragment mLocationDetailsFragment;
 
     private CheckboxSimpleCursorAdapter adapter;
 
@@ -136,7 +138,6 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
 
         PreferencesUtils.setLong(getActivity(), R.string.currentLocationId, id);
 
-/*
         if (mLocationDetailsFragment == null) {
             mLocationDetailsFragment = new LocationDetailsFragment();
         } else {
@@ -147,7 +148,6 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
                 mLocationDetailsFragment = new LocationDetailsFragment();
             }
         }
-
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.executePendingTransactions();
@@ -161,7 +161,7 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
         ft.addToBackStack(null);
         ft.commit();
         fragmentManager.executePendingTransactions();
-        */
+
     }
 
     @Override

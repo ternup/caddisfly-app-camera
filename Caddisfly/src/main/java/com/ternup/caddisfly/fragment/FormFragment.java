@@ -65,7 +65,7 @@ public class FormFragment extends BaseFragment implements TextView.OnEditorActio
 
     private Address mAddress;
 
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 

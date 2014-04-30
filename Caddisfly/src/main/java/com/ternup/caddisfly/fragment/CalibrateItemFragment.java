@@ -133,7 +133,7 @@ public class CalibrateItemFragment extends Fragment {
         final int position = getArguments().getInt(getString(R.string.swatchIndex));
         //final int index = position * INDEX_INCREMENT_STEP;
 
-        mTestType = getArguments().getInt(getString(R.string.testType));
+        mTestType = getArguments().getInt(getString(R.string.currentTestTypeId));
 
         displayInfo(false);
 
@@ -141,15 +141,18 @@ public class CalibrateItemFragment extends Fragment {
             @Override
             public void onClick(final View v) {
 
-                final MainApp context = ((MainApp) getActivity().getApplicationContext());
-                ArrayList<Integer> colorRange = context.colorList;
+                final MainApp mainApp = ((MainApp) getActivity().getApplicationContext());
+                ArrayList<Integer> colorRange = mainApp.colorList;
                 String fileName = String.format("%s/%s-%d-%d",
                         FileUtils
                                 .getStoragePath(getActivity(), -1, Globals.CALIBRATE_FOLDER, false),
-                        Globals.PHOTO_TEMP_FILE, mTestType, position);
+                        Globals.PHOTO_TEMP_FILE, mTestType, position
+                );
 
                 Bundle bundle;
-                bundle = ColorUtils.getPpmValue(fileName, colorRange);
+                bundle = ColorUtils.getPpmValue(fileName, colorRange,
+                        mainApp.rangeIncrementStep,
+                        mainApp.rangeStartIncrement);
 
                 storeCalibratedData(position,
                         bundle.getInt("resultColor"), bundle.getInt("accuracy"));
@@ -226,7 +229,8 @@ public class CalibrateItemFragment extends Fragment {
                     String.format("%s/%s-%d-%d",
                             FileUtils.getStoragePath(getActivity(), -1, Globals.CALIBRATE_FOLDER,
                                     false),
-                            Globals.PHOTO_TEMP_FILE, mTestType, position)
+                            Globals.PHOTO_TEMP_FILE, mTestType, position
+                    )
             );
             if (file.exists()) {
                 //mPhotoImageView.setMinimumHeight(250);
@@ -343,7 +347,8 @@ public class CalibrateItemFragment extends Fragment {
                     String.format("%s/%s-%d-%d",
                             FileUtils.getStoragePath(getActivity(), -1, Globals.CALIBRATE_FOLDER,
                                     false),
-                            Globals.PHOTO_TEMP_FILE, mTestType, position)
+                            Globals.PHOTO_TEMP_FILE, mTestType, position
+                    )
             );
 
             file.delete();
@@ -415,7 +420,8 @@ public class CalibrateItemFragment extends Fragment {
                         i);
                 colorList.set(index + i, nextColor);
 
-                editor.putInt(mTestType + "-" + String.valueOf(index + i), nextColor);
+                editor.putInt(String.format("%d-%s", mTestType, String.valueOf(index + i)),
+                        nextColor);
             }
         }
 
@@ -425,7 +431,8 @@ public class CalibrateItemFragment extends Fragment {
                         colorList.get(index - incrementStep), incrementStep,
                         i);
                 colorList.set(index - i, nextColor);
-                editor.putInt(mTestType + "-" + String.valueOf(index - i), nextColor);
+                editor.putInt(String.format("%d-%s", mTestType, String.valueOf(index - i)),
+                        nextColor);
             }
         }
     }

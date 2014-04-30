@@ -20,6 +20,7 @@ import android.content.Context;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class FileUtils {
 
@@ -76,5 +77,50 @@ public class FileUtils {
         }
     }
 
+    // Reading file paths from SDCard
+    public static ArrayList<String> getFilePaths(Context context, String folderName,
+            long locationId) {
+        return getFilePaths(context, folderName, "", locationId);
+    }
+
+    // Reading file paths from SDCard
+    public static ArrayList<String> getFilePaths(Context context, String folderName,
+            String subFolder, long locationId) {
+
+        ArrayList<String> filePaths = new ArrayList<String>();
+
+        String folderPath = getStoragePath(context, locationId, folderName, false);
+
+        folderPath += subFolder;
+
+        File directory = new File(folderPath);
+
+        // check for directory
+        if (directory.isDirectory()) {
+            // getting list of file paths
+            File[] listFiles = directory.listFiles();
+
+            // Check for count
+            if (listFiles != null && listFiles.length > 0) {
+
+                // loop through all files
+                for (File listFile : listFiles) {
+
+                    if (listFile.isFile()) {
+                        // get file path
+                        String filePath = listFile.getAbsolutePath();
+
+                        // check for supported file extension
+                        //if (IsSupportedFile(filePath)) {
+                        // Add image path to array list
+                        filePaths.add(filePath);
+                    }
+                    //}
+                }
+            }
+        }
+
+        return filePaths;
+    }
 
 }

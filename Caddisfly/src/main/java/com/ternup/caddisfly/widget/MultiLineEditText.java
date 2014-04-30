@@ -27,7 +27,7 @@ import android.widget.LinearLayout;
 
 public class MultiLineEditText extends FormWidget {
 
-    protected EditText _input;
+    protected final EditText _input;
 
     public MultiLineEditText(Context context, String property) {
         super(context, property);

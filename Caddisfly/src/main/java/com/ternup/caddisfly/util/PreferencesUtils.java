@@ -107,6 +107,11 @@ public class PreferencesUtils {
 
     }
 
+
+    public static float getFloat(Context context, int keyId, float defaultValue) {
+        return PreferencesUtils.getFloat(context, getKey(context, keyId), defaultValue);
+    }
+
     /**
      * Gets a float value from preferences
      *
@@ -114,10 +119,10 @@ public class PreferencesUtils {
      * @param keyId        the key id
      * @param defaultValue the default value
      */
-    public static float getFloat(Context context, int keyId, float defaultValue) {
+    public static float getFloat(Context context, String keyId, float defaultValue) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        return sharedPreferences.getFloat(getKey(context, keyId), defaultValue);
+        return sharedPreferences.getFloat(keyId, defaultValue);
     }
 
     /**
@@ -136,16 +141,21 @@ public class PreferencesUtils {
 
     }
 
+
+    public static long getLong(Context context, int keyId) {
+        return PreferencesUtils.getLong(context, getKey(context, keyId));
+    }
+
     /**
      * Gets a long value from preferences
      *
      * @param context the context
      * @param keyId   the key id
      */
-    public static long getLong(Context context, int keyId) {
+    public static long getLong(Context context, String keyId) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        return sharedPreferences.getLong(getKey(context, keyId), -1L);
+        return sharedPreferences.getLong(keyId, -1L);
     }
 
     /**
@@ -194,10 +204,14 @@ public class PreferencesUtils {
     }
 
     public static void removeKey(Context context, int keyId) {
+        PreferencesUtils.removeKey(context, getKey(context, keyId));
+    }
+
+    public static void removeKey(Context context, String keyId) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         Editor editor = sharedPreferences.edit();
-        editor.remove(getKey(context, keyId));
+        editor.remove(keyId);
         editor.commit();
     }
 

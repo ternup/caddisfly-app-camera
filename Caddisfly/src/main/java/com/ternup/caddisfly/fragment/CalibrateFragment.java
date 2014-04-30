@@ -168,7 +168,7 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Bundle args = new Bundle();
         args.putInt(getString(R.string.swatchIndex), index);
-        args.putInt(getString(R.string.testType), mTestType);
+        args.putInt(getString(R.string.currentTestTypeId), mTestType);
         mCalibrateItemFragment.setArguments(args);
         ft.replace(R.id.container, mCalibrateItemFragment, "mCalibrateItemFragment");
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

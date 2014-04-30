@@ -340,7 +340,7 @@ public class LocationFragment extends BaseFragment implements
 
         // Get Location Manager and check for GPS & Network location services
         LocationManager lm = (LocationManager) getActivity()
-                .getSystemService(getActivity().LOCATION_SERVICE);
+                .getSystemService(Context.LOCATION_SERVICE);
         if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 !lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             // Build the alert dialog
@@ -569,7 +569,7 @@ public class LocationFragment extends BaseFragment implements
     protected class GetAddressTask extends AsyncTask<Location, Void, String> {
 
         // Store the context passed to the AsyncTask when the system instantiates it.
-        Context localContext;
+        final Context localContext;
 
         // Constructor called by the system to instantiate the task
         public GetAddressTask(Context context) {

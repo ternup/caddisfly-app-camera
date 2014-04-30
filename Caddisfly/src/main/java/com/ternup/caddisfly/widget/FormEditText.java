@@ -30,7 +30,7 @@ public class FormEditText extends FormWidget {
             defaultLayoutParams = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-    protected EditText _input;
+    protected final EditText _input;
 
 
     public FormEditText(Context context, String property) {
