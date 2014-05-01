@@ -38,10 +38,10 @@ public class ColorUtils {
 
     private static final int IMAGE_SAMPLE_LENGTH = 500;
 
-    private static final double MAX_COLOR_DISTANCE = 30.0;
+    private static final double MAX_COLOR_DISTANCE = 50.0;
 
     public static Bundle getPpmValue(String filePath, ArrayList<Integer> colorRange,
-            int rangeStepUnit, int rangeStartUnit) {
+            double rangeStepUnit, int rangeStartUnit) {
         ColorInfo photoColor = getColorFromImage(filePath);
         return analyzeColor(photoColor, colorRange, rangeStepUnit, rangeStartUnit);
     }
@@ -141,7 +141,7 @@ public class ColorUtils {
      * @return A bundle with the results
      */
     static Bundle analyzeColor(ColorInfo photoColor, ArrayList<Integer> colorRange,
-            int rangeStepUnit, int rangeStartUnit) {
+            double rangeStepUnit, int rangeStartUnit) {
 
         Bundle bundle = new Bundle();
         bundle.putInt("resultColor", photoColor.getColor()); //NON-NLS
@@ -198,7 +198,7 @@ public class ColorUtils {
      * @return A parts per million (ppm) value (color index multiplied by a step unit)
      */
     private static double getNearestColorFromSwatchRange(int color, List<Integer> colorRange,
-            int rangeStepUnit) {
+            double rangeStepUnit) {
         double distance = MAX_COLOR_DISTANCE;
         double nearest = -1;
 

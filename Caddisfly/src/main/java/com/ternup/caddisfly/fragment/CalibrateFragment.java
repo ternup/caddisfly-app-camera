@@ -114,7 +114,6 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
 
         switch (item.getItemId()) {
             case R.id.menu_swatches:
-/*
                 SwatchFragment fragment = new SwatchFragment();
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -122,7 +121,6 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
                 ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                 ft.addToBackStack(null);
                 ft.commit();
-*/
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

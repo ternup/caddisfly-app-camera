@@ -75,6 +75,8 @@ public class CalibrateItemFragment extends Fragment {
 
     private TextView mErrorQualityText;
 
+    private Button mResetButton;
+
     public CalibrateItemFragment() {
     }
 
@@ -93,9 +95,8 @@ public class CalibrateItemFragment extends Fragment {
 
         assert rootView != null;
         mValueButton = (Button) rootView.findViewById(R.id.valueButton);
-        Button resetButton = (Button) rootView.findViewById(R.id.resetButton);
+        mResetButton = (Button) rootView.findViewById(R.id.resetButton);
         mStartButton = (Button) rootView.findViewById(R.id.startButton);
-        Button analyzeButton = (Button) rootView.findViewById(R.id.analyzeButton);
         mColorButton = (Button) rootView.findViewById(R.id.colorButton);
         mPhotoImageView = (ImageView) rootView.findViewById(R.id.photoImageView);
         mErrorQualityText = (TextView) rootView.findViewById(R.id.errorQualityText);
@@ -137,29 +138,6 @@ public class CalibrateItemFragment extends Fragment {
 
         displayInfo(false);
 
-        analyzeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-
-                final MainApp mainApp = ((MainApp) getActivity().getApplicationContext());
-                ArrayList<Integer> colorRange = mainApp.colorList;
-                String fileName = String.format("%s/%s-%d-%d",
-                        FileUtils
-                                .getStoragePath(getActivity(), -1, Globals.CALIBRATE_FOLDER, false),
-                        Globals.PHOTO_TEMP_FILE, mTestType, position
-                );
-
-                Bundle bundle;
-                bundle = ColorUtils.getPpmValue(fileName, colorRange,
-                        mainApp.rangeIncrementStep,
-                        mainApp.rangeStartIncrement);
-
-                storeCalibratedData(position,
-                        bundle.getInt("resultColor"), bundle.getInt("accuracy"));
-
-            }
-        });
-
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -183,7 +161,7 @@ public class CalibrateItemFragment extends Fragment {
             }
         });
 
-        resetButton.setOnClickListener(new View.OnClickListener() {
+        mResetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 AlertUtils.askQuestion(getActivity(), R.string.reset,
@@ -233,14 +211,15 @@ public class CalibrateItemFragment extends Fragment {
                     )
             );
             if (file.exists()) {
-                //mPhotoImageView.setMinimumHeight(250);
                 mPhotoImageView.setImageBitmap(
                         ImageUtils.getAnalysedBitmap(file.getAbsolutePath())
                 );
                 mPhotoImageView.setMaxHeight(250);
             }
+            mResetButton.setVisibility(View.VISIBLE);
         } else {
             accuracy = 100;
+            mResetButton.setVisibility(View.GONE);
         }
 
         speedometer.setSpeed(accuracy, animate);

@@ -73,13 +73,9 @@ public class MainApp extends Application {
         rangeStartIncrement = 0;
         doubleFormat = new DecimalFormat("0.0");
 
-        rangeIntervals.add(0.0);
-        rangeIntervals.add(0.5);
-        rangeIntervals.add(1.0);
-        rangeIntervals.add(1.5);
-        rangeIntervals.add(2.0);
-        rangeIntervals.add(2.5);
-        rangeIntervals.add(3.0);
+        for (double i = 0.0; i < 3.5; i += 0.5) {
+            rangeIntervals.add(i);
+        }
 
         //TODO: Move preset colors to raw file
         presetColorList.add(Color.rgb(207, 90, 179));
@@ -130,53 +126,29 @@ public class MainApp extends Application {
         rangeStartIncrement = 1;
         doubleFormat = new DecimalFormat("0");
 
-        rangeIntervals.add(1.0);
-        rangeIntervals.add(2.0);
-        rangeIntervals.add(3.0);
-        rangeIntervals.add(4.0);
-        rangeIntervals.add(5.0);
-        rangeIntervals.add(6.0);
-        rangeIntervals.add(7.0);
-        rangeIntervals.add(8.0);
-        rangeIntervals.add(9.0);
-        rangeIntervals.add(10.0);
-        rangeIntervals.add(11.0);
-        rangeIntervals.add(12.0);
-        rangeIntervals.add(13.0);
-        rangeIntervals.add(14.0);
+        for (int i = 1; i < 15; i++) {
+            rangeIntervals.add((double) i);
+        }
 
         //TODO: Move preset colors to raw file
-        presetColorList.add(Color.rgb(255, 246, 246));
-        presetColorList.add(Color.rgb(255, 238, 238));
-        presetColorList.add(Color.rgb(255, 230, 230));
-        presetColorList.add(Color.rgb(255, 222, 222));
-        presetColorList.add(Color.rgb(255, 213, 213));
-        presetColorList.add(Color.rgb(255, 205, 205));
-        presetColorList.add(Color.rgb(255, 197, 197));
-        presetColorList.add(Color.rgb(255, 189, 189));
-        presetColorList.add(Color.rgb(255, 180, 180));
-        presetColorList.add(Color.rgb(255, 172, 172));
-        presetColorList.add(Color.rgb(255, 164, 164));
-        presetColorList.add(Color.rgb(255, 156, 156));
-        presetColorList.add(Color.rgb(255, 148, 148));
-        presetColorList.add(Color.rgb(255, 139, 139));
-        presetColorList.add(Color.rgb(255, 131, 131));
-        presetColorList.add(Color.rgb(255, 123, 123));
-        presetColorList.add(Color.rgb(255, 115, 115));
-        presetColorList.add(Color.rgb(255, 106, 106));
-        presetColorList.add(Color.rgb(255, 98, 98));
-        presetColorList.add(Color.rgb(255, 90, 90));
-        presetColorList.add(Color.rgb(255, 82, 82));
-        presetColorList.add(Color.rgb(255, 74, 74));
-        presetColorList.add(Color.rgb(255, 65, 65));
-        presetColorList.add(Color.rgb(255, 57, 57));
-        presetColorList.add(Color.rgb(255, 49, 49));
-        presetColorList.add(Color.rgb(255, 41, 41));
-        presetColorList.add(Color.rgb(255, 32, 32));
-        presetColorList.add(Color.rgb(255, 24, 24));
-        presetColorList.add(Color.rgb(255, 16, 16));
-        presetColorList.add(Color.rgb(255, 8, 8));
-        presetColorList.add(Color.rgb(255, 0, 0));
+        presetColorList.add(Color.rgb(235, 30, 37));
+        presetColorList.add(Color.rgb(238, 120, 33));
+        presetColorList.add(Color.rgb(244, 156, 30));
+        presetColorList.add(Color.rgb(242, 187, 24));
+
+        presetColorList.add(Color.rgb(247, 220, 9));
+        presetColorList.add(Color.rgb(246, 237, 18));
+
+        presetColorList.add(Color.rgb(202, 216, 43));
+        presetColorList.add(Color.rgb(171, 198, 69));
+
+        presetColorList.add(Color.rgb(122, 174, 162));
+        presetColorList.add(Color.rgb(68, 149, 204));
+        presetColorList.add(Color.rgb(49, 122, 190));
+        presetColorList.add(Color.rgb(62, 109, 181));
+
+        presetColorList.add(Color.rgb(94, 79, 162));
+        presetColorList.add(Color.rgb(97, 64, 151));
         colorList = new ArrayList<Integer>(presetColorList);
         loadCalibratedSwatches(Globals.PH_INDEX);
     }
@@ -192,7 +164,7 @@ public class MainApp extends Application {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
 
-        for (int i = 0; i <= 30; i++) {
+        for (int i = 0; i < colorList.size(); i++) {
             int value = sharedPreferences
                     .getInt(String.format("%s-%s", String.valueOf(testType), String.valueOf(i)),
                             -1);

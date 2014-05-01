@@ -40,7 +40,7 @@ public class Globals {
     public static final String UPDATE_FILE_NAME = "caddisfly_update.apk";
 
     // Caddisfly update path
-    public static final String UPDATE_URL = "http://caddisfly.ternup.com/ternupapp/v.txt?check=19";
+    public static final String UPDATE_URL = "http://caddisfly.ternup.com/ternupapp/v.txt?check=20";
 
     public static final String DATABASE_NAME = "caddisfly";
 

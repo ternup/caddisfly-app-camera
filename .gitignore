@@ -54,3 +54,5 @@ build/
 *.ipr
 *~
 *.swp
+
+/*/src/androidTest/

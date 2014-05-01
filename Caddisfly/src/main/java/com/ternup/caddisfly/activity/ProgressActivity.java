@@ -249,11 +249,12 @@ public class ProgressActivity extends Activity {
 
         if (Globals.ACTION_WATER_TEST.equals(action) && type != null) {
             if ("text/plain".equals(type)) {
-                // todo: action based on call from external app
+                // todo: recode this
             }
+            mTestType = -1;
+        } else {
+            mTestType = PreferencesHelper.getCurrentTestTypeId(this, intent);
         }
-
-        mTestType = PreferencesHelper.getCurrentTestTypeId(this, intent);
         mLocationId = PreferencesHelper.getCurrentLocationId(this, intent);
 
         // Register receiver for service
@@ -402,13 +403,23 @@ public class ProgressActivity extends Activity {
     }
 
     private int getTestType(String code) {
+
         if (("FLUOR").equals(code)) {
             return Globals.FLUORIDE_INDEX;
         } else if (("ALKAL").equals(code)) {
             return Globals.PH_INDEX;
         } else if (("COLIF").equals(code)) {
             return Globals.BACTERIA_INDEX;
+        } else if (("TURBI").equals(code)) {
+            return Globals.PH_INDEX;
+        } else if (("NITRA").equals(code)) {
+            return Globals.PH_INDEX;
+        } else if (("IRONA").equals(code)) {
+            return Globals.PH_INDEX;
+        } else if (("ARSEN").equals(code)) {
+            return Globals.PH_INDEX;
         }
+
         return -1;
     }
 
@@ -501,6 +512,7 @@ public class ProgressActivity extends Activity {
             builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    deleteRecord();
                     cancelService();
                     finish();
                 }

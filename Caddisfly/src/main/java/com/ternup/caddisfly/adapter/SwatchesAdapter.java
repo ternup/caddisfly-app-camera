@@ -1,0 +1,82 @@
+/*
+ * Copyright (C) TernUp Research Labs
+ *
+ * This file is part of Caddisfly
+ *
+ * Caddisfly is free software: you can redistribute it and modify it under the terms of
+ * the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+ * either version 3 of the License or any later version.
+ *
+ * Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License included below for more details.
+ *
+ * The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+ */
+
+package com.ternup.caddisfly.adapter;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.MainApp;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.TextView;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+public class SwatchesAdapter extends ArrayAdapter<Integer> {
+
+    private final Activity activity;
+
+    private final DecimalFormat doubleFormat = new DecimalFormat("0.0");
+
+    public SwatchesAdapter(Activity activity, Integer[] colorArray) {
+        super(activity, R.layout.row_swatch, colorArray);
+        this.activity = activity;
+    }
+
+    @Override
+    public View getView(final int position, View view, ViewGroup parent) {
+        LayoutInflater inflater = activity.getLayoutInflater();
+        View rowView = inflater.inflate(R.layout.row_swatch, parent, false);
+
+        MainApp mainApp = ((MainApp) activity.getApplicationContext());
+
+        if (mainApp != null && rowView != null) {
+            ArrayList<Integer> colorRange = mainApp.colorList;
+
+            TextView ppmText = (TextView) rowView.findViewById(R.id.ppmText);
+            TextView rgbText = (TextView) rowView.findViewById(R.id.rgbText);
+            Button button = (Button) rowView.findViewById(R.id.button);
+
+            //paint the button with the color
+            button.setBackgroundColor(colorRange.get(position));
+
+            //display ppm value
+            ppmText.setText(doubleFormat
+                    .format((position + mainApp.rangeStartIncrement)
+                            * mainApp.rangeIncrementValue));
+
+            //display color name
+            //colorNameText.setText(colorNames.get(position));
+
+            //display rgb value
+            int color = colorRange.get(position);
+            rgbText.setText(
+                    String.format("%s: %s  %s  %s", mainApp.getString(R.string.rgb),
+                            String.format("%d", Color.red(color)),
+                            String.format("%d", Color.green(color)),
+                            String.format("%d", Color.blue(color)))
+            );
+
+        }
+        return rowView;
+    }
+}

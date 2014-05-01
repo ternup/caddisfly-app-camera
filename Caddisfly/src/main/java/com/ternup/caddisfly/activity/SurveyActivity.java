@@ -188,7 +188,7 @@ public class SurveyActivity extends Activity implements LocationFragment.OnCompl
 
         // END_INCLUDE (setup_viewpager)
 
-        // BEGIN_INCLUDE (setup_slidingtablayout)
+        // BEGIN_INCLUDE (setup_slidingTabLayout)
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
         // it's PagerAdapter set.
         /*

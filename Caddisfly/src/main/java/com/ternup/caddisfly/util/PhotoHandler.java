@@ -120,7 +120,7 @@ public class PhotoHandler implements PictureCallback {
 
         Bundle bundle;
         bundle = ColorUtils.getPpmValue(pictureFile.getAbsolutePath(), colorRange,
-                ((MainApp) mContext).rangeIncrementStep,
+                ((MainApp) mContext).rangeIncrementValue,
                 ((MainApp) mContext).rangeStartIncrement);
 
         long id = -1;
