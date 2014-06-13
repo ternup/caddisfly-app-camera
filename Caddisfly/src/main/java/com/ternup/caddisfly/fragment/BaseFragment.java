@@ -28,6 +28,9 @@ public class BaseFragment extends Fragment implements TextView.OnEditorActionLis
 
     protected OnCompleteListener listener;
 
+    public BaseFragment() {
+    }
+
     @Override
     public void onAttach(Activity activity) {
         listener = (OnCompleteListener) activity;

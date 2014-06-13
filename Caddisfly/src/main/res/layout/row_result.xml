@@ -31,7 +31,7 @@
             >
 
         <TextView
-                android:layout_width="140dp"
+                android:layout_width="130dp"
                 tools:text="MMM, 00 MMM 8888"
                 android:id="@+id/dateText"
                 android:focusable="false"
@@ -68,7 +68,7 @@
                 android:id="@+id/moreArrow"
                 android:src="?arrowRight"
                 android:layout_gravity="center_vertical|right"
-                android:paddingLeft="10dp"
+                android:paddingLeft="5dp"
                 android:paddingRight="0dp"
                 android:contentDescription="@null"
                 android:visibility="visible"

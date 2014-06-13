@@ -46,7 +46,7 @@ public class AlertUtils {
         showAlert(context, title, message, callback, cancelListener);
     }
 
-    private static void showAlert(Context context, int title, int message,
+    public static void showAlert(Context context, int title, int message,
             DialogInterface.OnClickListener callback,
             DialogInterface.OnClickListener cancelListener) {
 
@@ -95,6 +95,26 @@ public class AlertUtils {
 
         builder.create().show();
     }
+
+    /**
+     * Generic error dialog with a close button.
+     */
+    public static void showDialog(String title, String message, Context context) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
 
     public static void showFutureFeature(Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

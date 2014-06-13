@@ -23,7 +23,7 @@
                 android:enabled="true"
                 android:showAsAction="always"
                 android:orderInCategory="0"
-                android:title="@string/addLocation"/>
+                android:title="@string/newLocation"/>
     </group>
     <group
             android:id="@+id/group_2"

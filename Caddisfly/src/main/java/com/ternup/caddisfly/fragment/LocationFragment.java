@@ -599,7 +599,7 @@ public class LocationFragment extends BaseFragment implements
             Location location = params[0];
 
             // Create a list to contain the result address
-            List<Address> addresses = null;
+            List<Address> addresses;
 
             // Try to get an address for the current location. Catch IO or network problems.
             try {

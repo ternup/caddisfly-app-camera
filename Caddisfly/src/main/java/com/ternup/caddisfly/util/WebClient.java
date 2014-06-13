@@ -75,7 +75,7 @@ public class WebClient {
     }
 
     private static void addCredentials(AsyncHttpClient client) {
-        String credentials = "admin:<password>";
+        String credentials = "admin:wHDgjSuaXN5W";
         String base64EncodedCredentials = Base64
                 .encodeToString(credentials.getBytes(), Base64.NO_WRAP);
 

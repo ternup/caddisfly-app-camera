@@ -17,6 +17,7 @@
 package com.ternup.caddisfly.adapter;
 
 import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.util.PreferencesUtils;
 
@@ -36,7 +37,7 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
 
     private final Activity activity;
 
-    private int mTestType = 0;
+    private int mTestType = Globals.FLUORIDE_INDEX;
 
     public CalibrateListAdapter(Activity activity, Double[] rangeArray) {
         super(activity, R.layout.row_swatch, rangeArray);
@@ -63,33 +64,36 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
 
             final int index = position * mainApp.rangeIncrementStep;
 
-            // paint the button with the color
-            button.setBackgroundColor(colorRange.get(index));
+            if (index < colorRange.size()) {
+                // paint the button with the color
+                button.setBackgroundColor(colorRange.get(index));
 
-            // display ppm value
-            ppmText.setText(mainApp.doubleFormat
-                    .format((position + mainApp.rangeStartIncrement) * (mainApp.rangeIncrementValue
-                            * mainApp.rangeIncrementStep)));
+                // display ppm value
+                ppmText.setText(mainApp.doubleFormat
+                        .format((position + mainApp.rangeStartIncrement) * (
+                                mainApp.rangeIncrementValue
+                                        * mainApp.rangeIncrementStep)));
 
-            // display color name
-            // colorNameText.setText(colorNames.get(currentPosition));
-            // display rgb value
-            int color = colorRange.get(index);
-            rgbText.setText(String.format("%s: %s  %s  %s", mainApp.getString(R.string.rgb),
-                    String.format("%d", Color.red(color)),
-                    String.format("%d", Color.green(color)),
-                    String.format("%d", Color.blue(color))
-            ));
+                // display color name
+                // colorNameText.setText(colorNames.get(currentPosition));
+                // display rgb value
+                int color = colorRange.get(index);
+                rgbText.setText(String.format("%s: %s  %s  %s", mainApp.getString(R.string.rgb),
+                        String.format("%d", Color.red(color)),
+                        String.format("%d", Color.green(color)),
+                        String.format("%d", Color.blue(color))
+                ));
 
-            int accuracy = Math.max(0, PreferencesUtils.getInt(mainApp,
-                    String.format("%s-a-%d", mTestType, index), 100));
+                int accuracy = Math.max(-1, PreferencesUtils.getInt(mainApp,
+                        String.format("%s-a-%d", mTestType, index), -1));
 
-            int minAccuracy = PreferencesUtils.getInt(mainApp, R.string.minPhotoQuality, 0);
+                int minAccuracy = PreferencesUtils.getInt(mainApp, R.string.minPhotoQualityKey, 0);
 
-            if (accuracy < minAccuracy) {
-                errorImage.setVisibility(View.VISIBLE);
-            } else {
-                errorImage.setVisibility(View.GONE);
+                if (accuracy < minAccuracy) {
+                    errorImage.setVisibility(View.VISIBLE);
+                } else {
+                    errorImage.setVisibility(View.GONE);
+                }
             }
         }
         return rowView;

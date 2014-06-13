@@ -40,36 +40,43 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/camera">
+        <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="@string/autoAnalyzeKey"
+                android:title="@string/autoAnalyze"/>
         <com.ternup.caddisfly.component.NumberPickerPreference
                 android:defaultValue="80"
-                android:dialogTitle="Minimum Photo Quality"
+                android:dialogTitle="@string/minPhotoQuality"
                 android:summary="%"
                 android:key="minPhotoQuality"
                 android:max="100"
-                android:title="Minimum Photo Quality"
+                android:title="@string/minPhotoQuality"
                 custom:min="0"
                 custom:interval="5"/>
-        <com.ternup.caddisfly.component.CameraZoomPreference
-                android:dialogTitle="@string/cameraZoom"
-                android:title="@string/zoom"
-                android:key="camera_zoom"
-                android:defaultValue="100"
-                />
         <CheckBoxPreference
-                android:title="Cloudy"
+                android:title="@string/cloudy"
                 android:key="camera_cloudy"
                 />
         <CheckBoxPreference
-                android:title="Torch Mode"
+                android:title="@string/torchMode"
                 android:key="camera_torch"
                 />
         <CheckBoxPreference
-                android:title="Infinity"
-                android:key="camera_infinity"
-                />
+                android:defaultValue="true"
+                android:key="camera_sound"
+                android:title="@string/playCameraSound"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/general">
+        <com.ternup.caddisfly.component.NumberPickerPreference
+                android:defaultValue="5"
+                android:dialogMessage="@string/selectNumberOfSamples"
+                android:dialogTitle="@string/samplingCount"
+                android:key="@string/samplingCountKey"
+                android:max="10"
+                android:title="@string/samplingCount"
+                custom:min="2"
+                android:summary="@string/samplingSummary"/>
         <CheckBoxPreference
                 android:defaultValue="true"
                 android:key="requireShakePref"
@@ -81,12 +88,6 @@
                 android:title="@string/soundAlarm"
                 android:summary="@string/soundAlarmSummary"
                 android:dependency="requireShakePref"/>
-        <!--
-                <CheckBoxPreference
-                    android:defaultValue="true"
-                    android:key="camera_sound"
-                    android:title="@string/playCameraSound" />
-        -->
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/locale">
@@ -98,6 +99,19 @@
                 android:entryValues="@array/language_codes"
                 android:key="@string/currentLocale"
                 android:negativeButtonText="@string/cancel"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/developer">
+        <com.ternup.caddisfly.component.CameraZoomPreference
+                android:dialogTitle="@string/cameraZoom"
+                android:title="@string/zoom"
+                android:key="camera_zoom"
+                android:defaultValue="100"
+                />
+        <CheckBoxPreference
+                android:title="@string/infinity"
+                android:key="camera_infinity"
+                />
     </PreferenceCategory>
 
 </PreferenceScreen>

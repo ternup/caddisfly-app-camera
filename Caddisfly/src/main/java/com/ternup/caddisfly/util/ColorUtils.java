@@ -16,6 +16,7 @@
 
 package com.ternup.caddisfly.util;
 
+import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.model.ColorInfo;
 
 import android.graphics.Bitmap;
@@ -26,6 +27,8 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.SparseIntArray;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +39,13 @@ public class ColorUtils {
 
     private static final int GRAY_TOLERANCE = 10;
 
-    private static final int IMAGE_SAMPLE_LENGTH = 500;
-
     private static final double MAX_COLOR_DISTANCE = 50.0;
+
+    public static Bundle getPpmValue(byte[] data, ArrayList<Integer> colorRange,
+            double rangeStepUnit, int rangeStartUnit) {
+        ColorInfo photoColor = getColorFromByteArray(data);
+        return analyzeColor(photoColor, colorRange, rangeStepUnit, rangeStartUnit);
+    }
 
     public static Bundle getPpmValue(String filePath, ArrayList<Integer> colorRange,
             double rangeStepUnit, int rangeStartUnit) {
@@ -46,13 +53,26 @@ public class ColorUtils {
         return analyzeColor(photoColor, colorRange, rangeStepUnit, rangeStartUnit);
     }
 
-    /**
-     * Analyzes an image and attempts to get the dominant color
-     *
-     * @param filename The path to image file that is to be analyzed
-     * @return The dominant color
-     */
-    static ColorInfo getColorFromImage(String filename) {
+
+    private static byte[] resizeImage(byte[] input) {
+        Bitmap original = BitmapFactory.decodeByteArray(input, 0, input.length);
+        Bitmap resized = Bitmap.createScaledBitmap(original, Globals.IMAGE_SAMPLE_LENGTH,
+                Globals.IMAGE_SAMPLE_LENGTH, true);
+
+        ByteArrayOutputStream blob = new ByteArrayOutputStream();
+        resized.compress(Bitmap.CompressFormat.JPEG, 100, blob);
+
+        return blob.toByteArray();
+    }
+
+    static ColorInfo getColorFromByteArray(byte[] data) {
+        byte[] imageData = resizeImage(data);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
+        return getColorFromBitmap(bitmap);
+
+    }
+
+    static ColorInfo getColorFromBitmap(Bitmap bitmap) {
         int highestCount = 0;
         int highCount = 0;
 
@@ -62,52 +82,29 @@ public class ColorUtils {
 
         try {
 
-            final BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            BitmapFactory.decodeFile(filename, options);
-
-            int height = options.outHeight;
-            int width = options.outWidth;
-            int leftMargin = (width - IMAGE_SAMPLE_LENGTH) / 2;
-            int topMargin = (height - IMAGE_SAMPLE_LENGTH) / 2;
-            if (leftMargin < 0) {
-                leftMargin = 0;
-            }
-            if (topMargin < 0) {
-                topMargin = 0;
-            }
-
-            BitmapRegionDecoder decoder = BitmapRegionDecoder.newInstance(filename, false);
-            BitmapFactory.Options options1 = new BitmapFactory.Options();
-            //options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            options1.inPreferQualityOverSpeed = true;
-            options1.inPurgeable = true;
-            Rect re = new Rect(leftMargin, topMargin, leftMargin + IMAGE_SAMPLE_LENGTH,
-                    topMargin + IMAGE_SAMPLE_LENGTH);
-            Bitmap bitmap = decoder.decodeRegion(re, options1);
-
             SparseIntArray m = new SparseIntArray();
 
             int counter;
-            for (int i = 0; i < Math.min(width, IMAGE_SAMPLE_LENGTH); i++) {
+            for (int i = 0; i < Math.min(bitmap.getWidth(), Globals.IMAGE_SAMPLE_LENGTH); i++) {
 
-                for (int j = 0; j < Math.min(height, IMAGE_SAMPLE_LENGTH); j++) {
+                for (int j = 0; j < Math.min(bitmap.getHeight(), Globals.IMAGE_SAMPLE_LENGTH);
+                        j++) {
 
                     totalCounter++;
 
                     int rgb = bitmap.getPixel(i, j);
-                    //int[] rgbArr = ColorUtil.getRGB(rgb);
+                    int[] rgbArr = ColorUtils.getRGB(rgb);
 
-                    // if (ColorUtil.isNotGray(rgbArr)) {
-                    counter = m.get(rgb);
-                    counter++;
-                    m.put(rgb, counter);
+                    if (ColorUtils.isNotGray(rgbArr)) {
+                        counter = m.get(rgb);
+                        counter++;
+                        m.put(rgb, counter);
 
-                    if (counter > highestCount) {
-                        commonColor = rgb;
-                        highestCount = counter;
+                        if (counter > highestCount) {
+                            commonColor = rgb;
+                            highestCount = counter;
+                        }
                     }
-                    //}
                 }
             }
 
@@ -131,6 +128,47 @@ public class ColorUtils {
         double colorPercentage = ((double) highCount / totalCounter) * 100d;
 
         return new ColorInfo(commonColor, count, (int) colorPercentage);
+
+    }
+
+    /**
+     * Analyzes an image and attempts to get the dominant color
+     *
+     * @param filename The path to image file that is to be analyzed
+     * @return The dominant color
+     */
+    static ColorInfo getColorFromImage(String filename) {
+
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filename, options);
+
+        int height = options.outHeight;
+        int width = options.outWidth;
+        int leftMargin = (width - Globals.IMAGE_SAMPLE_LENGTH) / 2;
+        int topMargin = (height - Globals.IMAGE_SAMPLE_LENGTH) / 2;
+        if (leftMargin < 0) {
+            leftMargin = 0;
+        }
+        if (topMargin < 0) {
+            topMargin = 0;
+        }
+
+        BitmapRegionDecoder decoder = null;
+        try {
+            decoder = BitmapRegionDecoder.newInstance(filename, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BitmapFactory.Options options1 = new BitmapFactory.Options();
+        //options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        options1.inPreferQualityOverSpeed = true;
+        options1.inPurgeable = true;
+        Rect re = new Rect(leftMargin, topMargin, leftMargin + Globals.IMAGE_SAMPLE_LENGTH,
+                topMargin + Globals.IMAGE_SAMPLE_LENGTH);
+        Bitmap bitmap = decoder.decodeRegion(re, options1);
+
+        return getColorFromBitmap(bitmap);
     }
 
     /**
@@ -178,7 +216,6 @@ public class ColorUtils {
 
         return bundle;
     }
-
 
     private static double getDistance(int color, int tempColor) {
         double red, green, blue;

@@ -14,9 +14,7 @@
   ~
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
-
 <resources>
-
     <string name="app_name">Caddisfly</string>
     <string name="about">About</string>
     <string name="settings">Settings</string>
@@ -27,7 +25,7 @@
     <string name="pH">pH</string>
     <string name="calibrate">Calibrate</string>
     <string name="working">Working</string>
-    <string name="analysingWait">Analysing…</string>
+    <string name="analyzingWait">Analysing…</string>
     <string name="send">Send</string>
     <string name="photo">Photo</string>
     <string name="delete">Delete</string>
@@ -59,7 +57,7 @@
     <string name="home">Home</string>
     <string name="rgb">rgb</string>
     <string name="ppm">ppm</string>
-    <string name="selectTestType">Select test type</string>
+    <string name="selectTestType">Select type</string>
     <string name="twentyFourHourTime">HH:mm:ss</string>
     <string name="twelveHourTime">h:mm:ss a</string>
     <string name="analysisCount">Analysis count</string>
@@ -110,7 +108,7 @@
     <string name="address">Address</string>
     <string name="dayTheme">Day Theme</string>
     <string name="nightTheme">Night Theme</string>
-    <string name="addLocation">New Location</string>
+    <string name="newLocation">New Location</string>
     <string name="notes">Notes</string>
     <string name="selectLocation">Select location for test</string>
     <string name="locationDetails">Location Details</string>
@@ -130,7 +128,6 @@
     <string name="cameraZoom">Camera Zoom</string>
     <string name="zoom">Zoom</string>
     <string name="done">Done</string>
-
     <string name="other">Other</string>
     <string name="locations">Locations</string>
     <string name="startNewTest">Start New Test</string>
@@ -140,9 +137,8 @@
     <string name="incomplete">Incomplete</string>
     <string name="incompleteMessage">Please enter a place name</string>
     <string name="gettingUpdate">Getting Caddisfly update…</string>
-    <string name="newLocation">New Location</string>
-    <string name="calibrate_error">There are calibration errors. Calibrate device before running the
-        test
+    <string name="calibrate_error">Device not yet calibrated or there are errors. Calibrate this
+        device before running the test
     </string>
     <string name="result_sent">Test details successfully sent to the server</string>
     <string name="success">Success</string>
@@ -161,5 +157,27 @@
     <string name="gettingLocation">Getting location…</string>
     <string name="takeSourcePhoto">Take Photo of Water Source</string>
     <string name="connecting">Connecting…</string>
-
+    <string name="analyze">Analyze</string>
+    <string name="playCameraSound">Camera sound</string>
+    <string name="fluoride2">Fluoride Easy</string>
+    <string name="autoAnalyze">Auto Analyze on Preview</string>
+    <string name="street">Street</string>
+    <string name="town">Town</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="country">Country</string>
+    <string name="minPhotoQuality">Minimum Photo Quality</string>
+    <string name="cloudy">Cloudy</string>
+    <string name="torchMode">Torch Mode</string>
+    <string name="infinity">Infinity</string>
+    <string name="clickAnalyze">Click Analyze to continue</string>
+    <string name="notCalibrated">Not Calibrated</string>
+    <string name="edit">Edit</string>
+    <string name="samplingCount">Sampling Count</string>
+    <string name="selectNumberOfSamples">Number of times the solution should be sampled</string>
+    <string name="developer">Developer</string>
+    <string name="samplingSummary">photos will be taken for each analysis. Result will be an
+        average.
+    </string>
+    <string name="enterColorRgb">Enter color rgb</string>
 </resources>

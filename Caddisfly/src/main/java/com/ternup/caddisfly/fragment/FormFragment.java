@@ -153,25 +153,26 @@ public class FormFragment extends BaseFragment implements TextView.OnEditorActio
             }
         };
 
-        mPlaceEditText = new FormEditText(getActivity(), "Place");
+        mPlaceEditText = new FormEditText(getActivity(), getString(R.string.place));
         mPlaceEditText.getEditText().requestFocus();
         linearLayout.addView(mPlaceEditText.getView());
         mPlaceEditText.getEditText().addTextChangedListener(textWatcher);
 
-        mThoroughfareEditText = new FormEditText(getActivity(), "Street");
+        mThoroughfareEditText = new FormEditText(getActivity(), getString(R.string.street));
         linearLayout.addView(mThoroughfareEditText.getView());
 
-        mSubLocalityEditText = new FormEditText(getActivity(), "Town");
+        mSubLocalityEditText = new FormEditText(getActivity(), getString(R.string.town));
         linearLayout.addView(mSubLocalityEditText.getView());
 
-        mLocalityEditText = new FormEditText(getActivity(), "City");
+        mLocalityEditText = new FormEditText(getActivity(), getString(R.string.city));
         linearLayout.addView(mLocalityEditText.getView());
 
-        mStateEditText = new FormEditText(getActivity(), "State");
+        mStateEditText = new FormEditText(getActivity(), getString(R.string.state));
         linearLayout.addView(mStateEditText.getView());
 
-        mCountryEditText = new FormEditText(getActivity(), "Country");
-        mCountryEditText.getEditText().setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
+        mCountryEditText = new FormEditText(getActivity(), getString(R.string.country));
+        mCountryEditText.getEditText()
+                .setImeActionLabel(getString(R.string.done), EditorInfo.IME_ACTION_DONE);
         linearLayout.addView(mCountryEditText.getView());
         mCountryEditText.getEditText().setOnEditorActionListener(this);
 

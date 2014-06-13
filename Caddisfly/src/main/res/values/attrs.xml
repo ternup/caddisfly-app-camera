@@ -43,7 +43,7 @@
     <attr name="listSelector" format="reference"/>
     <attr name="cardBackground" format="reference"/>
     <attr name="buttonStyle" format="color"/>
-    <attr name="subtitleTextStyle" format="color"/>
+    <attr name="subtitleTextColor" format="color"/>
     <attr name="listButton" format="color"/>
     <attr name="listCard" format="reference"/>
     <attr name="arrowRight" format="reference"/>

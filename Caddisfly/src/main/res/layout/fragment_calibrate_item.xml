@@ -58,7 +58,7 @@
                         android:paddingRight="8dp"
                         android:layout_weight="1"
                         android:layout_marginRight="10dp"
-                        android:text="@string/error"
+                        android:layout_marginBottom="8dp"
                         android:textColor="@android:color/holo_red_dark"/>
                 <Button
                         android:id="@+id/valueButton"
@@ -73,6 +73,12 @@
 
 
             </LinearLayout>
+            <TextView
+                    android:id="@+id/rgbText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textIsSelectable="false"/>
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -85,7 +91,7 @@
                         android:background="@drawable/blue_button"
                         style="?android:attr/buttonBarButtonStyle"
                         android:textColor="#fff"
-                        android:text="@string/reset"
+                        android:text="@string/edit"
                         android:enabled="true"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -94,7 +100,6 @@
                         android:layout_marginBottom="15dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
-                        android:visibility="gone"
                         >
                 </Button>
                 <Button
@@ -111,6 +116,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginLeft="10dp">
                 </Button>
+
             </LinearLayout>
             <TextView
                     android:id="@+id/errorQualityText"
@@ -126,6 +132,7 @@
         </LinearLayout>
 
         <LinearLayout
+                android:id="@+id/qualityLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -135,7 +142,8 @@
                 android:paddingRight="20dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="?cardBackground">
+                android:background="?cardBackground"
+                android:visibility="gone">
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -170,6 +178,7 @@
 
 
         <LinearLayout
+                android:id="@+id/photoLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -177,7 +186,8 @@
                 android:layout_marginBottom="5dp"
                 android:paddingTop="20dp"
                 android:scrollbars="none"
-                android:background="?cardBackground">
+                android:background="?cardBackground"
+                android:visibility="gone">
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -203,7 +213,8 @@
                 android:paddingBottom="40dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="80dp"
-                android:background="?cardBackground">
+                android:background="?cardBackground"
+                android:visibility="gone">
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -218,23 +229,9 @@
                     android:lineSpacingExtra="2sp"
                     />
         </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/resultPanel"
+        <FrameLayout
+                android:id="@+id/container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="15dp"
-                android:paddingBottom="20dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="?cardBackground"
-                android:clickable="false"
-                android:focusable="false"
-                android:visibility="gone"
-                android:focusableInTouchMode="false">
-        </LinearLayout>
+                android:layout_height="match_parent"/>
     </LinearLayout>
 </ScrollView>

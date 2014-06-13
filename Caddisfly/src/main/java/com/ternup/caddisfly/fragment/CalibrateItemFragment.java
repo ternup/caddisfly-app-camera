@@ -21,30 +21,35 @@ import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.component.SpeedometerView;
 import com.ternup.caddisfly.util.AlertUtils;
-import com.ternup.caddisfly.util.CameraUtils;
 import com.ternup.caddisfly.util.ColorUtils;
 import com.ternup.caddisfly.util.FileUtils;
 import com.ternup.caddisfly.util.ImageUtils;
 import com.ternup.caddisfly.util.PhotoHandler;
 import com.ternup.caddisfly.util.PreferencesUtils;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.ProgressDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.hardware.Camera;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -57,13 +62,13 @@ public class CalibrateItemFragment extends Fragment {
 
     ImageView mPhotoImageView;
 
-    private int mTestType = 0;
+    CameraFragment mCameraFragment;
+
+    private int mTestType = Globals.FLUORIDE_INDEX;
 
     private SpeedometerView speedometer;
 
-    private ProgressDialog progressDialog;
-
-    private Camera camera;
+    private TextView mRgbText;
 
     private Button mValueButton;
 
@@ -75,7 +80,9 @@ public class CalibrateItemFragment extends Fragment {
 
     private TextView mErrorQualityText;
 
-    private Button mResetButton;
+    private LinearLayout mQualityLayout;
+
+    private LinearLayout mPhotoLayout;
 
     public CalibrateItemFragment() {
     }
@@ -94,13 +101,18 @@ public class CalibrateItemFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_calibrate_item, container, false);
 
         assert rootView != null;
+        mRgbText = (TextView) rootView.findViewById(R.id.rgbText);
         mValueButton = (Button) rootView.findViewById(R.id.valueButton);
-        mResetButton = (Button) rootView.findViewById(R.id.resetButton);
+        Button resetButton = (Button) rootView.findViewById(R.id.resetButton);
         mStartButton = (Button) rootView.findViewById(R.id.startButton);
         mColorButton = (Button) rootView.findViewById(R.id.colorButton);
         mPhotoImageView = (ImageView) rootView.findViewById(R.id.photoImageView);
         mErrorQualityText = (TextView) rootView.findViewById(R.id.errorQualityText);
         mQualityTextView = (TextView) rootView.findViewById(R.id.qualityTextView);
+
+        mQualityLayout = (LinearLayout) rootView.findViewById(R.id.qualityLayout);
+        mPhotoLayout = (LinearLayout) rootView.findViewById(R.id.photoLayout);
+
 
         // Customize SpeedometerView
         speedometer = (SpeedometerView) rootView.findViewById(R.id.speedometer);
@@ -119,7 +131,7 @@ public class CalibrateItemFragment extends Fragment {
         speedometer.setMinorTicks(1);
 
         Context context = getActivity();
-        int minAccuracy = PreferencesUtils.getInt(context, R.string.minPhotoQuality, 0);
+        int minAccuracy = PreferencesUtils.getInt(context, R.string.minPhotoQualityKey, 0);
 
         int mid = minAccuracy / 2;
 
@@ -135,8 +147,6 @@ public class CalibrateItemFragment extends Fragment {
         //final int index = position * INDEX_INCREMENT_STEP;
 
         mTestType = getArguments().getInt(getString(R.string.currentTestTypeId));
-
-        displayInfo(false);
 
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,9 +171,13 @@ public class CalibrateItemFragment extends Fragment {
             }
         });
 
-        mResetButton.setOnClickListener(new View.OnClickListener() {
+        resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+
+                editCalibration(position);
+
+/*
                 AlertUtils.askQuestion(getActivity(), R.string.reset,
                         R.string.areYouSure,
                         new DialogInterface.OnClickListener() {
@@ -171,19 +185,115 @@ public class CalibrateItemFragment extends Fragment {
                             public void onClick(
                                     DialogInterface dialogInterface,
                                     int i) {
-                                resetCalibration(getActivity(), position);
+
+                                //resetCalibration(getActivity(), position);
                                 v.post(new Runnable() {
                                     public void run() {
+                                       // displayInfo(true);
                                         //notifyDataSetChanged();
                                     }
                                 });
                             }
                         }, null
                 );
+*/
             }
         });
 
         return rootView;
+    }
+
+
+    public void editCalibration(final int position) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        final EditText input = new EditText(getActivity());
+        input.setInputType(InputType.TYPE_CLASS_PHONE);
+
+        //input.setText(sp.getString("NAME_0",""),TextView.BufferType.EDITABLE);
+        alertDialogBuilder.setView(input);
+        alertDialogBuilder.setCancelable(true);
+        alertDialogBuilder.setTitle(R.string.enterColorRgb);
+        //alertDialogBuilder.setMessage(""); //Set the message for the box
+        alertDialogBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                closeKeyboard(input);
+
+                dialog.cancel();
+                saveRgb(input.getText().toString(), position);
+            }
+        });
+        alertDialogBuilder
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        closeKeyboard(input);
+                        dialog.cancel();
+                    }
+                });
+        final AlertDialog alertDialog = alertDialogBuilder.create(); //create the box
+
+        input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId
+                        == EditorInfo.IME_ACTION_DONE)) {
+
+                    closeKeyboard(input);
+                    alertDialog.cancel();
+
+                    saveRgb(input.getText().toString(), position);
+                }
+                return false;
+            }
+        });
+
+        alertDialog.show();
+        input.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+
+    }
+
+    public void closeKeyboard(EditText input) {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
+
+    }
+
+    public void saveRgb(String value, int position) {
+
+        try {
+            String[] rgbArray = value.split(" ");
+            if (rgbArray.length < 3) {
+                rgbArray = value.split("-");
+            }
+
+            if (rgbArray.length < 3 && value.length() > 8) {
+                rgbArray = new String[3];
+                rgbArray[0] = value.substring(0, 3);
+                rgbArray[1] = value.substring(3, 6);
+                rgbArray[2] = value.substring(6, 9);
+            }
+
+            if (rgbArray.length > 2) {
+                int r = Integer.parseInt(rgbArray[0]);
+                int g = Integer.parseInt(rgbArray[1]);
+                int b = Integer.parseInt(rgbArray[2]);
+                storeCalibratedData(position, Color.rgb(r, g, b), 100);
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        displayInfo(false);
+
     }
 
     void displayInfo(boolean animate) {
@@ -196,6 +306,12 @@ public class CalibrateItemFragment extends Fragment {
         int color = PreferencesUtils.getInt(mainApp,
                 String.format("%s-%s", String.valueOf(mTestType), String.valueOf(index)),
                 -1);
+
+        mRgbText.setText(String.format("%s: %s  %s  %s", mainApp.getString(R.string.rgb),
+                String.format("%d", Color.red(color)),
+                String.format("%d", Color.green(color)),
+                String.format("%d", Color.blue(color))
+        ));
 
         int accuracy = Math.max(0, PreferencesUtils.getInt(mainApp,
                 String.format("%s-a-%s", String.valueOf(mTestType), String.valueOf(index)),
@@ -216,18 +332,26 @@ public class CalibrateItemFragment extends Fragment {
                 );
                 mPhotoImageView.setMaxHeight(250);
             }
-            mResetButton.setVisibility(View.VISIBLE);
+            //mResetButton.setVisibility(View.VISIBLE);
+            mQualityLayout.setVisibility(View.VISIBLE);
+            mPhotoLayout.setVisibility(View.VISIBLE);
         } else {
-            accuracy = 100;
-            mResetButton.setVisibility(View.GONE);
+            accuracy = -1;
+            //mResetButton.setVisibility(View.GONE);
+            mQualityLayout.setVisibility(View.GONE);
+            mPhotoLayout.setVisibility(View.GONE);
         }
 
         speedometer.setSpeed(accuracy, animate);
 
-        int minAccuracy = PreferencesUtils.getInt(mainApp, R.string.minPhotoQuality, 0);
+        if (color == -1) {
+            color = colorRange.get(index);
+        }
+
+        int minAccuracy = PreferencesUtils.getInt(mainApp, R.string.minPhotoQualityKey, 0);
 
         mQualityTextView.setText(accuracy + "%");
-        if (accuracy < minAccuracy) {
+        if (accuracy < minAccuracy && accuracy > -1) {
             mErrorQualityText.setVisibility(View.VISIBLE);
             mColorButton.setText(getString(R.string.error));
         } else {
@@ -235,14 +359,18 @@ public class CalibrateItemFragment extends Fragment {
             mColorButton.setText("");
         }
 
-        if (color == -1) {
-            color = colorRange.get(index);
+        if (accuracy == -1) {
+            mColorButton.setText(getActivity().getString(R.string.notCalibrated));
+            color = Color.WHITE;
+            mRgbText.setVisibility(View.GONE);
+        } else {
+            mRgbText.setVisibility(View.VISIBLE);
         }
 
         mColorButton.setBackgroundColor(color);
 
         mValueButton.setText(mainApp.doubleFormat
-                .format((position + mainApp.rangeStartIncrement) * (mainApp.rangeIncrementValue
+                .format((position + mainApp.rangeStartIncrement) * (mainApp.rangeIncrementStep
                         * mainApp.rangeIncrementValue)));
 
         mStartButton.setEnabled(true);
@@ -255,7 +383,7 @@ public class CalibrateItemFragment extends Fragment {
      */
     void startCalibration(final int index) {
 
-        final Context context = getActivity();
+/*        final Context context = getActivity();
         progressDialog = ProgressDialog.show(context,
                 context.getString(R.string.working),
                 context.getString(R.string.analysingWait), true, false);
@@ -264,6 +392,7 @@ public class CalibrateItemFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+
 
                 if (camera == null) {
                     camera = CameraUtils.getCamera(context);
@@ -280,15 +409,33 @@ public class CalibrateItemFragment extends Fragment {
                 }
                 camera.setParameters(parameters);
                 camera.startPreview();
+*/
 
                 PhotoHandler photoHandler = new PhotoHandler(
                         getActivity().getApplicationContext(), mPhotoTakenHandler, index, "",
                         mTestType);
-                camera.takePicture(null, null, photoHandler);
+        //camera.takePicture(null, null, photoHandler);
+
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        Fragment prev = getFragmentManager().findFragmentByTag("cameraDialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        mCameraFragment = CameraFragment.newInstance();
+        mCameraFragment.mPicture = photoHandler;
+        mCameraFragment.makeShutterSound = true;
+        mCameraFragment.show(ft, "cameraDialog");
+
+        //mProgressLayout.setVisibility(View.GONE);
+        //mContainer.setVisibility(View.VISIBLE);
+
+/*
             }
         }, 4000);
 
-
+*/
     }
 
     /**
@@ -377,12 +524,11 @@ public class CalibrateItemFragment extends Fragment {
             protected void onPostExecute(Void result) {
                 // TODO Auto-generated method stub
                 super.onPostExecute(result);
-
+                if (mCameraFragment != null) {
+                    mCameraFragment.dismiss();
+                }
                 displayInfo(true);
 
-                if (progressDialog != null) {
-                    progressDialog.dismiss();
-                }
                 //notifyDataSetChanged();
             }
         }).execute();
@@ -427,10 +573,12 @@ public class CalibrateItemFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             CalibrateItemFragment adapter = mAdapter.get();
+
             if (adapter != null) {
-                adapter.camera.stopPreview();
-                adapter.camera.release();
-                adapter.camera = null;
+                //adapter.camera.stopPreview();
+                //adapter.camera.release();
+                //adapter.camera = null;
+                //adapter.mContainer.setVisibility(View.GONE);
                 adapter.storeCalibratedData(msg.getData().getInt("position"),
                         msg.getData().getInt("resultColor"), msg.getData().getInt("accuracy"));
             }

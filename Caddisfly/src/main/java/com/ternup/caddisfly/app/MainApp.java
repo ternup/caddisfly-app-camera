@@ -21,7 +21,6 @@ import com.ternup.caddisfly.R;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.hardware.Camera;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
@@ -42,9 +41,9 @@ public class MainApp extends Application {
 
     public int rangeStartIncrement = 0;
 
-    public Camera camera;
-
     public int CurrentTheme = R.style.AppTheme_Light;
+
+    public int currentTestType = Globals.FLUORIDE_INDEX;
 
     public ArrayList<Integer> colorList = new ArrayList<Integer>();
 
@@ -57,8 +56,6 @@ public class MainApp extends Application {
     public DecimalFormat doubleFormat = new DecimalFormat("0.0");
 
     public MainApp() {
-
-        //Factory preset color range (0.0 to 3.0 with increments of 0.1)
     }
 
     /**
@@ -73,46 +70,47 @@ public class MainApp extends Application {
         rangeStartIncrement = 0;
         doubleFormat = new DecimalFormat("0.0");
 
+        currentTestType = Globals.FLUORIDE_INDEX;
+
         for (double i = 0.0; i < 3.5; i += 0.5) {
             rangeIntervals.add(i);
         }
 
-        //TODO: Move preset colors to raw file
-        presetColorList.add(Color.rgb(207, 90, 179));
-        presetColorList.add(Color.rgb(209, 98, 180));
-        presetColorList.add(Color.rgb(212, 107, 181));
-        presetColorList.add(Color.rgb(215, 115, 182));
-        presetColorList.add(Color.rgb(218, 124, 183));
-        presetColorList.add(Color.rgb(221, 133, 184));
-        presetColorList.add(Color.rgb(217, 134, 179));
-        presetColorList.add(Color.rgb(213, 135, 175));
-        presetColorList.add(Color.rgb(210, 136, 171));
-        presetColorList.add(Color.rgb(206, 137, 167));
-        presetColorList.add(Color.rgb(203, 139, 163));
-        presetColorList.add(Color.rgb(205, 143, 165));
-        presetColorList.add(Color.rgb(208, 148, 168));
-        presetColorList.add(Color.rgb(211, 153, 171));
-        presetColorList.add(Color.rgb(214, 158, 174));
-        presetColorList.add(Color.rgb(217, 163, 177));
-        presetColorList.add(Color.rgb(215, 161, 174));
-        presetColorList.add(Color.rgb(213, 160, 171));
-        presetColorList.add(Color.rgb(212, 158, 168));
-        presetColorList.add(Color.rgb(210, 157, 165));
-        presetColorList.add(Color.rgb(209, 156, 162));
-        presetColorList.add(Color.rgb(203, 154, 159));
-        presetColorList.add(Color.rgb(198, 153, 157));
-        presetColorList.add(Color.rgb(192, 152, 155));
-        presetColorList.add(Color.rgb(187, 151, 153));
-        presetColorList.add(Color.rgb(182, 150, 151));
-        presetColorList.add(Color.rgb(184, 153, 153));
-        presetColorList.add(Color.rgb(187, 157, 155));
-        presetColorList.add(Color.rgb(190, 161, 157));
-        presetColorList.add(Color.rgb(193, 165, 159));
-        presetColorList.add(Color.rgb(196, 169, 162));
+        for (double i = 0; i < 31; i++) {
+            presetColorList.add(Color.rgb(0, 0, 0));
+        }
 
         colorList = new ArrayList<Integer>(presetColorList);
         loadCalibratedSwatches(Globals.FLUORIDE_INDEX);
     }
+
+
+    /**
+     * Factory preset values for Fluoride
+     */
+    public void setFluoride2Swatches() {
+        presetColorList.clear();
+        rangeIntervals.clear();
+
+        rangeIncrementStep = 30;
+        rangeIncrementValue = 0.1;
+        rangeStartIncrement = 0;
+        doubleFormat = new DecimalFormat("0.0");
+
+        currentTestType = Globals.FLUORIDE_2_INDEX;
+
+        for (double i = 0.0; i < 3.1; i += (rangeIncrementStep * rangeIncrementValue)) {
+            rangeIntervals.add(i);
+        }
+
+        for (double i = 0; i < 31; i++) {
+            presetColorList.add(Color.rgb(0, 0, 0));
+        }
+
+        colorList = new ArrayList<Integer>(presetColorList);
+        loadCalibratedSwatches(Globals.FLUORIDE_2_INDEX);
+    }
+
 
     /**
      * Factory preset values for pH Test
@@ -126,29 +124,16 @@ public class MainApp extends Application {
         rangeStartIncrement = 1;
         doubleFormat = new DecimalFormat("0");
 
+        currentTestType = Globals.PH_INDEX;
+
         for (int i = 1; i < 15; i++) {
             rangeIntervals.add((double) i);
         }
 
-        //TODO: Move preset colors to raw file
-        presetColorList.add(Color.rgb(235, 30, 37));
-        presetColorList.add(Color.rgb(238, 120, 33));
-        presetColorList.add(Color.rgb(244, 156, 30));
-        presetColorList.add(Color.rgb(242, 187, 24));
+        for (double i = 0; i < 14; i++) {
+            presetColorList.add(Color.rgb(0, 0, 0));
+        }
 
-        presetColorList.add(Color.rgb(247, 220, 9));
-        presetColorList.add(Color.rgb(246, 237, 18));
-
-        presetColorList.add(Color.rgb(202, 216, 43));
-        presetColorList.add(Color.rgb(171, 198, 69));
-
-        presetColorList.add(Color.rgb(122, 174, 162));
-        presetColorList.add(Color.rgb(68, 149, 204));
-        presetColorList.add(Color.rgb(49, 122, 190));
-        presetColorList.add(Color.rgb(62, 109, 181));
-
-        presetColorList.add(Color.rgb(94, 79, 162));
-        presetColorList.add(Color.rgb(97, 64, 151));
         colorList = new ArrayList<Integer>(presetColorList);
         loadCalibratedSwatches(Globals.PH_INDEX);
     }
@@ -173,5 +158,4 @@ public class MainApp extends Application {
             }
         }
     }
-
 }

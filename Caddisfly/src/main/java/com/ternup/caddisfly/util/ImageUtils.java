@@ -47,7 +47,7 @@ public class ImageUtils {
 
             int height = options.outHeight;
             int width = options.outWidth;
-            int sampleLength = Globals.IMAGE_SAMPLE_LENGTH;
+            int sampleLength = Globals.IMAGE_CROP_LENGTH;
 
             if (height < sampleLength || width < sampleLength) {
                 sampleLength = Math.min(height, width);
@@ -111,7 +111,7 @@ public class ImageUtils {
             return;
         }
 
-        OutputStream outStream = null;
+        OutputStream outStream;
 
         try {
             outStream = new FileOutputStream(filename);

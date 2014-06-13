@@ -19,7 +19,7 @@
     <color name="labelTextColor">#555</color>
     <color name="window_background_light">#ccffffff</color>
     <color name="window_background_dark">#ff000000</color>
-    <color name="textColorLight">#ff193a42</color>
+    <color name="textColorLight">#ff1e4650</color>
     <color name="textColorDark">#ffa0a0a0</color>
     <color name="actionbar_background_light">#ccffffff</color>
     <color name="actionbar_background_dark">#cc000000</color>

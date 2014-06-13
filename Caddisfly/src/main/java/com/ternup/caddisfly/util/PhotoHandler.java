@@ -40,7 +40,9 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class PhotoHandler implements PictureCallback {
 
@@ -119,13 +121,23 @@ public class PhotoHandler implements PictureCallback {
         ArrayList<Integer> colorRange = ((MainApp) mContext).colorList;
 
         Bundle bundle;
-        bundle = ColorUtils.getPpmValue(pictureFile.getAbsolutePath(), colorRange,
+
+        bundle = ColorUtils.getPpmValue(data, colorRange,
                 ((MainApp) mContext).rangeIncrementValue,
                 ((MainApp) mContext).rangeStartIncrement);
 
+        //bundle = ColorUtils.getPpmValue(pictureFile.getAbsolutePath(), colorRange,
+        //      ((MainApp) mContext).rangeIncrementValue,
+        //    ((MainApp) mContext).rangeStartIncrement);
+
         long id = -1;
         if (mIndex < 1 && mFolderName.length() > 0) {
-            id = saveResult(mFolderName, mTestType, bundle.getDouble("resultValue"));
+            if (hasSamplingCompleted(mContext)) {
+                double finalResult = getAverageResult(mContext, bundle.getDouble("resultValue"));
+                id = saveResult(mFolderName, mTestType, finalResult);
+            } else {
+                saveTempResult(mContext, bundle.getDouble("resultValue"));
+            }
             bundle.putLong(mContext.getString(R.string.currentTestId), id);
 
             int value = 0;
@@ -157,6 +169,89 @@ public class PhotoHandler implements PictureCallback {
         mHandler.sendMessage(msg);
     }
 
+    private double mostFrequent(double[] ary) {
+        Map<Double, Integer> m = new HashMap<Double, Integer>();
+
+        for (double a : ary) {
+            if (a >= 0) {
+                Integer freq = m.get(a);
+                m.put(a, (freq == null) ? 1 : freq + 1);
+            }
+        }
+
+        int max = -1;
+        double mostFrequent = -1;
+
+        for (Map.Entry<Double, Integer> e : m.entrySet()) {
+            if (e.getValue() > max) {
+                mostFrequent = e.getKey();
+                max = e.getValue();
+            }
+        }
+
+        return mostFrequent;
+    }
+
+    private double getAverageResult(Context context, double resultValue) {
+        //double result = Math.max(0, resultValue);
+
+        double result = 0;
+
+        int samplingCount = PreferencesUtils.getInt(context, R.string.samplingCountKey, 1);
+        saveTempResult(context, resultValue);
+        int counter = 0;
+        double commonResult = 0;
+        double[] results = new double[samplingCount];
+        for (int i = 1; i <= samplingCount; i++) {
+            String key = String.format(context.getString(R.string.samplingIndexKey), i);
+            results[i - 1] = PreferencesUtils.getDouble(context, key);
+            commonResult = mostFrequent(results);
+        }
+
+        for (double a : results) {
+            if (a >= 0) {
+                if (Math.abs(a - commonResult) < 0.5) {
+                    counter++;
+                    result += a;
+                }
+            }
+        }
+
+/*
+        for (int i = 1; i < samplingCount; i++) {
+            String key = String.format(context.getString(R.string.samplingIndexKey), i);
+            double tempResult = PreferencesUtils.getDouble(context, key);
+            if (tempResult >= 0) {
+                counter++;
+                result += tempResult;
+            }
+        }
+*/
+
+        return result / counter;
+    }
+
+    private void saveTempResult(Context context, double resultValue) {
+
+        int samplingCount = PreferencesUtils.getInt(context, R.string.currentSamplingCountKey, 0);
+
+        String key = String.format(context.getString(R.string.samplingIndexKey), ++samplingCount);
+
+        PreferencesUtils.setDouble(context, key, resultValue);
+    }
+
+
+    private boolean hasSamplingCompleted(Context context) {
+        if (mTestType == Globals.BACTERIA_INDEX) {
+            return true;
+        }
+
+        int currentSamplingCount = PreferencesUtils
+                .getInt(context, R.string.currentSamplingCountKey, 0);
+        int samplingCount = PreferencesUtils.getInt(context, R.string.samplingCountKey, 1);
+        return currentSamplingCount >= (samplingCount - 1);
+    }
+
     private long saveResult(String folder, int testType, double result) {
 
         SharedPreferences sharedPreferences = PreferenceManager
@@ -177,6 +272,14 @@ public class PhotoHandler implements PictureCallback {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(mContext.getString(R.string.currentTestId), id);
         editor.commit();
+
+        int samplingCount = PreferencesUtils.getInt(mContext, R.string.samplingCountKey, 1);
+        for (int i = 1; i <= samplingCount; i++) {
+            String key = String.format(mContext.getString(R.string.samplingIndexKey), i);
+            double tempResult = PreferencesUtils.getDouble(mContext, key);
+            PreferencesUtils.setDouble(mContext,
+                    String.format(mContext.getString(R.string.sampleResult), id, i), tempResult);
+        }
         return id;
     }
 }

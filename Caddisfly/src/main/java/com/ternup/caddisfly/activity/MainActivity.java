@@ -175,7 +175,7 @@ public class MainActivity extends Activity
             return;
         }
 
-        Fragment fragment = null;
+        Fragment fragment;
 
         isSettingsShowing = false;
         isAboutShowing = false;

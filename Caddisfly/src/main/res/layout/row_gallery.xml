@@ -42,8 +42,19 @@
                 android:focusable="false"
                 android:textSize="19sp"
                 android:layout_marginTop="5dp"
+                android:alpha="0.8"
                 android:textIsSelectable="false"/>
-
+        <TextView
+                tools:text="Result : 2.5"
+                android:id="@+id/resultText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:focusable="false"
+                android:textSize="19sp"
+                android:layout_marginTop="5dp"
+                android:textIsSelectable="false"/>
         <ImageView
                 android:id="@+id/photoImageView"
                 android:layout_width="250dp"

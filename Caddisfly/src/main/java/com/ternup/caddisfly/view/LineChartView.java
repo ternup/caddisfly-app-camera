@@ -155,7 +155,7 @@ public class LineChartView extends View {
         long distance;
         int distanceIndex = 0;
         long distanceMultiplier = 1;
-        int numberOfLines = MIN_LINES;
+        int numberOfLines;
 
         do {
             distance = DISTANCES[distanceIndex] * distanceMultiplier;

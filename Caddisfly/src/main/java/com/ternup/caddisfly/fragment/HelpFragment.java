@@ -34,6 +34,9 @@ import java.io.InputStreamReader;
 
 public class HelpFragment extends Fragment {
 
+    public HelpFragment() {
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_help, container, false);

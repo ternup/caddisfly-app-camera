@@ -104,6 +104,7 @@
 
     <string-array name="testTypes">
         <item>@string/fluoride</item>
+        <item>@string/fluoride2</item>
         <item>@string/pH</item>
     </string-array>
 
@@ -120,10 +121,12 @@
 
     <string-array name="languages">
         <item>English</item>
+        <item>हिंदी</item>
     </string-array>
 
     <string-array name="language_codes">
         <item>en</item>
+        <item>hi</item>
     </string-array>
 
 </resources>

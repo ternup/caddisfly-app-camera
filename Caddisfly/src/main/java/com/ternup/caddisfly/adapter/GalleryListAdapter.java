@@ -17,9 +17,11 @@
 package com.ternup.caddisfly.adapter;
 
 import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.util.PreferencesUtils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -49,12 +51,18 @@ public class GalleryListAdapter extends BaseAdapter {
 
     private final Activity mActivity;
 
+    private final Context mContext;
+
+    private final long mTestId;
+
     private ArrayList<String> mFilePaths = new ArrayList<String>();
 
-    public GalleryListAdapter(Activity activity, ArrayList<String> filePaths) {
-        this.mInflater = activity.getLayoutInflater();
-        this.mFilePaths = filePaths;
-        this.mActivity = activity;
+    public GalleryListAdapter(Activity activity, long testId, ArrayList<String> filePaths) {
+        mContext = activity;
+        mInflater = activity.getLayoutInflater();
+        mFilePaths = filePaths;
+        mActivity = activity;
+        mTestId = testId;
     }
 
     /*
@@ -116,6 +124,7 @@ public class GalleryListAdapter extends BaseAdapter {
             holder.serialNumber = (TextView) convertView.findViewById(R.id.serialNumberText);
             holder.icon = (ImageView) convertView.findViewById(R.id.photoImageView);
             holder.timestamp = (TextView) convertView.findViewById(R.id.dateText);
+            holder.result = (TextView) convertView.findViewById(R.id.resultText);
             holder.progress = (ProgressBar) convertView.findViewById(R.id.progressBar);
 
             convertView.setTag(holder);
@@ -142,13 +151,13 @@ public class GalleryListAdapter extends BaseAdapter {
 
             @SuppressLint("SimpleDateFormat") // Using SimpleDateFormat to display seconds also
             @Override
-            protected void onPostExecute(Bitmap result) {
-                super.onPostExecute(result);
+            protected void onPostExecute(Bitmap bitmap) {
+                super.onPostExecute(bitmap);
                 if (v.position == position) {
                     v.serialNumber.setText(String.valueOf(position + 1));
                     v.progress.setVisibility(View.GONE);
                     v.icon.setVisibility(View.VISIBLE);
-                    v.icon.setImageBitmap(result);
+                    v.icon.setImageBitmap(bitmap);
                     //v.icon.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
                     Pattern pattern = Pattern
@@ -174,6 +183,16 @@ public class GalleryListAdapter extends BaseAdapter {
                         );
                         DateFormat tf = new SimpleDateFormat(timePattern);
                         v.timestamp.setText(tf.format(cal.getTime()));
+
+                        double result = PreferencesUtils.getDouble(mContext,
+                                String.format(mContext.getString(R.string.sampleResult), mTestId,
+                                        position + 1));
+                        if (result < 0) {
+                            v.result.setText(R.string.error);
+                        } else {
+                            v.result.setText(String.valueOf(result));
+                        }
+
                     }
                 }
             }
@@ -186,6 +205,8 @@ public class GalleryListAdapter extends BaseAdapter {
         TextView serialNumber;
 
         TextView timestamp;
+
+        TextView result;
 
         ImageView icon;
 

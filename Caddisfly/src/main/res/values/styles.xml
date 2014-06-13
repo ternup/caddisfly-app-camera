@@ -38,7 +38,7 @@
         <item name="drawerSelector">@drawable/drawer_item_light</item>
         <item name="listSelector">@drawable/list_selector_light</item>
         <item name="cardBackground">@drawable/card</item>
-        <item name="subtitleTextStyle">@color/subtitle_light</item>
+        <item name="subtitleTextColor">@color/subtitle_light</item>
         <item name="buttonStyle">@drawable/button_style_light</item>
         <item name="listButton">@drawable/list_button_style_light</item>
         <item name="arrowRight">@drawable/arrow_right_light</item>
@@ -60,7 +60,7 @@
         <item name="drawerSelector">@drawable/list_selector_dark</item>
         <item name="listSelector">@drawable/list_selector_dark</item>
         <item name="cardBackground">@drawable/card_dark</item>
-        <item name="subtitleTextStyle">@color/subtitle_dark</item>
+        <item name="subtitleTextColor">@color/subtitle_dark</item>
         <item name="buttonStyle">@drawable/button_style_dark</item>
         <item name="listButton">@drawable/button_style_dark</item>
         <item name="arrowRight">@drawable/arrow_right</item>

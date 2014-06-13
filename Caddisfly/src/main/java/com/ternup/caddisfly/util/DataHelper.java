@@ -17,6 +17,7 @@
 package com.ternup.caddisfly.util;
 
 import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
 
 import android.content.Context;
 
@@ -24,11 +25,13 @@ public class DataHelper {
 
     public static String getTestTitle(Context context, int testType) {
         switch (testType) {
-            case 0:
+            case Globals.FLUORIDE_INDEX:
                 return context.getString(R.string.fluoride);
-            case 1:
+            case Globals.FLUORIDE_2_INDEX:
+                return context.getString(R.string.fluoride2);
+            case Globals.PH_INDEX:
                 return context.getString(R.string.pH);
-            case 2:
+            case Globals.BACTERIA_INDEX:
                 return context.getString(R.string.bacteria);
             default:
                 return context.getString(R.string.fluoride);

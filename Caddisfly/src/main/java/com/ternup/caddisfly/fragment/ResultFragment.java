@@ -107,6 +107,9 @@ public class ResultFragment extends Fragment {
 
     private int totalCount = 0;
 
+    public ResultFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -511,7 +514,7 @@ public class ResultFragment extends Fragment {
             mResultIcon.setVisibility(View.GONE);
             mPpmText.setVisibility(View.GONE);
         } else {
-            mResultTextView.setText(String.format("%.1f", resultPpm));
+            mResultTextView.setText(String.format("%.2f", resultPpm));
 
             Context context = getActivity().getApplicationContext();
 

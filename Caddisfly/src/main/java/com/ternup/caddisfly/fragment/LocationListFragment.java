@@ -19,6 +19,7 @@ package com.ternup.caddisfly.fragment;
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.activity.SurveyActivity;
 import com.ternup.caddisfly.adapter.CheckboxSimpleCursorAdapter;
+import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.database.LocationTable;
 import com.ternup.caddisfly.provider.LocationContentProvider;
 import com.ternup.caddisfly.util.AlertUtils;
@@ -71,13 +72,16 @@ public class LocationListFragment extends ListFragment implements AdapterView.On
 
     private final boolean showCheckbox = false;
 
-    int mTestType = 0;
+    int mTestType = Globals.FLUORIDE_INDEX;
 
     private LocationDetailsFragment mLocationDetailsFragment;
 
     private CheckboxSimpleCursorAdapter adapter;
 
     private Menu mMenu;
+
+    public LocationListFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

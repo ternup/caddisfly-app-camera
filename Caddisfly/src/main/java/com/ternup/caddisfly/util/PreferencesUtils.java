@@ -125,6 +125,15 @@ public class PreferencesUtils {
         return sharedPreferences.getFloat(keyId, defaultValue);
     }
 
+
+    public static void setDouble(Context context, String keyId, double value) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        Editor editor = sharedPreferences.edit();
+        editor.putLong(keyId, Double.doubleToRawLongBits(value));
+        editor.commit();
+    }
+
     /**
      * Sets a float value from preferences
      *
@@ -132,13 +141,8 @@ public class PreferencesUtils {
      * @param keyId   the key id
      * @param value   the value
      */
-    public static void setFloat(Context context, int keyId, float value) {
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-        Editor editor = sharedPreferences.edit();
-        editor.putFloat(getKey(context, keyId), value);
-        editor.commit();
-
+    public static void setDouble(Context context, int keyId, double value) {
+        setDouble(context, getKey(context, keyId), value);
     }
 
 
@@ -219,5 +223,12 @@ public class PreferencesUtils {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         return sharedPreferences.contains(getKey(context, keyId));
+    }
+
+    public static double getDouble(Context context, String keyId) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        return Double
+                .longBitsToDouble(sharedPreferences.getLong(keyId, Double.doubleToRawLongBits(0)));
     }
 }

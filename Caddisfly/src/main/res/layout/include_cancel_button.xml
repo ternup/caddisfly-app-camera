@@ -19,6 +19,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/actionbar_cancel"
             style="?android:actionBarTabTextStyle"
+            android:textSize="15sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

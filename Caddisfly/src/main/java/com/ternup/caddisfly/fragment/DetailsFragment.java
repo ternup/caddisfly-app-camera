@@ -39,6 +39,9 @@ import java.util.Collections;
 
 public class DetailsFragment extends ListFragment {
 
+    public DetailsFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -108,7 +111,7 @@ public class DetailsFragment extends ListFragment {
         } else {
             lineChart.setVisibility(View.GONE);
         }
-        GalleryListAdapter adapter = new GalleryListAdapter(getActivity(), imagePaths);
+        GalleryListAdapter adapter = new GalleryListAdapter(getActivity(), testId, imagePaths);
         this.setListAdapter(adapter);
     }
 

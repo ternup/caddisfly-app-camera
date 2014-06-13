@@ -112,7 +112,7 @@ public class PhotoIntentActivity extends Activity {
     */
     public static Bitmap loadBitmap(String path, int orientation, final int targetWidth,
             final int targetHeight) {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         try {
             // First decode with inJustDecodeBounds=true to check dimensions
             final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -213,8 +213,10 @@ public class PhotoIntentActivity extends Activity {
         /* So pre-scale the target bitmap into which the file is decoded */
 
 		/* Get the size of the ImageView */
-        int targetW = mImageLayout.getWidth();
-        int targetH = mImageLayout.getHeight();
+        //int targetW = mImageLayout.getWidth();
+        //int targetH = mImageLayout.getHeight();
+        int targetW;
+        int targetH;
 
 		/* Get the size of the image */
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -272,7 +274,7 @@ public class PhotoIntentActivity extends Activity {
         switch (actionCode) {
             case ACTION_TAKE_PHOTO_S:
             case ACTION_TAKE_PHOTO_B:
-                File f = null;
+                File f;
 
                 try {
                     f = setUpPhotoFile();
@@ -280,7 +282,6 @@ public class PhotoIntentActivity extends Activity {
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                 } catch (IOException e) {
                     e.printStackTrace();
-                    f = null;
                     mCurrentPhotoPath = null;
                 }
                 break;

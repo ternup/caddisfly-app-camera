@@ -19,11 +19,11 @@ package com.ternup.caddisfly.activity;
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.fragment.CameraFragment;
 import com.ternup.caddisfly.provider.TestContentProvider;
 import com.ternup.caddisfly.service.CameraService;
 import com.ternup.caddisfly.service.CameraServiceReceiver;
 import com.ternup.caddisfly.util.AudioUtils;
-import com.ternup.caddisfly.util.CameraUtils;
 import com.ternup.caddisfly.util.FileUtils;
 import com.ternup.caddisfly.util.ImageUtils;
 import com.ternup.caddisfly.util.PhotoHandler;
@@ -35,6 +35,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ContentUris;
@@ -46,7 +48,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
-import android.hardware.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
@@ -54,6 +55,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
@@ -71,14 +73,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class ProgressActivity extends Activity {
+public class ProgressActivity extends Activity implements CameraFragment.Cancelled {
 
     private final PhotoTakenHandler mPhotoTakenHandler = new PhotoTakenHandler(this);
 
@@ -90,11 +91,17 @@ public class ProgressActivity extends Activity {
         }
     };
 
+    CameraFragment mCameraFragment;
+
+    Timer timer;
+
     private LinearLayout mProgressLayout;
 
     private LinearLayout mShakeLayout;
 
     private TextView mTitleText;
+
+    //private ProgressBar mSingleProgress;
 
     private TextView mRemainingText;
 
@@ -102,16 +109,18 @@ public class ProgressActivity extends Activity {
 
     private TextView mTimeText;
 
+    private long mNextAlarmTime;
+
     private TextView mPlaceInStandText;
 
     private SensorManager mSensorManager;
 
     private Sensor mAccelerometer;
 
-    private ShakeDetector mShakeDetector;
-
     //Vibrator mVibrator;
     //private MediaPlayer cameraMediaPlayer;
+
+    private ShakeDetector mShakeDetector;
 
     private PowerManager.WakeLock wakeLock;
 
@@ -184,6 +193,7 @@ public class ProgressActivity extends Activity {
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mTimeText = (TextView) findViewById(R.id.timeText);
         mPlaceInStandText = (TextView) findViewById(R.id.placeInStandText);
+        //mSingleProgress = (ProgressBar) findViewById(R.id.singleProgress);
 
         //Set up the shake detector
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -229,9 +239,10 @@ public class ProgressActivity extends Activity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onPostResume() {
+        super.onPostResume();
         // Acquire a wake lock while waiting for user action
+/*
         if (wakeLock == null || !wakeLock.isHeld()) {
             PowerManager pm = (PowerManager) getApplicationContext()
                     .getSystemService(Context.POWER_SERVICE);
@@ -240,6 +251,7 @@ public class ProgressActivity extends Activity {
                             | PowerManager.ON_AFTER_RELEASE, "MyWakeLock");
             wakeLock.acquire();
         }
+*/
 
         //TODO: setup external app connection
         // Get intent, action and MIME type
@@ -247,14 +259,18 @@ public class ProgressActivity extends Activity {
         String action = intent.getAction();
         String type = intent.getType();
 
+        MainApp mainApp = (MainApp) getApplicationContext();
+
         if (Globals.ACTION_WATER_TEST.equals(action) && type != null) {
             if ("text/plain".equals(type)) {
                 // todo: recode this
             }
             mTestType = -1;
         } else {
-            mTestType = PreferencesHelper.getCurrentTestTypeId(this, intent);
+            mTestType = mainApp.currentTestType;
+            //mTestType = PreferencesHelper.getCurrentTestTypeId(this, intent);
         }
+
         mLocationId = PreferencesHelper.getCurrentLocationId(this, intent);
 
         // Register receiver for service
@@ -284,7 +300,15 @@ public class ProgressActivity extends Activity {
 
         } else if (mTestType > -1) {
 
-            mRemainingText.setText(String.valueOf(mTestTotal));
+            if (mTestType == Globals.BACTERIA_INDEX) {
+                mRemainingText.setText(String.valueOf(mTestTotal));
+                mRemainingText.setVisibility(View.VISIBLE);
+                //mSingleProgress.setVisibility(View.GONE);
+            } else {
+                mRemainingText.setVisibility(View.GONE);
+                //mSingleProgress.setVisibility(View.VISIBLE);
+
+            }
             mProgressBar.setMax(mTestTotal);
             mProgressBar.setProgress(0);
             startNewTest(mTestType);
@@ -371,6 +395,11 @@ public class ProgressActivity extends Activity {
                 mTitleText.setText(R.string.fluoride);
                 mainContext.setFluorideSwatches();
                 break;
+            case Globals.FLUORIDE_2_INDEX:
+                mTestTotal = 1;
+                mTitleText.setText(R.string.fluoride2);
+                mainContext.setFluoride2Swatches();
+                break;
             case Globals.PH_INDEX:
                 mTestTotal = 1;
                 mTitleText.setText(R.string.pH);
@@ -379,7 +408,7 @@ public class ProgressActivity extends Activity {
             case Globals.BACTERIA_INDEX:
                 mTitleText.setText(R.string.bacteria);
                 mTestTotal = sharedPreferences.getInt("timer_test_count", 3);
-                mInterval = sharedPreferences.getInt("analysis_interval", 1) * 60000;
+                mInterval = sharedPreferences.getInt("analysis_interval", 1) * Globals.MINUTE_IN_MS;
                 break;
         }
 
@@ -428,6 +457,7 @@ public class ProgressActivity extends Activity {
         mFolderName = getNewFolderName();
 
         Context context = getApplicationContext();
+        PreferencesUtils.setInt(context, R.string.currentSamplingCountKey, 0);
 
         // store the folder name of the current test to be able to refer to if the app is restarted
         SharedPreferences sharedPreferences = PreferenceManager
@@ -448,8 +478,8 @@ public class ProgressActivity extends Activity {
 
     private void deleteRecord() {
         Context context = getApplicationContext();
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
+
+        PreferencesUtils.removeKey(context, R.string.currentSamplingCountKey);
 
         FileUtils.deleteFolder(this, mLocationId, mFolderName);
         mId = PreferencesHelper.getCurrentTestId(this, null, null);
@@ -465,14 +495,13 @@ public class ProgressActivity extends Activity {
 
     private void sendResult(Message msg) {
 
-        Context context = getApplicationContext();
         mId = PreferencesHelper.getCurrentTestId(this, null, msg.getData());
 
         double result = msg.getData().getDouble("resultValue", -1);
         int accuracy = msg.getData().getInt("accuracy", 0);
         String message = getString(R.string.testFailedMessage);
 
-        int minAccuracy = PreferencesUtils.getInt(this, R.string.minPhotoQuality, 0);
+        int minAccuracy = PreferencesUtils.getInt(this, R.string.minPhotoQualityKey, 0);
         if (accuracy < minAccuracy) {
             message = String.format(getString(R.string.testFailedQualityMessage), minAccuracy);
         }
@@ -562,7 +591,7 @@ public class ProgressActivity extends Activity {
         editor.commit();
 
         mSensorManager.unregisterListener(mShakeDetector);
-
+/*
         MainApp mainContext = (MainApp) context;
 
         if (mainContext.camera != null) {
@@ -570,6 +599,7 @@ public class ProgressActivity extends Activity {
             mainContext.camera.release();
             mainContext.camera = null;
         }
+*/
 
         if (mMediaPlayer != null) {
             mMediaPlayer.release();
@@ -604,15 +634,16 @@ public class ProgressActivity extends Activity {
 
             Context context = getApplicationContext();
             boolean is24HourFormat = android.text.format.DateFormat.is24HourFormat(context);
-            String timePattern = context.getString(
-                    is24HourFormat ? R.string.twentyFourHourTime : R.string.twelveHourTime);
+            //String timePattern = context.getString(is24HourFormat ? R.string.twentyFourHourTime : R.string.twelveHourTime);
 
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.MILLISECOND, mInterval);
 
+            startTimeDisplay(cal.getTimeInMillis());
+
             // Using SimpleDateFormat to display seconds also
-            DateFormat timeFormat = new SimpleDateFormat(timePattern);
-            mTimeText.setText(timeFormat.format(cal.getTimeInMillis()));
+            //DateFormat timeFormat = new SimpleDateFormat(timePattern);
+            //mTimeText.setText(timeFormat.format(cal.getTimeInMillis()));
 
             mProgressBar.setMax(mTestTotal);
             mProgressBar.setProgress(doneCount);
@@ -621,22 +652,46 @@ public class ProgressActivity extends Activity {
         mRemainingText.setText(String.valueOf(mTestTotal - doneCount));
     }
 
+    private String formatTime(long time) {
+        String res = "";
+        res += time / 60 + ":";
+        if (time % 60 < 10) {
+            res += "0";
+        }
+        res += (time % 60);
+        return res;
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
+
+    }
+
+    private void displayRemainingTime() {
+        long timeLeft = (mNextAlarmTime - System.currentTimeMillis()) / 1000;
+        mTimeText.setText(formatTime(timeLeft));
+
+    }
+
+    private void startTimeDisplay(long nextTime) {
+        if (timer != null) {
+            timer.cancel();
+        }
+        mNextAlarmTime = nextTime - Globals.INITIAL_DELAY - Globals.INITIAL_DELAY;
+        displayRemainingTime();
+        timer = new Timer(5000, 5000);
+        timer.start();
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
-        try {
-            unregisterReceiver(receiver);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+/*
 
         Context context = getApplicationContext();
+
         MainApp mainContext = (MainApp) context;
 
         if (mainContext.camera != null) {
@@ -644,11 +699,23 @@ public class ProgressActivity extends Activity {
             mainContext.camera.release();
             mainContext.camera = null;
         }
+*/
     }
 
     @Override
     protected void onDestroy() {
+
+/*
+        try {
+            unregisterReceiver(receiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+*/
+
         super.onDestroy();
+
+
     }
 
     void startTest(final Context context, final String folderName) {
@@ -658,11 +725,13 @@ public class ProgressActivity extends Activity {
             @Override
             protected Void doInBackground(Void... params) {
 
+/*
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+*/
 
                 return null;
             }
@@ -675,7 +744,7 @@ public class ProgressActivity extends Activity {
 
                 if (!hasTestCompleted(folderName)) {
 
-                    if (mainContext.camera == null) {
+                 /*   if (mainContext.camera == null) {
                         mainContext.camera = CameraUtils.getCamera(mainContext);
                     }
 
@@ -692,19 +761,66 @@ public class ProgressActivity extends Activity {
                     }
                     mainContext.camera.setParameters(parameters);
                     mainContext.camera.startPreview();
-
+*/
                     PhotoHandler photoHandler = new PhotoHandler(mainContext, mPhotoTakenHandler,
                             mIndex, folderName, mTestType);
-                    //soundCamera(context);
-                    mainContext.camera.takePicture(null, null, photoHandler);
+                    //mainContext.camera.takePicture(null, null, photoHandler);
+
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                    Fragment prev = getFragmentManager().findFragmentByTag("cameraDialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    ft.addToBackStack(null);
+
+                    mCameraFragment = CameraFragment.newInstance();
+                    mCameraFragment.mPicture = photoHandler;
+
+                    if (mTestType == Globals.BACTERIA_INDEX) {
+                        mCameraFragment.makeShutterSound = true;
+                    }
+
+                    if (wakeLock == null || !wakeLock.isHeld()) {
+                        PowerManager pm = (PowerManager) getApplicationContext()
+                                .getSystemService(Context.POWER_SERVICE);
+                        wakeLock = pm
+                                .newWakeLock(PowerManager.FULL_WAKE_LOCK
+                                        | PowerManager.ACQUIRE_CAUSES_WAKEUP
+                                        | PowerManager.ON_AFTER_RELEASE, "MyWakeLock");
+                        wakeLock.acquire();
+                    }
+
+                    mCameraFragment.show(ft, "cameraDialog");
+
+                    //ft.add(mCameraFragment, "cameraDialog");
+                    //ft.commitAllowingStateLoss();
+
                 }
             }
         }).execute();
+    }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+    }
+
+    private boolean hasSamplingCompleted() {
+
+        if (mTestType == Globals.BACTERIA_INDEX) {
+            return true;
+        }
+        Context context = getApplicationContext();
+
+        int samplingCount = PreferencesUtils.getInt(context, R.string.currentSamplingCountKey, 0);
+        return samplingCount >= PreferencesUtils.getInt(context, R.string.samplingCountKey, 1);
     }
 
     private boolean hasTestCompleted(String folderName) {
 
+        if (!hasSamplingCompleted() && mTestType != Globals.BACTERIA_INDEX) {
+            return false;
+        }
         Context context = getApplicationContext();
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
@@ -767,6 +883,12 @@ public class ProgressActivity extends Activity {
         return true;
     }
 
+    @Override
+    public void dialogCancelled() {
+        cancelService();
+        finish();
+    }
+
     private static class PhotoTakenHandler extends Handler {
 
         private final WeakReference<ProgressActivity> mService;
@@ -779,27 +901,24 @@ public class ProgressActivity extends Activity {
         public void handleMessage(Message msg) {
 
             ProgressActivity service = mService.get();
+            PreferencesHelper.incrementPhotoTakenCount(service.getApplicationContext());
+
+            service.mCameraFragment.dismiss();
 
             if (service != null) {
-
-                MainApp mainContext = (MainApp) service.getApplicationContext();
-
-                if (mainContext.camera != null) {
-                    mainContext.camera.stopPreview();
-                    mainContext.camera.release();
-                    mainContext.camera = null;
-                }
-
                 Bundle bundle = msg.getData();
 
                 if (bundle != null) {
                     String folderName = msg.getData()
                             .getString(PreferencesHelper.FOLDER_NAME_KEY); //NON-NLS
-                    if (service.hasTestCompleted(folderName)) {
+                    if (!service.hasSamplingCompleted()) {
+                        service.startTest(service.getApplicationContext(), service.mFolderName);
+                    } else if (service.hasTestCompleted(folderName)) {
                         service.sendResult(msg);
                     } else {
                         Calendar cal = Calendar.getInstance();
-                        cal.add(Calendar.MILLISECOND, (service.mInterval - 3000));
+                        cal.add(Calendar.MILLISECOND, (service.mInterval - Globals.INITIAL_DELAY
+                                - Globals.INITIAL_DELAY));
 
                         Intent serviceIntent = new Intent(service.getApplicationContext(),
                                 CameraServiceReceiver.class);
@@ -829,4 +948,23 @@ public class ProgressActivity extends Activity {
             }
         }
     }
+
+    public class Timer extends CountDownTimer {
+
+        public Timer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onFinish() {
+            timer = new Timer(5000, 5000);
+            timer.start();
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            displayRemainingTime();
+        }
+    }
 }
+

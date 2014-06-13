@@ -42,6 +42,9 @@ public class SettingsFragment extends PreferenceFragment
 
     private Activity mActivity;
 
+    public SettingsFragment() {
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

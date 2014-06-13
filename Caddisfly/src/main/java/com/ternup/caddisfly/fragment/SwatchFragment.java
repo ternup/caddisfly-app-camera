@@ -32,6 +32,9 @@ import java.util.ArrayList;
 @SuppressWarnings("WeakerAccess")
 public class SwatchFragment extends ListFragment {
 
+    public SwatchFragment() {
+    }
+
     @SuppressWarnings("NullableProblems")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

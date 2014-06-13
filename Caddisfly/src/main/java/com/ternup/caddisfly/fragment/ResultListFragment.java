@@ -48,21 +48,20 @@ public class ResultListFragment extends ListFragment implements AdapterView.OnIt
 
     private final boolean showCheckbox = false;
 
-    final private OnItemClickListener mItemClickListener;
+    //final private OnItemClickListener mItemClickListener;
 
-//    private ListView mResultList;
+    public ItemClicked parentFragment;
 
     long mLocationId;
 
     private CheckboxSimpleCursorAdapter adapter;
 
     public ResultListFragment() {
-        mItemClickListener = null;
     }
 
-    public ResultListFragment(OnItemClickListener listener) {
-        mItemClickListener = listener;
-    }
+    //public ResultListFragment(OnItemClickListener listener) {
+    //mItemClickListener = listener;
+    //}
 
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
@@ -90,7 +89,11 @@ public class ResultListFragment extends ListFragment implements AdapterView.OnIt
         String folderName = content.getString(4);
         long id = content.getLong(0);
 
-        mItemClickListener.onItemClick(folderName, id);
+        if (parentFragment != null && parentFragment instanceof ItemClicked) {
+            parentFragment.resultItemClicked(folderName, id);
+        }
+
+        //mItemClickListener.onItemClick(folderName, id);
     }
 
     @Override
@@ -148,12 +151,7 @@ public class ResultListFragment extends ListFragment implements AdapterView.OnIt
 
                         String testType = DataHelper
                                 .getTestTitle(getActivity(), aCursor.getInt(aColumnIndex));
-                        /*if (aCursor.getInt(aColumnIndex) == 0) {
-                            testType = getString(R.string.fluoride);
-                        } else {
-                            testType = getString(R.string.bacteria);
-                        }
-*/
+
                         typeText.setText(testType);
 
                         return true;
@@ -166,7 +164,7 @@ public class ResultListFragment extends ListFragment implements AdapterView.OnIt
                             resultText.setText(
                                     String.format("%s", "0.0"));
                         } else {
-                            resultText.setText(String.format("%.1f", result));
+                            resultText.setText(String.format("%.2f", result));
                         }
                         return true;
 /*
@@ -242,6 +240,11 @@ public class ResultListFragment extends ListFragment implements AdapterView.OnIt
     public void onLoaderReset(Loader<Cursor> loader) {
         // data is not available anymore, delete reference
         adapter.swapCursor(null);
+    }
+
+    public interface ItemClicked {
+
+        public void resultItemClicked(String folderName, long id);
     }
 
     public interface OnItemClickListener {

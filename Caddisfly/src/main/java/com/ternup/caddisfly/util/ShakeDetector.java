@@ -84,7 +84,7 @@ public class ShakeDetector implements SensorEventListener {
                 long elapsedNoShakeTime = nowNoShake - noShakeStartTime;
 
                 if (elapsedNoShakeTime > MAX_SHAKE_DURATION) {
-                    elapsedNoShakeTime = 0;
+                    //elapsedNoShakeTime = 0;
                     noShakeStartTime = nowNoShake;
 
                     if (System.currentTimeMillis() - previousNoShake > 400) {

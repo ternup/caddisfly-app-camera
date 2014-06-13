@@ -16,6 +16,8 @@
 
 package com.ternup.caddisfly.util;
 
+import com.ternup.caddisfly.R;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,5 +70,10 @@ public class PreferencesHelper {
         }
         return id;
 
+    }
+
+    public static void incrementPhotoTakenCount(Context context) {
+        int count = PreferencesUtils.getInt(context, R.string.currentSamplingCountKey, 0);
+        PreferencesUtils.setInt(context, R.string.currentSamplingCountKey, ++count);
     }
 }

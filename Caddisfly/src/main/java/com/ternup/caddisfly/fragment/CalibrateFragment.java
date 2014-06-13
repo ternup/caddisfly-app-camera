@@ -18,6 +18,7 @@ package com.ternup.caddisfly.fragment;
 
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.adapter.CalibrateListAdapter;
+import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 
 import android.app.Activity;
@@ -42,7 +43,14 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
 
     CalibrateItemFragment mCalibrateItemFragment;
 
-    private int mTestType = 0;
+    //private int mTestType = 0;
+
+    public CalibrateFragment() {
+    }
+
+    public static CalibrateFragment newInstance() {
+        return new CalibrateFragment();
+    }
 
     @SuppressWarnings("NullableProblems")
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,23 +72,33 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
         adapter.setDropDownViewResource(R.layout.spinner_layout);
         testTypeSpinner.setAdapter(adapter);
 
+        final MainApp mainApp = (MainApp) getActivity().getApplicationContext();
+
+        if (mainApp.currentTestType < testTypeSpinner.getCount()) {
+            testTypeSpinner.setSelection(mainApp.currentTestType);
+        }
+
         testTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                     int position, long arg3) {
 
-                mTestType = position;
+                mainApp.currentTestType = position;
                 // TODO Auto-generated method stub
                 Activity activity = getActivity();
                 MainApp mainApp = (MainApp) activity.getApplicationContext();
 
                 switch (position) {
-                    case 0:
+                    case Globals.FLUORIDE_INDEX:
                         mainApp.setFluorideSwatches();
                         setAdapter();
                         break;
-                    case 1:
+                    case Globals.FLUORIDE_2_INDEX:
+                        mainApp.setFluoride2Swatches();
+                        setAdapter();
+                        break;
+                    case Globals.PH_INDEX:
                         mainApp.setPhSwatches();
                         setAdapter();
                         break;
@@ -137,18 +155,18 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
         Double[] rangeArray = rangeIntervals.toArray(new Double[rangeIntervals.size()]);
 
         CalibrateListAdapter customList = new CalibrateListAdapter(getActivity(), rangeArray);
-        customList.setTestType(mTestType);
+        customList.setTestType(mainApp.currentTestType);
         setListAdapter(customList);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //CursorWrapper content = (CursorWrapper) adapterView.getItemAtPosition(i);
-        displayLocation(i);
+        displayCalibrateItem(i);
 
     }
 
-    private void displayLocation(int index) {
+    private void displayCalibrateItem(int index) {
 
         if (mCalibrateItemFragment == null) {
             mCalibrateItemFragment = new CalibrateItemFragment();
@@ -166,7 +184,8 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Bundle args = new Bundle();
         args.putInt(getString(R.string.swatchIndex), index);
-        args.putInt(getString(R.string.currentTestTypeId), mTestType);
+        MainApp mainApp = (MainApp) getActivity().getApplicationContext();
+        args.putInt(getString(R.string.currentTestTypeId), mainApp.currentTestType);
         mCalibrateItemFragment.setArguments(args);
         ft.replace(R.id.container, mCalibrateItemFragment, "mCalibrateItemFragment");
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

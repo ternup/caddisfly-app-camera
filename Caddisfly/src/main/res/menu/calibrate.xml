@@ -14,7 +14,8 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android">
     <item
             android:id="@+id/menu_swatches"
             android:enabled="true"

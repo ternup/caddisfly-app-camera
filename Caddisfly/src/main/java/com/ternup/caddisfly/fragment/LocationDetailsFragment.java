@@ -53,7 +53,7 @@ import android.widget.TextView;
 import java.io.File;
 
 
-public class LocationDetailsFragment extends Fragment {
+public class LocationDetailsFragment extends Fragment implements ResultListFragment.ItemClicked {
 
     private static final int REQUEST_PHOTO = 6;
 
@@ -79,6 +79,8 @@ public class LocationDetailsFragment extends Fragment {
 
     private ResultListFragment resultListFragment;
 
+    public LocationDetailsFragment() {
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -100,9 +102,10 @@ public class LocationDetailsFragment extends Fragment {
                 final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
                         android.R.layout.select_dialog_singlechoice);
                 arrayAdapter.add(getString(R.string.fluoride));
+                arrayAdapter.add(getString(R.string.fluoride2));
                 arrayAdapter.add(getString(R.string.pH));
                 arrayAdapter.add(getString(R.string.bacteria));
-                builderSingle.setNegativeButton(android.R.string.cancel,
+                builderSingle.setNegativeButton(R.string.cancel,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -114,6 +117,22 @@ public class LocationDetailsFragment extends Fragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
+                                MainApp mainContext = (MainApp) getActivity()
+                                        .getApplicationContext();
+                                mainContext.currentTestType = which;
+                                switch (which) {
+                                    case Globals.FLUORIDE_INDEX:
+                                        mainContext.setFluorideSwatches();
+                                        break;
+                                    case Globals.FLUORIDE_2_INDEX:
+                                        mainContext.setFluoride2Swatches();
+                                        break;
+                                    case Globals.PH_INDEX:
+                                        mainContext.setPhSwatches();
+                                        break;
+                                }
+
                                 if (which != Globals.BACTERIA_INDEX) {
 
                                     MainApp mainApp = (MainApp) getActivity()
@@ -122,17 +141,42 @@ public class LocationDetailsFragment extends Fragment {
                                             .getDefaultSharedPreferences(getActivity());
 
                                     int minAccuracy = PreferencesUtils
-                                            .getInt(getActivity(), R.string.minPhotoQuality, 0);
+                                            .getInt(getActivity(), R.string.minPhotoQualityKey, 0);
 
                                     for (int i = 0; i < mainApp.rangeIntervals.size(); i++) {
                                         final int index = i * mainApp.rangeIncrementStep;
-                                        int accuracy = Math.max(0, sharedPreferences
+                                        int accuracy = Math.max(-1, sharedPreferences
                                                 .getInt(String
                                                         .format("%s-a-%s", String.valueOf(which),
-                                                                String.valueOf(index)), 100));
+                                                                String.valueOf(index)), -1));
                                         if (accuracy < minAccuracy) {
-                                            AlertUtils.showMessage(getActivity(), R.string.error,
-                                                    R.string.calibrate_error);
+                                            AlertUtils.showAlert(getActivity(), R.string.error,
+                                                    R.string.calibrate_error,
+                                                    new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(
+                                                                DialogInterface dialogInterface,
+                                                                int i) {
+                                                            Fragment fragment = CalibrateFragment
+                                                                    .newInstance();
+                                                            if (fragment != null) {
+                                                                FragmentManager fragmentManager
+                                                                        = getFragmentManager();
+                                                                FragmentTransaction ft
+                                                                        = fragmentManager
+                                                                        .beginTransaction();
+                                                                ft.replace(R.id.container, fragment,
+                                                                        String.valueOf(
+                                                                                Globals.CALIBRATE_SCREEN_INDEX));
+                                                                ft.setTransition(
+                                                                        FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                                                                ft.addToBackStack(null);
+                                                                ft.commit();
+                                                            }
+
+                                                        }
+                                                    }, null
+                                            );
                                             return;
                                         }
                                     }
@@ -150,37 +194,15 @@ public class LocationDetailsFragment extends Fragment {
 
         mPhotoImageView = (ImageView) view.findViewById(R.id.photoImageView);
 
+        resultListFragment = new ResultListFragment();
+        resultListFragment.parentFragment = this;
+/*
         resultListFragment = new ResultListFragment(new ResultListFragment.OnItemClickListener() {
             @Override
             public void onItemClick(String folder, long id) {
-                if (resultFragment == null) {
-                    resultFragment = new ResultFragment();
-                } else {
-
-                    //TODO: fix this
-                    try {
-                        resultFragment.setArguments(null);
-                    } catch (Exception e) {
-                        resultFragment = new ResultFragment();
-                    }
-                }
-
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.executePendingTransactions();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-
-                Bundle args = new Bundle();
-                args.putString(PreferencesHelper.FOLDER_NAME_KEY, folder);
-                args.putLong(PreferencesHelper.CURRENT_TEST_ID_KEY, id);
-
-                resultFragment.setArguments(args);
-                ft.replace(R.id.container, resultFragment, "resultFragment");
-                ft.setTransition(FragmentTransaction.TRANSIT_NONE);
-                ft.addToBackStack(null);
-                ft.commit();
-                fragmentManager.executePendingTransactions();
             }
         });
+*/
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
@@ -321,7 +343,6 @@ public class LocationDetailsFragment extends Fragment {
                         FileUtils.getStoragePath(getActivity(), mLocationId, "", false)));
                 break;
             case REQUEST_TEST:
-                // Make sure the request was successful
                 if (resultCode == Activity.RESULT_OK) {
                     String folderName = data.getStringExtra(PreferencesHelper.FOLDER_NAME_KEY);
                     long id = data.getLongExtra(PreferencesHelper.CURRENT_TEST_ID_KEY, -1);
@@ -353,4 +374,35 @@ public class LocationDetailsFragment extends Fragment {
         }
     }
 
+
+    @Override
+    public void resultItemClicked(String folder, long id) {
+        if (resultFragment == null) {
+            resultFragment = new ResultFragment();
+        } else {
+
+            //TODO: fix this
+            try {
+                resultFragment.setArguments(null);
+            } catch (Exception e) {
+                resultFragment = new ResultFragment();
+            }
+        }
+
+        FragmentManager fragmentManager = getFragmentManager();
+        //fragmentManager.executePendingTransactions();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+
+        Bundle args = new Bundle();
+        args.putString(PreferencesHelper.FOLDER_NAME_KEY, folder);
+        args.putLong(PreferencesHelper.CURRENT_TEST_ID_KEY, id);
+
+        resultFragment.setArguments(args);
+        ft.replace(R.id.container, resultFragment, "resultFragment");
+        ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+        ft.addToBackStack(null);
+        ft.commit();
+        fragmentManager.executePendingTransactions();
+
+    }
 }

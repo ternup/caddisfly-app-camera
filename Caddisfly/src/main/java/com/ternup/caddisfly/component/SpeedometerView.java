@@ -23,8 +23,6 @@ import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -131,7 +129,7 @@ public class SpeedometerView extends View {
 
     public void setSpeed(double speed) {
         if (speed < 0) {
-            throw new IllegalArgumentException("Non-positive value specified as a speed.");
+            speed = 0;
         }
         if (speed > maxSpeed) {
             speed = maxSpeed;
@@ -436,8 +434,8 @@ public class SpeedometerView extends View {
         txtPaint.setTextSize(labelTextSize);
         txtPaint.setTextAlign(Paint.Align.CENTER);
 
-        Bitmap mask = BitmapFactory.decodeResource(getResources(), R.drawable.spot_mask);
-        mask = Bitmap.createBitmap(mask, 0, 0, mask.getWidth(), mask.getHeight() / 2);
+        //Bitmap mask = BitmapFactory.decodeResource(getResources(), R.drawable.spot_mask);
+        //mask = Bitmap.createBitmap(mask, 0, 0, mask.getWidth(), mask.getHeight() / 2);
 
         Paint maskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         maskPaint.setDither(true);

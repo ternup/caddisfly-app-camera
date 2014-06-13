@@ -108,7 +108,7 @@ public class NotesFragment extends BaseFragment {
                 }
         );
 
-        mMultiLineEditText = new MultiLineEditText(getActivity(), "Notes");
+        mMultiLineEditText = new MultiLineEditText(getActivity(), getString(R.string.notes));
         //notesText = (EditText) rootView.findViewById(R.id.notesText);
         //mMultiLineEditText.getEditText().setImeActionLabel("Done", EditorInfo.IME_ACTION_DONE);
         mMultiLineEditText.getEditText().setOnEditorActionListener(this);

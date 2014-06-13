@@ -69,7 +69,7 @@ public class UpdateCheckTask extends AsyncTask<Void, Void, Void> {
                 .getBoolean(mContext, R.string.updateAvailable, false);
 
         if (!updateAvailable) {
-            if (checker.checkForUpdateByVersionCode(Globals.UPDATE_URL)) {
+            if (checker.checkForUpdateByVersionCode(Globals.UPDATE_CHECK_URL)) {
                 PreferencesUtils.setLong(mContext, R.string.lastUpdateCheck,
                         Calendar.getInstance().getTimeInMillis());
                 if (checker.isUpdateAvailable()) {
