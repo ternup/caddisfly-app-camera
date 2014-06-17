@@ -23,8 +23,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 19
-        versionCode 25
-        versionName "prototype 0.25 alpha"
+        versionCode 26
+        versionName "prototype 0.26 alpha"
         testPackageName "com.ternup.caddisfly.test"
         testInstrumentationRunner "com.ternup.caddisfly.test.TestRunner"
     }

@@ -497,8 +497,8 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
 
         mId = PreferencesHelper.getCurrentTestId(this, null, msg.getData());
 
-        double result = msg.getData().getDouble("resultValue", -1);
-        int accuracy = msg.getData().getInt("accuracy", 0);
+        double result = msg.getData().getDouble(MainApp.RESULT_VALUE_KEY, -1);
+        int accuracy = msg.getData().getInt(MainApp.QUALITY_KEY, 0);
         String message = getString(R.string.testFailedMessage);
 
         int minAccuracy = PreferencesUtils.getInt(this, R.string.minPhotoQualityKey, 0);
@@ -813,7 +813,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
         Context context = getApplicationContext();
 
         int samplingCount = PreferencesUtils.getInt(context, R.string.currentSamplingCountKey, 0);
-        return samplingCount >= PreferencesUtils.getInt(context, R.string.samplingCountKey, 1);
+        return samplingCount >= PreferencesUtils.getInt(context, R.string.samplingCountKey, 5);
     }
 
     private boolean hasTestCompleted(String folderName) {
@@ -830,7 +830,8 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
         if (sharedPreferences.getString("runningTestFolder", "").isEmpty()) {
             return true;
         } else {
-            ArrayList<String> imagePaths = FileUtils.getFilePaths(this, folderName, mLocationId);
+            ArrayList<String> imagePaths = FileUtils
+                    .getFilePaths(this, folderName, "/small/", mLocationId);
             mIndex = imagePaths.size();
             return imagePaths.size() >= mTestTotal;
         }

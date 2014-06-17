@@ -16,7 +16,7 @@
 
 package com.ternup.caddisfly.util;
 
-import com.ternup.caddisfly.app.Globals;
+import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.model.ColorInfo;
 
 import android.graphics.Bitmap;
@@ -42,22 +42,20 @@ public class ColorUtils {
     private static final double MAX_COLOR_DISTANCE = 50.0;
 
     public static Bundle getPpmValue(byte[] data, ArrayList<Integer> colorRange,
-            double rangeStepUnit, int rangeStartUnit) {
-        ColorInfo photoColor = getColorFromByteArray(data);
+            double rangeStepUnit, int rangeStartUnit, int length) {
+        ColorInfo photoColor = getColorFromByteArray(data, length);
         return analyzeColor(photoColor, colorRange, rangeStepUnit, rangeStartUnit);
     }
 
     public static Bundle getPpmValue(String filePath, ArrayList<Integer> colorRange,
-            double rangeStepUnit, int rangeStartUnit) {
-        ColorInfo photoColor = getColorFromImage(filePath);
+            double rangeStepUnit, int rangeStartUnit, int length) {
+        ColorInfo photoColor = getColorFromImage(filePath, length);
         return analyzeColor(photoColor, colorRange, rangeStepUnit, rangeStartUnit);
     }
 
-
-    private static byte[] resizeImage(byte[] input) {
+    private static byte[] resizeImage(byte[] input, int length) {
         Bitmap original = BitmapFactory.decodeByteArray(input, 0, input.length);
-        Bitmap resized = Bitmap.createScaledBitmap(original, Globals.IMAGE_SAMPLE_LENGTH,
-                Globals.IMAGE_SAMPLE_LENGTH, true);
+        Bitmap resized = Bitmap.createScaledBitmap(original, length, length, true);
 
         ByteArrayOutputStream blob = new ByteArrayOutputStream();
         resized.compress(Bitmap.CompressFormat.JPEG, 100, blob);
@@ -65,37 +63,36 @@ public class ColorUtils {
         return blob.toByteArray();
     }
 
-    static ColorInfo getColorFromByteArray(byte[] data) {
-        byte[] imageData = resizeImage(data);
+    static ColorInfo getColorFromByteArray(byte[] data, int length) {
+        byte[] imageData = resizeImage(data, length);
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
-        return getColorFromBitmap(bitmap);
-
+        return getColorFromBitmap(bitmap, length);
     }
 
-    static ColorInfo getColorFromBitmap(Bitmap bitmap) {
+    static ColorInfo getColorFromBitmap(Bitmap bitmap, int sampleLength) {
         int highestCount = 0;
-        int highCount = 0;
+        int goodPixelCount = 0;
 
         int commonColor = -1;
-        int count = 0;
-        int totalCounter = 0;
+        int totalPixels = 0;
+        int counter;
+        double quality = 0;
+        int colorsFound = 0;
 
         try {
 
             SparseIntArray m = new SparseIntArray();
 
-            int counter;
-            for (int i = 0; i < Math.min(bitmap.getWidth(), Globals.IMAGE_SAMPLE_LENGTH); i++) {
+            for (int i = 0; i < Math.min(bitmap.getWidth(), sampleLength); i++) {
 
-                for (int j = 0; j < Math.min(bitmap.getHeight(), Globals.IMAGE_SAMPLE_LENGTH);
-                        j++) {
-
-                    totalCounter++;
+                for (int j = 0; j < Math.min(bitmap.getHeight(), sampleLength); j++) {
 
                     int rgb = bitmap.getPixel(i, j);
                     int[] rgbArr = ColorUtils.getRGB(rgb);
 
                     if (ColorUtils.isNotGray(rgbArr)) {
+                        totalPixels++;
+
                         counter = m.get(rgb);
                         counter++;
                         m.put(rgb, counter);
@@ -109,25 +106,29 @@ public class ColorUtils {
             }
 
             bitmap.recycle();
-            count = m.size();
 
-            for (int i = 0; i < count; i++) {
+            colorsFound = m.size();
+            int goodColors = 0;
+
+            for (int i = 0; i < colorsFound; i++) {
                 double distance = getDistance(commonColor, m.keyAt(i));
 
                 if (distance < 10) {
-                    highCount += m.valueAt(i);
+                    goodColors++;
+                    goodPixelCount += m.valueAt(i);
                 }
             }
 
             m.clear();
+            double quality1 = ((double) goodPixelCount / totalPixels) * 100d;
+            double quality2 = ((double) goodColors / colorsFound) * 100d;
+            quality = Math.min(quality1, (100 - quality2));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        double colorPercentage = ((double) highCount / totalCounter) * 100d;
-
-        return new ColorInfo(commonColor, count, (int) colorPercentage);
+        return new ColorInfo(commonColor, colorsFound, goodPixelCount, (int) quality);
 
     }
 
@@ -137,7 +138,7 @@ public class ColorUtils {
      * @param filename The path to image file that is to be analyzed
      * @return The dominant color
      */
-    static ColorInfo getColorFromImage(String filename) {
+    static ColorInfo getColorFromImage(String filename, int length) {
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -145,8 +146,8 @@ public class ColorUtils {
 
         int height = options.outHeight;
         int width = options.outWidth;
-        int leftMargin = (width - Globals.IMAGE_SAMPLE_LENGTH) / 2;
-        int topMargin = (height - Globals.IMAGE_SAMPLE_LENGTH) / 2;
+        int leftMargin = (width - length) / 2;
+        int topMargin = (height - length) / 2;
         if (leftMargin < 0) {
             leftMargin = 0;
         }
@@ -164,11 +165,11 @@ public class ColorUtils {
         //options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         options1.inPreferQualityOverSpeed = true;
         options1.inPurgeable = true;
-        Rect re = new Rect(leftMargin, topMargin, leftMargin + Globals.IMAGE_SAMPLE_LENGTH,
-                topMargin + Globals.IMAGE_SAMPLE_LENGTH);
+        Rect re = new Rect(leftMargin, topMargin, leftMargin + length,
+                topMargin + length);
         Bitmap bitmap = decoder.decodeRegion(re, options1);
 
-        return getColorFromBitmap(bitmap);
+        return getColorFromBitmap(bitmap, length);
     }
 
     /**
@@ -182,17 +183,18 @@ public class ColorUtils {
             double rangeStepUnit, int rangeStartUnit) {
 
         Bundle bundle = new Bundle();
-        bundle.putInt("resultColor", photoColor.getColor()); //NON-NLS
+        bundle.putInt(MainApp.RESULT_COLOR_KEY, photoColor.getColor()); //NON-NLS
 
         double value = getNearestColorFromSwatchRange(photoColor.getColor(), colorRange,
                 rangeStepUnit);
 
         if (value < 0) {
-            bundle.putDouble("resultValue", -1); //NON-NLS
+            bundle.putDouble(MainApp.RESULT_VALUE_KEY, -1); //NON-NLS
 
         } else {
             value = value + rangeStartUnit;
-            bundle.putDouble("resultValue", (double) Math.round(value * 100) / 100); //NON-NLS
+            bundle.putDouble(MainApp.RESULT_VALUE_KEY,
+                    (double) Math.round(value * 100) / 100); //NON-NLS
             int color = colorRange.get((int) Math.round(value / rangeStepUnit));
 
             bundle.putInt("standardColor", color); //NON-NLS
@@ -210,9 +212,7 @@ public class ColorUtils {
                         Integer.toString(Color.blue(photoColor.getColor())))
         );
 
-        int colorAccuracy = Math.max(0, 100 - ((photoColor.getCount() / 5)));
-
-        bundle.putInt("accuracy", Math.min(colorAccuracy, photoColor.getDominantCount()));
+        bundle.putInt(MainApp.QUALITY_KEY, photoColor.getQuality());
 
         return bundle;
     }
@@ -274,6 +274,13 @@ public class ColorUtils {
         float result = (float) start
                 + ((((float) end - (float) start) / steps) * count);
         return (int) result;
+    }
+
+    public static String getColorRgbString(int color) {
+        return String.format("%s  %s  %s",
+                String.format("%d", Color.red(color)),
+                String.format("%d", Color.green(color)),
+                String.format("%d", Color.blue(color)));
     }
 
     public static int[] getRGB(int pixel) {

@@ -75,7 +75,7 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
 
     Button mNewTestButton;
 
-    private ResultFragment resultFragment;
+    private DetailsFragment resultFragment;
 
     private ResultListFragment resultListFragment;
 
@@ -167,7 +167,8 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
                                                                         .beginTransaction();
                                                                 ft.replace(R.id.container, fragment,
                                                                         String.valueOf(
-                                                                                Globals.CALIBRATE_SCREEN_INDEX));
+                                                                                Globals.CALIBRATE_SCREEN_INDEX)
+                                                                );
                                                                 ft.setTransition(
                                                                         FragmentTransaction.TRANSIT_FRAGMENT_FADE);
                                                                 ft.addToBackStack(null);
@@ -355,37 +356,16 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
     }
 
     private void displayResult(String folderName, long id) {
-        Fragment fragment = new ResultFragment();
-        if (fragment != null) {
 
-            Bundle args = new Bundle();
-            args.putString(PreferencesHelper.FOLDER_NAME_KEY, folderName);
-            args.putLong(PreferencesHelper.CURRENT_TEST_ID_KEY, id);
-            fragment.setArguments(args);
-
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.executePendingTransactions();
-            FragmentTransaction ft = fragmentManager.beginTransaction();
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.replace(R.id.container, fragment, Globals.RESULT_SCREEN_TAG);
-            ft.addToBackStack(null);
-            ft.commit();
-            fragmentManager.executePendingTransactions();
-        }
-    }
-
-
-    @Override
-    public void resultItemClicked(String folder, long id) {
         if (resultFragment == null) {
-            resultFragment = new ResultFragment();
+            resultFragment = new DetailsFragment();
         } else {
 
             //TODO: fix this
             try {
                 resultFragment.setArguments(null);
             } catch (Exception e) {
-                resultFragment = new ResultFragment();
+                resultFragment = new DetailsFragment();
             }
         }
 
@@ -394,15 +374,19 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
         FragmentTransaction ft = fragmentManager.beginTransaction();
 
         Bundle args = new Bundle();
-        args.putString(PreferencesHelper.FOLDER_NAME_KEY, folder);
+        args.putString(PreferencesHelper.FOLDER_NAME_KEY, folderName);
         args.putLong(PreferencesHelper.CURRENT_TEST_ID_KEY, id);
 
         resultFragment.setArguments(args);
-        ft.replace(R.id.container, resultFragment, "resultFragment");
+        ft.replace(R.id.container, resultFragment, Globals.RESULT_SCREEN_TAG);
         ft.setTransition(FragmentTransaction.TRANSIT_NONE);
         ft.addToBackStack(null);
         ft.commit();
-        fragmentManager.executePendingTransactions();
+        //fragmentManager.executePendingTransactions();
+    }
 
+    @Override
+    public void resultItemClicked(String folder, long id) {
+        displayResult(folder, id);
     }
 }

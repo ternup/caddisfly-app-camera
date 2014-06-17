@@ -178,9 +178,11 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
                 mCalibrateItemFragment = new CalibrateItemFragment();
             }
         }
+        //mCalibrateItemFragment = CalibrateItemFragment.newInstance();
 
         FragmentManager fragmentManager = getFragmentManager();
         assert fragmentManager != null;
+        fragmentManager.executePendingTransactions();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         Bundle args = new Bundle();
         args.putInt(getString(R.string.swatchIndex), index);

@@ -16,6 +16,8 @@
 
 package com.ternup.caddisfly.database;
 
+import com.ternup.caddisfly.app.MainApp;
+
 import android.database.sqlite.SQLiteDatabase;
 
 public class LocationTable {
@@ -31,7 +33,7 @@ public class LocationTable {
 
     public static final String COLUMN_LATITUDE = "latitude";
 
-    public static final String COLUMN_ACCURACY = "accuracy";
+    public static final String COLUMN_ACCURACY = MainApp.QUALITY_KEY;
 
     public static final String COLUMN_NAME = "name";
 

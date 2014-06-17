@@ -138,7 +138,7 @@ public class LineChartView extends View {
         paint.setTextAlign(Align.LEFT);
         paint.setTextSize(16);
         paint.setStrokeWidth(1);
-        for (int y = 0; y < maxValue; y += range) {
+        for (int y = 50; y < maxValue; y += range) {
             final int yPos = (int) getYPos(y, maxValue);
 
             // turn off anti alias for lines, they get crisper then
@@ -226,7 +226,7 @@ public class LineChartView extends View {
 
     private float getMax(Dynamics[] array) {
         float max = 0;
-        if (array != null) {
+        if (array != null && array.length > 0) {
             max = array[0].getPosition();
             for (int i = 1; i < array.length; i++) {
                 if (array[i].getPosition() > max) {
@@ -234,7 +234,7 @@ public class LineChartView extends View {
                 }
             }
         }
-        return max;
+        return max + 20;
     }
 
     private float getYPos(float value, float maxValue) {

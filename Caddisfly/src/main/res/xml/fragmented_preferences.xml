@@ -45,7 +45,7 @@
                 android:key="@string/autoAnalyzeKey"
                 android:title="@string/autoAnalyze"/>
         <com.ternup.caddisfly.component.NumberPickerPreference
-                android:defaultValue="80"
+                android:defaultValue="60"
                 android:dialogTitle="@string/minPhotoQuality"
                 android:summary="%"
                 android:key="minPhotoQuality"
@@ -102,15 +102,29 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/developer">
+        <com.ternup.caddisfly.component.NumberPickerPreference
+                android:defaultValue="200"
+                android:title="@string/photoSampleDimension"
+                android:dialogTitle="@string/photoSampleDimension"
+                android:dialogMessage="@string/photoSampleDimensionMessage"
+                android:key="photoSampleDimension"
+                android:max="700"
+                custom:min="10"
+                custom:interval="5"
+                />
+        <com.ternup.caddisfly.component.ConfirmCheckBoxPreference
+                android:title="@string/saveOriginalPhoto"
+                android:key="saveOriginalPhoto"
+                />
+        <CheckBoxPreference
+                android:title="@string/infinity"
+                android:key="camera_infinity"
+                />
         <com.ternup.caddisfly.component.CameraZoomPreference
                 android:dialogTitle="@string/cameraZoom"
                 android:title="@string/zoom"
                 android:key="camera_zoom"
                 android:defaultValue="100"
-                />
-        <CheckBoxPreference
-                android:title="@string/infinity"
-                android:key="camera_infinity"
                 />
     </PreferenceCategory>
 

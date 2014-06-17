@@ -28,7 +28,6 @@ import com.ternup.caddisfly.util.AlertUtils;
 import com.ternup.caddisfly.util.DataHelper;
 import com.ternup.caddisfly.util.DateUtils;
 import com.ternup.caddisfly.util.FileUtils;
-import com.ternup.caddisfly.util.NetworkUtils;
 import com.ternup.caddisfly.util.PreferencesHelper;
 import com.ternup.caddisfly.util.WebClient;
 
@@ -42,7 +41,6 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.database.Cursor;
@@ -55,8 +53,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -83,7 +79,7 @@ public class ResultFragment extends Fragment {
 
     private TextView mResultTextView;
 
-    private ImageView mResultIcon;
+    //private ImageView mResultIcon;
 
     private TextView mAddressText;
 
@@ -107,6 +103,8 @@ public class ResultFragment extends Fragment {
 
     private int totalCount = 0;
 
+    private TextView mTitleView;
+
     public ResultFragment() {
     }
 
@@ -124,8 +122,9 @@ public class ResultFragment extends Fragment {
         mContext = getActivity();
         mPpmText = (TextView) view.findViewById(R.id.ppmText);
         mDateView = (TextView) view.findViewById(R.id.testDate);
+        mTitleView = (TextView) view.findViewById(R.id.titleView);
         mResultTextView = (TextView) view.findViewById(R.id.result);
-        mResultIcon = (ImageView) view.findViewById(R.id.resultIcon);
+        //mResultIcon = (ImageView) view.findViewById(R.id.resultIcon);
 
         mAddressText = (TextView) view.findViewById(R.id.address1);
         mAddress2Text = (TextView) view.findViewById(R.id.address2);
@@ -144,46 +143,8 @@ public class ResultFragment extends Fragment {
 
         mLocationId = sharedPreferences.getLong(getString(R.string.currentLocationId), -1);
 
-        Button detailsButton = (Button) view.findViewById(R.id.detailsButton);
-        detailsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (detailsFragment == null) {
-                    detailsFragment = new DetailsFragment();
-                } else {
 
-                    //TODO: fix this
-                    try {
-                        detailsFragment.setArguments(null);
-                    } catch (Exception e) {
-                        detailsFragment = new DetailsFragment();
-                    }
-                }
-                Bundle args = new Bundle();
-                args.putString(PreferencesHelper.FOLDER_NAME_KEY, folderName);
-                args.putString("title", mTestType);
-                args.putLong(getString(R.string.currentTestId), mId);
-
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putLong(getString(R.string.currentTestId), mId);
-                editor.commit();
-
-                detailsFragment.setArguments(args);
-
-                FragmentManager fragmentManager = getFragmentManager();
-                assert fragmentManager != null;
-                fragmentManager.executePendingTransactions();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.replace(R.id.container, detailsFragment, "detailsFragment");
-                ft.addToBackStack(null);
-                ft.commit();
-                fragmentManager.executePendingTransactions();
-
-            }
-        });
-
-        Button deleteButton = (Button) view.findViewById(R.id.deleteButton);
+        /*Button deleteButton = (Button) view.findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -235,7 +196,7 @@ public class ResultFragment extends Fragment {
                 }
             }
         });
-
+*/
         ArrayList<String> filePaths = FileUtils
                 .getFilePaths(getActivity(), folderName, mLocationId);
 
@@ -476,17 +437,32 @@ public class ResultFragment extends Fragment {
                         cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_STREET)));
 
         mAddress2Text
-                .setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_TOWN)) + " " +
+                .setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_TOWN)) + ", " +
                         cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_CITY)));
 
         mAddress3Text
-                .setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_STATE)) + " " +
-                        cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_COUNTRY)));
+                .setText(
+                        cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_STATE)) + ", " +
+                                cursor.getString(
+                                        cursor.getColumnIndex(LocationTable.COLUMN_COUNTRY)));
 
+        if (mAddress2Text.getText().equals(", ")) {
+            mAddress2Text.setVisibility(View.GONE);
+        } else {
+            mAddress2Text.setVisibility(View.VISIBLE);
+        }
+        if (mAddress3Text.getText().equals(", ")) {
+            mAddress3Text.setVisibility(View.GONE);
+        } else {
+            mAddress3Text.setVisibility(View.VISIBLE);
+        }
         String[] sourceArray = getResources().getStringArray(R.array.source_types);
         int sourceType = cursor.getInt(cursor.getColumnIndex(LocationTable.COLUMN_SOURCE));
         if (sourceType > -1) {
             mSourceText.setText(sourceArray[sourceType]);
+            mSourceText.setVisibility(View.VISIBLE);
+        } else {
+            mSourceText.setVisibility(View.GONE);
         }
         Date date = new Date(cursor.getLong(cursor.getColumnIndex(TestTable.COLUMN_DATE)));
         SimpleDateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy");
@@ -499,7 +475,8 @@ public class ResultFragment extends Fragment {
                 cursor.getInt(cursor.getColumnIndex(TestTable.COLUMN_TYPE)));
         mTestTypeId = cursor.getInt(cursor.getColumnIndex(TestTable.COLUMN_TYPE));
 
-        mDateView.setText(mTestType + " : " + dateString);
+        mTitleView.setText(mTestType);
+        mDateView.setText(dateString);
 
         Double resultPpm = cursor.getDouble(cursor.getColumnIndex(TestTable.COLUMN_RESULT));
 
@@ -511,7 +488,7 @@ public class ResultFragment extends Fragment {
 
         if (resultPpm < 0) {
             mResultTextView.setText("0.0");
-            mResultIcon.setVisibility(View.GONE);
+            //mResultIcon.setVisibility(View.GONE);
             mPpmText.setVisibility(View.GONE);
         } else {
             mResultTextView.setText(String.format("%.2f", resultPpm));
@@ -534,9 +511,9 @@ public class ResultFragment extends Fragment {
                     .obtainStyledAttributes(((MainApp) context.getApplicationContext())
                             .CurrentTheme, new int[]{resourceAttribute});
             int attributeResourceId = a.getResourceId(0, 0);
-            mResultIcon.setImageResource(attributeResourceId);
+            //mResultIcon.setImageResource(attributeResourceId);
 
-            mResultIcon.setVisibility(View.VISIBLE);
+            //mResultIcon.setVisibility(View.VISIBLE);
             mPpmText.setVisibility(View.VISIBLE);
         }
 

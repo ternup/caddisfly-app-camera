@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+<resources>
+    <string name="app_name">केड्डीसफ्लै</string>
+    <string name="about">के बारे में</string>
+    <string name="settings">सेटिंग्स</string>
+    <string name="bacteriaTest">बैक्टीरिया टेस्ट</string>
+    <string name="swatches">नमूने</string>
+    <string name="fluoride">फ्लोराइड</string>
+    <string name="bacteria">बैक्टीरिया</string>
+    <string name="pH">पीएच</string>
+    <string name="calibrate">कैलिब्रेट</string>
+    <string name="working">काम कर रहा है</string>
+    <string name="analyzingWait">विश्लेषण …</string>
+    <string name="send">भेजें</string>
+    <string name="photo">फ़ोटो</string>
+    <string name="delete">हटाना</string>
+    <string name="areYouSure">क्या आपको यकीन है ?</string>
+    <string name="calibrate_info">एक मानक समाधान के साथ भरा एक कारतूस प्लेस और अपने मूल्य के लिए
+        परीक्षण शुरू
+    </string>
+    <string name="noData">अभी तक कोई भी स्थान. \n\nप्रेस \'न्यू स्थान\' बटन</string>
+    <string name="interval_info">प्रत्येक विश्लेषण के बाद इंतजार की अवधि</string>
+    <string name="details">विवरण</string>
+    <string name="selectNumberOfTests">विश्लेषण करने के लिए कितनी बार का चयन करें</string>
+    <string name="appUpdate">केड्डीसफ्लै अद्यतन</string>
+    <string name="askForUpdate">एक अद्यतन संस्करण उपलब्ध है , आप अब अद्यतन करना चाहते हैं?</string>
+    <string name="reset">रीसेट करें</string>
+    <string name="seconds">सेकंड्स</string>
+    <string name="minutes">मिनट</string>
+    <string name="checkUpdate">अपडेट जांच</string>
+    <string name="internetConnectionRequired">इंटरनेट कनेक्शन की आवश्यकता है . एक डाटा नेटवर्क से
+        कनेक्ट करें.
+    </string>
+    <string name="dataConnection">डेटा कनेक्शन</string>
+    <string name="testInProgress">प्रगति में टेस्ट</string>
+    <string name="alreadyHaveLatest">आप पहले से ही स्थापित केड्डीसफ्लै के नवीनतम संस्करण है</string>
+    <string name="ampersand">और</string>
+    <string name="remaining">शेष</string>
+    <string name="drawer_open">ओपन नेविगेशन दराज</string>
+    <string name="drawer_close">बंद नेविगेशन दराज</string>
+    <string name="result">परिणाम</string>
+    <string name="home">होम</string>
+    <string name="rgb">आरजीबी</string>
+    <string name="ppm">ppm</string>
+    <string name="selectTestType">परीक्षण प्रकार</string>
+    <string name="twentyFourHourTime">HH:mm:ss</string>
+    <string name="twelveHourTime">h:mm:ss a</string>
+    <string name="analysisCount">विश्लेषण की गिनती</string>
+    <string name="checkingForUpdates">अद्यतन के लिए जाँच हो रही है &#8230;</string>
+    <string name="place">जगह</string>
+    <string name="sourceType">स्रोत प्रकार</string>
+    <string name="selectSourceType">स्रोत प्रकार का चयन करें</string>
+    <string name="waterQualitySystem">जल गुणवत्ता प्रणाली</string>
+    <string name="starting">शुरू …</string>
+    <string name="general">सामान्य</string>
+    <string name="error">त्रुटि</string>
+    <string name="retry">पुन: प्रयास</string>
+    <string name="outOfRange">सीमा से बाहर रंग</string>
+    <string name="help">मदद</string>
+    <string name="soundAlarm">अलार्म जब हिला जरूरत</string>
+    <string name="shakeDevice">शेक के बाद विश्लेषण</string>
+    <string name="shakeDeviceSummary">समाधान का उचित मिश्रण के लिए , विश्लेषण करने से पहले हिल जा
+        करने के लिए उपकरण की आवश्यकता होती है .
+    </string>
+    <string name="soundAlarmSummary">एक हिला प्रत्येक विश्लेषण से पहले की जरूरत है यह बताने के लिए
+        एक अलार्म .
+    </string>
+    <string name="placeDeviceInStand">जारी रखने के लिए अपने रुख में फोन रखें</string>
+    <string name="shakeToContinue">कारतूस सही ढंग से रखा गया है सुनिश्चित करें और फिर जारी रखने के
+        लिए इस उपकरण हिला
+    </string>
+    <string name="shakeMe">मुझे हिला</string>
+    <string name="selectedWillBeDeleted">चयनित आइटम को हटा दिया जाएगा</string>
+    <string name="language">भाषा</string>
+    <string name="interval">अंतराल</string>
+    <string name="intervalMinutes">अंतराल (मिनट)</string>
+    <string name="futureFeature">भविष्य सुविधा</string>
+    <string name="featureNotImplemented">सुविधा अभी तक लागू नहीं किया</string>
+    <string name="ok">ठीक</string>
+    <string name="cancel">रद्द करें</string>
+    <string name="prototype">प्रोटोटाइप</string>
+    <string name="alpha">अल्फा</string>
+
+    <!-- time ago strings -->
+    <string name="just_now">अभी</string>
+    <string name="yesterday">कल</string>
+    <string name="locale">स्थानीय</string>
+    <string name="testFailedMessage">टेस्ट में विफल रहा है. कारतूस सही ढंग से रखा गया है की जाँच
+        करें और पुन: प्रयास करें.
+    </string>
+    <string name="testFailedQualityMessage">टेस्ट में विफल रहा है. %d%% नीचे तस्वीर की गुणवत्ता.
+        कारतूस सही ढंग से रखा गया है की जाँच करें और पुन: प्रयास करें.
+    </string>
+
+    <string name="location">स्थान</string>
+    <string name="address">पता</string>
+    <string name="dayTheme">दिन रंग</string>
+    <string name="nightTheme">सांझ रंग</string>
+    <string name="newLocation">नए स्थान</string>
+    <string name="notes">नोट्स</string>
+    <string name="selectLocation">स्थान का चयन करें या नया जोड़</string>
+    <string name="locationDetails">स्थान के विवरण</string>
+
+    <string-array name="source_types">
+        <item>हाथ पम्प</item>
+        <item>नलकूप</item>
+        <item>नदी / धारा</item>
+        <item>ओपन खैर</item>
+        <item>घरेलू ठोकर</item>
+        <item>जलाशय / तालाब / झील</item>
+        <item>औद्योगिक</item>
+        <item>अन्य</item>
+    </string-array>
+
+    <string name="camera">कैमरा</string>
+    <string name="cameraZoom">कैमरा जूम</string>
+    <string name="zoom">ज़ूम</string>
+    <string name="done">पूर्ण</string>
+    <string name="other">अन्य</string>
+    <string name="locations">स्थान</string>
+    <string name="startNewTest">प्रारंभ नई टेस्ट</string>
+    <string name="closeLocationSurvey">इस सर्वेक्षण में बंद कर दिया जाएगा और दर्ज किए गए डेटा
+    </string>
+    <string name="closeSurvey">बंद सर्वेक्षण</string>
+    <string name="incomplete">अधूरा</string>
+    <string name="incompleteMessage">एक जगह का नाम दर्ज करें</string>
+    <string name="gettingUpdate">हो रही केड्डीसफ्लै अद्यतन…</string>
+    <string name="calibrate_error">उपकरण अभी तक कैलिब्रेट नहीं या त्रुटियाँ हैं. परीक्षण चलाने से
+        पहले इस उपकरण कैलिब्रेट करो
+    </string>
+    <string name="result_sent">टेस्ट विवरण सफलतापूर्वक सर्वर के लिए भेजा</string>
+    <string name="success">सफलता</string>
+    <string name="send_failed">कारण सर्वर समस्या करने में विफल भेजें . बाद में पुन: प्रयास करें .
+    </string>
+    <string name="productName">Akvo FLOW</string>
+    <string name="enableInternet">वायरलेस इंटरनेट या मोबाइल डेटा कनेक्शन सक्षम करें</string>
+    <string name="noInternet">इंटरनेट कनेक्शन नहीं मिला</string>
+    <string name="photoQuality">फोटो गुणवत्ता</string>
+    <string name="photoQualityError">त्रुटि: फोटो गुणवत्ता भी कम</string>
+    <string name="waterSourceLocation">जल स्रोत स्थान</string>
+    <string name="standNearWaterSource">पानी के स्रोत के पास खड़े हो जाओ.</string>
+    <string name="ensureClearViewForGPS">जीपीएस संकेतों को प्राप्त करने के लिए आकाश की एक स्पष्ट
+        दृष्टिकोण सुनिश्चित करते हैं कि
+    </string>
+    <string name="getLocation">स्थान करें</string>
+    <string name="gettingLocation">स्थान हो रही है…</string>
+    <string name="takeSourcePhoto">पानी के स्रोत के फोटो ले लो</string>
+    <string name="connecting">जुड़ रहा है…</string>
+    <string name="analyze">विश्लेषण</string>
+    <string name="playCameraSound">कैमरा ध्वनि</string>
+    <string name="fluoride2">फ्लोराइड आसान</string>
+    <string name="autoAnalyze">स्वचालित फोटो</string>
+    <string name="street">सड़क</string>
+    <string name="town">शहर</string>
+    <string name="city">नगर</string>
+    <string name="state">राज्य</string>
+    <string name="country">देश</string>
+    <string name="minPhotoQuality">न्यूनतम फोटो गुणवत्ता</string>
+    <string name="cloudy">धुंधला</string>
+    <string name="torchMode">मशाल मोड</string>
+    <string name="infinity">अनन्तता</string>
+    <string name="clickAnalyze">विश्लेषण क्लिक करें</string>
+    <string name="notCalibrated">कैलिब्रेट नहीं</string>
+    <string name="edit">बदलना</string>
+    <string name="samplingCount">फोटो गणना</string>
+    <string name="selectNumberOfSamples">बार की संख्या समाधान विश्लेषण किया जाना चाहिए</string>
+    <string name="developer">विकासक</string>
+    <string name="samplingSummary">तस्वीर का प्रत्येक विश्लेषण के लिए ले जाया जाएगा. परिणाम एक औसत
+        हो जाएगा
+    </string>
+    <string name="enterColorRgb">रंग आरजीबी भरें</string>
+    <string name="saveOriginalPhoto">मूल तस्वीर रखना</string>
+    <string name="saveOriginalPhotoConfirm">चेतावनी: ध्यान में रखते हुए मूल फोटो अपने फोन पर
+        अंतरिक्ष के एक बहुत का उपयोग करेगा.
+    </string>
+    <string name="photoSampleDimensionMessage">विश्लेषण के लिए फोटो की फसल के लिए लंबाई का चयन करें
+    </string>
+    <string name="photoSampleDimension">फोटो नमूना क्षेत्र आयाम</string>
+</resources>
+

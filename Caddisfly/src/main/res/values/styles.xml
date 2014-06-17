@@ -42,10 +42,6 @@
         <item name="buttonStyle">@drawable/button_style_light</item>
         <item name="listButton">@drawable/list_button_style_light</item>
         <item name="arrowRight">@drawable/arrow_right_light</item>
-        <item name="drink">@drawable/drink_light</item>
-        <item name="cook">@drawable/cook_light</item>
-        <item name="bath">@drawable/bath_light</item>
-        <item name="wash">@drawable/wash_light</item>
         <item name="alarm">@drawable/alarm_light</item>
         <item name="listCard">@drawable/list_card_light</item>
     </style>
@@ -64,10 +60,6 @@
         <item name="buttonStyle">@drawable/button_style_dark</item>
         <item name="listButton">@drawable/button_style_dark</item>
         <item name="arrowRight">@drawable/arrow_right</item>
-        <item name="drink">@drawable/drink</item>
-        <item name="cook">@drawable/cook</item>
-        <item name="bath">@drawable/bath</item>
-        <item name="wash">@drawable/wash</item>
         <item name="alarm">@android:drawable/ic_lock_idle_alarm</item>
         <item name="listCard">@drawable/list_card_dark</item>
     </style>

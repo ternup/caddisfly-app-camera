@@ -16,222 +16,113 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
 
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cameraPreview">
+    </FrameLayout>
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/cameraPreview">
-        </FrameLayout>
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="?cardBackground">
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="?cardBackground">
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_horizontal"
-                    android:weightSum="2">
-                <Button
-                        android:id="@+id/colorButton"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:background="#ffff00"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:layout_weight="1"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="8dp"
-                        android:textColor="@android:color/holo_red_dark"/>
-                <Button
-                        android:id="@+id/valueButton"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:textSize="60sp"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="10dp"/>
-
-
-            </LinearLayout>
-            <TextView
-                    android:id="@+id/rgbText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:textIsSelectable="false"/>
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_horizontal"
-                    android:paddingTop="20dp"
-                    android:weightSum="2">
-                <Button
-                        android:id="@+id/resetButton"
-                        android:background="@drawable/blue_button"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:textColor="#fff"
-                        android:text="@string/edit"
-                        android:enabled="true"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        >
-                </Button>
-                <Button
-                        android:id="@+id/startButton"
-                        android:background="@drawable/green_button"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:textColor="#eee"
-                        android:text="@string/calibrate"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="15dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp">
-                </Button>
-
-            </LinearLayout>
-            <TextView
-                    android:id="@+id/errorQualityText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/photoQualityError"
-                    android:textSize="16sp"
-
-                    android:textColor="@android:color/holo_red_dark"
-                    android:padding="3dp"
-                    android:visibility="gone"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
-        </LinearLayout>
-
-        <LinearLayout
-                android:id="@+id/qualityLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="?cardBackground"
-                android:visibility="gone">
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_horizontal"
-                    android:weightSum="2">
-                <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/photoQuality"
-                        android:textSize="20sp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_weight="1"/>
-                <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:id="@+id/qualityTextView"
-                        android:gravity="right"
-                        android:layout_gravity="right"
-                        android:layout_weight="1"/>
-
-            </LinearLayout>
-
-            <com.ternup.caddisfly.component.SpeedometerView
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:paddingTop="-50dp"
-                    android:id="@+id/speedometer"
-                    />
-        </LinearLayout>
-
-
-        <LinearLayout
-                android:id="@+id/photoLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:paddingTop="20dp"
-                android:scrollbars="none"
-                android:background="?cardBackground"
-                android:visibility="gone">
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/photo"
-                    android:textSize="20sp"
-                    android:paddingLeft="20dp"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
-            <ImageView
-                    android:id="@+id/photoImageView"
-                    android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:weightSum="2">
+            <Button
+                    android:id="@+id/colorButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:scaleType="fitCenter"
-                    android:contentDescription="@null"
-                    />
+                    android:background="#ffff00"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@android:color/holo_red_dark"/>
+            <Button
+                    android:id="@+id/valueButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textSize="60sp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"/>
         </LinearLayout>
+        <TextView
+                android:id="@+id/rgbText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textIsSelectable="false"/>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="20dp"
-                android:paddingRight="15dp"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
                 android:paddingTop="20dp"
-                android:paddingBottom="40dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="80dp"
-                android:background="?cardBackground"
-                android:visibility="gone">
-            <TextView
-                    android:layout_width="match_parent"
+                android:weightSum="2">
+            <Button
+                    android:id="@+id/resetButton"
+                    android:background="@drawable/blue_button"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:textColor="#fff"
+                    android:text="@string/edit"
+                    android:enabled="true"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/notes"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
-            <TextView
-                    android:id="@+id/notesTextView"
-                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    >
+            </Button>
+            <Button
+                    android:id="@+id/startButton"
+                    android:background="@drawable/green_button"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:textColor="#eee"
+                    android:text="@string/calibrate"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:lineSpacingExtra="2sp"
-                    />
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp">
+            </Button>
+
         </LinearLayout>
-        <FrameLayout
-                android:id="@+id/container"
+        <TextView
+                android:id="@+id/errorQualityText"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"
+                android:text="@string/photoQualityError"
+                android:textSize="16sp"
+
+                android:textColor="@android:color/holo_red_dark"
+                android:padding="3dp"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
     </LinearLayout>
-</ScrollView>
+</LinearLayout>
+

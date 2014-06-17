@@ -17,13 +17,14 @@
 package com.ternup.caddisfly.adapter;
 
 import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.util.ColorUtils;
+import com.ternup.caddisfly.util.ImageUtils;
 import com.ternup.caddisfly.util.PreferencesUtils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,9 +34,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -45,8 +43,6 @@ import java.util.regex.Pattern;
 
 public class GalleryListAdapter extends BaseAdapter {
 
-    private static final int IMAGE_SIDE_LENGTH = 80;
-
     private final LayoutInflater mInflater;
 
     private final Activity mActivity;
@@ -55,46 +51,33 @@ public class GalleryListAdapter extends BaseAdapter {
 
     private final long mTestId;
 
+    private final int mTestType;
+
+    private final boolean mShowResult;
+
     private ArrayList<String> mFilePaths = new ArrayList<String>();
 
-    public GalleryListAdapter(Activity activity, long testId, ArrayList<String> filePaths) {
+    public GalleryListAdapter(Activity activity, int testType, long testId,
+            ArrayList<String> filePaths, boolean showResult) {
         mContext = activity;
         mInflater = activity.getLayoutInflater();
         mFilePaths = filePaths;
         mActivity = activity;
         mTestId = testId;
+        mTestType = testType;
+        mShowResult = showResult;
     }
 
     /*
      * Resizing image size
      */
     private static Bitmap decodeFile(String filePath) {
-        try {
-
-            File f = new File(filePath);
-
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(new FileInputStream(f), null, o);
-
-            int scale = 1;
-            while (o.outWidth / scale / 2 >= GalleryListAdapter.IMAGE_SIDE_LENGTH
-                    && o.outHeight / scale / 2 >= GalleryListAdapter.IMAGE_SIDE_LENGTH) {
-                scale *= 2;
-            }
-
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return ImageUtils.decodeFile(filePath);
     }
 
     @Override
     public int getCount() {
-        return this.mFilePaths.size();
+        return Math.max(1, this.mFilePaths.size());
     }
 
     @Override
@@ -113,24 +96,32 @@ public class GalleryListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View view, ViewGroup parent) {
 
+        if (mFilePaths.size() <= position) {
+            if (view == null) {
+                view = new View(mContext);
+            }
+            return view;
+        }
         ViewHolder holder;
         final String file = mFilePaths.get(position);
 
-        if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.row_gallery, parent, false);
+        if (view == null) {
+            view = mInflater.inflate(R.layout.row_gallery, parent, false);
             holder = new ViewHolder();
-            holder.serialNumber = (TextView) convertView.findViewById(R.id.serialNumberText);
-            holder.icon = (ImageView) convertView.findViewById(R.id.photoImageView);
-            holder.timestamp = (TextView) convertView.findViewById(R.id.dateText);
-            holder.result = (TextView) convertView.findViewById(R.id.resultText);
-            holder.progress = (ProgressBar) convertView.findViewById(R.id.progressBar);
+            holder.serialNumber = (TextView) view.findViewById(R.id.serialNumberText);
+            holder.icon = (ImageView) view.findViewById(R.id.photoImageView);
+            holder.timestamp = (TextView) view.findViewById(R.id.dateText);
+            holder.result = (TextView) view.findViewById(R.id.resultText);
+            //holder.color = (TextView) view.findViewById(R.id.rgbText);
+            //holder.quality =(TextView) view.findViewById(R.id.qualityText);
+            holder.progress = (ProgressBar) view.findViewById(R.id.progressBar);
 
-            convertView.setTag(holder);
+            view.setTag(holder);
 
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            holder = (ViewHolder) view.getTag();
         }
 
         holder.position = position;
@@ -184,20 +175,63 @@ public class GalleryListAdapter extends BaseAdapter {
                         DateFormat tf = new SimpleDateFormat(timePattern);
                         v.timestamp.setText(tf.format(cal.getTime()));
 
-                        double result = PreferencesUtils.getDouble(mContext,
-                                String.format(mContext.getString(R.string.sampleResult), mTestId,
-                                        position + 1));
-                        if (result < 0) {
+                        double result;
+                        result = PreferencesUtils.getDouble(mContext,
+                                String.format(mContext.getString(R.string.resultValueKey),
+                                        mTestType, mTestId, position)
+                        );
+                        int color = PreferencesUtils.getInt(mContext,
+                                String.format(mContext.getString(R.string.resultColorKey),
+                                        mTestType, mTestId,
+                                        position), -2
+                        );
+                        int quality = PreferencesUtils.getInt(mContext,
+                                String.format(mContext.getString(R.string.resultQualityKey),
+                                        mTestType, mTestId,
+                                        position), 0
+                        );
+                        if (color == -2) {
+                            v.result.setText("");
+                        } else if (color == -1) {
                             v.result.setText(R.string.error);
                         } else {
-                            v.result.setText(String.valueOf(result));
+                            if (mShowResult) {
+                                if (result < 0) {
+                                    v.result.setText(R.string.outOfRange);
+                                } else {
+                                    v.result.setText(
+                                            String.format("%.1f (%d%%) rgb:%s", result, quality,
+                                                    ColorUtils.getColorRgbString(color))
+                                    );
+                                }
+                            } else {
+                                v.result.setText(
+                                        String.format("(%d%%) rgb:%s", quality,
+                                                ColorUtils.getColorRgbString(color))
+                                );
+                            }
                         }
+
+/*
+                        if (result < 0) {
+                            v.color.setText(R.string.error);
+                        } else {
+                            v.color.setText(String.format("rgb: %s", ColorUtils.getColorRgbString(color)));
+                        }
+
+
+                        if (quality < 0) {
+                            v.quality.setText(R.string.error);
+                        } else {
+                            v.quality.setText(String.format("quality: %d%%", quality));
+                        }
+*/
 
                     }
                 }
             }
         }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, holder);
-        return convertView;
+        return view;
     }
 
     static class ViewHolder {
@@ -207,6 +241,10 @@ public class GalleryListAdapter extends BaseAdapter {
         TextView timestamp;
 
         TextView result;
+
+        //TextView color;
+
+        //TextView quality;
 
         ImageView icon;
 

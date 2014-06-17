@@ -30,7 +30,7 @@ public class FileUtils {
     public static String getStoragePath(Context context, long locationId, String folderName,
             boolean create) {
 
-        if (folderName != null && folderName.contains(File.separator)) {
+        if (folderName != null && folderName.startsWith(File.separator)) {
             return folderName;
         }
 

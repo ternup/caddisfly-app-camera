@@ -35,10 +35,19 @@
     <string name="minPhotoQualityKey">minPhotoQuality</string>
     <string name="cameraZoomPref">cameraZoomPref</string>
 
-    <string name="currentSamplingCountKey">currentSamplingCount</string>
-    <string name="samplingIndexKey" formatted="false">sampling_%d</string>
     <string name="samplingCountKey">samplingCount</string>
-    <string name="sampleResult" formatted="false">sampleResult_%d_%d</string>
+    <string name="currentSamplingCountKey">currentSamplingCount</string>
+    <string name="samplingIndexKey" formatted="false">sampling_result_%d</string>
+    <string name="samplingColorIndexKey" formatted="false">sampling_color_%d</string>
+    <string name="samplingQualityIndexKey">sampling_quality_%d</string>
+
+    <string name="resultValueKey" formatted="false">result_%d_%d_%d</string>
+    <string name="resultColorKey" formatted="false">resultColor_%d_%d_%d</string>
+    <string name="resultQualityKey" formatted="false">resultQuality_%d_%d_%d</string>
 
     <string name="locationUpdatesRequested">locationUpdatesRequested</string>
+    <string name="saveOriginalPhotoKey">saveOriginalPhoto</string>
+
+    // width and height of sampled image
+    <string name="photoSampleDimensionKey">photoSampleDimension</string>
 </resources>

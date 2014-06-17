@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+
+<resources>
+    <plurals name="minutes">
+        <item quantity="one">एक मिनट पहल</item>
+        <item quantity="other">%d मिनट पहल</item>
+    </plurals>
+
+    <plurals name="hours">
+        <item quantity="one">एक घंट पहले</item>
+        <item quantity="other">%d घंट पहले</item>
+    </plurals>
+
+    <plurals name="days">
+        <item quantity="one">एक दिन पहल</item>
+        <item quantity="other">%d दिन पहल</item>
+    </plurals>
+</resources>

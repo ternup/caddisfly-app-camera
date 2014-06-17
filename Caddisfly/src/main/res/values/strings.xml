@@ -126,7 +126,7 @@
 
     <string name="camera">Camera</string>
     <string name="cameraZoom">Camera Zoom</string>
-    <string name="zoom">Zoom</string>
+    <string name="zoom">Zoom (obsolete)</string>
     <string name="done">Done</string>
     <string name="other">Other</string>
     <string name="locations">Locations</string>
@@ -180,4 +180,11 @@
         average.
     </string>
     <string name="enterColorRgb">Enter color rgb</string>
+    <string name="saveOriginalPhoto">Save Original Photo</string>
+    <string name="saveOriginalPhotoConfirm">Warning: Saving original photos will use a lot of space
+        on your phone.
+    </string>
+    <string name="photoSampleDimensionMessage">Select the length to crop the photo for analysis
+    </string>
+    <string name="photoSampleDimension">Photo Sample Dimension</string>
 </resources>

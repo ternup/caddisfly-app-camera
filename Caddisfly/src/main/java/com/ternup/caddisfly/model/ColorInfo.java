@@ -24,10 +24,13 @@ public class ColorInfo {
 
     final int mDominantCount;
 
-    public ColorInfo(int color, int count, int dominantCount) {
+    final int mQuality;
+
+    public ColorInfo(int color, int count, int dominantCount, int quality) {
         mColor = color;
         mCount = count;
         mDominantCount = dominantCount;
+        mQuality = quality;
     }
 
     public int getColor() {
@@ -40,5 +43,9 @@ public class ColorInfo {
 
     public int getDominantCount() {
         return mDominantCount;
+    }
+
+    public int getQuality() {
+        return mQuality;
     }
 }

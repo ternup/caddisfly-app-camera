@@ -32,6 +32,12 @@ import java.util.Locale;
 
 public class MainApp extends Application {
 
+    public static final String RESULT_VALUE_KEY = "resultValue";
+
+    public static final String RESULT_COLOR_KEY = "resultColor";
+
+    public static final String QUALITY_KEY = "accuracy";
+
     //Global color lists
     public final ArrayList<Integer> presetColorList = new ArrayList<Integer>();
 

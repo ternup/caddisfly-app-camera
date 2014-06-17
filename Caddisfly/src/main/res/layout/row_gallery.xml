@@ -30,7 +30,7 @@
             android:orientation="vertical"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:background="?listCard">
+            android:background="?cardBackground">
 
         <TextView
                 tools:text="10 March 2013, 10:30 AM"
@@ -40,7 +40,7 @@
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_horizontal"
                 android:focusable="false"
-                android:textSize="19sp"
+                android:textSize="17sp"
                 android:layout_marginTop="5dp"
                 android:alpha="0.8"
                 android:textIsSelectable="false"/>
@@ -52,17 +52,20 @@
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_horizontal"
                 android:focusable="false"
-                android:textSize="19sp"
+                android:textSize="18sp"
                 android:layout_marginTop="5dp"
                 android:textIsSelectable="false"/>
         <ImageView
                 android:id="@+id/photoImageView"
-                android:layout_width="250dp"
-                android:layout_height="200dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_gravity="center_horizontal"
                 android:contentDescription="@null"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:background="#00000000"
                 android:visibility="gone"/>
 
         <ProgressBar

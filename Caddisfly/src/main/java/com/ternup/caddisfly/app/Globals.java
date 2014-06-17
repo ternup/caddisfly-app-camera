@@ -41,11 +41,11 @@ public class Globals {
 
     // Caddisfly update check path
     public static final String UPDATE_CHECK_URL
-            = "http://caddisfly.ternup.com/ternupapp/v.txt?check=25";
+            = "http://caddisfly.ternup.com/ternupapp/v.txt?check=26";
 
     // Caddisfly update path
     public static final String UPDATE_URL
-            = "http://caddisfly.ternup.com/ternupapp/cadapp_update.apk?check=25";
+            = "http://caddisfly.ternup.com/ternupapp/cadapp_update.apk?check=26";
 
     public static final String DATABASE_NAME = "caddisfly";
 
@@ -77,10 +77,7 @@ public class Globals {
     public static final int BACTERIA_INDEX = 3;
 
     // width and height of cropped image
-    public static final int IMAGE_CROP_LENGTH = 600;
-
-    // width and height of sampled image
-    public static final int IMAGE_SAMPLE_LENGTH = 300;
+    public static final int IMAGE_CROP_LENGTH = 300;
 
     // folder for calibration photos
     public static final String CALIBRATE_FOLDER = "calibrate";

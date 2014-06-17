@@ -21,6 +21,8 @@ import com.ternup.caddisfly.app.Globals;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
+import android.graphics.Canvas;
+import android.graphics.Path;
 import android.graphics.Rect;
 
 import java.io.File;
@@ -31,8 +33,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class ImageUtils {
-
-    private static final int IMAGE_SIDE_LENGTH = 400;
 
     private ImageUtils() {
     }
@@ -91,8 +91,8 @@ public class ImageUtils {
             BitmapFactory.decodeStream(new FileInputStream(f), null, o);
 
             int scale = 1;
-            while (o.outWidth / scale / 2 >= IMAGE_SIDE_LENGTH
-                    && o.outHeight / scale / 2 >= IMAGE_SIDE_LENGTH) {
+            while (o.outWidth / scale / 2 >= Globals.IMAGE_CROP_LENGTH
+                    && o.outHeight / scale / 2 >= Globals.IMAGE_CROP_LENGTH) {
                 scale *= 2;
             }
 
@@ -123,4 +123,24 @@ public class ImageUtils {
         }
     }
 
+    public static Bitmap getRoundedShape(Bitmap scaleBitmapImage, int diameter) {
+
+        Bitmap targetBitmap = Bitmap.createBitmap(diameter,
+                diameter, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(targetBitmap);
+        Path path = new Path();
+        path.addCircle(((float) diameter - 1) / 2,
+                ((float) diameter - 1) / 2,
+                (((float) diameter) / 2),
+                Path.Direction.CCW
+        );
+
+        canvas.clipPath(path);
+        targetBitmap.setHasAlpha(true);
+        canvas.drawBitmap(scaleBitmapImage,
+                new Rect(0, 0, scaleBitmapImage.getWidth(), scaleBitmapImage.getHeight()),
+                new Rect(0, 0, diameter, diameter), null
+        );
+        return targetBitmap;
+    }
 }

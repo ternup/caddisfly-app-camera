@@ -90,7 +90,6 @@ public class PreferencesUtils {
         return sharedPreferences.getInt(keyId, defaultValue);
     }
 
-
     /**
      * Sets an integer value from preferences
      *
@@ -99,14 +98,16 @@ public class PreferencesUtils {
      * @param value   the value
      */
     public static void setInt(Context context, int keyId, int value) {
+        setInt(context, getKey(context, keyId), value);
+    }
+
+    public static void setInt(Context context, String keyId, int value) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         Editor editor = sharedPreferences.edit();
-        editor.putInt(getKey(context, keyId), value);
+        editor.putInt(keyId, value);
         editor.commit();
-
     }
-
 
     public static float getFloat(Context context, int keyId, float defaultValue) {
         return PreferencesUtils.getFloat(context, getKey(context, keyId), defaultValue);
@@ -170,12 +171,15 @@ public class PreferencesUtils {
      * @param value   the value
      */
     public static void setLong(Context context, int keyId, long value) {
+        setLong(context, getKey(context, keyId), value);
+    }
+
+    public static void setLong(Context context, String keyId, long value) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         Editor editor = sharedPreferences.edit();
-        editor.putLong(getKey(context, keyId), value);
+        editor.putLong(keyId, value);
         editor.commit();
-
     }
 
     /**
@@ -219,10 +223,14 @@ public class PreferencesUtils {
         editor.commit();
     }
 
-    public static boolean contains(Context context, int keyId) {
+    public static boolean contains(Context context, String keyId) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        return sharedPreferences.contains(getKey(context, keyId));
+        return sharedPreferences.contains(keyId);
+    }
+
+    public static boolean contains(Context context, int keyId) {
+        return contains(context, getKey(context, keyId));
     }
 
     public static double getDouble(Context context, String keyId) {
@@ -231,4 +239,5 @@ public class PreferencesUtils {
         return Double
                 .longBitsToDouble(sharedPreferences.getLong(keyId, Double.doubleToRawLongBits(0)));
     }
+
 }
