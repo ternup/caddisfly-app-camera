@@ -16,26 +16,15 @@
 
 package com.ternup.caddisfly.util;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.Globals;
-
 import android.content.Context;
 
-public class DataHelper {
+public class DataStorage {
 
-    public static String getTestTitle(Context context, int testType) {
-        switch (testType) {
-            case Globals.FLUORIDE_INDEX:
-                return context.getString(R.string.fluoride);
-            case Globals.FLUORIDE_2_INDEX:
-                return context.getString(R.string.fluoride2);
-            case Globals.PH_INDEX:
-                return context.getString(R.string.pH);
-            case Globals.BACTERIA_INDEX:
-                return context.getString(R.string.bacteria);
-            default:
-                return context.getString(R.string.fluoride);
-        }
-
+    public static long saveResult(Context mContext, String folder, int testType, double result) {
+        return 10;
     }
+
+    public static void deleteRecord(Context context,long id, long locationId, String folderName) {
+    }
+
 }

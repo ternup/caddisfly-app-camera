@@ -40,7 +40,7 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
     private int mTestType = Globals.FLUORIDE_INDEX;
 
     public CalibrateListAdapter(Activity activity, Double[] rangeArray) {
-        super(activity, R.layout.row_swatch, rangeArray);
+        super(activity, R.layout.row_calibrate, rangeArray);
         this.activity = activity;
     }
 

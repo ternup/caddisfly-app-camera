@@ -30,7 +30,9 @@ import android.util.SparseIntArray;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Set of utility functions for color calculations and analysis
@@ -297,5 +299,37 @@ public class ColorUtils {
                 || Math.abs(rgb[0] - rgb[2]) > GRAY_TOLERANCE;
     }
 
+    private static final double LM_RED_COEFFICIENT = 0.2126;
+    private static final double LM_GREEN_COEFFICIENT = 0.7152;
+    private static final double LM_BLUE_COEFFICIENT = 0.0722;
+    //Reference: https://gist.github.com/alexfu/64dc37b3343b9dead0c4
+    public static int calculateRelativeLuminance(int color) {
+        int red = (int) (Color.red(color) * LM_RED_COEFFICIENT);
+        int green = (int) (Color.green(color) * LM_GREEN_COEFFICIENT);
+        int blue = (int) (Color.blue(color) * LM_BLUE_COEFFICIENT);
+        return red + green + blue;
+    }
 
+    public static double mostFrequent(double[] ary) {
+        Map<Double, Integer> m = new HashMap<Double, Integer>();
+
+        for (double a : ary) {
+            if (a >= 0) {
+                Integer freq = m.get(a);
+                m.put(a, (freq == null) ? 1 : freq + 1);
+            }
+        }
+
+        int max = -1;
+        double mostFrequent = -1;
+
+        for (Map.Entry<Double, Integer> e : m.entrySet()) {
+            if (e.getValue() > max) {
+                mostFrequent = e.getKey();
+                max = e.getValue();
+            }
+        }
+
+        return mostFrequent;
+    }
 }

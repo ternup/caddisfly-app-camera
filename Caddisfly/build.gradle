@@ -42,6 +42,17 @@ android {
         }
     }
 
+    productFlavors {
+        internalFlavor {
+            packageName "com.ternup.caddisfly"
+            versionName "prototype 0.26 alpha"
+        }
+        externalFlavor {
+            packageName "org.akvo.mobile.caddisfly"
+            versionName "prototype 0.1 alpha"
+        }
+    }
+
     lintOptions {
         abortOnError false
         absolutePaths false

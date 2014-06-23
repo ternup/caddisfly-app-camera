@@ -54,10 +54,12 @@
                 custom:min="0"
                 custom:interval="5"/>
         <CheckBoxPreference
+                android:defaultValue="true"
                 android:title="@string/cloudy"
                 android:key="camera_cloudy"
                 />
         <CheckBoxPreference
+                android:defaultValue="false"
                 android:title="@string/torchMode"
                 android:key="camera_torch"
                 />

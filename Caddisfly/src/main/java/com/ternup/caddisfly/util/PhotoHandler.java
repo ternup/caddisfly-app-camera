@@ -19,11 +19,7 @@ package com.ternup.caddisfly.util;
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
-import com.ternup.caddisfly.database.TestTable;
-import com.ternup.caddisfly.provider.TestContentProvider;
 
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -31,7 +27,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,9 +38,7 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class PhotoHandler implements PictureCallback {
 
@@ -80,7 +73,6 @@ public class PhotoHandler implements PictureCallback {
         String photoFolder;
 
         String photoFile;
-        //= String.format("%s-%d-%d", Globals.PHOTO_TEMP_FILE, mTestType, mIndex);
 
         mLocationId = sharedPreferences.getLong(mContext.getString(R.string.currentLocationId), -1);
         SimpleDateFormat dateFormat = new SimpleDateFormat(Globals.FOLDER_NAME_DATE_FORMAT,
@@ -91,9 +83,6 @@ public class PhotoHandler implements PictureCallback {
             photoFolder = FileUtils.getStoragePath(mContext, mLocationId, mFolderName, true);
             pictureFile = new File(photoFolder + photoFile);
         } else {
-            int currentSamplingCount = PreferencesUtils
-                    .getInt(mContext, R.string.currentSamplingCountKey, 2);
-            //photoFile = String.format("%s-%d", Globals.PHOTO_TEMP_FILE, currentSamplingCount);
             photoFolder = FileUtils.getStoragePath(mContext, -1,
                     String.format("%s/%d/%d/", Globals.CALIBRATE_FOLDER, mTestType, mIndex),
                     true);
@@ -128,9 +117,6 @@ public class PhotoHandler implements PictureCallback {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
         byte[] croppedData = bos.toByteArray();
 
-        //Bitmap bitmap = Utility.decodeFile(pictureFile.getAbsolutePath());
-        //bitmap = ThumbnailUtils.extractThumbnail(bitmap, 400, 400);
-
         Message msg = mHandler.obtainMessage();
 
         ArrayList<Integer> colorRange = ((MainApp) mContext).colorList;
@@ -156,50 +142,28 @@ public class PhotoHandler implements PictureCallback {
             e.printStackTrace();
         }
 
-
-/*
-        Bitmap bitmap = ImageUtils.getAnalysedBitmap(pictureFile.getAbsolutePath());
-        ImageUtils.saveBitmap(bitmap,
-                smallImageFolder.getAbsolutePath() + "/" + photoFile + "-s");
-*/
-
         long id = -1;
         if (mIndex < 1 && mFolderName.length() > 0) {
             saveTempResult(mContext, bundle.getDouble(MainApp.RESULT_VALUE_KEY),
                     bundle.getInt(MainApp.RESULT_COLOR_KEY),
                     bundle.getInt(MainApp.QUALITY_KEY));
 
+            PreferencesHelper.incrementPhotoTakenCount(mContext);
+
             if (hasSamplingCompleted(mContext)) {
                 getAverageResult(mContext, bundle);
-                id = saveResult(mFolderName, mTestType, bundle.getDouble(MainApp.RESULT_VALUE_KEY));
+                id = DataStorage.saveResult(mContext,mFolderName, mTestType,
+                        bundle.getDouble(MainApp.RESULT_VALUE_KEY));
                 saveResultToPreferences(id);
             }
             bundle.putLong(mContext.getString(R.string.currentTestId), id);
-
-/*
-            int value = 0;
-            int counter = 0;
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            while (value != -1) {
-                value = PreferencesUtils
-                        .getInt(mContext,
-                                String.format(mContext.getString(R.string.resultQualityKey),
-                                        mTestType, id, counter), -1
-                        );
-                if (value > -1) {
-                    editor.remove(
-                            String.format(mContext.getString(R.string.resultQualityKey), mTestType,
-                                    id, counter)
-                    );
-                    counter++;
-                }
-            }
-*/
         } else {
 
             saveTempResult(mContext, 0,
                     bundle.getInt(MainApp.RESULT_COLOR_KEY),
                     bundle.getInt(MainApp.QUALITY_KEY));
+
+            PreferencesHelper.incrementPhotoTakenCount(mContext);
 
             if (hasSamplingCompleted(mContext)) {
                 getAverageResult(mContext, bundle);
@@ -210,15 +174,6 @@ public class PhotoHandler implements PictureCallback {
         if (id == -1) {
             id = sharedPreferences.getLong(mContext.getString(R.string.currentTestId), -1);
         }
-/*
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(
-                String.format(mContext.getString(R.string.resultQualityKey), mTestType, id, mIndex),
-                bundle.getInt(
-                        MainApp.QUALITY_KEY)
-        );
-        editor.commit();
-*/
 
         bundle.putInt("position", mIndex);
         bundle.putString(mContext.getString(R.string.folderName), mFolderName);
@@ -226,39 +181,16 @@ public class PhotoHandler implements PictureCallback {
         bundle.putLong(mContext.getString(R.string.currentTestId), id);
         msg.setData(bundle);
 
-        mHandler.sendMessage(msg);
-    }
-
-    private double mostFrequent(double[] ary) {
-        Map<Double, Integer> m = new HashMap<Double, Integer>();
-
-        for (double a : ary) {
-            if (a >= 0) {
-                Integer freq = m.get(a);
-                m.put(a, (freq == null) ? 1 : freq + 1);
-            }
+        if(hasSamplingCompleted(mContext)) {
+            mHandler.sendMessage(msg);
         }
-
-        int max = -1;
-        double mostFrequent = -1;
-
-        for (Map.Entry<Double, Integer> e : m.entrySet()) {
-            if (e.getValue() > max) {
-                mostFrequent = e.getKey();
-                max = e.getValue();
-            }
-        }
-
-        return mostFrequent;
     }
 
     private double getAverageResult(Context context, Bundle bundle) {
-        //double result = Math.max(0, resultValue);
 
         double result = 0;
 
         int samplingCount = PreferencesUtils.getInt(context, R.string.samplingCountKey, 5);
-        //saveTempResult(context, resultValue, bundle.getInt(MainApp.RESULT_COLOR_KEY));
         int counter = 0;
         double commonResult = 0;
         double[] results = new double[samplingCount];
@@ -268,7 +200,7 @@ public class PhotoHandler implements PictureCallback {
             results[i] = PreferencesUtils.getDouble(context, key);
             key = String.format(context.getString(R.string.samplingColorIndexKey), i);
             colors[i] = PreferencesUtils.getInt(context, key, -1);
-            commonResult = mostFrequent(results);
+            commonResult = ColorUtils.mostFrequent(results);
         }
 
         int red = 0;
@@ -295,17 +227,6 @@ public class PhotoHandler implements PictureCallback {
             result = -1;
         }
 
-/*
-        for (int i = 1; i < samplingCount; i++) {
-            String key = String.format(context.getString(R.string.samplingIndexKey), i);
-            double tempResult = PreferencesUtils.getDouble(context, key);
-            if (tempResult >= 0) {
-                counter++;
-                result += tempResult;
-            }
-        }
-*/
-
         return result;
     }
 
@@ -329,31 +250,7 @@ public class PhotoHandler implements PictureCallback {
         int currentSamplingCount = PreferencesUtils
                 .getInt(context, R.string.currentSamplingCountKey, 0);
         int samplingCount = PreferencesUtils.getInt(context, R.string.samplingCountKey, 5);
-        return currentSamplingCount >= samplingCount - 1;
-    }
-
-    private long saveResult(String folder, int testType, double result) {
-
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(mContext);
-
-        mLocationId = sharedPreferences.getLong(mContext.getString(R.string.currentLocationId), -1);
-
-        ContentValues values = new ContentValues();
-        values.put(TestTable.COLUMN_FOLDER, folder);
-        values.put(TestTable.COLUMN_DATE, (new Date().getTime()));
-        values.put(TestTable.COLUMN_TYPE, testType);
-        values.put(TestTable.COLUMN_RESULT, result);
-        values.put(TestTable.COLUMN_LOCATION_ID, mLocationId);
-
-        Uri uri = mContext.getContentResolver().insert(TestContentProvider.CONTENT_URI, values);
-        long id = ContentUris.parseId(uri);
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong(mContext.getString(R.string.currentTestId), id);
-        editor.commit();
-
-        return id;
+        return currentSamplingCount >= samplingCount;
     }
 
     private void saveResultToPreferences(long id) {

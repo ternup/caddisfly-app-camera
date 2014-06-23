@@ -80,8 +80,6 @@ public class CalibrateItemFragment extends ListFragment {
 
     private TextView mErrorQualityText;
 
-    private DetailsFragment detailsFragment;
-
     public CalibrateItemFragment() {
     }
 
@@ -396,7 +394,7 @@ public class CalibrateItemFragment extends ListFragment {
                 ft.addToBackStack(null);
 
                 mCameraFragment = CameraFragment.newInstance();
-                mCameraFragment.mPicture = photoHandler;
+                mCameraFragment.pictureCallback = photoHandler;
                 //mCameraFragment.makeShutterSound = true;
                 mCameraFragment.show(ft, "cameraDialog");
 

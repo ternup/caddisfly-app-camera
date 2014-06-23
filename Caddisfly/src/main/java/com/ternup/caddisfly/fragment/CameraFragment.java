@@ -68,7 +68,7 @@ public class CameraFragment extends DialogFragment {
 
     public Boolean makeShutterSound = false;
 
-    public Camera.PictureCallback mPicture;
+    public Camera.PictureCallback pictureCallback;
 
     private AlertDialog progressDialog;
 
@@ -120,7 +120,7 @@ public class CameraFragment extends DialogFragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        takePicture();
+                        startTakingPictures();
                     }
                 }
         );
@@ -131,11 +131,11 @@ public class CameraFragment extends DialogFragment {
     public void onStart() {
         super.onStart();
         if (PreferencesUtils.getBoolean(getActivity(), R.string.autoAnalyzeKey, true)) {
-            takePicture();
+            startTakingPictures();
         }
     }
 
-    private void takePicture() {
+    private void startTakingPictures() {
 
         Context context = getActivity();
         ProgressDialog.Builder builder = new ProgressDialog.Builder(context);
@@ -159,26 +159,46 @@ public class CameraFragment extends DialogFragment {
             parameters.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
         }
 
-        final boolean shutterSound = sharedPreferences.getBoolean("camera_sound", true);
-
         mCamera.setParameters(parameters);
 
+        takePicture();
+    }
+
+    private void takePicture(){
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
+                final boolean shutterSound = PreferencesUtils.getBoolean(getActivity(),R.string.cameraSoundKey, true);
+                mPreview.startCameraPreview();
+                PictureCallback localCallback =  new PictureCallback();
                 try {
                     if (shutterSound && (makeShutterSound || hasTestCompleted(getActivity()))) {
-                        mCamera.takePicture(shutterCallback, null, mPicture);
+                        mCamera.takePicture(shutterCallback, null, localCallback);
                     } else {
-                        mCamera.takePicture(null, null, mPicture);
+                        mCamera.takePicture(null, null, localCallback);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }, Globals.INITIAL_DELAY);
+
+    }
+
+    public class PictureCallback implements Camera.PictureCallback {
+
+        @Override
+        public void onPictureTaken(byte[] bytes, Camera camera) {
+            if (!hasTestCompleted(getActivity())){
+                pictureCallback.onPictureTaken(bytes, camera);
+                takePicture();
+            }else{
+                pictureCallback.onPictureTaken(bytes, camera);
+            }
+
+        }
     }
 
     private boolean hasTestCompleted(Context context) {
@@ -283,7 +303,7 @@ public class CameraFragment extends DialogFragment {
             SharedPreferences sharedPreferences = PreferenceManager
                     .getDefaultSharedPreferences(context);
 
-            if (sharedPreferences.getBoolean("camera_cloudy", false)) {
+            if (sharedPreferences.getBoolean("camera_cloudy", true)) {
                 parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_CLOUDY_DAYLIGHT);
             } else {
                 parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_DAYLIGHT);

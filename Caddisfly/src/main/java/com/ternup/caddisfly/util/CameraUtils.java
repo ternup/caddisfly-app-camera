@@ -58,7 +58,7 @@ public class CameraUtils {
             }
             //parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_DAYLIGHT);
 
-            if (sharedPreferences.getBoolean("camera_cloudy", false)) {
+            if (sharedPreferences.getBoolean("camera_cloudy", true)) {
                 parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_CLOUDY_DAYLIGHT);
             } else {
                 parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_DAYLIGHT);

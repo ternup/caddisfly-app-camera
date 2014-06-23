@@ -20,16 +20,18 @@ import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.fragment.CameraFragment;
-import com.ternup.caddisfly.provider.TestContentProvider;
 import com.ternup.caddisfly.service.CameraService;
 import com.ternup.caddisfly.service.CameraServiceReceiver;
 import com.ternup.caddisfly.util.AudioUtils;
+import com.ternup.caddisfly.util.DataStorage;
 import com.ternup.caddisfly.util.FileUtils;
 import com.ternup.caddisfly.util.ImageUtils;
 import com.ternup.caddisfly.util.PhotoHandler;
 import com.ternup.caddisfly.util.PreferencesHelper;
 import com.ternup.caddisfly.util.PreferencesUtils;
 import com.ternup.caddisfly.util.ShakeDetector;
+
+import org.akvo.mobile.caddisfly.activity.MainActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -39,7 +41,6 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,7 +52,6 @@ import android.graphics.Shader;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -253,13 +253,14 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
         }
 */
 
+
+        MainApp mainApp = (MainApp) getApplicationContext();
+
         //TODO: setup external app connection
         // Get intent, action and MIME type
         Intent intent = getIntent();
         String action = intent.getAction();
         String type = intent.getType();
-
-        MainApp mainApp = (MainApp) getApplicationContext();
 
         if (Globals.ACTION_WATER_TEST.equals(action) && type != null) {
             if ("text/plain".equals(type)) {
@@ -473,24 +474,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
 
         releaseResources();
 
-        deleteRecord();
-    }
-
-    private void deleteRecord() {
-        Context context = getApplicationContext();
-
-        PreferencesUtils.removeKey(context, R.string.currentSamplingCountKey);
-
-        FileUtils.deleteFolder(this, mLocationId, mFolderName);
-        mId = PreferencesHelper.getCurrentTestId(this, null, null);
-        if (mId > -1) {
-            Uri uri = ContentUris.withAppendedId(TestContentProvider.CONTENT_URI, mId);
-            getApplicationContext().getContentResolver().delete(uri, null, null);
-
-            PreferencesUtils.removeKey(this, PreferencesHelper.CURRENT_TEST_ID_KEY);
-
-            mId = -1;
-        }
+        DataStorage.deleteRecord(this, mId, mLocationId, mFolderName);
     }
 
     private void sendResult(Message msg) {
@@ -532,7 +516,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     mIndex = 0;
-                    deleteRecord();
+                    DataStorage.deleteRecord(getApplicationContext(), mId, mLocationId, mFolderName);
                     dialog.dismiss();
                     InitializeTest(getApplicationContext());
                 }
@@ -541,7 +525,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
             builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    deleteRecord();
+                    DataStorage.deleteRecord(getApplicationContext(), mId, mLocationId, mFolderName);
                     cancelService();
                     finish();
                 }
@@ -775,7 +759,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
                     ft.addToBackStack(null);
 
                     mCameraFragment = CameraFragment.newInstance();
-                    mCameraFragment.mPicture = photoHandler;
+                    mCameraFragment.pictureCallback = photoHandler;
 
                     if (mTestType == Globals.BACTERIA_INDEX) {
                         mCameraFragment.makeShutterSound = true;
@@ -902,7 +886,6 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
         public void handleMessage(Message msg) {
 
             ProgressActivity service = mService.get();
-            PreferencesHelper.incrementPhotoTakenCount(service.getApplicationContext());
 
             service.mCameraFragment.dismiss();
 
@@ -912,9 +895,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
                 if (bundle != null) {
                     String folderName = msg.getData()
                             .getString(PreferencesHelper.FOLDER_NAME_KEY); //NON-NLS
-                    if (!service.hasSamplingCompleted()) {
-                        service.startTest(service.getApplicationContext(), service.mFolderName);
-                    } else if (service.hasTestCompleted(folderName)) {
+                    if (service.hasTestCompleted(folderName)) {
                         service.sendResult(msg);
                     } else {
                         Calendar cal = Calendar.getInstance();

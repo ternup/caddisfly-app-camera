@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              tools:context=".StartFragment"
+              android:orientation="vertical">
+
+    <ImageView android:layout_width="150dp"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center_horizontal"
+               android:src="@drawable/akvo_flow"
+
+            />
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textSize="30sp"
+              android:gravity="center_horizontal"
+              android:text="Fluoride"
+              android:textAllCaps="true"/>
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textSize="15sp"
+              android:gravity="center_horizontal"
+              android:text="Water Quality Test"
+              android:textAllCaps="true"/>
+
+    <Space android:layout_width="match_parent" android:layout_height="20dp"/>
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textSize="20sp"
+              android:lineSpacingExtra="10sp"
+              android:text="Attach the cartridge with the source water to the phone and start test."/>
+    <Space android:layout_width="match_parent" android:layout_height="20dp"/>
+
+    <Button
+            android:background="@drawable/red_button"
+            style="@style/button_text"
+            android:id="@+id/startButton"
+            android:text="Start Test"
+            />
+    <Space android:layout_width="match_parent" android:layout_height="20dp"/>
+    <Button
+            android:background="@drawable/red_button"
+            style="@style/button_text"
+            android:id="@+id/calibrateButton"
+            android:text="Calibrate"
+            />
+</LinearLayout>
