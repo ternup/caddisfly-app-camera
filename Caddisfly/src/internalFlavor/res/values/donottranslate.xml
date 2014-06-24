@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+
+<resources>
+
+    <!-- User interface labels and strings -->
+    <!-- Latitude, longitude format -->
+    <string name="latitude_longitude">%1$.8f, %2$.8f</string>
+
+    <!-- Labels -->
+    <string name="coordinates">Coordinates</string>
+
+    <!-- Messages -->
+    <string name="connection_error_code_unknown">Unknown connection error code: %1$d</string>
+    <string name="connection_failed">Connection failed</string>
+    <string name="disconnected">Client disconnected</string>
+    <string name="illegal_argument_exception">
+        Illegal arguments: Latitude %1$.8f Longitude %2$.8f
+    </string>
+    <string name="invalid_action">Invalid intent action %1$s</string>
+    <string name="invalid_integer_id">Invalid integer request ID: %1$s</string>
+    <string name="IO_Exception_getFromLocation">IO Exception in Geo-coder.getFromLocation()</string>
+    <string name="location_requested">Periodic updates requested</string>
+    <string name="location_updated">Location updated</string>
+    <string name="location_update_error">Location update failed</string>
+    <string name="location_update_error_detail">
+        Location update error. code %1$d message %2$s
+    </string>
+    <string name="location_update_missing_update">
+        Location update error. No incoming location.
+    </string>
+    <string name="location_updates_stopped">Periodic updates stopped</string>
+    <string name="log_new_location">New location: %1$s</string>
+    <string name="no_address_found">No address found for location</string>
+    <string name="no_connection">No connection: Cannot request location</string>
+    <string name="no_geo_coder_available">Cannot get address. No geo-coder available.</string>
+    <string name="no_location_available">Location not available</string>
+    <string name="resolved">Error resolved. Please re-try operation.</string>
+    <string name="no_resolution">Google Play services: unable to resolve connection error.</string>
+    <string name="periodic_update_stop">Stopping periodic updates</string>
+    <string name="play_services_available">Google Play services is available</string>
+    <string name="request_location_updates_in_progress">
+        Can\'t request location updates, previous request has not finished
+    </string>
+    <string name="start_updates">Start Updates</string>
+    <string name="stop_updates">Stop Updates</string>
+    <string name="unknown">--Unknown--</string>
+    <string name="unknown_activity_request_code">
+        Received an unknown activity request code %1$d in onActivityResult.
+    </string>
+
+    <string name="connection_error_code">Connection failure error code: %1$d</string>
+    <string name="connection_error_disabled">Google Play services is disabled</string>
+    <string name="connection_error_internal">An internal error occurred</string>
+    <string name="connection_error_invalid">The version of Google Play services on this device is
+        not authentic
+    </string>
+    <string name="connection_error_invalid_account">The specified account name is invalid</string>
+    <string name="connection_error_license_check_failed">The app is not licensed to the user
+    </string>
+    <string name="connection_error_message">Connection failure error message: %1$s</string>
+    <string name="connection_error_misconfigured">The application is misconfigured</string>
+    <string name="connection_error_missing">Google Play services is missing</string>
+    <string name="connection_error_needs_resolution">Additional resolution is required</string>
+    <string name="connection_error_network">A network error occurred</string>
+    <string name="connection_error_outdated">Google Play services is out of date</string>
+    <string name="connection_error_sign_in_required">The user is not signed in</string>
+    <string name="connection_error_unknown">An unknown error occurred</string>
+
+
+    <string-array name="nav_drawer_icons_dark">
+        <item>@drawable/ic_menu_home_dark</item>
+        <item>@drawable/ic_action_place_dark</item>
+        <item>@android:drawable/ic_menu_compass</item>
+        <item>@android:drawable/ic_menu_preferences</item>
+        <item>@drawable/ic_action_help_dark</item>
+        <item>@android:drawable/ic_menu_info_details</item>
+        <item>@drawable/ic_menu_swatch_dark</item>
+    </string-array>
+
+    <string-array name="nav_drawer_icons_light">
+        <item>@drawable/ic_menu_home_light</item>
+        <item>@drawable/ic_action_place</item>
+        <item>@drawable/ic_menu_compass_light</item>
+        <item>@drawable/ic_menu_settings_light</item>
+        <item>@drawable/ic_action_help</item>
+        <item>@drawable/ic_menu_info_light</item>
+        <item>@drawable/ic_menu_swatch_light</item>
+    </string-array>
+
+    <string-array name="testTypes">
+        <item>@string/fluoride</item>
+        <item>@string/fluoride2</item>
+        <item>@string/pH</item>
+    </string-array>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item>@string/home</item>
+        <item>@string/locations</item>
+        <item>@string/calibrate</item>
+        <item>@string/settings</item>
+        <item>@string/help</item>
+        <item>@string/about</item>
+        <item>@string/nightTheme</item>
+    </string-array>
+
+    <string-array name="languages">
+        <item>English</item>
+        <item>हिंदी</item>
+    </string-array>
+
+    <string-array name="language_codes">
+        <item>en</item>
+        <item>hi</item>
+    </string-array>
+
+</resources>

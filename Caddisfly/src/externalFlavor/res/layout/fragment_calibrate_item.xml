@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+    <TextView
+            android:id="@+id/infoTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Place a cartridge with a standard solution for the below value and click Calibrate"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cameraPreview">
+    </FrameLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp"
+            android:background="?cardBackground">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:weightSum="2">
+            <Button
+                    android:id="@+id/colorButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="#ffff00"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@android:color/holo_red_dark"/>
+            <Button
+                    android:id="@+id/valueButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textSize="60sp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+        <TextView
+                android:id="@+id/rgbText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textIsSelectable="false"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:paddingTop="10dp"
+                android:weightSum="2">
+            <Button
+                    android:id="@+id/editButton"
+                    android:background="@drawable/blue_button"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:textColor="#fff"
+                    android:text="@string/edit"
+                    android:enabled="true"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone"
+                    >
+            </Button>
+            <Button
+                    android:id="@+id/startButton"
+                    android:background="@drawable/red_button"
+                    style="@style/button_text"
+                    android:textColor="#eee"
+                    android:text="@string/calibrate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    >
+            </Button>
+        </LinearLayout>
+        <TextView
+                android:id="@+id/errorQualityText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/photoQualityError"
+                android:textSize="16sp"
+                android:textColor="@android:color/holo_red_dark"
+                android:padding="3dp"
+                android:visibility="gone"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+    </LinearLayout>
+</LinearLayout>
+

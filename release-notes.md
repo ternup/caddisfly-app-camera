@@ -9,6 +9,7 @@ v0.27
 7. Minimum photo quality defaults to 60%
 8. Added alert with exception message on send fail
 9. Updated Library : android-async-http 1.4.5
+10. Split code into two flavors (Internal (for research purpose) and External (for actual users))
 
 v0.26
 -----

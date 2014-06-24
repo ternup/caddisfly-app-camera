@@ -56,3 +56,5 @@ build/
 *.swp
 
 /*/src/androidTest/
+
+notes.md
