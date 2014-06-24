@@ -56,12 +56,12 @@
         <CheckBoxPreference
                 android:defaultValue="true"
                 android:title="@string/cloudy"
-                android:key="camera_cloudy"
+                android:key="@string/cameraCloudyKey"
                 />
         <CheckBoxPreference
                 android:defaultValue="false"
                 android:title="@string/torchMode"
-                android:key="camera_torch"
+                android:key="@string/cameraTorchKey"
                 />
         <CheckBoxPreference
                 android:defaultValue="true"
@@ -120,7 +120,7 @@
                 />
         <CheckBoxPreference
                 android:title="@string/infinity"
-                android:key="camera_infinity"
+                android:key="@string/cameraInfinityKey"
                 />
         <com.ternup.caddisfly.component.CameraZoomPreference
                 android:dialogTitle="@string/cameraZoom"

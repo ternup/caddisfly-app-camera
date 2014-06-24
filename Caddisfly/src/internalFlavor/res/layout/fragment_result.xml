@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="10dp"
-            android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:background="?cardBackground">
 
@@ -78,7 +77,6 @@
                     tools:text="@string/ppm"
                     android:alpha="0.5"
                     />
-
         </LinearLayout>
     </LinearLayout>
 
@@ -86,12 +84,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:visibility="visible"
             android:background="?cardBackground">
-
         <TextView
                 tools:text="Domestic Tap"
                 android:id="@+id/sourceType"
@@ -104,7 +101,6 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:textSize="20sp"/>
-
         <TextView
                 tools:text="Trinity Circle, MG Road"
                 android:id="@+id/address1"
@@ -118,7 +114,6 @@
                 android:paddingRight="5dp"
                 android:paddingTop="5dp"
                 android:textSize="17sp"/>
-
         <TextView
                 tools:text="Bangalore, India"
                 android:id="@+id/address2"

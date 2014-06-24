@@ -1,3 +1,19 @@
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+
 <resources>
 
     <style name="ActionBar" parent="@android:style/Widget.Holo.ActionBar"/>
@@ -13,7 +29,7 @@
         <item name="android:actionBarStyle">@style/ActionBar.Dark</item>
         <item name="arrowRight">@drawable/arrow_right</item>
         <item name="cardBackground">@drawable/card_dark</item>
-        <item name="alarm">@drawable/alarm_light</item>
+        <item name="alarm">@android:drawable/ic_lock_idle_alarm</item>
     </style>
 
     <style name="ActionBar.Dark" parent="@style/ActionBar">

@@ -187,7 +187,6 @@ public class DetailsFragment extends ListFragment {
         drawerList.setItemChecked(-1, true);
         drawerList.setSelection(-1);
 
-
         assert listView != null;
         listView.addHeaderView(header);
 
@@ -306,90 +305,95 @@ public class DetailsFragment extends ListFragment {
         Cursor cursor = mContext.getContentResolver().query(uri, projection, null, null, null);
         cursor.moveToFirst();
 
-        mAddressText
-                .setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_NAME)) + ", " +
-                        cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_STREET)));
+        if (cursor.getCount() > 0) {
+            mAddressText
+                    .setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_NAME))
+                            + ", " +
+                            cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_STREET)));
 
-        mAddress2Text
-                .setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_TOWN)) + ", " +
-                        cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_CITY)));
+            mAddress2Text
+                    .setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_TOWN))
+                            + ", " +
+                            cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_CITY)));
 
-        mAddress3Text
-                .setText(
-                        cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_STATE)) + ", " +
-                                cursor.getString(
-                                        cursor.getColumnIndex(LocationTable.COLUMN_COUNTRY))
-                );
+            mAddress3Text
+                    .setText(
+                            cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_STATE))
+                                    + ", " +
+                                    cursor.getString(
+                                            cursor.getColumnIndex(LocationTable.COLUMN_COUNTRY))
+                    );
 
-        if (mAddress2Text.getText().equals(", ")) {
-            mAddress2Text.setVisibility(View.GONE);
-        } else {
-            mAddress2Text.setVisibility(View.VISIBLE);
-        }
-        if (mAddress3Text.getText().equals(", ")) {
-            mAddress3Text.setVisibility(View.GONE);
-        } else {
-            mAddress3Text.setVisibility(View.VISIBLE);
-        }
-        String[] sourceArray = getResources().getStringArray(R.array.source_types);
-        int sourceType = cursor.getInt(cursor.getColumnIndex(LocationTable.COLUMN_SOURCE));
-        if (sourceType > -1) {
-            mSourceText.setText(sourceArray[sourceType]);
-            mSourceText.setVisibility(View.VISIBLE);
-        } else {
-            mSourceText.setVisibility(View.GONE);
-        }
-        Date date = new Date(cursor.getLong(cursor.getColumnIndex(TestTable.COLUMN_DATE)));
-        SimpleDateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy");
-        DateFormat tf = android.text.format.DateFormat
-                .getTimeFormat(getActivity()); // Gets system TF
-
-        String dateString = df.format(date.getTime()) + ", " + tf.format(date.getTime());
-
-        mTestType = DataHelper.getTestTitle(getActivity(),
-                cursor.getInt(cursor.getColumnIndex(TestTable.COLUMN_TYPE)));
-        mTestTypeId = cursor.getInt(cursor.getColumnIndex(TestTable.COLUMN_TYPE));
-
-        mTitleView.setText(mTestType);
-        mDateView.setText(dateString);
-
-        Double resultPpm = cursor.getDouble(cursor.getColumnIndex(TestTable.COLUMN_RESULT));
-
-        if (mTestTypeId == Globals.PH_INDEX) {
-            mPpmText.setText("");
-        } else {
-            mPpmText.setText(R.string.ppm);
-        }
-
-        if (resultPpm < 0) {
-            mResultTextView.setText("0.0");
-            //mResultIcon.setVisibility(View.GONE);
-            mPpmText.setVisibility(View.GONE);
-        } else {
-            mResultTextView.setText(String.format("%.2f", resultPpm));
-
-            Context context = getActivity().getApplicationContext();
-
-            int resourceAttribute;
-
-            if (resultPpm <= Globals.FLUORIDE_MAX_DRINK) {
-                resourceAttribute = R.attr.drink;
-            } else if (resultPpm <= Globals.FLUORIDE_MAX_COOK) {
-                resourceAttribute = R.attr.cook;
-            } else if (resultPpm <= Globals.FLUORIDE_MAX_BATHE) {
-                resourceAttribute = R.attr.bath;
+            if (mAddress2Text.getText().equals(", ")) {
+                mAddress2Text.setVisibility(View.GONE);
             } else {
-                resourceAttribute = R.attr.wash;
+                mAddress2Text.setVisibility(View.VISIBLE);
+            }
+            if (mAddress3Text.getText().equals(", ")) {
+                mAddress3Text.setVisibility(View.GONE);
+            } else {
+                mAddress3Text.setVisibility(View.VISIBLE);
+            }
+            String[] sourceArray = getResources().getStringArray(R.array.source_types);
+            int sourceType = cursor.getInt(cursor.getColumnIndex(LocationTable.COLUMN_SOURCE));
+            if (sourceType > -1) {
+                mSourceText.setText(sourceArray[sourceType]);
+                mSourceText.setVisibility(View.VISIBLE);
+            } else {
+                mSourceText.setVisibility(View.GONE);
+            }
+            Date date = new Date(cursor.getLong(cursor.getColumnIndex(TestTable.COLUMN_DATE)));
+            SimpleDateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy");
+            DateFormat tf = android.text.format.DateFormat
+                    .getTimeFormat(getActivity()); // Gets system TF
+
+            String dateString = df.format(date.getTime()) + ", " + tf.format(date.getTime());
+
+            mTestType = DataHelper.getTestTitle(getActivity(),
+                    cursor.getInt(cursor.getColumnIndex(TestTable.COLUMN_TYPE)));
+            mTestTypeId = cursor.getInt(cursor.getColumnIndex(TestTable.COLUMN_TYPE));
+
+            mTitleView.setText(mTestType);
+            mDateView.setText(dateString);
+
+            Double resultPpm = cursor.getDouble(cursor.getColumnIndex(TestTable.COLUMN_RESULT));
+
+            if (mTestTypeId == Globals.PH_INDEX) {
+                mPpmText.setText("");
+            } else {
+                mPpmText.setText(R.string.ppm);
             }
 
-            TypedArray a = context.getTheme()
-                    .obtainStyledAttributes(((MainApp) context.getApplicationContext())
-                            .CurrentTheme, new int[]{resourceAttribute});
-            int attributeResourceId = a.getResourceId(0, 0);
-            //mResultIcon.setImageResource(attributeResourceId);
+            if (resultPpm < 0) {
+                mResultTextView.setText("0.0");
+                //mResultIcon.setVisibility(View.GONE);
+                mPpmText.setVisibility(View.GONE);
+            } else {
+                mResultTextView.setText(String.format("%.2f", resultPpm));
 
-            //mResultIcon.setVisibility(View.VISIBLE);
-            mPpmText.setVisibility(View.VISIBLE);
+                Context context = getActivity().getApplicationContext();
+
+                int resourceAttribute;
+
+                if (resultPpm <= Globals.FLUORIDE_MAX_DRINK) {
+                    resourceAttribute = R.attr.drink;
+                } else if (resultPpm <= Globals.FLUORIDE_MAX_COOK) {
+                    resourceAttribute = R.attr.cook;
+                } else if (resultPpm <= Globals.FLUORIDE_MAX_BATHE) {
+                    resourceAttribute = R.attr.bath;
+                } else {
+                    resourceAttribute = R.attr.wash;
+                }
+
+                TypedArray a = context.getTheme()
+                        .obtainStyledAttributes(((MainApp) context.getApplicationContext())
+                                .CurrentTheme, new int[]{resourceAttribute});
+                int attributeResourceId = a.getResourceId(0, 0);
+                //mResultIcon.setImageResource(attributeResourceId);
+
+                //mResultIcon.setVisibility(View.VISIBLE);
+                mPpmText.setVisibility(View.VISIBLE);
+            }
         }
         cursor.close();
     }
@@ -513,8 +517,9 @@ public class DetailsFragment extends ListFragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody,
-                    Throwable error) {
+                    final Throwable error) {
                 Log.d(Globals.DEBUG_TAG, "fail: " + error.getMessage());
+
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
                         if (progressDialog != null) {
@@ -524,6 +529,9 @@ public class DetailsFragment extends ListFragment {
                         if (wakeLock != null && wakeLock.isHeld()) {
                             wakeLock.release();
                         }
+                        AlertUtils
+                                .showAlert(getActivity(), R.string.error, error.getMessage(), null,
+                                        null);
                     }
                 });
             }

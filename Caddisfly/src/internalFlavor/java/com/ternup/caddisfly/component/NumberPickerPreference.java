@@ -26,8 +26,11 @@ import android.content.res.TypedArray;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.preference.DialogPreference;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -79,6 +82,7 @@ public class NumberPickerPreference extends DialogPreference {
             setIntervalValue(a.getInteger(R.styleable.NumberPickerPreference_interval,
                     DEFAULT_INTERVAL_VALUE));
             mSummary = a.getString(R.styleable.NumberPickerPreference_android_summary);
+
         } finally {
             assert a != null;
             a.recycle();
@@ -121,6 +125,10 @@ public class NumberPickerPreference extends DialogPreference {
         mNumberPicker.setMinValue(0);
         mNumberPicker.setMaxValue(count - 1);
         mNumberPicker.setValue((mValue / mInterval) - (mMinValue / mInterval));
+
+        EditText input = findInput(mNumberPicker);
+        input.setInputType(InputType.TYPE_CLASS_PHONE);
+
     }
 
     int getMinValue() {
@@ -214,6 +222,19 @@ public class NumberPickerPreference extends DialogPreference {
         super.onRestoreInstanceState(myState.getSuperState());
     }
 
+    private EditText findInput(ViewGroup np) {
+        int count = np.getChildCount();
+        for (int i = 0; i < count; i++) {
+            final View child = np.getChildAt(i);
+            if (child instanceof ViewGroup) {
+                findInput((ViewGroup) child);
+            } else if (child instanceof EditText) {
+                return (EditText) child;
+            }
+        }
+        return null;
+    }
+
     private static class SavedState extends BaseSavedState {
 
         @SuppressWarnings("unused")
@@ -256,5 +277,6 @@ public class NumberPickerPreference extends DialogPreference {
             dest.writeInt(maxValue);
             dest.writeInt(value);
         }
+
     }
 }

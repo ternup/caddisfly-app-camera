@@ -23,9 +23,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 19
-        versionCode 26
-        versionName "prototype 0.26 alpha"
-        testPackageName "com.ternup.caddisfly.test"
+        testApplicationId "com.ternup.caddisfly.test"
         testInstrumentationRunner "com.ternup.caddisfly.test.TestRunner"
     }
 
@@ -44,12 +42,14 @@ android {
 
     productFlavors {
         internalFlavor {
-            packageName "com.ternup.caddisfly"
-            versionName "prototype 0.26 alpha"
+            applicationId "com.ternup.caddisfly"
+            versionName "prototype 0.27 alpha"
+            versionCode 27
         }
         externalFlavor {
-            packageName "org.akvo.mobile.caddisfly"
-            versionName "prototype 0.1 alpha"
+            applicationId "org.akvo.mobile.caddisfly"
+            versionName "prototype 0.2 alpha"
+            versionCode 2
         }
     }
 
@@ -60,11 +60,10 @@ android {
 }
 
 dependencies {
-    compile files('libs/android-async-http-1.4.4.jar')
+    internalFlavorCompile files('libs/android-async-http-1.4.5.jar')
+    internalFlavorCompile 'com.google.android.gms:play-services:4.4.52'
+    internalFlavorCompile 'com.android.support:support-v13:+'
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5+'
-    compile files('libs/graphview-3.1.jar')
-    compile 'com.google.android.gms:play-services:4.4.52'
-    compile 'com.android.support:support-v13:+'
 }
 
 def props = new Properties()

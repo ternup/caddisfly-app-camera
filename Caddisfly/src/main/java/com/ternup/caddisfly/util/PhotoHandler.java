@@ -19,6 +19,7 @@ package com.ternup.caddisfly.util;
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.database.DataStorage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -152,7 +153,7 @@ public class PhotoHandler implements PictureCallback {
 
             if (hasSamplingCompleted(mContext)) {
                 getAverageResult(mContext, bundle);
-                id = DataStorage.saveResult(mContext,mFolderName, mTestType,
+                id = DataStorage.saveResult(mContext, mFolderName, mTestType,
                         bundle.getDouble(MainApp.RESULT_VALUE_KEY));
                 saveResultToPreferences(id);
             }
@@ -181,7 +182,7 @@ public class PhotoHandler implements PictureCallback {
         bundle.putLong(mContext.getString(R.string.currentTestId), id);
         msg.setData(bundle);
 
-        if(hasSamplingCompleted(mContext)) {
+        if (hasSamplingCompleted(mContext)) {
             mHandler.sendMessage(msg);
         }
     }

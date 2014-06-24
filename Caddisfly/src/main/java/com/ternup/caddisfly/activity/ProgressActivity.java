@@ -19,19 +19,17 @@ package com.ternup.caddisfly.activity;
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.database.DataStorage;
 import com.ternup.caddisfly.fragment.CameraFragment;
 import com.ternup.caddisfly.service.CameraService;
 import com.ternup.caddisfly.service.CameraServiceReceiver;
 import com.ternup.caddisfly.util.AudioUtils;
-import com.ternup.caddisfly.util.DataStorage;
 import com.ternup.caddisfly.util.FileUtils;
 import com.ternup.caddisfly.util.ImageUtils;
 import com.ternup.caddisfly.util.PhotoHandler;
 import com.ternup.caddisfly.util.PreferencesHelper;
 import com.ternup.caddisfly.util.PreferencesUtils;
 import com.ternup.caddisfly.util.ShakeDetector;
-
-import org.akvo.mobile.caddisfly.activity.MainActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -81,6 +79,8 @@ import java.util.Locale;
 
 public class ProgressActivity extends Activity implements CameraFragment.Cancelled {
 
+    final Handler delayHandler = new Handler();
+
     private final PhotoTakenHandler mPhotoTakenHandler = new PhotoTakenHandler(this);
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -95,13 +95,15 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
 
     Timer timer;
 
+    Runnable delayRunnable;
+
     private LinearLayout mProgressLayout;
+
+    //private ProgressBar mSingleProgress;
 
     private LinearLayout mShakeLayout;
 
     private TextView mTitleText;
-
-    //private ProgressBar mSingleProgress;
 
     private TextView mRemainingText;
 
@@ -113,12 +115,12 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
 
     private TextView mPlaceInStandText;
 
+    //Vibrator mVibrator;
+    //private MediaPlayer cameraMediaPlayer;
+
     private SensorManager mSensorManager;
 
     private Sensor mAccelerometer;
-
-    //Vibrator mVibrator;
-    //private MediaPlayer cameraMediaPlayer;
 
     private ShakeDetector mShakeDetector;
 
@@ -235,6 +237,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
         mShakeLayout.setVisibility(View.GONE);
         mPlaceInStandText.setVisibility(View.GONE);
         mProgressLayout.setVisibility(View.VISIBLE);
+
         startTest(getApplicationContext(), mFolderName);
     }
 
@@ -252,7 +255,6 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
             wakeLock.acquire();
         }
 */
-
 
         MainApp mainApp = (MainApp) getApplicationContext();
 
@@ -516,7 +518,8 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     mIndex = 0;
-                    DataStorage.deleteRecord(getApplicationContext(), mId, mLocationId, mFolderName);
+                    DataStorage
+                            .deleteRecord(getApplicationContext(), mId, mLocationId, mFolderName);
                     dialog.dismiss();
                     InitializeTest(getApplicationContext());
                 }
@@ -525,7 +528,8 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
             builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    DataStorage.deleteRecord(getApplicationContext(), mId, mLocationId, mFolderName);
+                    DataStorage
+                            .deleteRecord(getApplicationContext(), mId, mLocationId, mFolderName);
                     cancelService();
                     finish();
                 }
@@ -559,6 +563,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
 
     private void releaseResources() {
 
+        delayHandler.removeCallbacks(delayRunnable);
         try {
             unregisterReceiver(receiver);
         } catch (Exception e) {
@@ -611,7 +616,8 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
     @SuppressLint("SimpleDateFormat")
     void displayInfo() {
 
-        ArrayList<String> imagePaths = FileUtils.getFilePaths(this, mFolderName, mLocationId);
+        ArrayList<String> imagePaths = FileUtils
+                .getFilePaths(this, mFolderName, "/small/", mLocationId);
         int doneCount = imagePaths.size();
 
         if (doneCount > 0) {
@@ -750,7 +756,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
                             mIndex, folderName, mTestType);
                     //mainContext.camera.takePicture(null, null, photoHandler);
 
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    final FragmentTransaction ft = getFragmentManager().beginTransaction();
 
                     Fragment prev = getFragmentManager().findFragmentByTag("cameraDialog");
                     if (prev != null) {
@@ -775,7 +781,17 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
                         wakeLock.acquire();
                     }
 
-                    mCameraFragment.show(ft, "cameraDialog");
+                    delayRunnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            if (this != null) {
+                                mCameraFragment.show(ft, "cameraDialog");
+                            }
+
+                        }
+                    };
+
+                    delayHandler.postDelayed(delayRunnable, Globals.INITIAL_DELAY);
 
                     //ft.add(mCameraFragment, "cameraDialog");
                     //ft.commitAllowingStateLoss();

@@ -31,8 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="20dp"
-                android:paddingBottom="30dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="20dp"
                 android:layout_marginTop="5dp"
@@ -40,35 +40,35 @@
                 android:background="?cardBackground">
 
             <TextView
+                    android:text="testing this"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:id="@+id/placeTextView"/>
-
-            <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:layout_marginBottom="10dp"
                     android:id="@+id/addressTextView"/>
 
             <TextView
+                    android:text="testing this"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:layout_marginBottom="10dp"
                     android:id="@+id/address2TextView"/>
 
-            <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"/>
-
             <TextView
+                    android:text="testing this"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/address3TextView"/>
+
+            <TextView
+                    android:text="testing this"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="10dp"
                     android:id="@+id/sourceTextView"/>
         </LinearLayout>
 
@@ -124,6 +124,7 @@
         </LinearLayout>
 
         <LinearLayout
+                android:id="@+id/notesLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -133,7 +134,8 @@
                 android:paddingBottom="40dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="?cardBackground">
+                android:background="?cardBackground"
+                >
 
             <TextView
                     android:layout_width="match_parent"

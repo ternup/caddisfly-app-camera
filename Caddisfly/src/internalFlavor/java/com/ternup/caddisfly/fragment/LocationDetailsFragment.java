@@ -48,6 +48,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -63,9 +64,9 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
 
     TextView mAddressText;
 
-    TextView mAddressText2;
+    TextView mAddress2Text;
 
-    TextView mPlaceText;
+    TextView mAddress3Text;
 
     TextView mSourceText;
 
@@ -74,6 +75,8 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
     ImageView mPhotoImageView;
 
     Button mNewTestButton;
+
+    LinearLayout mNotesLinearLayout;
 
     private DetailsFragment resultFragment;
 
@@ -87,10 +90,11 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
         View view = inflater.inflate(R.layout.fragment_location_details, container, false);
 
         mAddressText = (TextView) view.findViewById(R.id.addressTextView);
-        mAddressText2 = (TextView) view.findViewById(R.id.address2TextView);
-        mPlaceText = (TextView) view.findViewById(R.id.placeTextView);
+        mAddress2Text = (TextView) view.findViewById(R.id.address2TextView);
+        mAddress3Text = (TextView) view.findViewById(R.id.address3TextView);
         mSourceText = (TextView) view.findViewById(R.id.sourceTextView);
         mNotesText = (TextView) view.findViewById(R.id.notesTextView);
+        mNotesLinearLayout = (LinearLayout) view.findViewById(R.id.notesLinearLayout);
         mNewTestButton = (Button) view.findViewById(R.id.newTestButton);
 
         mNewTestButton.setOnClickListener(new View.OnClickListener() {
@@ -252,11 +256,6 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
             }
             return;
         }
-        String[] sourceArray = getResources().getStringArray(R.array.source_types);
-
-        mPlaceText
-                .setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_NAME)) + ", " +
-                        cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_STREET)));
 
         getActivity()
                 .setTitle(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_NAME)) + " " +
@@ -264,20 +263,49 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
                         cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_CITY)));
 
         mAddressText
-                .setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_TOWN)) + " " +
+                .setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_NAME))
+                        + ", " +
+                        cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_STREET)));
+
+        mAddress2Text
+                .setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_TOWN))
+                        + ", " +
                         cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_CITY)));
 
-        mAddressText2
-                .setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_STATE)) + " " +
-                        cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_COUNTRY)));
+        mAddress3Text
+                .setText(
+                        cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_STATE))
+                                + ", " +
+                                cursor.getString(
+                                        cursor.getColumnIndex(LocationTable.COLUMN_COUNTRY))
+                );
 
+        if (mAddress2Text.getText().equals(", ")) {
+            mAddress2Text.setVisibility(View.GONE);
+        } else {
+            mAddress2Text.setVisibility(View.VISIBLE);
+        }
+        if (mAddress3Text.getText().equals(", ")) {
+            mAddress3Text.setVisibility(View.GONE);
+        } else {
+            mAddress3Text.setVisibility(View.VISIBLE);
+        }
+        String[] sourceArray = getResources().getStringArray(R.array.source_types);
         int sourceType = cursor.getInt(cursor.getColumnIndex(LocationTable.COLUMN_SOURCE));
         if (sourceType > -1) {
-            mSourceText.setText(
-                    sourceArray[sourceType]);
+            mSourceText.setText(sourceArray[sourceType]);
+            mSourceText.setVisibility(View.VISIBLE);
+        } else {
+            mSourceText.setVisibility(View.GONE);
         }
 
-        mNotesText.setText(cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_NOTES)));
+        String notes = cursor.getString(cursor.getColumnIndex(LocationTable.COLUMN_NOTES));
+        if (notes.length() > 0) {
+            mNotesText.setText(notes);
+            mNotesLinearLayout.setVisibility(View.VISIBLE);
+        } else {
+            mNotesLinearLayout.setVisibility(View.GONE);
+        }
 
         cursor.close();
 

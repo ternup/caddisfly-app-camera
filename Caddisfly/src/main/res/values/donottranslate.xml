@@ -81,27 +81,6 @@
     <string name="connection_error_sign_in_required">The user is not signed in</string>
     <string name="connection_error_unknown">An unknown error occurred</string>
 
-
-    <array name="nav_drawer_icons_dark">
-        <item>@drawable/ic_menu_home_dark</item>
-        <item>@drawable/ic_menu_history_dark</item>
-        <item>@android:drawable/ic_menu_compass</item>
-        <item>@android:drawable/ic_menu_preferences</item>
-        <item>@android:drawable/ic_menu_help</item>
-        <item>@android:drawable/ic_menu_info_details</item>
-        <item>@drawable/ic_menu_swatch_dark</item>
-    </array>
-
-    <string-array name="nav_drawer_icons_light">
-        <item>@drawable/ic_menu_home_light</item>
-        <item>@drawable/ic_menu_history_light</item>
-        <item>@drawable/ic_menu_compass_light</item>
-        <item>@drawable/ic_menu_settings_light</item>
-        <item>@drawable/ic_menu_help_light</item>
-        <item>@drawable/ic_menu_info_light</item>
-        <item>@drawable/ic_menu_swatch_light</item>
-    </string-array>
-
     <string-array name="testTypes">
         <item>@string/fluoride</item>
         <item>@string/fluoride2</item>

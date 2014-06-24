@@ -109,7 +109,7 @@ public class CalibrateItemFragment extends ListFragment {
         assert header != null;
         mRgbText = (TextView) header.findViewById(R.id.rgbText);
         mValueButton = (Button) header.findViewById(R.id.valueButton);
-        Button resetButton = (Button) header.findViewById(R.id.resetButton);
+        Button editButton = (Button) header.findViewById(R.id.editButton);
         mStartButton = (Button) header.findViewById(R.id.startButton);
         mColorButton = (Button) header.findViewById(R.id.colorButton);
         mErrorQualityText = (TextView) header.findViewById(R.id.errorQualityText);
@@ -149,11 +149,10 @@ public class CalibrateItemFragment extends ListFragment {
             }
         });
 
-        resetButton.setOnClickListener(new View.OnClickListener() {
+        editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 editCalibration(position);
-
             }
         });
 
@@ -198,20 +197,15 @@ public class CalibrateItemFragment extends ListFragment {
     }
 
     public void editCalibration(final int position) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         final EditText input = new EditText(getActivity());
         input.setInputType(InputType.TYPE_CLASS_PHONE);
 
         alertDialogBuilder.setView(input);
-        alertDialogBuilder.setCancelable(true);
+        alertDialogBuilder.setCancelable(false);
+
         alertDialogBuilder.setTitle(R.string.enterColorRgb);
-        alertDialogBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                closeKeyboard(input);
-                dialog.cancel();
-                saveRgb(input.getText().toString(), position);
-            }
-        });
+        alertDialogBuilder.setPositiveButton(R.string.ok, null);
         alertDialogBuilder
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
@@ -222,15 +216,43 @@ public class CalibrateItemFragment extends ListFragment {
                 });
         final AlertDialog alertDialog = alertDialogBuilder.create(); //create the box
 
+        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+            @Override
+            public void onShow(DialogInterface dialog) {
+
+                Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                b.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        if (saveRgb(input.getText().toString(), position)) {
+                            closeKeyboard(input);
+                            alertDialog.dismiss();
+                        } else {
+                            input.setError(getString(R.string.invalidColor));
+                        }
+                    }
+                });
+            }
+        });
+
         input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId
                         == EditorInfo.IME_ACTION_DONE)) {
 
-                    closeKeyboard(input);
-                    alertDialog.cancel();
-
-                    saveRgb(input.getText().toString(), position);
+                    if (saveRgb(input.getText().toString(), position)) {
+                        closeKeyboard(input);
+                        alertDialog.cancel();
+                    } else {
+                        input.setError(getString(R.string.invalidColor));
+                        input.requestFocus();
+                        InputMethodManager imm = (InputMethodManager) getActivity()
+                                .getSystemService(
+                                        Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                    }
                 }
                 return false;
             }
@@ -241,8 +263,6 @@ public class CalibrateItemFragment extends ListFragment {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
-
     }
 
     public void closeKeyboard(EditText input) {
@@ -252,7 +272,7 @@ public class CalibrateItemFragment extends ListFragment {
 
     }
 
-    public void saveRgb(String value, int position) {
+    public boolean saveRgb(String value, int position) {
 
         try {
             String[] rgbArray = value.split(" ");
@@ -274,17 +294,26 @@ public class CalibrateItemFragment extends ListFragment {
                 int r = Integer.parseInt(rgbArray[0]);
                 int g = Integer.parseInt(rgbArray[1]);
                 int b = Integer.parseInt(rgbArray[2]);
-                storeCalibratedData(position, Color.rgb(r, g, b), 100);
+                if (r < 256 && g < 256 && b < 256) {
+                    storeCalibratedData(position, Color.rgb(r, g, b), 100);
 
-                String folderName = FileUtils.getStoragePath(getActivity(), -1,
-                        String.format("%s/%d/%d/", Globals.CALIBRATE_FOLDER, mTestType, position),
-                        false);
+                    String folderName = FileUtils.getStoragePath(getActivity(), -1,
+                            String.format("%s/%d/%d/", Globals.CALIBRATE_FOLDER, mTestType,
+                                    position), false
+                    );
 
-                FileUtils.deleteFolder(getActivity(), -1, folderName);
+                    FileUtils.deleteFolder(getActivity(), -1, folderName);
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
             }
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override

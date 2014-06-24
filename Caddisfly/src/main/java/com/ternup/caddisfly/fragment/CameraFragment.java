@@ -25,15 +25,12 @@ import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.ImageFormat;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -85,7 +82,7 @@ public class CameraFragment extends DialogFragment {
         return new CameraFragment();
     }
 
-    public static Camera getCameraInstance() {
+    private static Camera getCameraInstance() {
         Camera c = null;
         try {
             c = Camera.open();
@@ -111,7 +108,6 @@ public class CameraFragment extends DialogFragment {
         boolean opened = safeCameraOpenInView(view);
 
         if (!opened) {
-            Log.d("CameraGuide", "Error, Camera failed to open");
             return view;
         }
 
@@ -147,13 +143,9 @@ public class CameraFragment extends DialogFragment {
         progressDialog.show();
         progressDialog.setCancelable(false);
 
-        assert context != null;
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-
         Camera.Parameters parameters = mCamera.getParameters();
 
-        if (sharedPreferences.getBoolean("camera_torch", false)) {
+        if (PreferencesUtils.getBoolean(getActivity(), R.string.cameraTorchKey, false)) {
             parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
         } else {
             parameters.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
@@ -187,21 +179,12 @@ public class CameraFragment extends DialogFragment {
 
     }
 
-    public class PictureCallback implements Camera.PictureCallback {
-
-        @Override
-        public void onPictureTaken(byte[] bytes, Camera camera) {
-            if (!hasTestCompleted(getActivity())){
-                pictureCallback.onPictureTaken(bytes, camera);
-                takePicture();
-            }else{
-                pictureCallback.onPictureTaken(bytes, camera);
-            }
-
-        }
-    }
-
     private boolean hasTestCompleted(Context context) {
+        //TODO remove this code
+        if (makeShutterSound) {
+            return true;
+        }
+
         int currentSamplingCount = PreferencesUtils
                 .getInt(context, R.string.currentSamplingCountKey, 0);
         int samplingCount = PreferencesUtils.getInt(context, R.string.samplingCountKey, 5);
@@ -263,7 +246,7 @@ public class CameraFragment extends DialogFragment {
         public void dialogCancelled();
     }
 
-    class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
+    static class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
 
         private final SurfaceHolder mHolder;
 
@@ -300,10 +283,7 @@ public class CameraFragment extends DialogFragment {
             mSupportedFlashModes = mCamera.getParameters().getSupportedFlashModes();
             Camera.Parameters parameters = mCamera.getParameters();
 
-            SharedPreferences sharedPreferences = PreferenceManager
-                    .getDefaultSharedPreferences(context);
-
-            if (sharedPreferences.getBoolean("camera_cloudy", true)) {
+            if (PreferencesUtils.getBoolean(context, R.string.cameraCloudyKey, true)) {
                 parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_CLOUDY_DAYLIGHT);
             } else {
                 parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_DAYLIGHT);
@@ -312,7 +292,7 @@ public class CameraFragment extends DialogFragment {
             parameters.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
             parameters.setColorEffect(Camera.Parameters.EFFECT_NONE);
 
-            if (sharedPreferences.getBoolean("camera_infinity", false)) {
+            if (PreferencesUtils.getBoolean(context, R.string.cameraInfinityKey, false)) {
                 parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
             }
 
@@ -327,9 +307,11 @@ public class CameraFragment extends DialogFragment {
                 parameters.setMeteringAreas(meteringAreas);
             }
 
-            if (mSupportedFlashModes != null && mSupportedFlashModes
-                    .contains(Camera.Parameters.FLASH_MODE_ON)) {
-                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+            if (!PreferencesUtils.getBoolean(context, R.string.autoAnalyzeKey, false)) {
+                if (mSupportedFlashModes != null && mSupportedFlashModes
+                        .contains(Camera.Parameters.FLASH_MODE_ON)) {
+                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                }
             }
 
             mCamera.setDisplayOrientation(90);
@@ -413,6 +395,19 @@ public class CameraFragment extends DialogFragment {
             }
 
             return optimalSize;
+        }
+    }
+
+    private class PictureCallback implements Camera.PictureCallback {
+
+        @Override
+        public void onPictureTaken(byte[] bytes, Camera camera) {
+            if (!hasTestCompleted(getActivity())) {
+                pictureCallback.onPictureTaken(bytes, camera);
+                takePicture();
+            } else {
+                pictureCallback.onPictureTaken(bytes, camera);
+            }
         }
     }
 }

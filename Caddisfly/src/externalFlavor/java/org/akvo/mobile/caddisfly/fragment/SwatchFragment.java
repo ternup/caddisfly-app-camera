@@ -14,9 +14,7 @@
  * The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
  */
 
-package com.ternup.caddisfly.fragment;
-
-
+package org.akvo.mobile.caddisfly.fragment;
 
 import android.app.Fragment;
 

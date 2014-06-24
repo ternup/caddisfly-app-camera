@@ -14,7 +14,7 @@
  * The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
  */
 
-package com.ternup.caddisfly.util;
+package org.akvo.mobile.caddisfly.database;
 
 import android.content.Context;
 

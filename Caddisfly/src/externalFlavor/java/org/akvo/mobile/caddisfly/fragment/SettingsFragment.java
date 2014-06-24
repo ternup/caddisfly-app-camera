@@ -16,8 +16,6 @@
 
 package org.akvo.mobile.caddisfly.fragment;
 
-
-
 import android.app.Fragment;
 
 /**

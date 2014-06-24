@@ -51,4 +51,7 @@
     // width and height of sampled image
     <string name="photoSampleDimensionKey">photoSampleDimension</string>
     <string name="cameraSoundKey">cameraSound</string>
+    <string name="cameraTorchKey">cameraTorch</string>
+    <string name="cameraCloudyKey">cameraCloudy</string>
+    <string name="cameraInfinityKey">cameraInfinity</string>
 </resources>

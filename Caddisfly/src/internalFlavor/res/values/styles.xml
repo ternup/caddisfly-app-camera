@@ -42,8 +42,9 @@
         <item name="buttonStyle">@drawable/button_style_light</item>
         <item name="listButton">@drawable/list_button_style_light</item>
         <item name="arrowRight">@drawable/arrow_right_light</item>
-        <item name="alarm">@drawable/alarm_light</item>
-        <item name="listCard">@drawable/list_card_light</item>
+        <item name="alarm">@drawable/ic_action_alarms</item>
+        <item name="sendIcon">@drawable/ic_action_upload</item>
+        <item name="deleteIcon">@drawable/ic_action_discard</item>
     </style>
 
     <style name="AppTheme.Dark" parent="@android:style/Theme.Holo">
@@ -60,8 +61,9 @@
         <item name="buttonStyle">@drawable/button_style_dark</item>
         <item name="listButton">@drawable/button_style_dark</item>
         <item name="arrowRight">@drawable/arrow_right</item>
-        <item name="alarm">@android:drawable/ic_lock_idle_alarm</item>
-        <item name="listCard">@drawable/list_card_dark</item>
+        <item name="alarm">@drawable/ic_action_alarms_dark</item>
+        <item name="sendIcon">@drawable/ic_action_upload_dark</item>
+        <item name="deleteIcon">@drawable/ic_action_discard_dark</item>
     </style>
 
     <color name="subtitle_light">#ff333333</color>

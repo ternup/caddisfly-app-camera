@@ -45,13 +45,14 @@
     <attr name="buttonStyle" format="color"/>
     <attr name="subtitleTextColor" format="color"/>
     <attr name="listButton" format="color"/>
-    <attr name="listCard" format="reference"/>
     <attr name="arrowRight" format="reference"/>
     <attr name="drink" format="integer"/>
     <attr name="cook" format="integer"/>
     <attr name="bath" format="integer"/>
     <attr name="wash" format="integer"/>
     <attr name="alarm" format="integer"/>
+    <attr name="sendIcon" format="reference"/>
+    <attr name="deleteIcon" format="reference"/>
 
     <declare-styleable name="ButtonBarContainerTheme">
         <attr name="metaButtonBarStyle" format="reference"/>

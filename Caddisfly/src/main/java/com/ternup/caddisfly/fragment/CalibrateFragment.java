@@ -75,43 +75,44 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
         final MainApp mainApp = (MainApp) getActivity().getApplicationContext();
 
         if (mainApp.currentTestType < testTypeSpinner.getCount()) {
-            testTypeSpinner.setSelection(mainApp.currentTestType);
+            testTypeSpinner.setSelection(mainApp.currentTestType, false);
         }
 
         testTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
                     int position, long arg3) {
-
-                mainApp.currentTestType = position;
-                // TODO Auto-generated method stub
-                Activity activity = getActivity();
-                MainApp mainApp = (MainApp) activity.getApplicationContext();
-
-                switch (position) {
-                    case Globals.FLUORIDE_INDEX:
-                        mainApp.setFluorideSwatches();
-                        setAdapter();
-                        break;
-                    case Globals.FLUORIDE_2_INDEX:
-                        mainApp.setFluoride2Swatches();
-                        setAdapter();
-                        break;
-                    case Globals.PH_INDEX:
-                        mainApp.setPhSwatches();
-                        setAdapter();
-                        break;
-                    default:
-                        break;
-                }
+                changeTestType(position);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
             }
         });
+
+        changeTestType(mainApp.currentTestType);
+    }
+
+    public void changeTestType(int position) {
+        final MainApp mainApp = (MainApp) getActivity().getApplicationContext();
+        mainApp.currentTestType = position;
+
+        switch (position) {
+            case Globals.FLUORIDE_INDEX:
+                mainApp.setFluorideSwatches();
+                setAdapter();
+                break;
+            case Globals.FLUORIDE_2_INDEX:
+                mainApp.setFluoride2Swatches();
+                setAdapter();
+                break;
+            case Globals.PH_INDEX:
+                mainApp.setPhSwatches();
+                setAdapter();
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

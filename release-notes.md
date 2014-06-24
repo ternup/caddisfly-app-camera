@@ -1,12 +1,25 @@
+v0.27
+-----
+1. Prevent camera preview from closing and opening during multiple analysis
+2. Check if phone is placed in a level position on test start (as of now only works if shake is on)
+3. Initial delay on start of test increased by a few seconds
+4. Prevent invalid entry of rgb value on edit
+5. Some minor UI changes (changed: icons, margins, settings summary...)
+6. Cloudy settings defaults to true
+7. Minimum photo quality defaults to 60%
+8. Added alert with exception message on send fail
+9. Updated Library : android-async-http 1.4.5
+
 v0.26
 -----
 1. Multiple sampling for calibration (result will be an average color)
 2. Cropping photo to circle before analysis (to match the cartridge shape)
-3. Setting : Photo sample dimension [default: 200]
-4. Setting : Save original photo [default: false] (to avoid running out of space)
+3. Setting : Photo sample dimension, default: 200
+4. Setting : Save original photo, default: false (to avoid running out of space)
 5. Some UI changes on calibration and result screens
 6. Fix: Photo quality check
 7. Removed Speedometer UI
+8. Removed line chart
 
 v0.25
 -----

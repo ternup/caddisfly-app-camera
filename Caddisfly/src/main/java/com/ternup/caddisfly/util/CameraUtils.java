@@ -16,11 +16,11 @@
 
 package com.ternup.caddisfly.util;
 
+import com.ternup.caddisfly.R;
+
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
-import android.preference.PreferenceManager;
 
 public class CameraUtils {
 
@@ -49,16 +49,12 @@ public class CameraUtils {
 
             Camera.Parameters parameters = camera.getParameters();
 
-            SharedPreferences sharedPreferences = PreferenceManager
-                    .getDefaultSharedPreferences(context);
-            if (sharedPreferences.getBoolean("camera_torch", false)) {
+            if (PreferencesUtils.getBoolean(context, R.string.cameraTorchKey, false)) {
                 parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             } else {
                 parameters.setFlashMode("on"); //NON-NLS
             }
-            //parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_DAYLIGHT);
-
-            if (sharedPreferences.getBoolean("camera_cloudy", true)) {
+            if (PreferencesUtils.getBoolean(context, R.string.cameraCloudyKey, true)) {
                 parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_CLOUDY_DAYLIGHT);
             } else {
                 parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_DAYLIGHT);
@@ -67,7 +63,7 @@ public class CameraUtils {
             parameters.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
             parameters.setColorEffect(Camera.Parameters.EFFECT_NONE);
 
-            if (sharedPreferences.getBoolean("camera_infinity", false)) {
+            if (PreferencesUtils.getBoolean(context, R.string.cameraInfinityKey, false)) {
                 parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_INFINITY);
             }
 

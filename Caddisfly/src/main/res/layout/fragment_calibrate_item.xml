@@ -35,8 +35,6 @@
             android:paddingTop="20dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:background="?cardBackground">
         <LinearLayout
                 android:layout_width="match_parent"
@@ -81,7 +79,7 @@
                 android:paddingTop="20dp"
                 android:weightSum="2">
             <Button
-                    android:id="@+id/resetButton"
+                    android:id="@+id/editButton"
                     android:background="@drawable/blue_button"
                     style="?android:attr/buttonBarButtonStyle"
                     android:textColor="#fff"

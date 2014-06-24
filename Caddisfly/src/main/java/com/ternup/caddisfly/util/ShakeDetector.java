@@ -70,30 +70,41 @@ public class ShakeDetector implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        // This method will be called when the accelerometer detects a change.
 
         setCurrentAcceleration(event);
 
-        // Get the max linear acceleration in any direction
         float maxLinearAcceleration = getMaxCurrentLinearAcceleration();
 
-        synchronized (this) {
+        //http://stackoverflow.com/questions/11175599/how-to-measure-the-tilt-of-the-phone-in-xy-plane-using-accelerometer-in-android/15149421#15149421
+        float[] g;
+        g = event.values.clone();
 
-            long nowNoShake = System.currentTimeMillis();
-            if (Math.abs(maxLinearAcceleration) < MAX_SHAKE_ACCELERATION) {
-                long elapsedNoShakeTime = nowNoShake - noShakeStartTime;
+        float norm_Of_g = (float) Math.sqrt(g[0] * g[0] + g[1] * g[1] + g[2] * g[2]);
 
-                if (elapsedNoShakeTime > MAX_SHAKE_DURATION) {
-                    //elapsedNoShakeTime = 0;
-                    noShakeStartTime = nowNoShake;
+        // Normalize the accelerometer vector
+        g[0] = g[0] / norm_Of_g;
+        g[1] = g[1] / norm_Of_g;
+        g[2] = g[2] / norm_Of_g;
 
-                    if (System.currentTimeMillis() - previousNoShake > 400) {
-                        previousNoShake = System.currentTimeMillis();
-                        mNoShakeListener.onNoShake();
+        int inclination = (int) Math.round(Math.toDegrees(Math.acos(g[2])));
+        if (inclination < 10 || inclination > 170) {
+            synchronized (this) {
+                long nowNoShake = System.currentTimeMillis();
+                if (Math.abs(maxLinearAcceleration) < MAX_SHAKE_ACCELERATION) {
+                    long elapsedNoShakeTime = nowNoShake - noShakeStartTime;
+
+                    if (elapsedNoShakeTime > MAX_SHAKE_DURATION) {
+                        //elapsedNoShakeTime = 0;
+                        noShakeStartTime = nowNoShake;
+
+                        if (System.currentTimeMillis() - previousNoShake > 400) {
+                            previousNoShake = System.currentTimeMillis();
+                            mNoShakeListener.onNoShake();
+                        }
                     }
+                } else {
+                    noShakeStartTime = nowNoShake;
                 }
-            } else {
-                noShakeStartTime = nowNoShake;
             }
         }
 

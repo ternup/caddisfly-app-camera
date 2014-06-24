@@ -191,5 +191,6 @@
     <string name="photoSampleDimensionMessage">विश्लेषण के लिए फोटो की फसल के लिए लंबाई का चयन करें
     </string>
     <string name="photoSampleDimension">फोटो नमूना क्षेत्र आयाम</string>
+    <string name="invalidColor">Invalid Color value</string>
 </resources>
 

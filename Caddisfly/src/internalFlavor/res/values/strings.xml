@@ -73,18 +73,9 @@
     <string name="outOfRange">Color out of range</string>
     <string name="help">Help</string>
     <string name="soundAlarm">Alarm when shake needed</string>
-    <string name="shakeDevice">Require shake to analyze</string>
-    <string name="shakeDeviceSummary">For proper mixing of solution, require the device to be shaken
-        before analyzing.
-    </string>
     <string name="soundAlarmSummary">An alarm to notify that a shake is needed before each
         analysis.
     </string>
-    <string name="placeDeviceInStand">Place the phone in its stand to continue</string>
-    <string name="shakeToContinue">Ensure cartridge is placed correctly and then shake this device
-        to continue
-    </string>
-    <string name="shakeMe">Shake Me</string>
     <string name="selectedWillBeDeleted">Selected items will be deleted</string>
     <string name="language">Language</string>
     <string name="interval">Interval</string>

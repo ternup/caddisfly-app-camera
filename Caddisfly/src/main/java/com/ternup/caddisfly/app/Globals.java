@@ -41,11 +41,16 @@ public class Globals {
 
     // Caddisfly update check path
     public static final String UPDATE_CHECK_URL
-            = "http://caddisfly.ternup.com/ternupapp/v.txt?check=26";
+            = "http://caddisfly.ternup.com/ternupapp/v.txt?check=27";
 
     // Caddisfly update path
     public static final String UPDATE_URL
-            = "http://caddisfly.ternup.com/ternupapp/cadapp_update.apk?check=26";
+            = "http://caddisfly.ternup.com/ternupapp/cadapp_update.apk?check=27";
+
+    //TODO: remove this
+    public static final String CONNECT = "";
+
+    public static final String SERVER_BASE_URL = "http://labyrinth-punter.rhcloud.com/testlog/api/";
 
     public static final String DATABASE_NAME = "caddisfly";
 
@@ -93,7 +98,7 @@ public class Globals {
 
     public static final int MINUTE_IN_MS = 60000;
 
-    public static final int INITIAL_DELAY = 3000;
+    public static final int INITIAL_DELAY = 4000;
 
     protected Globals() {
         // prevents calls from subclass

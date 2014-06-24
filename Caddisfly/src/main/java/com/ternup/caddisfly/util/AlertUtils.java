@@ -53,7 +53,7 @@ public class AlertUtils {
         showAlert(context, title, context.getString(message), callback, cancelListener);
     }
 
-    private static void showAlert(Context context, int title, String message,
+    public static void showAlert(Context context, int title, String message,
             DialogInterface.OnClickListener callback,
             DialogInterface.OnClickListener cancelListener) {
         //if ( title == null ) title = context.getResources().getString(R.string.app_name);
@@ -63,9 +63,9 @@ public class AlertUtils {
         assert context.getApplicationContext() != null;
         if (((MainApp) context.getApplicationContext()).CurrentTheme
                 == R.style.AppTheme_Dark) {
-            iconId = android.R.drawable.ic_dialog_alert;
+            iconId = R.drawable.ic_action_warning_dark;
         } else {
-            iconId = R.drawable.ic_dialog_alert_light;
+            iconId = R.drawable.ic_action_warning;
         }
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);

@@ -1,0 +1,89 @@
+/*
+ * Copyright (C) TernUp Research Labs
+ *
+ * This file is part of Caddisfly
+ *
+ * Caddisfly is free software: you can redistribute it and modify it under the terms of
+ * the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+ * either version 3 of the License or any later version.
+ *
+ * Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License included below for more details.
+ *
+ * The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+ */
+
+/*
+    This file is part of Caddisfly
+
+    Caddisfly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Caddisfly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Caddisfly.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+package com.ternup.caddisfly.test;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.activity.MainActivity;
+
+import android.content.Intent;
+import android.test.ActivityUnitTestCase;
+import android.widget.Button;
+
+public class MainActivityTest extends ActivityUnitTestCase<MainActivity> {
+
+    private MainActivity activity;
+
+    public MainActivityTest() {
+        super(MainActivity.class);
+    }
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        Intent intent = new Intent(getInstrumentation().getTargetContext(),
+                MainActivity.class);
+        startActivity(intent, null, null);
+        activity = getActivity();
+    }
+
+    public void testLayout() {
+        int buttonId = R.id.locationButton;
+        assertNotNull(activity.findViewById(buttonId));
+        Button startButton = (Button) activity.findViewById(buttonId);
+        assertEquals("Button text not correct", getActivity().getString(R.string.fluoride),
+                startButton.getText());
+    }
+
+    public void testStartButtonClick() {
+        Button startButton = (Button) activity.findViewById(R.id.addLocationButton);
+        assertNotNull("Button is null", startButton);
+
+/*        startButton.performClick();
+
+        Button startButton = (Button) activity.findViewById(R.id.startButton);
+
+        startButton.performClick();
+
+        Button chartButton = (Button) activity.findViewById(R.id.chartButton);
+        assertNotNull("Button is null", chartButton);
+        assertEquals("Button text not correct", "Chart", chartButton.getText());
+
+        Button calibrateButton = (Button) activity.findViewById(R.id.calibrateButton);
+
+        assertNotNull("Button is null", calibrateButton);
+        assertEquals("Button text not correct", "Start Test", calibrateButton.getText());
+*/
+
+    }
+}

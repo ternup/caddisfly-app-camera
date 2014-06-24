@@ -251,6 +251,8 @@ public class SurveyActivity extends Activity implements LocationFragment.OnCompl
 
         File file = new File(FileUtils.getStoragePath(this, 0, "", true) + "photo");
 
+        FileUtils.deleteFolder(this, id, "");
+
         file.renameTo(new File(FileUtils.getStoragePath(this, id, "", true) + "photo"));
 
         return id;

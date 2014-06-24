@@ -1,0 +1,150 @@
+/*
+ * Copyright (C) TernUp Research Labs
+ *
+ * This file is part of Caddisfly
+ *
+ * Caddisfly is free software: you can redistribute it and modify it under the terms of
+ * the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+ * either version 3 of the License or any later version.
+ *
+ * Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License included below for more details.
+ *
+ * The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+ */
+
+/*
+    This file is part of Caddisfly
+
+    Caddisfly is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Caddisfly is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Caddisfly.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+package com.ternup.caddisfly.test;
+
+import com.robotium.solo.Solo;
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.activity.MainActivity;
+import com.ternup.caddisfly.app.Globals;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
+import android.preference.PreferenceManager;
+import android.test.ActivityInstrumentationTestCase2;
+
+public class RobotiumTestSingle extends ActivityInstrumentationTestCase2<MainActivity> {
+
+    private Solo solo;
+
+    public RobotiumTestSingle() {
+        super(MainActivity.class);
+    }
+
+    protected void setUp() throws Exception {
+        super.setUp();
+        Context context = this.getInstrumentation().getTargetContext();
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        sharedPreferences.edit().clear().commit();
+        solo = new Solo(getInstrumentation(), getActivity());
+    }
+
+
+    private void openHome() {
+        solo.sleep(500);
+        openDrawer();
+        solo.waitForView(R.id.navigation_drawer);
+        solo.sleep(1000);
+        solo.clickOnText(solo.getString(R.string.home));
+        assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.HOME_SCREEN_INDEX)));
+
+        solo.sleep(500);
+    }
+
+    private void openLocations(int index) {
+        openDrawer();
+        solo.waitForView(R.id.navigation_drawer);
+        solo.sleep(1000);
+        solo.clickOnText(solo.getString(R.string.locations), index);
+        assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.LOCATION_LIST_SCREEN_INDEX)));
+    }
+
+    private void openCalibrate(int index) {
+        openDrawer();
+        solo.waitForView(R.id.navigation_drawer);
+        solo.sleep(1000);
+        solo.clickOnText(solo.getString(R.string.calibrate), index);
+        assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.CALIBRATE_SCREEN_INDEX)));
+    }
+
+   /* private void openSwatches() {
+        solo.sleep(500);
+        openDrawer();
+        solo.waitForView(R.id.navigation_drawer);
+        solo.sleep(1000);
+        solo.clickOnText(solo.getString(R.string.swatches));
+        assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.SWATCHES_SCREEN_INDEX)));
+    }*/
+
+    private void openSettings() {
+        solo.sleep(1500);
+        openDrawer();
+        solo.waitForView(R.id.navigation_drawer);
+        solo.sleep(1000);
+        solo.clickOnText(solo.getString(R.string.settings));
+        assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.SETTINGS_SCREEN_INDEX)));
+    }
+
+    private void openHelp() {
+        openDrawer();
+        solo.waitForView(R.id.navigation_drawer);
+        solo.sleep(1000);
+        solo.clickOnText(solo.getString(R.string.help));
+        assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.HELP_SCREEN_INDEX)));
+    }
+
+    private void openAbout() {
+        openDrawer();
+        solo.waitForView(R.id.navigation_drawer);
+        solo.sleep(1000);
+        solo.clickOnText(solo.getString(R.string.about));
+        assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.ABOUT_SCREEN_INDEX)));
+    }
+
+    private void openDrawer() {
+        solo.drag(0, 400, 500, 500, 5);
+    }
+
+    private void closeDrawer() {
+        solo.drag(400, 0, 500, 500, 5);
+    }
+
+    private int getButtonColor(int index) {
+
+        if (index > 0) {
+            boolean found = solo.searchButton("", index + 1, true);
+            if (!found) {
+                index -= 1;
+            }
+        }
+        return ((ColorDrawable) solo.getButton(index).getBackground()).getColor();
+
+    }
+
+    @Override
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
+    }
+}
