@@ -15,8 +15,6 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 <resources>
-
-    <string name="app_name">Caddisfly</string>
     <string name="about">About</string>
     <string name="settings">Settings</string>
     <string name="bacteriaTest">Bacteria Test</string>
@@ -26,7 +24,7 @@
     <string name="pH">pH</string>
     <string name="calibrate">Calibrate</string>
     <string name="working">Working</string>
-    <string name="analyzingWait">Analysing…</string>
+    <string name="analyzingWait">Analyzing…</string>
     <string name="send">Send</string>
     <string name="photo">Photo</string>
     <string name="delete">Delete</string>
@@ -142,7 +140,6 @@
     <string name="result_sent">Test details successfully sent to the server</string>
     <string name="success">Success</string>
     <string name="send_failed">Send failed due to server problem. Try again later.</string>
-    <string name="productName">Akvo FLOW</string>
     <string name="enableInternet">Please enable wireless internet or mobile data connection</string>
     <string name="noInternet">Internet connection not found</string>
     <string name="photoQuality">Photo quality</string>
@@ -187,5 +184,11 @@
     </string>
     <string name="photoSampleDimension">Photo Sample Dimension</string>
     <string name="invalidColor">Invalid Color value</string>
+    <string name="selectValueToCalibrate">Select a value to calibrate</string>
+    <string name="startSurvey">Start Survey</string>
+    <string name="startTest">Start Test</string>
+    <string name="installAkvoFlow">Please install Akvo flow Survey App and then try again</string>
+    <string name="sending">Sending</string>
+    <string name="waterQualityTest">Water Quality Test</string>
 
 </resources>

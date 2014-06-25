@@ -14,17 +14,19 @@
  * The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
  */
 
-package com.ternup.caddisfly.database;
+package org.akvo.mobile.caddisfly.fragment;
 
-import android.content.Context;
+import com.ternup.caddisfly.app.Globals;
+import com.ternup.caddisfly.fragment.CalibrateFragmentBase;
 
-public class DataStorage {
+import android.os.Bundle;
+import android.view.View;
 
-    public static long saveResult(Context mContext, String folder, int testType, double result) {
-        return 10;
+public class CalibrateFragment extends CalibrateFragmentBase {
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        changeTestType(Globals.FLUORIDE_INDEX);
     }
-
-    public static void deleteRecord(Context context, long id, long locationId, String folderName) {
-    }
-
 }

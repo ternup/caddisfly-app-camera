@@ -21,12 +21,12 @@ import com.ternup.caddisfly.activity.ProgressActivity;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.fragment.AboutFragment;
-import com.ternup.caddisfly.fragment.CalibrateFragment;
 import com.ternup.caddisfly.fragment.HelpFragment;
 import com.ternup.caddisfly.util.AlertUtils;
 import com.ternup.caddisfly.util.PreferencesHelper;
 import com.ternup.caddisfly.util.PreferencesUtils;
 
+import org.akvo.mobile.caddisfly.fragment.CalibrateFragment;
 import org.akvo.mobile.caddisfly.fragment.SettingsFragment;
 import org.akvo.mobile.caddisfly.fragment.StartFragment;
 
@@ -41,17 +41,18 @@ import android.os.Bundle;
 
 
 public class MainActivity extends Activity
-        implements StartFragment.OnCalibrateListener, StartFragment.OnStartTestListener {
+        implements StartFragment.OnCalibrateListener, StartFragment.OnStartTestListener,
+        StartFragment.OnStartSurveyListener, StartFragment.OnHelpListener {
 
-    private CalibrateFragment calibrateFragment = null;
+    private final int REQUEST_TEST = 1;
+
+    private CalibrateFragment mCalibrateFragment = null;
 
     private HelpFragment helpFragment = null;
 
     private AboutFragment aboutFragment = null;
 
     private SettingsFragment settingsFragment = null;
-
-    private final int REQUEST_TEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,10 +96,10 @@ public class MainActivity extends Activity
         //isAboutShowing = false;
         switch (position) {
             case Globals.CALIBRATE_SCREEN_INDEX:
-                if (calibrateFragment == null) {
-                    calibrateFragment = new CalibrateFragment();
+                if (mCalibrateFragment == null) {
+                    mCalibrateFragment = new CalibrateFragment();
                 }
-                fragment = calibrateFragment;
+                fragment = mCalibrateFragment;
                 break;
             case Globals.SETTINGS_SCREEN_INDEX:
                 //isSettingsShowing = true;
@@ -161,12 +162,30 @@ public class MainActivity extends Activity
     }
 
     @Override
+    public void onHelp(int index) {
+        displayView(index, true);
+    }
+
+    @Override
+    public void onStartSurvey() {
+        Intent LaunchIntent = getPackageManager()
+                .getLaunchIntentForPackage("com.gallatinsystems.survey.device");
+        if (LaunchIntent == null) {
+            AlertUtils.showMessage(this, R.string.error, R.string.installAkvoFlow);
+        } else {
+            startActivity(LaunchIntent);
+            finish();
+        }
+    }
+
+    @Override
     public void onStartTest() {
 
         Context context = this;
         int testType = 0;
 
         MainApp mainApp = (MainApp) this.getApplicationContext();
+        mainApp.setFluorideSwatches();
 
         int minAccuracy = PreferencesUtils
                 .getInt(context, R.string.minPhotoQualityKey, 0);
@@ -184,23 +203,7 @@ public class MainActivity extends Activity
                             public void onClick(
                                     DialogInterface dialogInterface,
                                     int i) {
-                                Fragment fragment = CalibrateFragment
-                                        .newInstance();
-                                if (fragment != null) {
-                                    FragmentManager fragmentManager
-                                            = getFragmentManager();
-                                    FragmentTransaction ft
-                                            = fragmentManager
-                                            .beginTransaction();
-                                    ft.replace(R.id.container, fragment,
-                                            String.valueOf(
-                                                    Globals.CALIBRATE_SCREEN_INDEX)
-                                    );
-                                    ft.setTransition(
-                                            FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                                    ft.addToBackStack(null);
-                                    ft.commit();
-                                }
+                                displayView(Globals.CALIBRATE_SCREEN_INDEX, true);
 
                             }
                         }, null

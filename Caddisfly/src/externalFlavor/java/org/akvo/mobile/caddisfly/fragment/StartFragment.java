@@ -26,18 +26,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class StartFragment extends Fragment {
 
+    private static final String EXTERNAL_PARAM = "external";
+
     private OnCalibrateListener mOnCalibrateListener;
+
+    private OnHelpListener mOnHelpListener;
+
+    private OnStartSurveyListener mOnStartSurveyListener;
 
     private OnStartTestListener mOnStartTestListener;
 
     private boolean mIsExternal = false;
 
-    private static final String EXTERNAL_PARAM = "external";
-
-    private String mParam1;
+    public StartFragment() {
+        // Required empty public constructor
+    }
 
     public static StartFragment newInstance(boolean external) {
         StartFragment fragment = new StartFragment();
@@ -45,10 +52,6 @@ public class StartFragment extends Fragment {
         args.putBoolean(EXTERNAL_PARAM, external);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public StartFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -63,6 +66,10 @@ public class StartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
+        getActivity().setTitle(R.string.appName);
+
+        TextView startTestText = (TextView) view.findViewById(R.id.startTestText);
+        final TextView startSurveyText = (TextView) view.findViewById(R.id.startSurveyText);
 
         Button calibrateButton = (Button) view.findViewById(R.id.calibrateButton);
         calibrateButton.setOnClickListener(new View.OnClickListener() {
@@ -74,17 +81,45 @@ public class StartFragment extends Fragment {
             }
         });
 
+        Button helpButton = (Button) view.findViewById(R.id.helpButton);
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnHelpListener != null) {
+                    mOnHelpListener.onHelp(Globals.HELP_SCREEN_INDEX);
+                }
+            }
+        });
+
+        final Button startSurveyButton = (Button) view.findViewById(R.id.startSurveyButton);
+        startSurveyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnStartSurveyListener != null) {
+                    mOnStartSurveyListener.onStartSurvey();
+                }
+            }
+        });
+
         Button startButton = (Button) view.findViewById(R.id.startButton);
         if (mIsExternal) {
+            startSurveyText.setVisibility(View.GONE);
+            startSurveyButton.setVisibility(View.GONE);
+            startTestText.setVisibility(View.VISIBLE);
+            startButton.setVisibility(View.VISIBLE);
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mOnStartTestListener != null) {
                         mOnStartTestListener.onStartTest();
+
                     }
                 }
             });
         } else {
+            startSurveyText.setVisibility(View.GONE);
+            startSurveyButton.setVisibility(View.VISIBLE);
+            startTestText.setVisibility(View.GONE);
             startButton.setVisibility(View.GONE);
         }
 
@@ -96,7 +131,9 @@ public class StartFragment extends Fragment {
         super.onAttach(activity);
         try {
             mOnCalibrateListener = (OnCalibrateListener) activity;
+            mOnHelpListener = (OnHelpListener) activity;
             mOnStartTestListener = (OnStartTestListener) activity;
+            mOnStartSurveyListener = (OnStartSurveyListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -107,7 +144,8 @@ public class StartFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mOnCalibrateListener = null;
-
+        mOnHelpListener = null;
+        mOnStartSurveyListener = null;
         mOnStartTestListener = null;
     }
 
@@ -117,6 +155,16 @@ public class StartFragment extends Fragment {
     public interface OnCalibrateListener {
 
         public void onCalibrate(int index);
+    }
+
+    public interface OnHelpListener {
+
+        public void onHelp(int index);
+    }
+
+    public interface OnStartSurveyListener {
+
+        public void onStartSurvey();
     }
 
     public interface OnStartTestListener {

@@ -15,7 +15,7 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 <resources>
-    <string name="app_name">केड्डीसफ्लै</string>
+    <string name="appName">केड्डीसफ्लै</string>
     <string name="about">के बारे में</string>
     <string name="settings">सेटिंग्स</string>
     <string name="bacteriaTest">बैक्टीरिया टेस्ट</string>
@@ -147,7 +147,6 @@
     <string name="success">सफलता</string>
     <string name="send_failed">कारण सर्वर समस्या करने में विफल भेजें . बाद में पुन: प्रयास करें .
     </string>
-    <string name="productName">Akvo FLOW</string>
     <string name="enableInternet">वायरलेस इंटरनेट या मोबाइल डेटा कनेक्शन सक्षम करें</string>
     <string name="noInternet">इंटरनेट कनेक्शन नहीं मिला</string>
     <string name="photoQuality">फोटो गुणवत्ता</string>
@@ -192,5 +191,11 @@
     </string>
     <string name="photoSampleDimension">फोटो नमूना क्षेत्र आयाम</string>
     <string name="invalidColor">Invalid Color value</string>
+    <string name="selectValueToCalibrate">Select a value to calibrate</string>
+    <string name="startSurvey">Start Survey</string>
+    <string name="startTest">Start Test</string>
+    <string name="installAkvoFlow">Please install Akvo FLOW Survey App</string>
+    <string name="sending">Sending</string>
+    <string name="waterQualityTest">Water Quality Test</string>
 </resources>
 

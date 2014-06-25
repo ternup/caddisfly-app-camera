@@ -97,7 +97,7 @@ public class CameraFragment extends DialogFragment {
             Bundle savedInstanceState) {
 
         if (PreferencesUtils.getBoolean(getActivity(), R.string.autoAnalyzeKey, true)) {
-            getDialog().setTitle(R.string.analyzingWait);
+            getDialog().setTitle(R.string.testInProgress);
         } else {
             getDialog().setTitle(R.string.clickAnalyze);
         }
@@ -134,14 +134,18 @@ public class CameraFragment extends DialogFragment {
     private void startTakingPictures() {
 
         Context context = getActivity();
-        ProgressDialog.Builder builder = new ProgressDialog.Builder(context);
-        builder.setTitle(R.string.working);
-        builder.setMessage(R.string.analyzingWait);
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage(getString(R.string.analyzingWait));
+        progressDialog.setCancelable(false);
 
-        progressDialog = builder.create();
+        //ProgressDialog.Builder builder = new ProgressDialog.Builder(context);
+        //builder.setTitle(R.string.working);
+        //builder.setMessage(R.string.analyzingWait);
+
+        //progressDialog = builder.create();
         progressDialog.getWindow().setGravity(Gravity.BOTTOM);
         progressDialog.show();
-        progressDialog.setCancelable(false);
+        //progressDialog.setCancelable(false);
 
         Camera.Parameters parameters = mCamera.getParameters();
 

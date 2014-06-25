@@ -104,7 +104,7 @@ public class UpdateCheckTask extends AsyncTask<Void, Void, Void> {
         } else {
 
             if (!mBackground) {
-                AlertUtils.showMessage(mContext, R.string.app_name, R.string.alreadyHaveLatest);
+                AlertUtils.showMessage(mContext, R.string.appName, R.string.alreadyHaveLatest);
             }
         }
     }

@@ -74,12 +74,6 @@
                     android:layout_weight="1"
                     android:layout_marginLeft="10dp"/>
         </LinearLayout>
-        <TextView
-                android:id="@+id/rgbText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:textIsSelectable="false"/>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -106,7 +100,7 @@
             </Button>
             <Button
                     android:id="@+id/startButton"
-                    android:background="@drawable/red_button"
+                    android:background="@drawable/cyan_button"
                     style="@style/button_text"
                     android:textColor="#eee"
                     android:text="@string/calibrate"

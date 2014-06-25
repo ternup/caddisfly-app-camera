@@ -21,35 +21,31 @@ import com.ternup.caddisfly.adapter.CalibrateListAdapter;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 
+import org.akvo.mobile.caddisfly.fragment.CalibrateItemFragment;
+
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class CalibrateFragment extends ListFragment implements AdapterView.OnItemClickListener {
+public class CalibrateFragmentBase extends ListFragment implements AdapterView.OnItemClickListener {
 
     CalibrateItemFragment mCalibrateItemFragment;
 
     //private int mTestType = 0;
 
-    public CalibrateFragment() {
+    public CalibrateFragmentBase() {
     }
 
-    public static CalibrateFragment newInstance() {
-        return new CalibrateFragment();
+    public static CalibrateFragmentBase newInstance() {
+        return new CalibrateFragmentBase();
     }
 
     @SuppressWarnings("NullableProblems")
@@ -63,34 +59,7 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle(R.string.calibrate);
-
         getListView().setOnItemClickListener(this);
-
-        final Spinner testTypeSpinner = (Spinner) view.findViewById(R.id.testTypeSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.testTypes, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_layout);
-        testTypeSpinner.setAdapter(adapter);
-
-        final MainApp mainApp = (MainApp) getActivity().getApplicationContext();
-
-        if (mainApp.currentTestType < testTypeSpinner.getCount()) {
-            testTypeSpinner.setSelection(mainApp.currentTestType, false);
-        }
-
-        testTypeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> arg0, View arg1,
-                    int position, long arg3) {
-                changeTestType(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
-        });
-
-        changeTestType(mainApp.currentTestType);
     }
 
     public void changeTestType(int position) {
@@ -119,31 +88,6 @@ public class CalibrateFragment extends ListFragment implements AdapterView.OnIte
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-    }
-
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.calibrate, menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.menu_swatches:
-                SwatchFragment fragment = new SwatchFragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction ft = fragmentManager.beginTransaction();
-                ft.replace(R.id.container, fragment, "SwatchFragment");
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.addToBackStack(null);
-                ft.commit();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     public void setAdapter() {

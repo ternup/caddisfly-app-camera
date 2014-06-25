@@ -240,7 +240,7 @@ public class DetailsFragment extends ListFragment {
                 if (NetworkUtils.checkInternetConnection(mContext)) {
                     if (progressDialog == null) {
                         progressDialog = new ProgressDialog(getActivity());
-                        progressDialog.setMessage("Sending...");
+                        progressDialog.setMessage(getString(R.string.sending));
                         progressDialog.setCancelable(false);
                     }
                     progressDialog.show();

@@ -31,6 +31,8 @@ import com.ternup.caddisfly.util.PreferencesHelper;
 import com.ternup.caddisfly.util.PreferencesUtils;
 import com.ternup.caddisfly.util.ShakeDetector;
 
+import org.akvo.mobile.caddisfly.activity.MainActivity;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -181,7 +183,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
 
         setContentView(R.layout.activity_progress);
 
-        this.setTitle(R.string.app_name);
+        this.setTitle(R.string.appName);
 
         // Gradient shading for title
         mTitleText = (TextView) findViewById(R.id.titleText);

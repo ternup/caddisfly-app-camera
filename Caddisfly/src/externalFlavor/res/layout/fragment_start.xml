@@ -1,50 +1,158 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              tools:context=".StartFragment"
-              android:orientation="vertical">
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
 
-    <ImageView android:layout_width="150dp"
-               android:layout_height="wrap_content"
-               android:layout_gravity="center_horizontal"
-               android:src="@drawable/akvo_flow"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/linearLayout"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_gravity="center"
+             android:orientation="vertical"
+             android:paddingLeft="@dimen/activity_horizontal_margin"
+             android:paddingRight="@dimen/activity_horizontal_margin"
+             tools:ignore="Overdraw">
 
-            />
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:textSize="30sp"
-              android:gravity="center_horizontal"
-              android:text="Fluoride"
-              android:textAllCaps="true"/>
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:textSize="15sp"
-              android:gravity="center_horizontal"
-              android:text="Water Quality Test"
-              android:textAllCaps="true"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Space android:layout_width="match_parent" android:layout_height="20dp"/>
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:textSize="20sp"
-              android:lineSpacingExtra="10sp"
-              android:text="Attach the cartridge with the source water to the phone and start test."/>
-    <Space android:layout_width="match_parent" android:layout_height="20dp"/>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="30sp"
+                  android:paddingTop="15dp"
+                  android:gravity="center_horizontal"
+                  android:text="@string/fluoride"
+                  android:textAllCaps="true"/>
+        <TextView android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textSize="15sp"
+                  android:gravity="center_horizontal"
+                  android:text="@string/waterQualityTest"
+                  android:textAllCaps="true"/>
 
-    <Button
-            android:background="@drawable/red_button"
-            style="@style/button_text"
-            android:id="@+id/startButton"
-            android:text="Start Test"
-            />
-    <Space android:layout_width="match_parent" android:layout_height="20dp"/>
-    <Button
-            android:background="@drawable/red_button"
-            style="@style/button_text"
-            android:id="@+id/calibrateButton"
-            android:text="Calibrate"
-            />
-</LinearLayout>
+        <Space android:layout_width="match_parent" android:layout_height="20dp"/>
+        <TextView
+                android:id="@+id/startTestText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:lineSpacingExtra="10sp"
+                android:visibility="visible"
+                android:text="Attach a cartridge filled with the source water to be tested to the phone and press Start Test."/>
+
+        <TextView
+                android:id="@+id/startSurveyText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:lineSpacingExtra="10sp"
+                android:visibility="gone"
+                android:text="Start a water quality survey to begin."/>
+
+        <Space android:layout_width="match_parent" android:layout_height="20dp"/>
+
+        <Button
+                android:background="@drawable/cyan_button"
+                style="@style/button_text"
+                android:id="@+id/startButton"
+                android:text="@string/startTest"
+                android:visibility="gone"
+                />
+        <Button
+                android:background="@drawable/orange_button"
+                style="@style/button_text"
+                android:id="@+id/startSurveyButton"
+                android:text="@string/startSurvey"
+                android:paddingTop="15dp"
+                />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:id="@+id/layoutAboutCompany"
+            android:orientation="vertical"
+            android:layout_gravity="bottom">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal"
+                android:gravity="bottom"
+                android:paddingTop="10dp">
+
+            <Button
+                    android:id="@+id/calibrateButton"
+                    android:text="@string/calibrate"
+                    android:padding="20dp"
+                    android:layout_margin="1dp"
+                    android:drawableTop="@android:drawable/ic_menu_compass"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?buttonStyle"
+                    style="?android:borderlessButtonStyle"
+                    android:textColor="#ddd"/>
+
+            <Button
+                    android:id="@+id/helpButton"
+                    android:text="@string/help"
+                    android:padding="20dp"
+                    android:layout_margin="1dp"
+                    android:drawableTop="@drawable/ic_action_help_dark"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="?buttonStyle"
+                    style="?android:borderlessButtonStyle"
+                    android:textColor="#ddd"/>
+
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:background="#bb7e6453"
+                      android:layout_marginTop="20dp"
+                >
+            <View android:layout_width="match_parent"
+                  android:layout_height="5dp"
+                  android:background="#ff7700"/>
+
+            <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/organizationImage"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/akvo"
+                    android:alpha="0.6"
+                    android:contentDescription="@null"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    />
+            <TextView android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:text="Akvo Caddisfly v0.27"
+                      android:gravity="center_horizontal"
+                      android:layout_marginTop="-15dp"
+                      android:layout_marginLeft="-17dp"
+                      android:paddingBottom="5dp"
+                      android:textColor="#999"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

@@ -14,17 +14,10 @@
  * The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
  */
 
-package com.ternup.caddisfly.database;
+package org.akvo.mobile.caddisfly.fragment;
 
-import android.content.Context;
+import com.ternup.caddisfly.fragment.CalibrateItemFragmentBase;
 
-public class DataStorage {
-
-    public static long saveResult(Context mContext, String folder, int testType, double result) {
-        return 10;
-    }
-
-    public static void deleteRecord(Context context, long id, long locationId, String folderName) {
-    }
+public class CalibrateItemFragment extends CalibrateItemFragmentBase {
 
 }

@@ -58,19 +58,17 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class CalibrateItemFragment extends ListFragment {
+public class CalibrateItemFragmentBase extends ListFragment {
 
     private final PhotoTakenHandler mPhotoTakenHandler = new PhotoTakenHandler(this);
+
+    protected int mTestType = Globals.FLUORIDE_INDEX;
 
     CameraFragment mCameraFragment;
 
     GalleryListAdapter mAdapter;
 
     private PowerManager.WakeLock wakeLock;
-
-    private int mTestType = Globals.FLUORIDE_INDEX;
-
-    private TextView mRgbText;
 
     private Button mValueButton;
 
@@ -80,15 +78,15 @@ public class CalibrateItemFragment extends ListFragment {
 
     private TextView mErrorQualityText;
 
-    public CalibrateItemFragment() {
+    public CalibrateItemFragmentBase() {
     }
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static CalibrateItemFragment newInstance() {
-        return new CalibrateItemFragment();
+    public static CalibrateItemFragmentBase newInstance() {
+        return new CalibrateItemFragmentBase();
     }
 
     @Override
@@ -107,7 +105,6 @@ public class CalibrateItemFragment extends ListFragment {
         ListView listView = getListView();
 
         assert header != null;
-        mRgbText = (TextView) header.findViewById(R.id.rgbText);
         mValueButton = (Button) header.findViewById(R.id.valueButton);
         Button editButton = (Button) header.findViewById(R.id.editButton);
         mStartButton = (Button) header.findViewById(R.id.startButton);
@@ -122,6 +119,7 @@ public class CalibrateItemFragment extends ListFragment {
         mStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+                mStartButton.setEnabled(false);
                 AlertUtils.askQuestion(getActivity(), R.string.calibrate,
                         R.string.calibrate_info,
                         new DialogInterface.OnClickListener() {
@@ -335,12 +333,6 @@ public class CalibrateItemFragment extends ListFragment {
                 String.format("%s-%s", String.valueOf(mTestType), String.valueOf(index)),
                 -1);
 
-        mRgbText.setText(String.format("%s: %s  %s  %s", mainApp.getString(R.string.rgb),
-                String.format("%d", Color.red(color)),
-                String.format("%d", Color.green(color)),
-                String.format("%d", Color.blue(color))
-        ));
-
         int accuracy = Math.max(0, PreferencesUtils.getInt(mainApp,
                 String.format("%s-a-%s", String.valueOf(mTestType), String.valueOf(index)),
                 101));
@@ -380,11 +372,7 @@ public class CalibrateItemFragment extends ListFragment {
         if (accuracy == -1) {
             mColorButton.setText(getActivity().getString(R.string.notCalibrated));
             color = Color.WHITE;
-            mRgbText.setVisibility(View.GONE);
-        } else {
-            mRgbText.setVisibility(View.VISIBLE);
         }
-
         mColorButton.setBackgroundColor(color);
 
         mValueButton.setText(mainApp.doubleFormat
@@ -534,15 +522,15 @@ public class CalibrateItemFragment extends ListFragment {
 
     private static class PhotoTakenHandler extends Handler {
 
-        private final WeakReference<CalibrateItemFragment> mAdapter;
+        private final WeakReference<CalibrateItemFragmentBase> mAdapter;
 
-        public PhotoTakenHandler(CalibrateItemFragment adapter) {
-            mAdapter = new WeakReference<CalibrateItemFragment>(adapter);
+        public PhotoTakenHandler(CalibrateItemFragmentBase adapter) {
+            mAdapter = new WeakReference<CalibrateItemFragmentBase>(adapter);
         }
 
         @Override
         public void handleMessage(Message msg) {
-            CalibrateItemFragment adapter = mAdapter.get();
+            CalibrateItemFragmentBase adapter = mAdapter.get();
             PreferencesHelper.incrementPhotoTakenCount(adapter.getActivity());
 
             //if (adapter.mCameraFragment != null) {
