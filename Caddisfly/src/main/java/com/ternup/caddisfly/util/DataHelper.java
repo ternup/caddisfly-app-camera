@@ -36,6 +36,28 @@ public class DataHelper {
             default:
                 return context.getString(R.string.fluoride);
         }
-
     }
+
+    public static int getTestTypeFromCode(String code) {
+
+        if (("FLUOR").equals(code)) {
+            return Globals.FLUORIDE_INDEX;
+        } else if (("ALKAL").equals(code)) {
+            return Globals.FLUORIDE_INDEX;
+        } else if (("COLIF").equals(code)) {
+            return Globals.BACTERIA_INDEX;
+        } else if (("TURBI").equals(code)) {
+            return Globals.FLUORIDE_INDEX;
+        } else if (("NITRA").equals(code)) {
+            return Globals.FLUORIDE_INDEX;
+        } else if (("IRONA").equals(code)) {
+            return Globals.FLUORIDE_INDEX;
+        } else if (("ARSEN").equals(code)) {
+            return Globals.FLUORIDE_INDEX;
+        }
+
+        return -1;
+    }
+
+
 }

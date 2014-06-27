@@ -31,8 +31,6 @@ import com.ternup.caddisfly.util.PreferencesHelper;
 import com.ternup.caddisfly.util.PreferencesUtils;
 import com.ternup.caddisfly.util.ShakeDetector;
 
-import org.akvo.mobile.caddisfly.activity.MainActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -79,7 +77,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class ProgressActivity extends Activity implements CameraFragment.Cancelled {
+public class ProgressActivityBase extends Activity implements CameraFragment.Cancelled {
 
     final Handler delayHandler = new Handler();
 
@@ -158,7 +156,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
 
     private long mLocationId;
 
-    private String mQuestionId;
+    private TextView mRemainingValueText;
 
     @Override
     public void onAttachedToWindow() {
@@ -193,6 +191,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
         mTitleText.getPaint().setShader(textShader);
         mProgressLayout = (LinearLayout) findViewById(R.id.progressLayout);
         mShakeLayout = (LinearLayout) findViewById(R.id.shakeLayout);
+        mRemainingValueText = (TextView) findViewById(R.id.remainingValueText);
         mRemainingText = (TextView) findViewById(R.id.remainingText);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mTimeText = (TextView) findViewById(R.id.timeText);
@@ -263,18 +262,10 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
         //TODO: setup external app connection
         // Get intent, action and MIME type
         Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
+        //String action = intent.getAction();
+        //String type = intent.getType();
 
-        if (Globals.ACTION_WATER_TEST.equals(action) && type != null) {
-            if ("text/plain".equals(type)) {
-                // todo: recode this
-            }
-            mTestType = -1;
-        } else {
-            mTestType = mainApp.currentTestType;
-            //mTestType = PreferencesHelper.getCurrentTestTypeId(this, intent);
-        }
+        mTestType = mainApp.currentTestType;
 
         mLocationId = PreferencesHelper.getCurrentLocationId(this, intent);
 
@@ -308,11 +299,10 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
             if (mTestType == Globals.BACTERIA_INDEX) {
                 mRemainingText.setText(String.valueOf(mTestTotal));
                 mRemainingText.setVisibility(View.VISIBLE);
-                //mSingleProgress.setVisibility(View.GONE);
+                mRemainingValueText.setVisibility(View.VISIBLE);
             } else {
                 mRemainingText.setVisibility(View.GONE);
-                //mSingleProgress.setVisibility(View.VISIBLE);
-
+                mRemainingValueText.setVisibility(View.GONE);
             }
             mProgressBar.setMax(mTestTotal);
             mProgressBar.setProgress(0);
@@ -381,14 +371,6 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
 
     private void getSharedPreferences() {
 
-        if (mTestType == -1) {
-            mQuestionId = getIntent().getStringExtra("questionId");
-            String questionTitle = getIntent().getStringExtra("questionTitle");
-
-            String code = questionTitle.substring(Math.max(0, questionTitle.length() - 5));
-            mTestType = getTestType(code);
-        }
-
         MainApp mainContext = (MainApp) getApplicationContext();
 
         SharedPreferences sharedPreferences = PreferenceManager
@@ -436,27 +418,6 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
         }
     }
 
-    private int getTestType(String code) {
-
-        if (("FLUOR").equals(code)) {
-            return Globals.FLUORIDE_INDEX;
-        } else if (("ALKAL").equals(code)) {
-            return Globals.PH_INDEX;
-        } else if (("COLIF").equals(code)) {
-            return Globals.BACTERIA_INDEX;
-        } else if (("TURBI").equals(code)) {
-            return Globals.PH_INDEX;
-        } else if (("NITRA").equals(code)) {
-            return Globals.PH_INDEX;
-        } else if (("IRONA").equals(code)) {
-            return Globals.PH_INDEX;
-        } else if (("ARSEN").equals(code)) {
-            return Globals.PH_INDEX;
-        }
-
-        return -1;
-    }
-
     private void startNewTest(int testType) {
 
         mFolderName = getNewFolderName();
@@ -485,11 +446,12 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
 
         mId = PreferencesHelper.getCurrentTestId(this, null, msg.getData());
 
-        double result = msg.getData().getDouble(MainApp.RESULT_VALUE_KEY, -1);
-        int accuracy = msg.getData().getInt(MainApp.QUALITY_KEY, 0);
+        double result = msg.getData().getDouble(Globals.RESULT_VALUE_KEY, -1);
+        int accuracy = msg.getData().getInt(Globals.QUALITY_KEY, 0);
         String message = getString(R.string.testFailedMessage);
 
-        int minAccuracy = PreferencesUtils.getInt(this, R.string.minPhotoQualityKey, 0);
+        int minAccuracy = PreferencesUtils
+                .getInt(this, R.string.minPhotoQualityKey, Globals.MINIMUM_PHOTO_QUALITY);
         if (accuracy < minAccuracy) {
             message = String.format(getString(R.string.testFailedQualityMessage), minAccuracy);
         }
@@ -523,6 +485,8 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
                     DataStorage
                             .deleteRecord(getApplicationContext(), mId, mLocationId, mFolderName);
                     dialog.dismiss();
+                    releaseResources();
+                    startNewTest(mTestType);
                     InitializeTest(getApplicationContext());
                 }
             });
@@ -546,14 +510,14 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
 
             releaseResources();
 
-            Intent intent = new Intent();
+            Intent intent = new Intent(getIntent());
             if (mFolderName != null && !mFolderName.isEmpty()) {
                 if (msg != null && msg.getData() != null) {
                     intent.putExtra(PreferencesHelper.FOLDER_NAME_KEY, mFolderName);
                     intent.putExtra(PreferencesHelper.CURRENT_TEST_ID_KEY, mId);
 
                     intent.putExtra("result", result);
-                    intent.putExtra("questionId", mQuestionId);
+                    //intent.putExtra("questionId", mQuestionId);
                     intent.putExtra("response", String.valueOf(result));
                 }
             }
@@ -606,13 +570,7 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
         alarmManager.cancel(pi);
     }
 
-    private void startHomeActivity(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-
-        finish();
+    protected void startHomeActivity(Context context) {
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -815,7 +773,8 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
         Context context = getApplicationContext();
 
         int samplingCount = PreferencesUtils.getInt(context, R.string.currentSamplingCountKey, 0);
-        return samplingCount >= PreferencesUtils.getInt(context, R.string.samplingCountKey, 5);
+        return samplingCount >= PreferencesUtils
+                .getInt(context, R.string.samplingCountKey, Globals.SAMPLING_COUNT_DEFAULT);
     }
 
     private boolean hasTestCompleted(String folderName) {
@@ -894,16 +853,16 @@ public class ProgressActivity extends Activity implements CameraFragment.Cancell
 
     private static class PhotoTakenHandler extends Handler {
 
-        private final WeakReference<ProgressActivity> mService;
+        private final WeakReference<ProgressActivityBase> mService;
 
-        public PhotoTakenHandler(ProgressActivity service) {
-            mService = new WeakReference<ProgressActivity>(service);
+        public PhotoTakenHandler(ProgressActivityBase service) {
+            mService = new WeakReference<ProgressActivityBase>(service);
         }
 
         @Override
         public void handleMessage(Message msg) {
 
-            ProgressActivity service = mService.get();
+            ProgressActivityBase service = mService.get();
 
             service.mCameraFragment.dismiss();
 

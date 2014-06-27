@@ -16,7 +16,7 @@
 
 package com.ternup.caddisfly.util;
 
-import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.model.ColorInfo;
 
 import android.graphics.Bitmap;
@@ -42,6 +42,12 @@ public class ColorUtils {
     private static final int GRAY_TOLERANCE = 10;
 
     private static final double MAX_COLOR_DISTANCE = 50.0;
+
+    private static final double LM_RED_COEFFICIENT = 0.2126;
+
+    private static final double LM_GREEN_COEFFICIENT = 0.7152;
+
+    private static final double LM_BLUE_COEFFICIENT = 0.0722;
 
     public static Bundle getPpmValue(byte[] data, ArrayList<Integer> colorRange,
             double rangeStepUnit, int rangeStartUnit, int length) {
@@ -185,36 +191,36 @@ public class ColorUtils {
             double rangeStepUnit, int rangeStartUnit) {
 
         Bundle bundle = new Bundle();
-        bundle.putInt(MainApp.RESULT_COLOR_KEY, photoColor.getColor()); //NON-NLS
+        bundle.putInt(Globals.RESULT_COLOR_KEY, photoColor.getColor()); //NON-NLS
 
         double value = getNearestColorFromSwatchRange(photoColor.getColor(), colorRange,
                 rangeStepUnit);
 
         if (value < 0) {
-            bundle.putDouble(MainApp.RESULT_VALUE_KEY, -1); //NON-NLS
+            bundle.putDouble(Globals.RESULT_VALUE_KEY, -1); //NON-NLS
 
         } else {
             value = value + rangeStartUnit;
-            bundle.putDouble(MainApp.RESULT_VALUE_KEY,
+            bundle.putDouble(Globals.RESULT_VALUE_KEY,
                     (double) Math.round(value * 100) / 100); //NON-NLS
             int color = colorRange.get((int) Math.round(value / rangeStepUnit));
 
             bundle.putInt("standardColor", color); //NON-NLS
 
             bundle.putString("standardColorRgb",
-                    String.format("%s  %s  %s", Integer.toString(Color.red(color)),
-                            Integer.toString(Color.green(color)),
-                            Integer.toString(Color.blue(color)))
+                    String.format("%d  %d  %d", Color.red(color),
+                            Color.green(color),
+                            Color.blue(color))
             );
         }
 
         bundle.putString("color",
-                String.format("%s  %s  %s", Integer.toString(Color.red(photoColor.getColor())),
-                        Integer.toString(Color.green(photoColor.getColor())),
-                        Integer.toString(Color.blue(photoColor.getColor())))
+                String.format("%d  %d  %d", Color.red(photoColor.getColor()),
+                        Color.green(photoColor.getColor()),
+                        Color.blue(photoColor.getColor()))
         );
 
-        bundle.putInt(MainApp.QUALITY_KEY, photoColor.getQuality());
+        bundle.putInt(Globals.QUALITY_KEY, photoColor.getQuality());
 
         return bundle;
     }
@@ -279,10 +285,8 @@ public class ColorUtils {
     }
 
     public static String getColorRgbString(int color) {
-        return String.format("%s  %s  %s",
-                String.format("%d", Color.red(color)),
-                String.format("%d", Color.green(color)),
-                String.format("%d", Color.blue(color)));
+        return String.format("%d  %d  %d",
+                Color.red(color), Color.green(color), Color.blue(color));
     }
 
     public static int[] getRGB(int pixel) {
@@ -299,9 +303,6 @@ public class ColorUtils {
                 || Math.abs(rgb[0] - rgb[2]) > GRAY_TOLERANCE;
     }
 
-    private static final double LM_RED_COEFFICIENT = 0.2126;
-    private static final double LM_GREEN_COEFFICIENT = 0.7152;
-    private static final double LM_BLUE_COEFFICIENT = 0.0722;
     //Reference: https://gist.github.com/alexfu/64dc37b3343b9dead0c4
     public static int calculateRelativeLuminance(int color) {
         int red = (int) (Color.red(color) * LM_RED_COEFFICIENT);

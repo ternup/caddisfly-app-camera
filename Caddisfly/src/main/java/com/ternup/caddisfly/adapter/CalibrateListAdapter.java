@@ -77,17 +77,29 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
                 // display color name
                 // colorNameText.setText(colorNames.get(currentPosition));
                 // display rgb value
-                int color = colorRange.get(index);
-                rgbText.setText(String.format("%s: %s  %s  %s", mainApp.getString(R.string.rgb),
-                        String.format("%d", Color.red(color)),
-                        String.format("%d", Color.green(color)),
-                        String.format("%d", Color.blue(color))
-                ));
 
                 int accuracy = Math.max(-1, PreferencesUtils.getInt(mainApp,
-                        String.format("%s-a-%d", mTestType, index), -1));
+                        String.format("%d-a-%d", mTestType, index), -1));
 
-                int minAccuracy = PreferencesUtils.getInt(mainApp, R.string.minPhotoQualityKey, 0);
+                int color = colorRange.get(index);
+                int r = Color.red(color);
+                int g = Color.green(color);
+                int b = Color.blue(color);
+
+                // eliminate white and black colors
+                if (r == 255 && g == 255 && b == 255) {
+                    accuracy = -1;
+                }
+
+                if (r == 0 && g == 0 && b == 0) {
+                    accuracy = -1;
+                }
+
+                rgbText.setText(
+                        String.format("%s: %d  %d  %d", mainApp.getString(R.string.rgb), r, g, b));
+
+                int minAccuracy = PreferencesUtils.getInt(mainApp, R.string.minPhotoQualityKey,
+                        Globals.MINIMUM_PHOTO_QUALITY);
 
                 if (accuracy < minAccuracy) {
                     errorImage.setVisibility(View.VISIBLE);

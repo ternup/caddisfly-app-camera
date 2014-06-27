@@ -17,7 +17,7 @@
 package com.ternup.caddisfly.app;
 
 @SuppressWarnings("HardCodedStringLiteral")
-public class Globals {
+public class GlobalsBase {
 
     public static final String DEFAULT_LOCALE = "en";
 
@@ -30,31 +30,8 @@ public class Globals {
     // Name of folder where app data will be stored
     public static final String APP_FOLDER_NAME = "com.ternup.caddisfly";
 
-    // For external app connection
-    public static final String ACTION_WATER_TEST = "org.akvo.flow.action.externalsource";
-
     // Tag for debug log filtering
     public static final String DEBUG_TAG = "Caddisfly";
-
-    // Caddisfly update file name
-    public static final String UPDATE_FILE_NAME = "caddisfly_update.apk";
-
-    // Caddisfly update check path
-    public static final String UPDATE_CHECK_URL
-            = "http://caddisfly.ternup.com/ternupapp/v.txt?check=27";
-
-    // Caddisfly update path
-    public static final String UPDATE_URL
-            = "http://caddisfly.ternup.com/ternupapp/cadapp_update.apk?check=27";
-
-    //TODO: remove this
-    public static final String CONNECT = "";
-
-    public static final String SERVER_BASE_URL = "http://labyrinth-punter.rhcloud.com/testlog/api/";
-
-    public static final String DATABASE_NAME = "caddisfly";
-
-    public static final String PHOTO_TEMP_FILE = "cad";
 
     // new folder name using date
     public static final String FOLDER_NAME_DATE_FORMAT = "yyyyMMddHHmmss";
@@ -62,15 +39,9 @@ public class Globals {
     // Index of screens that gets displayed in the app
     public static final int HOME_SCREEN_INDEX = 0;
 
-    public static final int LOCATION_LIST_SCREEN_INDEX = 1;
-
     public static final int CALIBRATE_SCREEN_INDEX = 2;
 
-    public static final int SETTINGS_SCREEN_INDEX = 3;
-
     public static final int HELP_SCREEN_INDEX = 4;
-
-    public static final int ABOUT_SCREEN_INDEX = 5;
 
     // Index of test types
     public static final int FLUORIDE_INDEX = 0;
@@ -94,13 +65,28 @@ public class Globals {
 
     public static final double FLUORIDE_MAX_BATHE = 2.5;
 
-    public static final String RESULT_SCREEN_TAG = "resultFragment";
-
     public static final int MINUTE_IN_MS = 60000;
 
     public static final int INITIAL_DELAY = 4000;
 
-    protected Globals() {
+    public static final int MINIMUM_PHOTO_QUALITY = 60;
+
+    // For external app connection
+    public static final String ACTION_IMPORT_CALIBRATION
+            = "com.ternup.caddisfly.action.IMPORT_CALIBRATE";
+
+    public static final int SAMPLING_COUNT_DEFAULT = 5;
+
+    // width and height of cropped image
+    public static final int SAMPLE_CROP_LENGTH_DEFAULT = 200;
+
+    public static final String RESULT_VALUE_KEY = "resultValue";
+
+    public static final String RESULT_COLOR_KEY = "resultColor";
+
+    public static final String QUALITY_KEY = "accuracy";
+
+    protected GlobalsBase() {
         // prevents calls from subclass
         throw new UnsupportedOperationException();
     }

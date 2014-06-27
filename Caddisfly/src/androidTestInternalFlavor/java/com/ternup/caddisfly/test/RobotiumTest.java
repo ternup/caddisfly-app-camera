@@ -43,8 +43,6 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
-import android.widget.ImageButton;
 
 public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
@@ -63,6 +61,51 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
         solo = new Solo(getInstrumentation(), getActivity());
     }
 
+
+    public void testZCalibrate() {
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        openCalibrate(2);
+        calibrate(1);
+        solo.goBack();
+        calibrate(2);
+        solo.goBack();
+        calibrate(3);
+        solo.goBack();
+        calibrate(4);
+        solo.goBack();
+        calibrate(5);
+        solo.goBack();
+        calibrate(6);
+        solo.goBack();
+        calibrate(7);
+        solo.goBack();
+
+    }
+
+
+    private void calibrate(int index) {
+
+        solo.clickInList(index);
+
+        int colorBefore = getButtonColor(0);
+
+        solo.clickOnText(solo.getString(R.string.calibrate), 2);
+
+        solo.waitForDialogToOpen();
+
+        solo.clickOnButton(solo.getString(R.string.ok));
+
+        solo.waitForDialogToOpen();
+
+        solo.waitForDialogToClose(30000);
+
+        int colorAfter = getButtonColor(0);
+
+        assertTrue("Calibrate error", colorAfter != colorBefore);
+
+    }
+
+/*
     public void testEditSourceLocation() {
         openHome();
 
@@ -180,26 +223,25 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
         solo.waitForText(solo.getString(R.string.noData));
 
-        /*solo.clickLongInList(1);
+//        solo.clickLongInList(1);
+//
+//        solo.clickInList(1);
+//
+//        solo.clickInList(3);
+//
+//        solo.clickInList(4);
+//
+//        solo.clickInList(5);
+//
+//        solo.goBack();
+//
+//        solo.clickInList(1);
+//
+//        solo.clickOnButton(solo.getString(R.string.details));
 
-        solo.clickInList(1);
-
-        solo.clickInList(3);
-
-        solo.clickInList(4);
-
-        solo.clickInList(5);
-
-        solo.goBack();
-
-        solo.clickInList(1);
-
-        solo.clickOnButton(solo.getString(R.string.details));
-*/
         solo.goBack();
 
     }
-
 
     public void testCalibrate() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
@@ -274,23 +316,6 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
     }
 
-
-/*
-    public void testSwatches() {
-
-        openHome();
-
-        openSwatches();
-
-        solo.scrollListToBottom(0);
-
-        solo.waitForText("3.0");
-
-        solo.scrollListToTop(0);
-
-        solo.waitForText("0.0");
-    }
-*/
 
     public void testSettings() {
 
@@ -403,6 +428,24 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
         solo.goBack();
 
     }
+
+*/
+    /*
+    public void testSwatches() {
+
+        openHome();
+
+        openSwatches();
+
+        solo.scrollListToBottom(0);
+
+        solo.waitForText("3.0");
+
+        solo.scrollListToTop(0);
+
+        solo.waitForText("0.0");
+    }
+*/
 
 
     private void openHome() {

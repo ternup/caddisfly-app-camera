@@ -18,9 +18,14 @@
 
     <style name="ActionBar" parent="@android:style/Widget.Holo.ActionBar"/>
 
+    <style name="ActionBar.Dark" parent="@style/ActionBar">
+        <item name="android:background">@color/panel_light</item>
+    </style>
+
     <style name="AppTheme.Dark" parent="@android:style/Theme.Holo">
+        <item name="android:actionBarStyle">@style/ActionBar.Dark</item>
+        <item name="android:windowBackground">@color/window_background_dark</item>
         <item name="arrowRight">@drawable/arrow_right</item>
-        <item name="cardBackground">@drawable/card_dark</item>
         <item name="alarm">@android:drawable/ic_lock_idle_alarm</item>
         <item name="buttonStyle">@drawable/button_style_dark</item>
     </style>
@@ -28,22 +33,17 @@
     <style name="AppTheme.Light" parent="@android:style/Theme.Holo">
         <item name="android:actionBarStyle">@style/ActionBar.Dark</item>
         <item name="arrowRight">@drawable/arrow_right</item>
-        <item name="cardBackground">@drawable/card_dark</item>
         <item name="alarm">@android:drawable/ic_lock_idle_alarm</item>
         <item name="buttonStyle">@drawable/button_style_dark</item>
     </style>
 
-    <style name="ActionBar.Dark" parent="@style/ActionBar">
-        <item name="android:background">#000</item>
-    </style>
 
     <style name="button_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#ffeaeaea</item>
+        <item name="android:textColor">#fff8f8f8</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:layout_margin">3dp</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:shadowColor">#444</item>
@@ -51,5 +51,6 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">2</item>
         <item name="android:textAllCaps">true</item>
+        <item name="android:alpha">0.6</item>
     </style>
 </resources>

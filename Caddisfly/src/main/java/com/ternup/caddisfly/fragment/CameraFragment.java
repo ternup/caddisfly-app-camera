@@ -97,7 +97,7 @@ public class CameraFragment extends DialogFragment {
             Bundle savedInstanceState) {
 
         if (PreferencesUtils.getBoolean(getActivity(), R.string.autoAnalyzeKey, true)) {
-            getDialog().setTitle(R.string.testInProgress);
+            getDialog().setTitle(R.string.analysisInProgress);
         } else {
             getDialog().setTitle(R.string.clickAnalyze);
         }
@@ -160,15 +160,16 @@ public class CameraFragment extends DialogFragment {
         takePicture();
     }
 
-    private void takePicture(){
+    private void takePicture() {
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
-                final boolean shutterSound = PreferencesUtils.getBoolean(getActivity(),R.string.cameraSoundKey, true);
+                final boolean shutterSound = PreferencesUtils
+                        .getBoolean(getActivity(), R.string.cameraSoundKey, true);
                 mPreview.startCameraPreview();
-                PictureCallback localCallback =  new PictureCallback();
+                PictureCallback localCallback = new PictureCallback();
                 try {
                     if (shutterSound && (makeShutterSound || hasTestCompleted(getActivity()))) {
                         mCamera.takePicture(shutterCallback, null, localCallback);
@@ -191,7 +192,8 @@ public class CameraFragment extends DialogFragment {
 
         int currentSamplingCount = PreferencesUtils
                 .getInt(context, R.string.currentSamplingCountKey, 0);
-        int samplingCount = PreferencesUtils.getInt(context, R.string.samplingCountKey, 5);
+        int samplingCount = PreferencesUtils
+                .getInt(context, R.string.samplingCountKey, Globals.SAMPLING_COUNT_DEFAULT);
         return currentSamplingCount >= (samplingCount - 1);
     }
 

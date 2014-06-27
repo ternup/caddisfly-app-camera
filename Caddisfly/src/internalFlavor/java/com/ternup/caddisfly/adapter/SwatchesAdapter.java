@@ -69,13 +69,12 @@ public class SwatchesAdapter extends ArrayAdapter<Integer> {
 
             //display rgb value
             int color = colorRange.get(position);
-            rgbText.setText(
-                    String.format("%s: %s  %s  %s", mainApp.getString(R.string.rgb),
-                            String.format("%d", Color.red(color)),
-                            String.format("%d", Color.green(color)),
-                            String.format("%d", Color.blue(color)))
-            );
+            int r = Color.red(color);
+            int g = Color.green(color);
+            int b = Color.blue(color);
 
+            rgbText.setText(
+                    String.format("%s: %d  %d  %d", mainApp.getString(R.string.rgb), r, g, b));
         }
         return rowView;
     }

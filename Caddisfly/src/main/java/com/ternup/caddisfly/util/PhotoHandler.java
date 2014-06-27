@@ -100,7 +100,8 @@ public class PhotoHandler implements PictureCallback {
             }
         }
 
-        int sampleLength = PreferencesUtils.getInt(mContext, R.string.photoSampleDimensionKey, 200);
+        int sampleLength = PreferencesUtils.getInt(mContext, R.string.photoSampleDimensionKey,
+                Globals.SAMPLE_CROP_LENGTH_DEFAULT);
         int[] pixels = new int[sampleLength * sampleLength];
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
@@ -145,24 +146,24 @@ public class PhotoHandler implements PictureCallback {
 
         long id = -1;
         if (mIndex < 1 && mFolderName.length() > 0) {
-            saveTempResult(mContext, bundle.getDouble(MainApp.RESULT_VALUE_KEY),
-                    bundle.getInt(MainApp.RESULT_COLOR_KEY),
-                    bundle.getInt(MainApp.QUALITY_KEY));
+            saveTempResult(mContext, bundle.getDouble(Globals.RESULT_VALUE_KEY),
+                    bundle.getInt(Globals.RESULT_COLOR_KEY),
+                    bundle.getInt(Globals.QUALITY_KEY));
 
             PreferencesHelper.incrementPhotoTakenCount(mContext);
 
             if (hasSamplingCompleted(mContext)) {
                 getAverageResult(mContext, bundle);
                 id = DataStorage.saveResult(mContext, mFolderName, mTestType,
-                        bundle.getDouble(MainApp.RESULT_VALUE_KEY));
+                        bundle.getDouble(Globals.RESULT_VALUE_KEY));
                 saveResultToPreferences(id);
             }
             bundle.putLong(mContext.getString(R.string.currentTestId), id);
         } else {
 
             saveTempResult(mContext, 0,
-                    bundle.getInt(MainApp.RESULT_COLOR_KEY),
-                    bundle.getInt(MainApp.QUALITY_KEY));
+                    bundle.getInt(Globals.RESULT_COLOR_KEY),
+                    bundle.getInt(Globals.QUALITY_KEY));
 
             PreferencesHelper.incrementPhotoTakenCount(mContext);
 
@@ -191,7 +192,8 @@ public class PhotoHandler implements PictureCallback {
 
         double result = 0;
 
-        int samplingCount = PreferencesUtils.getInt(context, R.string.samplingCountKey, 5);
+        int samplingCount = PreferencesUtils
+                .getInt(context, R.string.samplingCountKey, Globals.SAMPLING_COUNT_DEFAULT);
         int counter = 0;
         double commonResult = 0;
         double[] results = new double[samplingCount];
@@ -221,8 +223,8 @@ public class PhotoHandler implements PictureCallback {
 
         if (counter > 0) {
             result = result / counter;
-            bundle.putDouble(MainApp.RESULT_VALUE_KEY, result);
-            bundle.putInt(MainApp.RESULT_COLOR_KEY,
+            bundle.putDouble(Globals.RESULT_VALUE_KEY, result);
+            bundle.putInt(Globals.RESULT_COLOR_KEY,
                     Color.rgb(red / counter, green / counter, blue / counter));
         } else {
             result = -1;
@@ -250,12 +252,14 @@ public class PhotoHandler implements PictureCallback {
 
         int currentSamplingCount = PreferencesUtils
                 .getInt(context, R.string.currentSamplingCountKey, 0);
-        int samplingCount = PreferencesUtils.getInt(context, R.string.samplingCountKey, 5);
+        int samplingCount = PreferencesUtils
+                .getInt(context, R.string.samplingCountKey, Globals.SAMPLING_COUNT_DEFAULT);
         return currentSamplingCount >= samplingCount;
     }
 
     private void saveResultToPreferences(long id) {
-        int samplingCount = PreferencesUtils.getInt(mContext, R.string.samplingCountKey, 5);
+        int samplingCount = PreferencesUtils
+                .getInt(mContext, R.string.samplingCountKey, Globals.SAMPLING_COUNT_DEFAULT);
         for (int i = 0; i < samplingCount; i++) {
             String key = String.format(mContext.getString(R.string.samplingIndexKey), i);
             double tempResult = PreferencesUtils.getDouble(mContext, key);

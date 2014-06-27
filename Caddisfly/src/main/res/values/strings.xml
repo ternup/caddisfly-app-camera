@@ -78,8 +78,8 @@
         analysis.
     </string>
     <string name="placeDeviceInStand">Place the phone on a flat surface to continue</string>
-    <string name="shakeToContinue">Ensure cartridge is placed correctly and then shake this device
-        to continue
+    <string name="shakeToContinue">Shake this device to ensure proper mixing of the solution in the
+        cartridge
     </string>
     <string name="shakeMe">Shake Me</string>
     <string name="selectedWillBeDeleted">Selected items will be deleted</string>
@@ -187,8 +187,17 @@
     <string name="selectValueToCalibrate">Select a value to calibrate</string>
     <string name="startSurvey">Start Survey</string>
     <string name="startTest">Start Test</string>
-    <string name="installAkvoFlow">Please install Akvo flow Survey App and then try again</string>
+    <string name="installAkvoFlow">Please install Akvo Flow app</string>
     <string name="sending">Sending</string>
     <string name="waterQualityTest">Water Quality Test</string>
+    <string name="attachStandardCartridge">Attach a standard solution cartridge for this value and
+        press Calibrate
+    </string>
+    <string name="analysisInProgress">Analysis in progress</string>
+    <string name="importFromCaddisfly">This will import calibration colors from Caddisfly and
+        overwrite the current values.
+    </string>
+    <string name="importAction">Import</string>
+    <string name="updateRequired">Please update to a newer version to enable this feature</string>
 
 </resources>

@@ -21,30 +21,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp">
-
-    <TextView
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+    <com.ternup.caddisfly.widget.TextViewEx
             android:id="@+id/infoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Place a cartridge with a standard solution for the below value and click Calibrate"
-            android:textSize="20sp"
-            android:padding="10dp"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
-    <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cameraPreview">
-    </FrameLayout>
+            android:textSize="19sp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:lineSpacingExtra="5sp"
+            android:text="@string/attachStandardCartridge"
+            />
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:paddingBottom="20dp"
-            android:background="?cardBackground">
+            >
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -61,8 +58,8 @@
                     android:paddingRight="8dp"
                     android:layout_weight="1"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@android:color/holo_red_dark"/>
+                    android:textColor="@android:color/holo_red_dark"
+                    android:clickable="false"/>
             <Button
                     android:id="@+id/valueButton"
                     style="?android:attr/buttonBarButtonStyle"
@@ -72,7 +69,9 @@
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:layout_weight="1"
-                    android:layout_marginLeft="10dp"/>
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:clickable="false"/>
         </LinearLayout>
         <LinearLayout
                 android:layout_width="match_parent"
@@ -80,37 +79,17 @@
                 android:orientation="horizontal"
                 android:gravity="center_horizontal"
                 android:paddingTop="10dp"
-                android:weightSum="2">
-            <Button
-                    android:id="@+id/editButton"
-                    android:background="@drawable/blue_button"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:textColor="#fff"
-                    android:text="@string/edit"
-                    android:enabled="true"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:visibility="gone"
-                    >
-            </Button>
+                android:layout_marginTop="10dp"
+                >
             <Button
                     android:id="@+id/startButton"
                     android:background="@drawable/cyan_button"
                     style="@style/button_text"
-                    android:textColor="#eee"
                     android:text="@string/calibrate"
-                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="10dp"
-                    >
-            </Button>
+                    android:alpha="0.8"
+                    />
         </LinearLayout>
         <TextView
                 android:id="@+id/errorQualityText"

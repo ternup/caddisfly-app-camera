@@ -21,11 +21,7 @@ import com.ternup.caddisfly.adapter.CalibrateListAdapter;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 
-import org.akvo.mobile.caddisfly.fragment.CalibrateItemFragment;
-
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,15 +33,9 @@ import java.util.ArrayList;
 
 public class CalibrateFragmentBase extends ListFragment implements AdapterView.OnItemClickListener {
 
-    CalibrateItemFragment mCalibrateItemFragment;
-
     //private int mTestType = 0;
 
     public CalibrateFragmentBase() {
-    }
-
-    public static CalibrateFragmentBase newInstance() {
-        return new CalibrateFragmentBase();
     }
 
     @SuppressWarnings("NullableProblems")
@@ -108,36 +98,8 @@ public class CalibrateFragmentBase extends ListFragment implements AdapterView.O
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         //CursorWrapper content = (CursorWrapper) adapterView.getItemAtPosition(i);
         displayCalibrateItem(i);
-
     }
 
-    private void displayCalibrateItem(int index) {
-
-        if (mCalibrateItemFragment == null) {
-            mCalibrateItemFragment = new CalibrateItemFragment();
-        } else {
-            //TODO: fix this
-            try {
-                mCalibrateItemFragment.setArguments(null);
-            } catch (Exception e) {
-                mCalibrateItemFragment = new CalibrateItemFragment();
-            }
-        }
-        //mCalibrateItemFragment = CalibrateItemFragment.newInstance();
-
-        FragmentManager fragmentManager = getFragmentManager();
-        assert fragmentManager != null;
-        fragmentManager.executePendingTransactions();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        Bundle args = new Bundle();
-        args.putInt(getString(R.string.swatchIndex), index);
-        MainApp mainApp = (MainApp) getActivity().getApplicationContext();
-        args.putInt(getString(R.string.currentTestTypeId), mainApp.currentTestType);
-        mCalibrateItemFragment.setArguments(args);
-        ft.replace(R.id.container, mCalibrateItemFragment, "mCalibrateItemFragment");
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.addToBackStack(null);
-        ft.commit();
-        fragmentManager.executePendingTransactions();
+    protected void displayCalibrateItem(int index) {
     }
 }

@@ -145,7 +145,8 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
                                             .getDefaultSharedPreferences(getActivity());
 
                                     int minAccuracy = PreferencesUtils
-                                            .getInt(getActivity(), R.string.minPhotoQualityKey, 0);
+                                            .getInt(getActivity(), R.string.minPhotoQualityKey,
+                                                    Globals.MINIMUM_PHOTO_QUALITY);
 
                                     for (int i = 0; i < mainApp.rangeIntervals.size(); i++) {
                                         final int index = i * mainApp.rangeIncrementStep;
@@ -354,7 +355,7 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
 
         final Context context = getActivity().getApplicationContext();
         final Intent intent = new Intent(context, ProgressActivity.class);
-        intent.putExtra("startTest", true);
+        //intent.putExtra("startTest", true);
         intent.putExtra(PreferencesHelper.CURRENT_TEST_TYPE_KEY, testType);
         intent.putExtra(PreferencesHelper.CURRENT_LOCATION_ID_KEY, locationId);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

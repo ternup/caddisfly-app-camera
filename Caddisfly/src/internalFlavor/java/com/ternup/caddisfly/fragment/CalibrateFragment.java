@@ -33,6 +33,14 @@ import android.widget.Spinner;
 
 public class CalibrateFragment extends CalibrateFragmentBase {
 
+    private CalibrateItemFragment mCalibrateItemFragment;
+
+
+    public static CalibrateFragment newInstance() {
+        return new CalibrateFragment();
+    }
+
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -86,4 +94,38 @@ public class CalibrateFragment extends CalibrateFragmentBase {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    protected void displayCalibrateItem(int index) {
+        super.displayCalibrateItem(index);
+
+        if (mCalibrateItemFragment == null) {
+            mCalibrateItemFragment = new CalibrateItemFragment();
+        } else {
+            //TODO: fix this
+            try {
+                mCalibrateItemFragment.setArguments(null);
+            } catch (Exception e) {
+                mCalibrateItemFragment = new CalibrateItemFragment();
+            }
+        }
+        //mCalibrateItemFragment = CalibrateItemFragment.newInstance();
+
+        FragmentManager fragmentManager = getFragmentManager();
+        assert fragmentManager != null;
+        fragmentManager.executePendingTransactions();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        Bundle args = new Bundle();
+        args.putInt(getString(R.string.swatchIndex), index);
+        MainApp mainApp = (MainApp) getActivity().getApplicationContext();
+        args.putInt(getString(R.string.currentTestTypeId), mainApp.currentTestType);
+        mCalibrateItemFragment.setArguments(args);
+        ft.replace(R.id.container, mCalibrateItemFragment, "mCalibrateItemFragment");
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.addToBackStack(null);
+        ft.commit();
+        fragmentManager.executePendingTransactions();
+    }
+
+
 }

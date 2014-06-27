@@ -17,9 +17,12 @@
 package com.ternup.caddisfly.app;
 
 import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.util.PreferencesUtils;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Location;
@@ -31,12 +34,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainApp extends Application {
-
-    public static final String RESULT_VALUE_KEY = "resultValue";
-
-    public static final String RESULT_COLOR_KEY = "resultColor";
-
-    public static final String QUALITY_KEY = "accuracy";
 
     //Global color lists
     public final ArrayList<Integer> presetColorList = new ArrayList<Integer>();
@@ -62,6 +59,35 @@ public class MainApp extends Application {
     public DecimalFormat doubleFormat = new DecimalFormat("0.0");
 
     public MainApp() {
+    }
+
+    public static String getVersion(Context context) {
+        try {
+            String version = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0).versionName;
+            String[] words = version.split("\\s");
+            String versionString = "";
+            for (String word : words) {
+                try {
+                    Double versionNumber = Double.parseDouble(word);
+                    versionString += String.format("%.2f", versionNumber);
+                } catch (NumberFormatException e) {
+                    int id = context.getResources()
+                            .getIdentifier(word, "string", context.getPackageName());
+                    if (id > 0) {
+                        versionString += context.getString(id);
+                    } else {
+                        versionString += word;
+                    }
+                }
+                versionString += " ";
+            }
+            return versionString.trim();
+
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+        }
+
     }
 
     /**
@@ -90,7 +116,6 @@ public class MainApp extends Application {
         loadCalibratedSwatches(Globals.FLUORIDE_INDEX);
     }
 
-
     /**
      * Factory preset values for Fluoride
      */
@@ -116,7 +141,6 @@ public class MainApp extends Application {
         colorList = new ArrayList<Integer>(presetColorList);
         loadCalibratedSwatches(Globals.FLUORIDE_2_INDEX);
     }
-
 
     /**
      * Factory preset values for pH Test
@@ -157,11 +181,63 @@ public class MainApp extends Application {
 
         for (int i = 0; i < colorList.size(); i++) {
             int value = sharedPreferences
-                    .getInt(String.format("%s-%s", String.valueOf(testType), String.valueOf(i)),
+                    .getInt(String.format("%d-%d", testType, i),
                             -1);
+
             if (value != -1) {
-                colorList.set(i, value);
+                int r = Color.red(value);
+                int g = Color.green(value);
+                int b = Color.blue(value);
+
+                // eliminate white and black colors
+                if (r == 255 && g == 255 && b == 255) {
+                    PreferencesUtils.setInt(this, String.format("%d-a-%d", testType, i), -1);
+                    value = -1;
+                }
+
+                if (r == 0 && g == 0 && b == 0) {
+                    PreferencesUtils.setInt(this, String.format("%d-a-%d", testType, i), -1);
+                    value = -1;
+                }
+
+                if (value != -1) {
+                    colorList.set(i, value);
+                }
             }
         }
     }
+
+    public void saveCalibratedSwatches(int testType, ArrayList<Integer> colorList) {
+        MainApp context = ((MainApp) this.getApplicationContext());
+        assert context != null;
+
+        for (int i = 0; i < colorList.size(); i++) {
+
+            PreferencesUtils
+                    .setInt(context.getApplicationContext(),
+                            String.format("%d-%d", testType, i),
+                            colorList.get(i));
+            PreferencesUtils
+                    .setInt(context.getApplicationContext(),
+                            String.format("%d-a-%d", testType, i), 100);
+        }
+    }
+
+    public int getCalibrationErrorCount(int testType) {
+        MainApp mainApp = this;
+        int minAccuracy = PreferencesUtils
+                .getInt(mainApp, R.string.minPhotoQualityKey, Globals.MINIMUM_PHOTO_QUALITY);
+
+        int count = 0;
+        for (int i = 0; i < mainApp.rangeIntervals.size(); i++) {
+            final int index = i * mainApp.rangeIncrementStep;
+            int accuracy = Math.max(-1, PreferencesUtils.getInt(mainApp, String
+                    .format("%d-a-%d", testType, index), -1));
+            if (accuracy < minAccuracy) {
+                count++;
+            }
+        }
+        return count;
+    }
+
 }

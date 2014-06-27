@@ -87,7 +87,7 @@ public class ShakeDetector implements SensorEventListener {
         g[2] = g[2] / norm_Of_g;
 
         int inclination = (int) Math.round(Math.toDegrees(Math.acos(g[2])));
-        if (inclination < 10 || inclination > 170) {
+        if (inclination < 3 || inclination > 178) {
             synchronized (this) {
                 long nowNoShake = System.currentTimeMillis();
                 if (Math.abs(maxLinearAcceleration) < MAX_SHAKE_ACCELERATION) {

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) TernUp Research Labs
   ~
@@ -15,6 +14,11 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 
-<resources>
-    <color name="button_pressed_dark">#ff595959</color>
-</resources>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:id="@+id/menu_import"
+            android:enabled="true"
+            android:showAsAction="always"
+            android:orderInCategory="0"
+            android:title="@string/importAction"/>
+</menu>

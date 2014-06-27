@@ -22,7 +22,6 @@ import com.ternup.caddisfly.app.MainApp;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -46,32 +45,7 @@ public class AboutFragment extends Fragment {
 
         if (view != null) {
             TextView productView = (TextView) view.findViewById(R.id.textVersion);
-            try {
-                String version = getActivity().getPackageManager()
-                        .getPackageInfo(getActivity().getPackageName(), 0).versionName;
-                String[] words = version.split("\\s");
-                String versionString = "";
-                for (String word : words) {
-                    try {
-                        Double versionNumber = Double.parseDouble(word);
-                        versionString += String.format("%.2f", versionNumber);
-                    } catch (NumberFormatException e) {
-                        int id = getResources()
-                                .getIdentifier(word, "string", getActivity().getPackageName());
-                        if (id > 0) {
-                            versionString += getResources().getString(id);
-                        } else {
-                            versionString += word;
-                        }
-                    }
-                    versionString += " ";
-                }
-                productView.setText(versionString.trim());
-
-            } catch (PackageManager.NameNotFoundException e) {
-                productView.setText("");
-            }
-
+            productView.setText(MainApp.getVersion(getActivity()));
             ImageView organizationView = (ImageView) view.findViewById(R.id.organizationImage);
 
             productView.setOnClickListener(new OnClickListener() {

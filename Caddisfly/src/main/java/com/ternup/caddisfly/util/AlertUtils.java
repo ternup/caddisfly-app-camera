@@ -114,14 +114,4 @@ public class AlertUtils {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
-
-    public static void showFutureFeature(Context context) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(R.string.futureFeature);
-        builder.setMessage(R.string.featureNotImplemented);
-        builder.setPositiveButton(R.string.ok, null);
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
 }

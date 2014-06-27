@@ -17,7 +17,8 @@
 package org.akvo.mobile.caddisfly.fragment;
 
 import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.Globals;
+import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.util.DataHelper;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -32,6 +33,8 @@ public class StartFragment extends Fragment {
 
     private static final String EXTERNAL_PARAM = "external";
 
+    private static final String TEST_TYPE_PARAM = "testType";
+
     private OnCalibrateListener mOnCalibrateListener;
 
     private OnHelpListener mOnHelpListener;
@@ -42,14 +45,17 @@ public class StartFragment extends Fragment {
 
     private boolean mIsExternal = false;
 
+    private int mTestType;
+
     public StartFragment() {
         // Required empty public constructor
     }
 
-    public static StartFragment newInstance(boolean external) {
+    public static StartFragment newInstance(boolean external, int testType) {
         StartFragment fragment = new StartFragment();
         Bundle args = new Bundle();
         args.putBoolean(EXTERNAL_PARAM, external);
+        args.putInt(TEST_TYPE_PARAM, testType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,6 +65,7 @@ public class StartFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mIsExternal = getArguments().getBoolean(EXTERNAL_PARAM);
+            mTestType = getArguments().getInt(TEST_TYPE_PARAM);
         }
     }
 
@@ -68,25 +75,39 @@ public class StartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_start, container, false);
         getActivity().setTitle(R.string.appName);
 
-        TextView startTestText = (TextView) view.findViewById(R.id.startTestText);
-        final TextView startSurveyText = (TextView) view.findViewById(R.id.startSurveyText);
+        TextView testTypeTextView = (TextView) view.findViewById(R.id.testTypeTextView);
+        testTypeTextView.setText(DataHelper.getTestTitle(getActivity(), mTestType));
 
         Button calibrateButton = (Button) view.findViewById(R.id.calibrateButton);
         calibrateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mOnCalibrateListener != null) {
-                    mOnCalibrateListener.onCalibrate(Globals.CALIBRATE_SCREEN_INDEX);
+                    mOnCalibrateListener.onCalibrate();
                 }
             }
         });
+
+        TextView versionTextView = (TextView) view.findViewById(R.id.versionTextView);
+        versionTextView.setText(String.format("%s %s", getString(R.string.appName), MainApp.getVersion(getActivity())));
+
+        TextView badgeTextView = (TextView) view.findViewById(R.id.badgeTextView);
+        MainApp mainApp = (MainApp) getActivity().getApplicationContext();
+        int errorCount = mainApp.getCalibrationErrorCount(mTestType);
+
+        if (errorCount > 0) {
+            badgeTextView.setText(String.valueOf(errorCount));
+            badgeTextView.setVisibility(View.VISIBLE);
+        } else {
+            badgeTextView.setVisibility(View.GONE);
+        }
 
         Button helpButton = (Button) view.findViewById(R.id.helpButton);
         helpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mOnHelpListener != null) {
-                    mOnHelpListener.onHelp(Globals.HELP_SCREEN_INDEX);
+                    mOnHelpListener.onHelp();
                 }
             }
         });
@@ -101,11 +122,12 @@ public class StartFragment extends Fragment {
             }
         });
 
+        //TextView startTestText = (TextView) view.findViewById(R.id.startTestText);
+        //startTestText.setText(getString(R.string.attachFilledCartridge), true);
+
         Button startButton = (Button) view.findViewById(R.id.startButton);
         if (mIsExternal) {
-            startSurveyText.setVisibility(View.GONE);
             startSurveyButton.setVisibility(View.GONE);
-            startTestText.setVisibility(View.VISIBLE);
             startButton.setVisibility(View.VISIBLE);
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -117,9 +139,7 @@ public class StartFragment extends Fragment {
                 }
             });
         } else {
-            startSurveyText.setVisibility(View.GONE);
             startSurveyButton.setVisibility(View.VISIBLE);
-            startTestText.setVisibility(View.GONE);
             startButton.setVisibility(View.GONE);
         }
 
@@ -154,12 +174,12 @@ public class StartFragment extends Fragment {
      */
     public interface OnCalibrateListener {
 
-        public void onCalibrate(int index);
+        public void onCalibrate();
     }
 
     public interface OnHelpListener {
 
-        public void onHelp(int index);
+        public void onHelp();
     }
 
     public interface OnStartSurveyListener {

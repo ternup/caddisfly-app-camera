@@ -190,12 +190,20 @@
     <string name="photoSampleDimensionMessage">विश्लेषण के लिए फोटो की फसल के लिए लंबाई का चयन करें
     </string>
     <string name="photoSampleDimension">फोटो नमूना क्षेत्र आयाम</string>
-    <string name="invalidColor">Invalid Color value</string>
-    <string name="selectValueToCalibrate">Select a value to calibrate</string>
-    <string name="startSurvey">Start Survey</string>
-    <string name="startTest">Start Test</string>
-    <string name="installAkvoFlow">Please install Akvo FLOW Survey App</string>
-    <string name="sending">Sending</string>
-    <string name="waterQualityTest">Water Quality Test</string>
+    <string name="invalidColor">अमान्य रंग मूल्य</string>
+    <string name="selectValueToCalibrate">कैलिब्रेट करने के लिए एक मूल्य का चयन करें</string>
+    <string name="startSurvey">प्रारंभ सर्वेक्षण</string>
+    <string name="startTest">परीक्षण शुरू</string>
+    <string name="installAkvoFlow">Akvo Flow एप्लिकेशन इंस्टॉल करें</string>
+    <string name="sending">भेजा जा रहा है</string>
+    <string name="waterQualityTest">जल गुणवत्ता परीक्षण</string>
+    <string name="attachStandardCartridge">इस मूल्य के लिए एक मानक समाधान कारतूस अटैच करें और
+        कैलिब्रेट बटन दबाएँ
+    </string>
+    <string name="analysisInProgress">विश्लेषण हो रहा है</string>
+    <string name="importFromCaddisfly">रंग केड्डीसफ्लै से आयात किया जाएगा</string>
+    <string name="importAction">आयात</string>
+    <string name="updateRequired">इस सुविधा को सक्षम करने के लिए एक नए संस्करण को अपडेट करें
+    </string>
 </resources>
 

@@ -23,6 +23,7 @@ import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.util.AlertUtils;
 import com.ternup.caddisfly.util.ColorUtils;
 import com.ternup.caddisfly.util.FileUtils;
+import com.ternup.caddisfly.util.ImageUtils;
 import com.ternup.caddisfly.util.PhotoHandler;
 import com.ternup.caddisfly.util.PreferencesHelper;
 import com.ternup.caddisfly.util.PreferencesUtils;
@@ -41,15 +42,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -64,9 +61,15 @@ public class CalibrateItemFragmentBase extends ListFragment {
 
     protected int mTestType = Globals.FLUORIDE_INDEX;
 
+    protected GalleryListAdapter mAdapter;
+
+    protected View mListHeader;
+
     CameraFragment mCameraFragment;
 
-    GalleryListAdapter mAdapter;
+    ArrayList<String> oldFilePaths;
+
+    File calibrateFolder;
 
     private PowerManager.WakeLock wakeLock;
 
@@ -81,14 +84,6 @@ public class CalibrateItemFragmentBase extends ListFragment {
     public CalibrateItemFragmentBase() {
     }
 
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
-    public static CalibrateItemFragmentBase newInstance() {
-        return new CalibrateItemFragmentBase();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -101,12 +96,11 @@ public class CalibrateItemFragmentBase extends ListFragment {
 
         View header = getActivity().getLayoutInflater()
                 .inflate(R.layout.fragment_calibrate_item, null, false);
-
+        mListHeader = header;
         ListView listView = getListView();
 
         assert header != null;
         mValueButton = (Button) header.findViewById(R.id.valueButton);
-        Button editButton = (Button) header.findViewById(R.id.editButton);
         mStartButton = (Button) header.findViewById(R.id.startButton);
         mColorButton = (Button) header.findViewById(R.id.colorButton);
         mErrorQualityText = (TextView) header.findViewById(R.id.errorQualityText);
@@ -127,60 +121,56 @@ public class CalibrateItemFragmentBase extends ListFragment {
                             public void onClick(
                                     DialogInterface dialogInterface,
                                     int i) {
-                                PreferencesUtils
-                                        .setInt(getActivity(), R.string.currentSamplingCountKey, 0);
-                                deleteCalibration(position);
-                                if (wakeLock == null || !wakeLock.isHeld()) {
-                                    PowerManager pm = (PowerManager) getActivity()
-                                            .getApplicationContext()
-                                            .getSystemService(Context.POWER_SERVICE);
-                                    wakeLock = pm
-                                            .newWakeLock(PowerManager.FULL_WAKE_LOCK
-                                                    | PowerManager.ACQUIRE_CAUSES_WAKEUP
-                                                    | PowerManager.ON_AFTER_RELEASE, "MyWakeLock");
-                                    wakeLock.acquire();
-                                }
-                                startCalibration(position);
+                                calibrate(position);
                             }
-                        }, null
+                        }, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mStartButton.setEnabled(true);
+                            }
+                        }
                 );
             }
         });
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                editCalibration(position);
-            }
-        });
-
-        String folderName = FileUtils.getStoragePath(getActivity(), -1,
-                String.format("%s/%d/%d/small/", Globals.CALIBRATE_FOLDER, mTestType, position),
-                false);
-
-        ArrayList<String> files = FileUtils
-                .getFilePaths(getActivity(), folderName, "", -1);
-
-/*
-        Shader textShader = new LinearGradient(0, 0, 0, mTitleView.getPaint().getTextSize(),
-                new int[]{getResources().getColor(R.color.textGradientStart),
-                        getResources().getColor(R.color.textGradientEnd)},
-                new float[]{0, 1}, Shader.TileMode.CLAMP
-        );
-        mTitleView.getPaint().setShader(textShader);
-*/
-
-        Collections.sort(files);
 
         setListAdapter(null);
 
         assert listView != null;
         listView.addHeaderView(header);
 
-        mAdapter = new GalleryListAdapter(getActivity(), mTestType, position, files, false);
-        this.setListAdapter(mAdapter);
+        updateListView(position);
     }
 
+    private void calibrate(int position) {
+        PreferencesUtils
+                .setInt(getActivity(), R.string.currentSamplingCountKey, 0);
+
+        calibrateFolder = new File(
+                FileUtils.getStoragePath(getActivity(), -1,
+                        String.format("%s/%d/%d/small/", Globals.CALIBRATE_FOLDER, mTestType,
+                                position),
+                        false
+                )
+        );
+
+        oldFilePaths = FileUtils
+                .getFilePaths(getActivity(), calibrateFolder.getAbsolutePath(), -1);
+
+        //deleteCalibration(position);
+        if (wakeLock == null || !wakeLock.isHeld()) {
+            PowerManager pm = (PowerManager) getActivity()
+                    .getApplicationContext()
+                    .getSystemService(Context.POWER_SERVICE);
+            wakeLock = pm
+                    .newWakeLock(PowerManager.FULL_WAKE_LOCK
+                            | PowerManager.ACQUIRE_CAUSES_WAKEUP
+                            | PowerManager.ON_AFTER_RELEASE, "MyWakeLock");
+            wakeLock.acquire();
+        }
+        startCalibration(position);
+    }
+
+/*
     private void deleteCalibration(int position) {
         File file = new File(
                 FileUtils.getStoragePath(getActivity(), -1,
@@ -194,125 +184,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
 
     }
 
-    public void editCalibration(final int position) {
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-        final EditText input = new EditText(getActivity());
-        input.setInputType(InputType.TYPE_CLASS_PHONE);
-
-        alertDialogBuilder.setView(input);
-        alertDialogBuilder.setCancelable(false);
-
-        alertDialogBuilder.setTitle(R.string.enterColorRgb);
-        alertDialogBuilder.setPositiveButton(R.string.ok, null);
-        alertDialogBuilder
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int i) {
-                        closeKeyboard(input);
-                        dialog.cancel();
-                    }
-                });
-        final AlertDialog alertDialog = alertDialogBuilder.create(); //create the box
-
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
-            @Override
-            public void onShow(DialogInterface dialog) {
-
-                Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                b.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        if (saveRgb(input.getText().toString(), position)) {
-                            closeKeyboard(input);
-                            alertDialog.dismiss();
-                        } else {
-                            input.setError(getString(R.string.invalidColor));
-                        }
-                    }
-                });
-            }
-        });
-
-        input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId
-                        == EditorInfo.IME_ACTION_DONE)) {
-
-                    if (saveRgb(input.getText().toString(), position)) {
-                        closeKeyboard(input);
-                        alertDialog.cancel();
-                    } else {
-                        input.setError(getString(R.string.invalidColor));
-                        input.requestFocus();
-                        InputMethodManager imm = (InputMethodManager) getActivity()
-                                .getSystemService(
-                                        Context.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                    }
-                }
-                return false;
-            }
-        });
-
-        alertDialog.show();
-        input.requestFocus();
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
-                Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-    }
-
-    public void closeKeyboard(EditText input) {
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
-                Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
-
-    }
-
-    public boolean saveRgb(String value, int position) {
-
-        try {
-            String[] rgbArray = value.split(" ");
-            if (rgbArray.length < 3) {
-                rgbArray = value.split("-");
-            }
-            if (rgbArray.length < 3) {
-                rgbArray = value.split("\\.");
-            }
-
-            if (rgbArray.length < 3 && value.length() > 8) {
-                rgbArray = new String[3];
-                rgbArray[0] = value.substring(0, 3);
-                rgbArray[1] = value.substring(3, 6);
-                rgbArray[2] = value.substring(6, 9);
-            }
-
-            if (rgbArray.length > 2) {
-                int r = Integer.parseInt(rgbArray[0]);
-                int g = Integer.parseInt(rgbArray[1]);
-                int b = Integer.parseInt(rgbArray[2]);
-                if (r < 256 && g < 256 && b < 256) {
-                    storeCalibratedData(position, Color.rgb(r, g, b), 100);
-
-                    String folderName = FileUtils.getStoragePath(getActivity(), -1,
-                            String.format("%s/%d/%d/", Globals.CALIBRATE_FOLDER, mTestType,
-                                    position), false
-                    );
-
-                    FileUtils.deleteFolder(getActivity(), -1, folderName);
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+*/
 
     @Override
     public void onStart() {
@@ -338,20 +210,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
                 101));
 
         //check if calibration is factory preset or set by user
-        if (accuracy < 101) {
-
-            int samplingCount = PreferencesUtils
-                    .getInt(getActivity(), R.string.samplingCountKey, 1);
-            String photoFile = String.format("%s-%d", Globals.PHOTO_TEMP_FILE, 1);
-            File file = new File(
-                    FileUtils.getStoragePath(getActivity(), -1,
-                            String.format("%s/%d/%d/", Globals.CALIBRATE_FOLDER, mTestType,
-                                    position),
-                            false
-                    ) + photoFile
-            );
-
-        } else {
+        if (accuracy >= 101) {
             accuracy = -1;
         }
 
@@ -359,7 +218,8 @@ public class CalibrateItemFragmentBase extends ListFragment {
             color = colorRange.get(index);
         }
 
-        int minAccuracy = PreferencesUtils.getInt(mainApp, R.string.minPhotoQualityKey, 0);
+        int minAccuracy = PreferencesUtils
+                .getInt(mainApp, R.string.minPhotoQualityKey, Globals.MINIMUM_PHOTO_QUALITY);
 
         if (accuracy < minAccuracy && accuracy > -1) {
             mErrorQualityText.setVisibility(View.VISIBLE);
@@ -370,8 +230,8 @@ public class CalibrateItemFragmentBase extends ListFragment {
         }
 
         if (accuracy == -1) {
-            mColorButton.setText(getActivity().getString(R.string.notCalibrated));
-            color = Color.WHITE;
+            //mColorButton.setText(getActivity().getString(R.string.notCalibrated));
+            color = Color.BLACK;
         }
         mColorButton.setBackgroundColor(color);
 
@@ -420,7 +280,8 @@ public class CalibrateItemFragmentBase extends ListFragment {
 
     }
 
-    void storeCalibratedData(final int position, final int resultColor, final int accuracy) {
+    protected void storeCalibratedData(final int position, final int resultColor,
+            final int accuracy) {
 
         (new AsyncTask<Void, Void, Void>() {
 
@@ -455,21 +316,84 @@ public class CalibrateItemFragmentBase extends ListFragment {
             protected void onPostExecute(Void result) {
                 // TODO Auto-generated method stub
                 super.onPostExecute(result);
-                String folderName = FileUtils.getStoragePath(getActivity(), -1,
-                        String.format("%s/%d/%d/small/", Globals.CALIBRATE_FOLDER, mTestType,
-                                position),
-                        false
-                );
 
-                ArrayList<String> files = FileUtils
-                        .getFilePaths(getActivity(), folderName, "", -1);
-                mAdapter = new GalleryListAdapter(getActivity(), mTestType, position, files, false);
-                setListAdapter(mAdapter);
-
-                //mAdapter.notifyDataSetChanged();
+                updateListView(position);
                 displayInfo(true);
             }
         }).execute();
+    }
+
+    private boolean validateCalibration(final Message msg) {
+        Context context = getActivity();
+
+        //double result = msg.getData().getDouble(MainApp.RESULT_VALUE_KEY, -1);
+        int accuracy = msg.getData().getInt(Globals.QUALITY_KEY, 0);
+        String message = getString(R.string.testFailedMessage);
+
+        int minAccuracy = PreferencesUtils
+                .getInt(context, R.string.minPhotoQualityKey, Globals.MINIMUM_PHOTO_QUALITY);
+        if (accuracy < minAccuracy) {
+            message = String.format(getString(R.string.testFailedQualityMessage), minAccuracy);
+        }
+
+        if (accuracy < minAccuracy) {
+
+            AlertDialog myDialog;
+            View alertView;
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+            LayoutInflater inflater = LayoutInflater.from(getActivity().getApplicationContext());
+            ViewGroup parent = (ViewGroup) getActivity().findViewById(R.id.linearLayout);
+
+            alertView = inflater.inflate(R.layout.dialog_error, parent, false);
+            builder.setView(alertView);
+
+            builder.setTitle(R.string.error);
+
+            builder.setMessage(message);
+
+            ImageView image = (ImageView) alertView.findViewById(R.id.image);
+
+            image.setImageBitmap(
+                    ImageUtils.getAnalysedBitmap(msg.getData().getString("file"))
+            );
+
+            builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    calibrate(msg.getData().getInt("position"));
+                }
+            });
+
+            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+
+            builder.setCancelable(false);
+            myDialog = builder.create();
+
+            myDialog.show();
+            return false;
+        }
+        return true;
+
+    }
+
+    protected void updateListView(int position) {
+        String folderName = FileUtils.getStoragePath(getActivity(), -1,
+                String.format("%s/%d/%d/small/", Globals.CALIBRATE_FOLDER, mTestType,
+                        position),
+                false
+        );
+
+        ArrayList<String> files = FileUtils
+                .getFilePaths(getActivity(), folderName, "", -1);
+        Collections.sort(files);
+        mAdapter = new GalleryListAdapter(getActivity(), mTestType, position, files, false);
+        setListAdapter(mAdapter);
     }
 
     void autoGenerateColors(int index, int startColor,
@@ -505,7 +429,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
         int currentSamplingCount = PreferencesUtils
                 .getInt(context, R.string.currentSamplingCountKey, 0);
         return currentSamplingCount >= PreferencesUtils
-                .getInt(context, R.string.samplingCountKey, 5);
+                .getInt(context, R.string.samplingCountKey, Globals.SAMPLING_COUNT_DEFAULT);
     }
 
     private void releaseResources() {
@@ -541,10 +465,17 @@ public class CalibrateItemFragmentBase extends ListFragment {
                 if (!adapter.hasSamplingCompleted()) {
                     adapter.startCalibration(msg.getData().getInt("position"));
                 } else {
-                    adapter.storeCalibratedData(msg.getData().getInt("position"),
-                            msg.getData().getInt(MainApp.RESULT_COLOR_KEY),
-                            msg.getData().getInt(MainApp.QUALITY_KEY));
+                    if (adapter.validateCalibration(msg)) {
+                        adapter.storeCalibratedData(msg.getData().getInt("position"),
+                                msg.getData().getInt(Globals.RESULT_COLOR_KEY),
+                                msg.getData().getInt(Globals.QUALITY_KEY));
+                        FileUtils.deleteFiles(adapter.oldFilePaths);
+                    } else {
+                        FileUtils.deleteFilesExcepting(adapter.calibrateFolder,
+                                adapter.oldFilePaths);
+                    }
                     adapter.releaseResources();
+
                 }
             }
         }

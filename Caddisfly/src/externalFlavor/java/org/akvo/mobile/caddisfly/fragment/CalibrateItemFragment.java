@@ -16,8 +16,21 @@
 
 package org.akvo.mobile.caddisfly.fragment;
 
+import com.ternup.caddisfly.adapter.GalleryListAdapter;
 import com.ternup.caddisfly.fragment.CalibrateItemFragmentBase;
 
+import java.util.ArrayList;
+
 public class CalibrateItemFragment extends CalibrateItemFragmentBase {
+    @Override
+    protected void updateListView(int position) {
+
+        // override and show only headers by not providing data to list adapter
+
+        ArrayList<String> files = new ArrayList<String>();
+        mAdapter = new GalleryListAdapter(getActivity(), mTestType, position, files, false);
+        setListAdapter(mAdapter);
+
+    }
 
 }

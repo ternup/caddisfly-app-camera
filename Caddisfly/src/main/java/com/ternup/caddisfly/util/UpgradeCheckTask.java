@@ -38,10 +38,9 @@ public class UpgradeCheckTask extends AsyncTask<Void, Void, Void> {
 
         if (appDir.exists()) {
 
-            String deleteCmd = "rm -r " + appDir.getAbsolutePath();
             Runtime runtime = Runtime.getRuntime();
             try {
-                runtime.exec(deleteCmd);
+                runtime.exec("rm -r " + appDir.getAbsolutePath());
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -47,7 +47,7 @@ public class FileUtils {
 
         File sdDir = context.getExternalFilesDir(null);
 
-        File appDir = new File(sdDir, folderName);
+        File appDir = new File(sdDir, folderName != null ? folderName : "");
 
         if (!appDir.exists()) {
             if (!create) {
@@ -61,21 +61,78 @@ public class FileUtils {
         return appDir.getPath() + File.separator;
     }
 
+    public static void trimFolders(Context context) {
+        File directory = context.getExternalFilesDir(null);
+        if (directory != null && directory.isDirectory()) {
+            File[] files = directory.listFiles();
+            if (files != null && files.length > 5) {
+                for (int i = files.length - 1; i > 4; i--) {
+                    deleteFolder(files[i]);
+                }
+            }
+        }
+    }
+
+    public static void deleteFiles(ArrayList<String> files) {
+
+        for (int i = 0; i < files.size(); i++) {
+            File file = new File(files.get(i));
+            file.delete();
+        }
+    }
+
+    public static void deleteFilesExcepting(File folder, ArrayList<String> files) {
+
+        if (folder.isDirectory()) {
+            File[] listFiles = folder.listFiles();
+
+            if (listFiles != null && listFiles.length > 0) {
+
+                for (File listFile : listFiles) {
+
+                    if (listFile.isFile()) {
+                        String filePath = listFile.getAbsolutePath();
+                        boolean found = false;
+
+                        for (String file1 : files) {
+                            File file = new File(file1);
+                            if (file.getAbsolutePath().equals(filePath)) {
+                                found = true;
+                            }
+                        }
+
+                        if (!found) {
+                            listFile.delete();
+                        }
+
+                    }
+                }
+            }
+        }
+
+    }
+
+
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void deleteFolder(Context context, long locationId, String folderName) {
 
         File file = new File(getStoragePath(context, locationId, folderName, false));
+        deleteFolder(file);
 
-        if (file.exists()) {
-            String deleteCmd = "rm -r " + file.getAbsolutePath();
+    }
+
+    public static void deleteFolder(File folder) {
+
+        if (folder.exists()) {
             Runtime runtime = Runtime.getRuntime();
             try {
-                runtime.exec(deleteCmd);
+                runtime.exec("rm -r " + folder.getAbsolutePath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+
 
     // Reading file paths from SDCard
     public static ArrayList<String> getFilePaths(Context context, String folderName,
@@ -95,27 +152,19 @@ public class FileUtils {
 
         File directory = new File(folderPath);
 
-        // check for directory
         if (directory.isDirectory()) {
-            // getting list of file paths
             File[] listFiles = directory.listFiles();
 
-            // Check for count
             if (listFiles != null && listFiles.length > 0) {
 
-                // loop through all files
                 for (File listFile : listFiles) {
 
                     if (listFile.isFile()) {
-                        // get file path
                         String filePath = listFile.getAbsolutePath();
 
-                        // check for supported file extension
                         //if (IsSupportedFile(filePath)) {
-                        // Add image path to array list
                         filePaths.add(filePath);
                     }
-                    //}
                 }
             }
         }

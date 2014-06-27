@@ -28,30 +28,25 @@ import com.ternup.caddisfly.fragment.NavigationDrawerFragment;
 import com.ternup.caddisfly.fragment.SettingsFragment;
 import com.ternup.caddisfly.util.DateUtils;
 import com.ternup.caddisfly.util.PreferencesUtils;
-import com.ternup.caddisfly.util.UpdateCheckTask;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.res.Configuration;
-import android.content.res.Resources;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
-import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import java.util.Calendar;
-import java.util.Locale;
 
 /**
  * The Main Activity of the App which includes navigation drawer menu
  */
-public class MainActivity extends Activity
+public class MainActivity extends MainActivityBase
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private HomeFragment homeFragment = null;
@@ -66,12 +61,6 @@ public class MainActivity extends Activity
 
     private SettingsFragment settingsFragment = null;
 
-    private long updateLastCheck;
-
-    private boolean isSettingsShowing = false;
-
-    private boolean isAboutShowing = false;
-
     private CharSequence mTitle;
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
@@ -80,10 +69,14 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        loadSavedPreferences();
-
+        MainApp mainApp = (MainApp) getApplicationContext();
         assert getApplicationContext() != null;
-        this.setTheme(((MainApp) getApplicationContext()).CurrentTheme);
+
+        // Set theme according to preference
+        mainApp.CurrentTheme = PreferencesUtils.getInt(this, R.string.currentTheme,
+                R.style.AppTheme_Light);
+
+        this.setTheme(mainApp.CurrentTheme);
 
         setContentView(R.layout.activity_main);
 
@@ -122,16 +115,8 @@ public class MainActivity extends Activity
         }
 
         int index = getCurrentFragmentIndex();
-        isSettingsShowing = index == Globals.SETTINGS_SCREEN_INDEX;
-        isAboutShowing = index == Globals.ABOUT_SCREEN_INDEX;
-    }
-
-    /**
-     * @param background true: check for update silently, false: show messages to user
-     */
-    void checkUpdate(boolean background) {
-        UpdateCheckTask updateCheckTask = new UpdateCheckTask(this, background);
-        updateCheckTask.execute();
+        showCheckUpdateOption = index == Globals.SETTINGS_SCREEN_INDEX;
+        showCheckUpdateOption = index == Globals.ABOUT_SCREEN_INDEX;
     }
 
     /**
@@ -148,13 +133,9 @@ public class MainActivity extends Activity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         restoreActionBar();
 
-        // Show the 'Check Update' button for Settings and About screens
-        if (isSettingsShowing || isAboutShowing) {
-            menu.add(Menu.NONE, R.id.menu_update, Menu.NONE, R.string.checkUpdate)
-                    .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        }
         return true;
     }
 
@@ -177,8 +158,8 @@ public class MainActivity extends Activity
 
         Fragment fragment;
 
-        isSettingsShowing = false;
-        isAboutShowing = false;
+        showCheckUpdateOption = false;
+        showCheckUpdateOption = false;
         switch (position) {
             case Globals.HOME_SCREEN_INDEX:
                 if (homeFragment == null) {
@@ -199,21 +180,21 @@ public class MainActivity extends Activity
                 fragment = calibrateFragment;
                 break;
             case Globals.SETTINGS_SCREEN_INDEX:
-                isSettingsShowing = true;
+                showCheckUpdateOption = true;
                 if (settingsFragment == null) {
                     settingsFragment = new SettingsFragment();
                 }
                 fragment = settingsFragment;
                 break;
             case Globals.HELP_SCREEN_INDEX:
-
+                showCheckUpdateOption = true;
                 if (helpFragment == null) {
                     helpFragment = new HelpFragment();
                 }
                 fragment = helpFragment;
                 break;
             case Globals.ABOUT_SCREEN_INDEX:
-                isAboutShowing = true;
+                showCheckUpdateOption = true;
                 if (aboutFragment == null) {
                     aboutFragment = new AboutFragment();
                 }
@@ -249,7 +230,20 @@ public class MainActivity extends Activity
     @Override
     protected void onStart() {
         super.onStart();
-        assert getApplicationContext() != null;
+        MainApp mainApp = (MainApp) getApplicationContext();
+
+        Intent currentIntent = getIntent();
+        String action = currentIntent.getAction();
+        String type = currentIntent.getType();
+
+        if (Globals.ACTION_IMPORT_CALIBRATION.equals(action)) {
+            mainApp.setFluorideSwatches();
+            Intent intent = new Intent();
+            intent.putIntegerArrayListExtra("swatches", mainApp.colorList);
+            this.setResult(Activity.RESULT_OK, intent);
+            finish();
+        }
+
         //final String folderName = PreferencesUtils.getString(this, R.string.runningTestFolder, "");
         //final int testType = PreferencesUtils.getInt(this, R.string.testType, 0);
     }
@@ -260,17 +254,6 @@ public class MainActivity extends Activity
         int index = getCurrentFragmentIndex();
         if (index > -1) {
             mNavigationDrawerFragment.checkItem(index);
-        }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_update:
-                checkUpdate(false);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -289,37 +272,13 @@ public class MainActivity extends Activity
         this.recreate();
     }
 
-    /**
-     * Load user preferences
-     */
-    private void loadSavedPreferences() {
-        assert getApplicationContext() != null;
-
-        updateLastCheck = PreferencesUtils.getLong(this, R.string.lastUpdateCheck);
-
-        MainApp context = ((MainApp) this.getApplicationContext());
-
-        // Default app to Fluoride swatches
-        context.setFluorideSwatches();
-
-        // Set the locale according to preference
-        Locale myLocale = new Locale(
-                PreferencesUtils.getString(this, R.string.currentLocale, Globals.DEFAULT_LOCALE));
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-
-        // Set theme according to preference
-        context.CurrentTheme = PreferencesUtils.getInt(this, R.string.currentTheme,
-                R.style.AppTheme_Light);
-    }
-
     @Override
     public void onBackPressed() {
         try {
             int index = getCurrentFragmentIndex();
+
+            showCheckUpdateOption = index == Globals.SETTINGS_SCREEN_INDEX;
+            showCheckUpdateOption = index == Globals.ABOUT_SCREEN_INDEX;
 
             if (index == Globals.LOCATION_LIST_SCREEN_INDEX) {
                 Fragment fragment = getFragmentManager().findFragmentById(R.id.container);
@@ -334,32 +293,11 @@ public class MainActivity extends Activity
 
             mNavigationDrawerFragment.checkItem(index);
 
-            isSettingsShowing = index == Globals.SETTINGS_SCREEN_INDEX;
-            isAboutShowing = index == Globals.ABOUT_SCREEN_INDEX;
-            invalidateOptionsMenu();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * @return index of fragment currently showing
-     */
-    private int getCurrentFragmentIndex() {
-        Fragment fragment = getFragmentManager().findFragmentById(R.id.container);
-        if (fragment != null) {
-            String positionString = fragment.getTag();
-            if (positionString != null) {
-                try {
-                    return Integer.parseInt(positionString);
-                } catch (NumberFormatException e) {
-                    return -1;
-                }
-            }
-        }
-        return -1;
-    }
 
     @Override
     public boolean onKeyDown(int keycode, KeyEvent e) {

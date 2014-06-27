@@ -21,10 +21,12 @@ import android.content.Context;
 public class DataStorage {
 
     public static long saveResult(Context mContext, String folder, int testType, double result) {
-        return 10;
+        //do nothing
+        return -1;
     }
 
     public static void deleteRecord(Context context, long id, long locationId, String folderName) {
+        //do nothing
     }
 
 }

@@ -43,13 +43,13 @@ android {
     productFlavors {
         internalFlavor {
             applicationId "com.ternup.caddisfly"
-            versionName "prototype 0.27 alpha"
-            versionCode 27
+            versionName "prototype 0.28 alpha"
+            versionCode 28
         }
         externalFlavor {
             applicationId "org.akvo.mobile.caddisfly"
-            versionName "prototype 0.2 alpha"
-            versionCode 2
+            versionName "prototype 0.28 alpha"
+            versionCode 28
         }
     }
 

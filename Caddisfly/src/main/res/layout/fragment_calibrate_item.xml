@@ -53,7 +53,8 @@
                     android:layout_weight="1"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="8dp"
-                    android:textColor="@android:color/holo_red_dark"/>
+                    android:textColor="@android:color/holo_red_dark"
+                    android:clickable="false"/>
             <Button
                     android:id="@+id/valueButton"
                     style="?android:attr/buttonBarButtonStyle"
@@ -63,7 +64,8 @@
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:layout_weight="1"
-                    android:layout_marginLeft="10dp"/>
+                    android:layout_marginLeft="10dp"
+                    android:clickable="false"/>
         </LinearLayout>
         <TextView
                 android:id="@+id/rgbText"
