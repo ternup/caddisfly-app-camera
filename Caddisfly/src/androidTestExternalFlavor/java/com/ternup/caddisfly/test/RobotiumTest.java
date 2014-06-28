@@ -14,27 +14,11 @@
  * The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
  */
 
-/*
-    This file is part of Caddisfly
-
-    Caddisfly is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Caddisfly is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Caddisfly.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 package com.ternup.caddisfly.test;
 
 import com.robotium.solo.Solo;
 import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
 
 import org.akvo.mobile.caddisfly.activity.MainActivity;
 
@@ -62,7 +46,6 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
     }
 
-/*
     public void testAStartSurvey() {
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
@@ -137,7 +120,6 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
         solo.goBack();
     }
 
-*/
     public void testZCalibrate() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
@@ -157,9 +139,7 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
         solo.goBack();
         calibrate(7);
         solo.goBack();
-
     }
-
 
     private void calibrate(int index) {
 
@@ -175,7 +155,7 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
         solo.waitForDialogToOpen();
 
-        solo.waitForDialogToClose(30000);
+        solo.waitForDialogToClose(40000);
 
         int colorAfter = getButtonColor(0);
 

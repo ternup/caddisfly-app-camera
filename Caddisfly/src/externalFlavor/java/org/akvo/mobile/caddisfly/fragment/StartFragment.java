@@ -47,6 +47,7 @@ public class StartFragment extends Fragment {
 
     private int mTestType;
 
+    @SuppressWarnings("WeakerAccess")
     public StartFragment() {
         // Required empty public constructor
     }
@@ -89,7 +90,8 @@ public class StartFragment extends Fragment {
         });
 
         TextView versionTextView = (TextView) view.findViewById(R.id.versionTextView);
-        versionTextView.setText(String.format("%s %s", getString(R.string.appName), MainApp.getVersion(getActivity())));
+        versionTextView.setText(String.format("%s %s", getString(R.string.appName),
+                MainApp.getVersion(getActivity())));
 
         TextView badgeTextView = (TextView) view.findViewById(R.id.badgeTextView);
         MainApp mainApp = (MainApp) getActivity().getApplicationContext();

@@ -16,7 +16,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.akvo.mobile.caddisfly">
+          xmlns:tools="http://schemas.android.com/tools" package="org.akvo.mobile.caddisfly">
 
     <application
             android:name="com.ternup.caddisfly.app.MainApp"
@@ -41,7 +41,7 @@
                 android:name="com.ternup.caddisfly.activity.ProgressActivity"
                 android:label="@string/appName"
                 android:screenOrientation="nosensor"
-                android:showOnLockScreen="true">
+                android:showOnLockScreen="true" tools:ignore="UnusedAttribute">
         </activity>
 
     </application>

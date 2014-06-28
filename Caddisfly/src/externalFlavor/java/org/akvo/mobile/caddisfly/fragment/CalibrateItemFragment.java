@@ -21,7 +21,9 @@ import com.ternup.caddisfly.fragment.CalibrateItemFragmentBase;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("WeakerAccess")
 public class CalibrateItemFragment extends CalibrateItemFragmentBase {
+
     @Override
     protected void updateListView(int position) {
 

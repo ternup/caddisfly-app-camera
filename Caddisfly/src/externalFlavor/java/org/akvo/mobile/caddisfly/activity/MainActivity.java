@@ -43,11 +43,11 @@ public class MainActivity extends MainActivityBase
         implements StartFragment.OnCalibrateListener, StartFragment.OnStartTestListener,
         StartFragment.OnStartSurveyListener, StartFragment.OnHelpListener {
 
+    private final int mTestType = Globals.FLUORIDE_INDEX;
+
     private CalibrateFragment mCalibrateFragment = null;
 
     private HelpFragment helpFragment = null;
-
-    private final int mTestType = Globals.FLUORIDE_INDEX;
 
     private boolean mShouldFinish = false;
 
@@ -87,7 +87,7 @@ public class MainActivity extends MainActivityBase
         Boolean external = false;
 
         if (Globals.ACTION_WATER_TEST.equals(action) && type != null) {
-            if ("text/plain".equals(type)) {
+            if ("text/plain".equals(type)) { //NON-NLS
                 external = true;
                 //mQuestionId = getIntent().getStringExtra("questionId");
                 //questionTitle = getIntent().getStringExtra("questionTitle");
@@ -175,7 +175,7 @@ public class MainActivity extends MainActivityBase
             mShouldFinish = true;
             (new Handler()).postDelayed(new Runnable() {
                 public void run() {
-                    if(mShouldFinish) {
+                    if (mShouldFinish) {
                         finish();
                     }
                 }

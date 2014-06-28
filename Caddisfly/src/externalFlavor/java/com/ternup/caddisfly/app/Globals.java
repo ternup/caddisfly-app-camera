@@ -20,10 +20,10 @@ package com.ternup.caddisfly.app;
 public class Globals extends GlobalsBase {
 
     // For external app connection
-    public static final String ACTION_WATER_TEST = "org.akvo.flow.action.externalsource";
+    public static final String ACTION_WATER_TEST = "org.akvo.flow.action.externalsource"; //NON-NLS
 
     // Caddisfly update file name
-    public static final String UPDATE_FILE_NAME = "caddisfly_update.apk";
+    public static final String UPDATE_FILE_NAME = "akvo_caddisfly_update.apk";
 
     // Caddisfly update check path
     public static final String UPDATE_CHECK_URL
@@ -34,8 +34,6 @@ public class Globals extends GlobalsBase {
             = "http://caddisfly.ternup.com/akvoapp/akvo_caddisfly_update.apk?check=28";
 
     public static final String FLOW_SURVEY_PACKAGE_NAME = "com.gallatinsystems.survey.device";
-
-    public static final String CADDISFLY_PACKAGE_NAME = "com.ternup.caddisfly";
 
     protected Globals() {
         // prevents calls from subclass

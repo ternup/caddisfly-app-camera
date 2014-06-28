@@ -120,7 +120,7 @@ public class CalibrateFragment extends CalibrateFragmentBase {
         MainApp mainApp = (MainApp) getActivity().getApplicationContext();
         args.putInt(getString(R.string.currentTestTypeId), mainApp.currentTestType);
         mCalibrateItemFragment.setArguments(args);
-        ft.replace(R.id.container, mCalibrateItemFragment, "mCalibrateItemFragment");
+        ft.replace(R.id.container, mCalibrateItemFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.addToBackStack(null);
         ft.commit();

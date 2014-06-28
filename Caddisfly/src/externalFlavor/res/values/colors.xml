@@ -16,8 +16,8 @@
   -->
 
 <resources>
-    <color name="button_default_dark">#9f005548</color>
-    <color name="button_pressed_dark">#9f004137</color>
+    <color name="button_default_dark">#ff3d3d3d</color>
+    <color name="button_pressed_dark">#ff343434</color>
     <color name="panel_light">#ff1e1e1e</color>
     <color name="window_background_dark">#ff252525</color>
 </resources>

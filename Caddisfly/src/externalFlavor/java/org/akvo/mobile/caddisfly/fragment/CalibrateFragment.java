@@ -16,6 +16,7 @@
 
 package org.akvo.mobile.caddisfly.fragment;
 
+import com.ternup.caddisfly.BuildConfig;
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.adapter.CalibrateListAdapter;
 import com.ternup.caddisfly.app.Globals;
@@ -48,7 +49,7 @@ public class CalibrateFragment extends CalibrateFragmentBase {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         Intent LaunchIntent = getActivity().getPackageManager()
-                .getLaunchIntentForPackage(Globals.CADDISFLY_PACKAGE_NAME);
+                .getLaunchIntentForPackage(BuildConfig.PACKAGE_NAME);
         if (LaunchIntent != null) {
             inflater.inflate(R.menu.calibrate, menu);
         }
@@ -85,7 +86,7 @@ public class CalibrateFragment extends CalibrateFragmentBase {
         MainApp mainApp = (MainApp) getActivity().getApplicationContext();
         args.putInt(getString(R.string.currentTestTypeId), mainApp.currentTestType);
         mCalibrateItemFragment.setArguments(args);
-        ft.replace(R.id.container, mCalibrateItemFragment, "mCalibrateItemFragment");
+        ft.replace(R.id.container, mCalibrateItemFragment);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.addToBackStack(null);
         ft.commit();
@@ -110,7 +111,8 @@ public class CalibrateFragment extends CalibrateFragmentBase {
                                         try {
                                             startActivityForResult(intent, REQUEST_IMPORT);
                                         } catch (ActivityNotFoundException e) {
-                                            AlertUtils.showMessage(getActivity(), R.string.error, R.string.updateRequired);
+                                            AlertUtils.showMessage(getActivity(), R.string.error,
+                                                    R.string.updateRequired);
 
                                         }
                                     }

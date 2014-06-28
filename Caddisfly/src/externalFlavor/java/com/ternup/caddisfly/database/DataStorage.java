@@ -18,13 +18,16 @@ package com.ternup.caddisfly.database;
 
 import android.content.Context;
 
+@SuppressWarnings("EmptyMethod")
 public class DataStorage {
 
+    @SuppressWarnings("UnusedParameters")
     public static long saveResult(Context mContext, String folder, int testType, double result) {
         //do nothing
         return -1;
     }
 
+    @SuppressWarnings("UnusedParameters")
     public static void deleteRecord(Context context, long id, long locationId, String folderName) {
         //do nothing
     }

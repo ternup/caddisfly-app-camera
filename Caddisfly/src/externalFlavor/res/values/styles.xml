@@ -20,11 +20,18 @@
 
     <style name="ActionBar.Dark" parent="@style/ActionBar">
         <item name="android:background">@color/panel_light</item>
+        <item name="android:titleTextStyle">@style/TitleColor</item>
+    </style>
+
+    <style name="TitleColor" parent="android:TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/textColorDark</item>
     </style>
 
     <style name="AppTheme.Dark" parent="@android:style/Theme.Holo">
         <item name="android:actionBarStyle">@style/ActionBar.Dark</item>
         <item name="android:windowBackground">@color/window_background_dark</item>
+        <item name="android:actionMenuTextColor">@color/textColorDark</item>
+        <item name="android:textColor">@color/textColorDark</item>
         <item name="arrowRight">@drawable/arrow_right</item>
         <item name="alarm">@android:drawable/ic_lock_idle_alarm</item>
         <item name="buttonStyle">@drawable/button_style_dark</item>
@@ -41,15 +48,15 @@
     <style name="button_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#fff8f8f8</item>
+        <item name="android:textColor">@color/button_text_color</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:shadowColor">#444</item>
+        <item name="android:shadowColor">#777</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
-        <item name="android:shadowRadius">2</item>
+        <item name="android:shadowRadius">6</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:alpha">0.6</item>
     </style>

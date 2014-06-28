@@ -83,12 +83,11 @@
                 >
             <Button
                     android:id="@+id/startButton"
-                    android:background="@drawable/cyan_button"
+                    android:background="@drawable/green_button"
                     style="@style/button_text"
                     android:text="@string/calibrate"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:alpha="0.8"
                     />
         </LinearLayout>
         <TextView

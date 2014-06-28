@@ -14,23 +14,6 @@
  * The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
  */
 
-/*
-    This file is part of Caddisfly
-
-    Caddisfly is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    Caddisfly is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with Caddisfly.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 package com.ternup.caddisfly.test;
 
 import com.robotium.solo.Solo;
@@ -43,6 +26,8 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
+import android.widget.ImageButton;
 
 public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
@@ -97,7 +82,7 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
         solo.waitForDialogToOpen();
 
-        solo.waitForDialogToClose(30000);
+        solo.waitForDialogToClose(40000);
 
         int colorAfter = getButtonColor(0);
 
@@ -105,7 +90,6 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
     }
 
-/*
     public void testEditSourceLocation() {
         openHome();
 
@@ -429,13 +413,13 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
     }
 
-*/
-    /*
     public void testSwatches() {
 
         openHome();
 
-        openSwatches();
+        openCalibrate(2);
+
+        solo.clickOnText(solo.getString(R.string.swatches));
 
         solo.scrollListToBottom(0);
 
@@ -445,7 +429,6 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
         solo.waitForText("0.0");
     }
-*/
 
 
     private void openHome() {

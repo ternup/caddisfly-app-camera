@@ -28,27 +28,14 @@
     <string name="send">Send</string>
     <string name="photo">Photo</string>
     <string name="delete">Delete</string>
-    <string name="areYouSure">Are you sure?</string>
-    <string name="calibrate_info">Place a cartridge filled with a standard solution and press OK
-    </string>
     <string name="noData">No locations yet.\n\nPress \'New Location\' button</string>
     <string name="interval_info">Duration to wait after each analysis</string>
     <string name="details">Details</string>
     <string name="selectNumberOfTests">Select how many times to analyze</string>
     <string name="appUpdate">Caddisfly update</string>
-    <string name="askForUpdate">An updated version is available, Do you want to update now?</string>
     <string name="reset">Reset</string>
     <string name="seconds">seconds</string>
     <string name="minutes">minutes</string>
-    <string name="checkUpdate">Check update</string>
-    <string name="internetConnectionRequired">Internet connection is required. Connect to a data
-        network.
-    </string>
-    <string name="dataConnection">Data Connection</string>
-    <string name="testInProgress">Test in progress</string>
-    <string name="alreadyHaveLatest">You already have the latest version of Caddisfly installed
-    </string>
-    <string name="ampersand">&amp;</string>
     <string name="remaining">remaining</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
@@ -126,10 +113,6 @@
     <string name="closeSurvey">Close Survey</string>
     <string name="incomplete">Incomplete</string>
     <string name="incompleteMessage">Please enter a place name</string>
-    <string name="gettingUpdate">Getting Caddisfly update…</string>
-    <string name="calibrate_error">Device not yet calibrated or there are errors. Calibrate this
-        device before running the test
-    </string>
     <string name="result_sent">Test details successfully sent to the server</string>
     <string name="success">Success</string>
     <string name="send_failed">Send failed due to server problem. Try again later.</string>
@@ -177,5 +160,6 @@
     </string>
     <string name="photoSampleDimension">Photo Sample Dimension</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sending">Sending</string>
 
 </resources>

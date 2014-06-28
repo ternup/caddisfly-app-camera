@@ -15,29 +15,13 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 <resources>
-    <string name="about">About</string>
     <string name="settings">Settings</string>
-    <string name="bacteriaTest">Bacteria Test</string>
-    <string name="swatches">Swatches</string>
     <string name="fluoride">Fluoride</string>
-    <string name="bacteria">Bacteria</string>
-    <string name="pH">pH</string>
     <string name="calibrate">Calibrate</string>
-    <string name="working">Working</string>
     <string name="analyzingWait">Analyzing…</string>
-    <string name="send">Send</string>
-    <string name="photo">Photo</string>
-    <string name="delete">Delete</string>
-    <string name="areYouSure">Are you sure?</string>
-    <string name="calibrate_info">Place a cartridge filled with a standard solution and press OK
-    </string>
-    <string name="noData">No locations yet.\n\nPress \'New Location\' button</string>
-    <string name="interval_info">Duration to wait after each analysis</string>
-    <string name="details">Details</string>
-    <string name="selectNumberOfTests">Select how many times to analyze</string>
+    <string name="calibrate_info">Ensure cartridge is attached correctly and press OK</string>
     <string name="appUpdate">Caddisfly update</string>
     <string name="askForUpdate">An updated version is available, Do you want to update now?</string>
-    <string name="reset">Reset</string>
     <string name="seconds">seconds</string>
     <string name="minutes">minutes</string>
     <string name="checkUpdate">Check update</string>
@@ -48,147 +32,51 @@
     <string name="testInProgress">Test in progress</string>
     <string name="alreadyHaveLatest">You already have the latest version of Caddisfly installed
     </string>
-    <string name="ampersand">&amp;</string>
     <string name="remaining">remaining</string>
-    <string name="drawer_open">Open navigation drawer</string>
-    <string name="drawer_close">Close navigation drawer</string>
     <string name="result">Result</string>
-    <string name="home">Home</string>
     <string name="rgb">rgb</string>
     <string name="ppm">ppm</string>
-    <string name="selectTestType">Select type</string>
     <string name="twentyFourHourTime">HH:mm:ss</string>
     <string name="twelveHourTime">h:mm:ss a</string>
-    <string name="analysisCount">Analysis count</string>
     <string name="checkingForUpdates">Checking for updates…</string>
-    <string name="place">Place</string>
-    <string name="sourceType">Source type</string>
-    <string name="selectSourceType">Select Source Type</string>
-    <string name="waterQualitySystem">Water Quality System</string>
     <string name="starting">Starting…</string>
-    <string name="general">General</string>
     <string name="error">Error</string>
     <string name="retry">Retry</string>
     <string name="outOfRange">Color out of range</string>
     <string name="help">Help</string>
-    <string name="soundAlarm">Alarm when shake needed</string>
-    <string name="shakeDevice">Require shake to analyze</string>
-    <string name="shakeDeviceSummary">To ensure proper mixing of solution.</string>
-    <string name="soundAlarmSummary">An alarm to notify that a shake is needed before each
-        analysis.
-    </string>
     <string name="placeDeviceInStand">Place the phone on a flat surface to continue</string>
     <string name="shakeToContinue">Shake this device to ensure proper mixing of the solution in the
         cartridge
     </string>
     <string name="shakeMe">Shake Me</string>
-    <string name="selectedWillBeDeleted">Selected items will be deleted</string>
-    <string name="language">Language</string>
-    <string name="interval">Interval</string>
-    <string name="intervalMinutes">Interval (minutes)</string>
-    <string name="futureFeature">Future Feature</string>
-    <string name="featureNotImplemented">Feature not yet implemented</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="prototype">Prototype</string>
     <string name="alpha">Alpha</string>
 
-    <!-- time ago strings -->
-    <string name="just_now">just now</string>
-    <string name="yesterday">yesterday</string>
-    <string name="locale">Locale</string>
     <string name="testFailedMessage">Solution color out of range. Check cartridge placement.
     </string>
     <string name="testFailedQualityMessage">Photo quality below %d%%. Check cartridge placement.
     </string>
-    <string name="location">Location</string>
-    <string name="address">Address</string>
-    <string name="dayTheme">Day Theme</string>
-    <string name="nightTheme">Night Theme</string>
-    <string name="newLocation">New Location</string>
-    <string name="notes">Notes</string>
-    <string name="selectLocation">Select location for test</string>
-    <string name="locationDetails">Location Details</string>
-
-    <string-array name="source_types">
-        <item>Hand Pump</item>
-        <item>Tube Well</item>
-        <item>River / Stream</item>
-        <item>Open Well</item>
-        <item>Domestic Tap</item>
-        <item>Reservoir / Pond / Lake</item>
-        <item>Industrial</item>
-        <item>Other</item>
-    </string-array>
-
-    <string name="camera">Camera</string>
-    <string name="cameraZoom">Camera Zoom</string>
-    <string name="zoom">Zoom (obsolete)</string>
     <string name="done">Done</string>
-    <string name="other">Other</string>
-    <string name="locations">Locations</string>
-    <string name="startNewTest">Start New Test</string>
-    <string name="closeLocationSurvey">This survey will be closed and data entered will be lost
-    </string>
-    <string name="closeSurvey">Close Survey</string>
-    <string name="incomplete">Incomplete</string>
-    <string name="incompleteMessage">Please enter a place name</string>
     <string name="gettingUpdate">Getting Caddisfly update…</string>
-    <string name="calibrate_error">Device not yet calibrated or there are errors. Calibrate this
-        device before running the test
+    <string name="calibrate_error">Caddisfly not yet calibrated or there are errors. Calibrate this
+        device before starting a test
     </string>
-    <string name="result_sent">Test details successfully sent to the server</string>
-    <string name="success">Success</string>
-    <string name="send_failed">Send failed due to server problem. Try again later.</string>
     <string name="enableInternet">Please enable wireless internet or mobile data connection</string>
     <string name="noInternet">Internet connection not found</string>
     <string name="photoQuality">Photo quality</string>
     <string name="photoQualityError">Error: Photo quality too low</string>
-    <string name="waterSourceLocation">Water Source Location</string>
-    <string name="standNearWaterSource">Stand near the water source.</string>
-    <string name="ensureClearViewForGPS">Ensure that there is a clear view of the sky to receive GPS
-        signals
-    </string>
-    <string name="getLocation">Get Location</string>
-    <string name="gettingLocation">Getting location…</string>
-    <string name="takeSourcePhoto">Take Photo of Water Source</string>
     <string name="connecting">Connecting…</string>
     <string name="analyze">Analyze</string>
-    <string name="playCameraSound">Camera sound</string>
-    <string name="fluoride2">Fluoride Easy</string>
-    <string name="autoAnalyze">Auto Analyze on Preview</string>
-    <string name="street">Street</string>
-    <string name="town">Town</string>
-    <string name="city">City</string>
-    <string name="state">State</string>
-    <string name="country">Country</string>
     <string name="minPhotoQuality">Minimum Photo Quality</string>
-    <string name="cloudy">Cloudy</string>
-    <string name="torchMode">Torch Mode</string>
-    <string name="infinity">Infinity</string>
     <string name="clickAnalyze">Click Analyze to continue</string>
     <string name="notCalibrated">Not Calibrated</string>
-    <string name="edit">Edit</string>
-    <string name="samplingCount">Sampling Count</string>
-    <string name="selectNumberOfSamples">Number of times the solution should be sampled</string>
-    <string name="developer">Developer</string>
-    <string name="samplingSummary">photos will be taken for each analysis. Result will be an
-        average.
-    </string>
-    <string name="enterColorRgb">Enter color rgb</string>
-    <string name="saveOriginalPhoto">Save Original Photo</string>
-    <string name="saveOriginalPhotoConfirm">Warning: Saving original photos will use a lot of space
-        on your phone.
-    </string>
-    <string name="photoSampleDimensionMessage">Select the length to crop the photo for analysis
-    </string>
-    <string name="photoSampleDimension">Photo Sample Dimension</string>
     <string name="invalidColor">Invalid Color value</string>
     <string name="selectValueToCalibrate">Select a value to calibrate</string>
     <string name="startSurvey">Start Survey</string>
     <string name="startTest">Start Test</string>
     <string name="installAkvoFlow">Please install Akvo Flow app</string>
-    <string name="sending">Sending</string>
     <string name="waterQualityTest">Water Quality Test</string>
     <string name="attachStandardCartridge">Attach a standard solution cartridge for this value and
         press Calibrate
