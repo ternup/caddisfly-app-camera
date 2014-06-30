@@ -248,7 +248,7 @@ public class DetailsFragment extends ListFragment {
                 }
                 return true;
             case R.id.menu_delete:
-                AlertUtils.askQuestion(getActivity(), R.string.delete, R.string.areYouSure,
+                AlertUtils.askQuestion(getActivity(), R.string.delete, R.string.selectedWillBeDeleted,
                         new DialogInterface.OnClickListener() {
 
                             @Override

@@ -26,6 +26,7 @@ import com.ternup.caddisfly.fragment.HomeFragment;
 import com.ternup.caddisfly.fragment.LocationListFragment;
 import com.ternup.caddisfly.fragment.NavigationDrawerFragment;
 import com.ternup.caddisfly.fragment.SettingsFragment;
+import com.ternup.caddisfly.model.ColorInfo;
 import com.ternup.caddisfly.util.DateUtils;
 import com.ternup.caddisfly.util.PreferencesUtils;
 
@@ -41,6 +42,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.Menu;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -239,7 +241,11 @@ public class MainActivity extends MainActivityBase
         if (Globals.ACTION_IMPORT_CALIBRATION.equals(action)) {
             mainApp.setFluorideSwatches();
             Intent intent = new Intent();
-            intent.putIntegerArrayListExtra("swatches", mainApp.colorList);
+            ArrayList<Integer> exportList = new ArrayList<Integer>();
+            for (ColorInfo aColorList : mainApp.colorList) {
+                exportList.add(aColorList.getColor());
+            }
+            intent.putIntegerArrayListExtra("swatches", exportList);
             this.setResult(Activity.RESULT_OK, intent);
             finish();
         }

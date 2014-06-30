@@ -16,18 +16,6 @@
 
 package com.ternup.caddisfly.fragment;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.adapter.GalleryListAdapter;
-import com.ternup.caddisfly.app.Globals;
-import com.ternup.caddisfly.app.MainApp;
-import com.ternup.caddisfly.util.AlertUtils;
-import com.ternup.caddisfly.util.ColorUtils;
-import com.ternup.caddisfly.util.FileUtils;
-import com.ternup.caddisfly.util.ImageUtils;
-import com.ternup.caddisfly.util.PhotoHandler;
-import com.ternup.caddisfly.util.PreferencesHelper;
-import com.ternup.caddisfly.util.PreferencesUtils;
-
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -35,7 +23,6 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,8 +34,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.adapter.GalleryListAdapter;
+import com.ternup.caddisfly.app.Globals;
+import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.model.ColorInfo;
+import com.ternup.caddisfly.util.AlertUtils;
+import com.ternup.caddisfly.util.ColorUtils;
+import com.ternup.caddisfly.util.DataHelper;
+import com.ternup.caddisfly.util.FileUtils;
+import com.ternup.caddisfly.util.ImageUtils;
+import com.ternup.caddisfly.util.PhotoHandler;
+import com.ternup.caddisfly.util.PreferencesHelper;
+import com.ternup.caddisfly.util.PreferencesUtils;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -79,14 +81,16 @@ public class CalibrateItemFragmentBase extends ListFragment {
 
     private Button mStartButton;
 
-    private TextView mErrorQualityText;
+    private LinearLayout mErrorLayout;
+    private TextView mErrorTextView;
+    private TextView mErrorSummaryTextView;
 
     public CalibrateItemFragmentBase() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_gallery, container, false);
     }
 
@@ -103,7 +107,10 @@ public class CalibrateItemFragmentBase extends ListFragment {
         mValueButton = (Button) header.findViewById(R.id.valueButton);
         mStartButton = (Button) header.findViewById(R.id.startButton);
         mColorButton = (Button) header.findViewById(R.id.colorButton);
-        mErrorQualityText = (TextView) header.findViewById(R.id.errorQualityText);
+        mErrorLayout = (LinearLayout) header.findViewById(R.id.errorLayout);
+        mErrorTextView = (TextView) header.findViewById(R.id.errorTextView);
+        mErrorSummaryTextView = (TextView) header.findViewById(R.id.errorSummaryTextView);
+
 
         final int position = getArguments().getInt(getString(R.string.swatchIndex));
         //final int index = position * INDEX_INCREMENT_STEP;
@@ -199,8 +206,11 @@ public class CalibrateItemFragmentBase extends ListFragment {
 
         final int position = getArguments().getInt(getString(R.string.swatchIndex));
         final int index = position * mainApp.rangeIncrementStep;
-        ArrayList<Integer> colorRange = mainApp.colorList;
+        ArrayList<ColorInfo> colorRange = mainApp.colorList;
 
+        int color = mainApp.colorList.get(index).getColor();
+
+/*
         int color = PreferencesUtils.getInt(mainApp,
                 String.format("%s-%s", String.valueOf(mTestType), String.valueOf(index)),
                 -1);
@@ -215,24 +225,31 @@ public class CalibrateItemFragmentBase extends ListFragment {
         }
 
         if (color == -1) {
-            color = colorRange.get(index);
+            color = colorRange.get(index).getColor();
         }
+*/
 
-        int minAccuracy = PreferencesUtils
-                .getInt(mainApp, R.string.minPhotoQualityKey, Globals.MINIMUM_PHOTO_QUALITY);
+        //int minAccuracy = PreferencesUtils
+        //      .getInt(mainApp, R.string.minPhotoQualityKey, Globals.MINIMUM_PHOTO_QUALITY);
 
-        if (accuracy < minAccuracy && accuracy > -1) {
-            mErrorQualityText.setVisibility(View.VISIBLE);
-            mColorButton.setText(getString(R.string.error));
+        //if (accuracy < minAccuracy && accuracy > -1) {
+        int error = mainApp.colorList.get(index).getErrorCode();
+        if (error > 0) {
+            mErrorLayout.setVisibility(View.VISIBLE);
+            if (error == Globals.ERROR_NOT_YET_CALIBRATED) {
+                mErrorSummaryTextView.setVisibility(View.GONE);
+            } else {
+                mErrorSummaryTextView.setVisibility(View.VISIBLE);
+            }
+            mErrorTextView.setText(DataHelper.getSwatchError(getActivity(), error));
         } else {
-            mErrorQualityText.setVisibility(View.GONE);
-            mColorButton.setText("");
+            mErrorLayout.setVisibility(View.GONE);
         }
 
-        if (accuracy == -1) {
-            //mColorButton.setText(getActivity().getString(R.string.notCalibrated));
-            color = Color.BLACK;
-        }
+        //if (accuracy == -1) {
+        //mColorButton.setText(getActivity().getString(R.string.notCalibrated));
+        //  color = Color.BLACK;
+        //}
         mColorButton.setBackgroundColor(color);
 
         mValueButton.setText(mainApp.doubleFormat
@@ -281,7 +298,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
     }
 
     protected void storeCalibratedData(final int position, final int resultColor,
-            final int accuracy) {
+                                       final int accuracy) {
 
         (new AsyncTask<Void, Void, Void>() {
 
@@ -291,10 +308,11 @@ public class CalibrateItemFragmentBase extends ListFragment {
 
                 if (context != null) {
                     MainApp mainApp = ((MainApp) context.getApplicationContext());
-                    ArrayList<Integer> colorList = ((MainApp) context).colorList;
+                    ArrayList<ColorInfo> colorList = ((MainApp) context).colorList;
                     int index = position * mainApp.rangeIncrementStep;
 
-                    colorList.set(index, resultColor);
+                    ColorInfo colorInfo = new ColorInfo(resultColor, 0, 0, accuracy);
+                    colorList.set(index, colorInfo);
 
                     SharedPreferences sharedPreferences = PreferenceManager
                             .getDefaultSharedPreferences(context);
@@ -305,8 +323,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
                     editor.putInt(String.format("%d-a-%s", mTestType, String.valueOf(index)),
                             accuracy);
 
-                    autoGenerateColors(index, colorList.get(index), colorList,
-                            mainApp.rangeIncrementStep, editor);
+                    autoGenerateColors(index, colorList, mainApp.rangeIncrementStep, editor);
                     editor.commit();
                 }
                 return null;
@@ -396,16 +413,17 @@ public class CalibrateItemFragmentBase extends ListFragment {
         setListAdapter(mAdapter);
     }
 
-    void autoGenerateColors(int index, int startColor,
-            ArrayList<Integer> colorList, int incrementStep,
-            SharedPreferences.Editor editor) {
+    void autoGenerateColors(int index, ArrayList<ColorInfo> colorList, int incrementStep,
+                            SharedPreferences.Editor editor) {
 
+        int startColor = colorList.get(index).getColor();
         if (index < 30) {
             for (int i = 1; i < incrementStep; i++) {
                 int nextColor = ColorUtils.getGradientColor(startColor,
-                        colorList.get(index + incrementStep), incrementStep,
+                        colorList.get(index + incrementStep).getColor(), incrementStep,
                         i);
-                colorList.set(index + i, nextColor);
+                ColorInfo colorInfo = new ColorInfo(nextColor, 0, 0, 100);
+                colorList.set(index + i, colorInfo);
 
                 editor.putInt(String.format("%d-%s", mTestType, String.valueOf(index + i)),
                         nextColor);
@@ -415,9 +433,11 @@ public class CalibrateItemFragmentBase extends ListFragment {
         if (index > 0) {
             for (int i = 1; i < incrementStep; i++) {
                 int nextColor = ColorUtils.getGradientColor(startColor,
-                        colorList.get(index - incrementStep), incrementStep,
+                        colorList.get(index - incrementStep).getColor(), incrementStep,
                         i);
-                colorList.set(index - i, nextColor);
+                ColorInfo colorInfo = new ColorInfo(nextColor, 0, 0, 100);
+                colorList.set(index - i, colorInfo);
+
                 editor.putInt(String.format("%d-%s", mTestType, String.valueOf(index - i)),
                         nextColor);
             }

@@ -80,7 +80,7 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
         assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.HOME_SCREEN_INDEX)));
 
-        assertTrue(solo.searchText("6"));
+        assertTrue(solo.searchText("7"));
 
     }
 

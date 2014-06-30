@@ -17,12 +17,6 @@
 package com.ternup.caddisfly.fragment;
 
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.Globals;
-import com.ternup.caddisfly.app.MainApp;
-import com.ternup.caddisfly.util.FileUtils;
-import com.ternup.caddisfly.util.PreferencesUtils;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,6 +30,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
+import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.util.FileUtils;
 
 public class CalibrateItemFragment extends CalibrateItemFragmentBase {
 
@@ -69,16 +68,19 @@ public class CalibrateItemFragment extends CalibrateItemFragmentBase {
         final int position = getArguments().getInt(getString(R.string.swatchIndex));
         final int index = position * mainApp.rangeIncrementStep;
 
-        int color = PreferencesUtils.getInt(mainApp,
-                String.format("%s-%s", String.valueOf(mTestType), String.valueOf(index)),
-                -1);
-
-        int r = Color.red(color);
-        int g = Color.green(color);
-        int b = Color.blue(color);
-
-        mRgbText.setText(
-                String.format("%s: %d  %d  %d", mainApp.getString(R.string.rgb), r, g, b));
+        if (mainApp.colorList.get(index).getErrorCode() != Globals.ERROR_NOT_YET_CALIBRATED) {
+/*
+            int color = PreferencesUtils.getInt(mainApp,
+                    String.format("%s-%s", String.valueOf(mTestType), String.valueOf(index)),
+                    -1);
+*/
+            int color = mainApp.colorList.get(index).getColor();
+            int r = Color.red(color);
+            int g = Color.green(color);
+            int b = Color.blue(color);
+            mRgbText.setText(
+                    String.format("%s: %d  %d  %d", mainApp.getString(R.string.rgb), r, g, b));
+        }
 /*
         if (accuracy == -1) {
             mColorButton.setText(getActivity().getString(R.string.notCalibrated));

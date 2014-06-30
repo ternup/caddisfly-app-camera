@@ -26,11 +26,14 @@ public class ColorInfo {
 
     final int mQuality;
 
+    int mErrorCode = 0;
+
     public ColorInfo(int color, int count, int dominantCount, int quality) {
         mColor = color;
         mCount = count;
         mDominantCount = dominantCount;
         mQuality = quality;
+
     }
 
     public int getColor() {
@@ -48,4 +51,13 @@ public class ColorInfo {
     public int getQuality() {
         return mQuality;
     }
+
+    public int getErrorCode() {
+        return mErrorCode;
+    }
+
+    public void setErrorCode(int value) {
+        mErrorCode = value;
+    }
+
 }

@@ -16,27 +16,24 @@
 
 package com.ternup.caddisfly.app;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.util.PreferencesUtils;
-
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
-import android.preference.PreferenceManager;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.model.ColorInfo;
+import com.ternup.caddisfly.util.ColorUtils;
+import com.ternup.caddisfly.util.PreferencesUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainApp extends Application {
-
-    //Global color lists
-    public final ArrayList<Integer> presetColorList = new ArrayList<Integer>();
 
     public final ArrayList<Double> rangeIntervals = new ArrayList<Double>();
 
@@ -48,7 +45,9 @@ public class MainApp extends Application {
 
     public int currentTestType = Globals.FLUORIDE_INDEX;
 
-    public ArrayList<Integer> colorList = new ArrayList<Integer>();
+    public ArrayList<ColorInfo> colorList = new ArrayList<ColorInfo>();
+
+    //public ArrayList<Integer> colorList = new ArrayList<Integer>();
 
     public Address address = new Address(Locale.getDefault());
 
@@ -94,7 +93,8 @@ public class MainApp extends Application {
      * Factory preset values for Fluoride
      */
     public void setFluorideSwatches() {
-        presetColorList.clear();
+        //ArrayList<Integer> presetColorList = new ArrayList<Integer>();
+        colorList.clear();
         rangeIntervals.clear();
 
         rangeIncrementStep = 5;
@@ -109,10 +109,9 @@ public class MainApp extends Application {
         }
 
         for (double i = 0; i < 31; i++) {
-            presetColorList.add(Color.rgb(0, 0, 0));
+            colorList.add(new ColorInfo(Color.rgb(0, 0, 0), 0, 0, 100));
         }
 
-        colorList = new ArrayList<Integer>(presetColorList);
         loadCalibratedSwatches(Globals.FLUORIDE_INDEX);
     }
 
@@ -120,7 +119,8 @@ public class MainApp extends Application {
      * Factory preset values for Fluoride
      */
     public void setFluoride2Swatches() {
-        presetColorList.clear();
+        //ArrayList<Integer> presetColorList = new ArrayList<Integer>();
+        colorList.clear();
         rangeIntervals.clear();
 
         rangeIncrementStep = 30;
@@ -135,10 +135,10 @@ public class MainApp extends Application {
         }
 
         for (double i = 0; i < 31; i++) {
-            presetColorList.add(Color.rgb(0, 0, 0));
+            colorList.add(new ColorInfo(Color.rgb(0, 0, 0), 0, 0, 100));
         }
 
-        colorList = new ArrayList<Integer>(presetColorList);
+        //colorList = new ArrayList<Integer>(presetColorList);
         loadCalibratedSwatches(Globals.FLUORIDE_2_INDEX);
     }
 
@@ -146,7 +146,8 @@ public class MainApp extends Application {
      * Factory preset values for pH Test
      */
     public void setPhSwatches() {
-        presetColorList.clear();
+        //ArrayList<Integer> presetColorList = new ArrayList<Integer>();
+        colorList.clear();
         rangeIntervals.clear();
 
         rangeIncrementStep = 1;
@@ -161,10 +162,10 @@ public class MainApp extends Application {
         }
 
         for (double i = 0; i < 14; i++) {
-            presetColorList.add(Color.rgb(0, 0, 0));
+            colorList.add(new ColorInfo(Color.rgb(0, 0, 0), 0, 0, 100));
         }
 
-        colorList = new ArrayList<Integer>(presetColorList);
+        //colorList = new ArrayList<Integer>(colorList);
         loadCalibratedSwatches(Globals.PH_INDEX);
     }
 
@@ -175,16 +176,14 @@ public class MainApp extends Application {
      */
     void loadCalibratedSwatches(int testType) {
         MainApp context = ((MainApp) this.getApplicationContext());
-        assert context != null;
-        SharedPreferences sharedPreferences = PreferenceManager
-                .getDefaultSharedPreferences(context);
-
         for (int i = 0; i < colorList.size(); i++) {
-            int value = sharedPreferences
-                    .getInt(String.format("%d-%d", testType, i),
-                            -1);
 
-            if (value != -1) {
+            if (PreferencesUtils.contains(context, String.format("%d-%d", testType, i))) {
+                int value = PreferencesUtils.getInt(context, String.format("%d-%d", testType, i), -1);
+
+                int quality = Math.max(-1, PreferencesUtils.getInt(context,
+                        String.format("%d-a-%d", testType, i), -1));
+
                 int r = Color.red(value);
                 int g = Color.green(value);
                 int b = Color.blue(value);
@@ -200,11 +199,22 @@ public class MainApp extends Application {
                     value = -1;
                 }
 
-                if (value != -1) {
-                    colorList.set(i, value);
+                ColorInfo colorInfo = new ColorInfo(value, 0, 0, quality);
+                if (value == -1) {
+                    colorInfo.setErrorCode(Globals.ERROR_COLOR_IS_GRAY);
                 }
+                colorList.set(i, colorInfo);
+            } else {
+                ColorInfo colorInfo = new ColorInfo(-1, 0, 0, 0);
+                colorInfo.setErrorCode(Globals.ERROR_NOT_YET_CALIBRATED);
+                colorList.set(i, colorInfo);
             }
         }
+        int minQuality = PreferencesUtils.getInt(this, R.string.minPhotoQualityKey,
+                Globals.MINIMUM_PHOTO_QUALITY);
+
+        ColorUtils.validateGradient(colorList, context.rangeIntervals.size(), context.rangeIncrementStep, minQuality);
+
     }
 
     public void saveCalibratedSwatches(int testType, ArrayList<Integer> colorList) {
@@ -231,9 +241,12 @@ public class MainApp extends Application {
         int count = 0;
         for (int i = 0; i < mainApp.rangeIntervals.size(); i++) {
             final int index = i * mainApp.rangeIncrementStep;
+/*
             int accuracy = Math.max(-1, PreferencesUtils.getInt(mainApp, String
                     .format("%d-a-%d", testType, index), -1));
-            if (accuracy < minAccuracy) {
+*/
+            if (mainApp.colorList.get(index).getErrorCode() > 0 ||
+                    mainApp.colorList.get(index).getQuality() < minAccuracy) {
                 count++;
             }
         }

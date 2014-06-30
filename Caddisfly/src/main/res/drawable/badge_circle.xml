@@ -16,15 +16,14 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-       android:shape="oval">
-    <solid
-            android:color="#F00"/>
+    android:shape="oval">
+    <solid android:color="#F00" />
     <stroke
-            android:width="1dip"
-            android:color="#ddd"/>
+        android:width="1dip"
+        android:color="#ddd" />
     <padding
-            android:left="10dip"
-            android:right="10dip"
-            android:top="4dip"
-            android:bottom="6dip"/>
+        android:bottom="6dip"
+        android:left="10dip"
+        android:right="10dip"
+        android:top="4dip" />
 </shape>

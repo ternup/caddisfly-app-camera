@@ -20,9 +20,6 @@
     <string name="settings">Settings</string>
     <string name="bacteriaTest">Bacteria Test</string>
     <string name="swatches">Swatches</string>
-    <string name="fluoride">Fluoride</string>
-    <string name="bacteria">Bacteria</string>
-    <string name="pH">pH</string>
     <string name="calibrate">Calibrate</string>
     <string name="working">Working</string>
     <string name="send">Send</string>
@@ -58,6 +55,8 @@
     <string name="retry">Retry</string>
     <string name="outOfRange">Color out of range</string>
     <string name="help">Help</string>
+    <string name="shakeDevice">Require shake to analyze</string>
+    <string name="shakeDeviceSummary">To ensure proper mixing of solution.</string>
     <string name="soundAlarm">Alarm when shake needed</string>
     <string name="soundAlarmSummary">An alarm to notify that a shake is needed before each
         analysis.
@@ -119,7 +118,6 @@
     <string name="enableInternet">Please enable wireless internet or mobile data connection</string>
     <string name="noInternet">Internet connection not found</string>
     <string name="photoQuality">Photo quality</string>
-    <string name="photoQualityError">Error: Photo quality too low</string>
     <string name="waterSourceLocation">Water Source Location</string>
     <string name="standNearWaterSource">Stand near the water source.</string>
     <string name="ensureClearViewForGPS">Ensure that there is a clear view of the sky to receive GPS
@@ -131,7 +129,6 @@
     <string name="connecting">Connecting…</string>
     <string name="analyze">Analyze</string>
     <string name="playCameraSound">Camera sound</string>
-    <string name="fluoride2">Fluoride Easy</string>
     <string name="autoAnalyze">Auto Analyze on Preview</string>
     <string name="street">Street</string>
     <string name="town">Town</string>
@@ -159,7 +156,6 @@
     <string name="photoSampleDimensionMessage">Select the length to crop the photo for analysis
     </string>
     <string name="photoSampleDimension">Photo Sample Dimension</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sending">Sending</string>
 
 </resources>

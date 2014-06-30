@@ -17,68 +17,73 @@
   -->
 
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:stretchColumns="1"
-             android:paddingLeft="@dimen/activity_horizontal_margin"
-             android:paddingRight="@dimen/activity_horizontal_margin">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingStart="@dimen/activity_horizontal_margin"
+    android:stretchColumns="1">
 
     <TableRow
-            tools:ignore="UselessParent"
-            android:layout_width="match_parent"
-            android:layout_height="98dp"
-            android:rowCount="1"
-            android:columnCount="3"
-            android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        android:columnCount="4"
+        android:orientation="horizontal"
+        android:rowCount="1"
+        tools:ignore="UselessParent">
 
         <Button
-                android:id="@+id/button"
-                android:layout_width="90dp"
-                android:layout_height="44dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginRight="17dp"
-                android:layout_marginBottom="7dp"
-                android:clickable="false"
-                android:focusable="false"/>
+            android:id="@+id/button"
+            android:layout_width="90dp"
+            android:layout_height="44dp"
+            android:layout_marginBottom="7dp"
+            android:layout_marginEnd="17dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginTop="7dp"
+            android:clickable="false"
+            android:focusable="false" />
 
-        <TextView
-                tools:text="2.5"
+        <RelativeLayout android:layout_gravity="center_vertical">
+
+            <TextView
                 android:id="@+id/ppmText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+
                 android:textIsSelectable="false"
-                android:layout_gravity="center_vertical"
-                android:gravity="center_vertical"/>
+                android:textSize="30sp"
+                tools:text="2.5" />
+        </RelativeLayout>
 
         <TextView
-                tools:text="rgb: 234 56 120"
-                android:id="@+id/rgbText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textIsSelectable="false"
-                android:visibility="gone"/>
-        <ImageView
-                android:id="@+id/error"
-                android:src="@drawable/error"
-                android:layout_gravity="center_vertical|right"
-                android:contentDescription="@null"
-                android:visibility="visible"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingRight="10dp"
-                />
+            android:id="@+id/rgbText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textIsSelectable="false"
+            android:textSize="14sp"
+            android:visibility="gone"
+            tools:text="rgb: 234 56 120" />
 
         <ImageView
-                android:id="@+id/moreArrow"
-                android:src="?arrowRight"
-                android:layout_gravity="center_vertical|right"
-                android:contentDescription="@null"
-                android:visibility="visible"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                />
+            android:id="@+id/error"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|right|end"
+            android:contentDescription="@null"
+            android:paddingEnd="10dp"
+            android:paddingRight="10dp"
+            android:src="@drawable/error"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/moreArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical|right|end"
+            android:contentDescription="@null"
+            android:src="?arrowRight"
+            android:visibility="visible" />
     </TableRow>
 </TableLayout>

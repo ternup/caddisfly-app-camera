@@ -59,5 +59,22 @@ public class DataHelper {
         return -1;
     }
 
-
+    public static String getSwatchError(Context context, int errorCode) {
+        switch (errorCode) {
+            case Globals.ERROR_NOT_YET_CALIBRATED:
+                return context.getString(R.string.notCalibrated);
+            case Globals.ERROR_DUPLICATE_SWATCH:
+                return context.getString(R.string.duplicateSwatch);
+            case Globals.ERROR_SWATCH_OUT_OF_PLACE:
+                return context.getString(R.string.outOfSequence);
+            case Globals.ERROR_OUT_OF_RANGE:
+                return context.getString(R.string.outOfRange);
+            case Globals.ERROR_COLOR_IS_GRAY:
+                return context.getString(R.string.outOfRange);
+            case Globals.ERROR_LOW_QUALITY:
+                return context.getString(R.string.photoQualityError);
+            default:
+                return context.getString(R.string.error);
+        }
+    }
 }

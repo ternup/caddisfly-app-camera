@@ -67,7 +67,7 @@ public class MainActivityBase extends Activity {
     private void loadSavedPreferences() {
         assert getApplicationContext() != null;
 
-        MainApp context = ((MainApp) this.getApplicationContext());
+        MainApp context = ((MainApp) getApplicationContext());
 
         // Default app to Fluoride swatches
         context.setFluorideSwatches();

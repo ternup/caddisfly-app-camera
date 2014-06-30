@@ -85,6 +85,12 @@ public class GlobalsBase {
     public static final String RESULT_COLOR_KEY = "resultColor";
 
     public static final String QUALITY_KEY = "accuracy";
+    public static final int ERROR_NOT_YET_CALIBRATED = 1;
+    public static final int ERROR_LOW_QUALITY = 2;
+    public static final int ERROR_DUPLICATE_SWATCH = 3;
+    public static final int ERROR_SWATCH_OUT_OF_PLACE = 4;
+    public static final int ERROR_OUT_OF_RANGE = 5;
+    public static final int ERROR_COLOR_IS_GRAY = 6;
 
     protected GlobalsBase() {
         // prevents calls from subclass

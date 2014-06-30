@@ -20,6 +20,7 @@ import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.database.DataStorage;
+import com.ternup.caddisfly.model.ColorInfo;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -105,7 +106,6 @@ public class PhotoHandler implements PictureCallback {
         int[] pixels = new int[sampleLength * sampleLength];
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-        bitmap.setHasAlpha(true);
         bitmap.getPixels(pixels, 0, sampleLength,
                 (bitmap.getWidth() - sampleLength) / 2,
                 (bitmap.getHeight() - sampleLength) / 2,
@@ -115,13 +115,30 @@ public class PhotoHandler implements PictureCallback {
                 sampleLength,
                 sampleLength,
                 Bitmap.Config.ARGB_8888);
-        bitmap = ImageUtils.getRoundedShape(bitmap, sampleLength);
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
-        byte[] croppedData = bos.toByteArray();
+
+        byte[] croppedData;
+        if (PreferencesUtils.getBoolean(mContext, R.string.cropToSquareKey, false)) {
+//            ByteBuffer byteBuffer = ByteBuffer.allocate(bitmap.getByteCount());
+//            bitmap.copyPixelsToBuffer(byteBuffer);
+//            byteBuffer.rewind();
+//            //croppedData = byteBuffer.array();
+//            croppedData = new byte[bitmap.getByteCount()];
+//            byteBuffer.get(croppedData);
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            croppedData = bos.toByteArray();
+        } else {
+            bitmap = ImageUtils.getRoundedShape(bitmap, sampleLength);
+            bitmap.setHasAlpha(true);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+            croppedData = bos.toByteArray();
+        }
+
+        bitmap.recycle();
 
         Message msg = mHandler.obtainMessage();
 
-        ArrayList<Integer> colorRange = ((MainApp) mContext).colorList;
+        ArrayList<ColorInfo> colorRange = ((MainApp) mContext).colorList;
 
         Bundle bundle;
 

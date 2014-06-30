@@ -19,6 +19,7 @@ package com.ternup.caddisfly.adapter;
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.model.ColorInfo;
 import com.ternup.caddisfly.util.PreferencesUtils;
 
 import android.app.Activity;
@@ -56,7 +57,7 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
         final MainApp mainApp = ((MainApp) activity.getApplicationContext());
 
         if (mainApp != null && rowView != null) {
-            ArrayList<Integer> colorRange = mainApp.colorList;
+            ArrayList<ColorInfo> colorRange = mainApp.colorList;
             TextView ppmText = (TextView) rowView.findViewById(R.id.ppmText);
             TextView rgbText = (TextView) rowView.findViewById(R.id.rgbText);
             ImageView errorImage = (ImageView) rowView.findViewById(R.id.error);
@@ -65,8 +66,10 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
             final int index = position * mainApp.rangeIncrementStep;
 
             if (index < colorRange.size()) {
+
+                int color = colorRange.get(index).getColor();
+
                 // paint the button with the color
-                button.setBackgroundColor(colorRange.get(index));
 
                 // display ppm value
                 ppmText.setText(mainApp.doubleFormat
@@ -78,34 +81,44 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
                 // colorNameText.setText(colorNames.get(currentPosition));
                 // display rgb value
 
-                int accuracy = Math.max(-1, PreferencesUtils.getInt(mainApp,
+/*
+                int quality = Math.max(-1, PreferencesUtils.getInt(mainApp,
                         String.format("%d-a-%d", mTestType, index), -1));
+*/
 
-                int color = colorRange.get(index);
+                //int quality = colorRange.get(index).getQuality();
+
                 int r = Color.red(color);
                 int g = Color.green(color);
                 int b = Color.blue(color);
 
                 // eliminate white and black colors
+/*
                 if (r == 255 && g == 255 && b == 255) {
-                    accuracy = -1;
+                    quality = -1;
                 }
 
                 if (r == 0 && g == 0 && b == 0) {
-                    accuracy = -1;
+                    quality = -1;
                 }
-
-                rgbText.setText(
-                        String.format("%s: %d  %d  %d", mainApp.getString(R.string.rgb), r, g, b));
-
                 int minAccuracy = PreferencesUtils.getInt(mainApp, R.string.minPhotoQualityKey,
                         Globals.MINIMUM_PHOTO_QUALITY);
+*/
 
-                if (accuracy < minAccuracy) {
+                if (colorRange.get(index).getErrorCode() > 0) {
                     errorImage.setVisibility(View.VISIBLE);
                 } else {
                     errorImage.setVisibility(View.GONE);
                 }
+
+                if(color != -1) {
+                    button.setBackgroundColor(color);
+                    rgbText.setText(
+                            String.format("%s: %d  %d  %d", mainApp.getString(R.string.rgb), r, g, b));
+                }else{
+                    rgbText.setText("");
+                }
+
             }
         }
         return rowView;

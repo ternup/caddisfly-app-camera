@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) TernUp Research Labs
   ~
   ~ This file is part of Caddisfly
@@ -15,9 +14,7 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 
-<resources
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:ignore="MissingTranslation">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="currentTheme">currentTheme</string>
     <string name="currentLocale">currentLocale</string>
 
@@ -54,4 +51,6 @@
     <string name="cameraTorchKey">cameraTorch</string>
     <string name="cameraCloudyKey">cameraCloudy</string>
     <string name="cameraInfinityKey">cameraInfinity</string>
+    <string name="ignoreCalibrationErrorsKey">ignoreCalibrationErrors</string>
+    <string name="cropToSquareKey">cropToSquare</string>
 </resources>

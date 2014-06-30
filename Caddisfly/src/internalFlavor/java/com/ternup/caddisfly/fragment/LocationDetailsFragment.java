@@ -16,18 +16,6 @@
 
 package com.ternup.caddisfly.fragment;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.activity.ProgressActivity;
-import com.ternup.caddisfly.app.Globals;
-import com.ternup.caddisfly.app.MainApp;
-import com.ternup.caddisfly.database.LocationTable;
-import com.ternup.caddisfly.provider.LocationContentProvider;
-import com.ternup.caddisfly.util.AlertUtils;
-import com.ternup.caddisfly.util.FileUtils;
-import com.ternup.caddisfly.util.ImageUtils;
-import com.ternup.caddisfly.util.PreferencesHelper;
-import com.ternup.caddisfly.util.PreferencesUtils;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -50,6 +38,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.activity.ProgressActivity;
+import com.ternup.caddisfly.app.Globals;
+import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.database.LocationTable;
+import com.ternup.caddisfly.provider.LocationContentProvider;
+import com.ternup.caddisfly.util.AlertUtils;
+import com.ternup.caddisfly.util.FileUtils;
+import com.ternup.caddisfly.util.ImageUtils;
+import com.ternup.caddisfly.util.PreferencesHelper;
+import com.ternup.caddisfly.util.PreferencesUtils;
 
 import java.io.File;
 
@@ -86,7 +86,7 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_location_details, container, false);
 
         mAddressText = (TextView) view.findViewById(R.id.addressTextView);
@@ -139,51 +139,59 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
 
                                 if (which != Globals.BACTERIA_INDEX) {
 
-                                    MainApp mainApp = (MainApp) getActivity()
-                                            .getApplicationContext();
-                                    final SharedPreferences sharedPreferences = PreferenceManager
+                                    boolean ignoreCalibrationErrors = PreferencesUtils.getBoolean(getActivity(), R.string.ignoreCalibrationErrorsKey, false);
+
+                                    if (!ignoreCalibrationErrors) {
+                                        MainApp mainApp = (MainApp) getActivity()
+                                                .getApplicationContext();
+/*                                    final SharedPreferences sharedPreferences = PreferenceManager
                                             .getDefaultSharedPreferences(getActivity());
+
 
                                     int minAccuracy = PreferencesUtils
                                             .getInt(getActivity(), R.string.minPhotoQualityKey,
                                                     Globals.MINIMUM_PHOTO_QUALITY);
+*/
 
-                                    for (int i = 0; i < mainApp.rangeIntervals.size(); i++) {
-                                        final int index = i * mainApp.rangeIncrementStep;
+                                        for (int i = 0; i < mainApp.rangeIntervals.size(); i++) {
+                                            final int index = i * mainApp.rangeIncrementStep;
+/*
                                         int accuracy = Math.max(-1, sharedPreferences
                                                 .getInt(String
                                                         .format("%s-a-%s", String.valueOf(which),
                                                                 String.valueOf(index)), -1));
-                                        if (accuracy < minAccuracy) {
-                                            AlertUtils.showAlert(getActivity(), R.string.error,
-                                                    R.string.calibrate_error,
-                                                    new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(
-                                                                DialogInterface dialogInterface,
-                                                                int i) {
-                                                            Fragment fragment = CalibrateFragment
-                                                                    .newInstance();
-                                                            if (fragment != null) {
-                                                                FragmentManager fragmentManager
-                                                                        = getFragmentManager();
-                                                                FragmentTransaction ft
-                                                                        = fragmentManager
-                                                                        .beginTransaction();
-                                                                ft.replace(R.id.container, fragment,
-                                                                        String.valueOf(
-                                                                                Globals.CALIBRATE_SCREEN_INDEX)
-                                                                );
-                                                                ft.setTransition(
-                                                                        FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                                                                ft.addToBackStack(null);
-                                                                ft.commit();
-                                                            }
+*/
+                                            if (mainApp.colorList.get(index).getErrorCode() > 0) {
+                                                AlertUtils.showAlert(getActivity(), R.string.error,
+                                                        R.string.calibrate_error,
+                                                        new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(
+                                                                    DialogInterface dialogInterface,
+                                                                    int i) {
+                                                                Fragment fragment = CalibrateFragment
+                                                                        .newInstance();
+                                                                if (fragment != null) {
+                                                                    FragmentManager fragmentManager
+                                                                            = getFragmentManager();
+                                                                    FragmentTransaction ft
+                                                                            = fragmentManager
+                                                                            .beginTransaction();
+                                                                    ft.replace(R.id.container, fragment,
+                                                                            String.valueOf(
+                                                                                    Globals.CALIBRATE_SCREEN_INDEX)
+                                                                    );
+                                                                    ft.setTransition(
+                                                                            FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                                                                    ft.addToBackStack(null);
+                                                                    ft.commit();
+                                                                }
 
-                                                        }
-                                                    }, null
-                                            );
-                                            return;
+                                                            }
+                                                        }, null
+                                                );
+                                                return;
+                                            }
                                         }
                                     }
 

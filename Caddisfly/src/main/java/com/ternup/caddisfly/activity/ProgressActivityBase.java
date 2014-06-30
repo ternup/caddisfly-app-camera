@@ -297,7 +297,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
         } else if (mTestType > -1) {
 
             if (mTestType == Globals.BACTERIA_INDEX) {
-                mRemainingText.setText(String.valueOf(mTestTotal));
+                mRemainingValueText.setText(String.valueOf(mTestTotal));
                 mRemainingText.setVisibility(View.VISIBLE);
                 mRemainingValueText.setVisibility(View.VISIBLE);
             } else {
@@ -599,7 +599,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
             mProgressBar.setProgress(doneCount);
         }
 
-        mRemainingText.setText(String.valueOf(mTestTotal - doneCount));
+        mRemainingValueText.setText(String.valueOf(mTestTotal - doneCount));
     }
 
     private String formatTime(long time) {

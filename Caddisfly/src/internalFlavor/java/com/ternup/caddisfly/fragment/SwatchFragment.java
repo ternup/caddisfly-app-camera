@@ -19,6 +19,7 @@ package com.ternup.caddisfly.fragment;
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.adapter.SwatchesAdapter;
 import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.model.ColorInfo;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -38,7 +39,7 @@ public class SwatchFragment extends ListFragment {
     @SuppressWarnings("NullableProblems")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_swatch, container, false);
     }
 
@@ -54,8 +55,12 @@ public class SwatchFragment extends ListFragment {
             MainApp context = (MainApp) activity.getApplicationContext();
 
             if (context != null) {
-                ArrayList<Integer> colorRange = context.colorList;
-                Integer[] colorArray = colorRange.toArray(new Integer[colorRange.size()]);
+                ArrayList<Integer> swatchList = new ArrayList<Integer>();
+                for (ColorInfo aColorList : context.colorList) {
+                    swatchList.add(aColorList.getColor());
+                }
+
+                Integer[] colorArray = swatchList.toArray(new Integer[swatchList.size()]);
 
                 SwatchesAdapter swatchesAdapter = new SwatchesAdapter(getActivity(), colorArray);
                 setListAdapter(swatchesAdapter);

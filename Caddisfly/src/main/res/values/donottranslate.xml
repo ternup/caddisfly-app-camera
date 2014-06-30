@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) TernUp Research Labs
   ~
   ~ This file is part of Caddisfly
@@ -85,17 +84,6 @@
         <item>@string/fluoride</item>
         <item>@string/fluoride2</item>
         <item>@string/pH</item>
-    </string-array>
-
-    <!-- Nav Drawer Menu Items -->
-    <string-array name="nav_drawer_items">
-        <item>@string/home</item>
-        <item>@string/locations</item>
-        <item>@string/calibrate</item>
-        <item>@string/settings</item>
-        <item>@string/help</item>
-        <item>@string/about</item>
-        <item>@string/nightTheme</item>
     </string-array>
 
     <string-array name="languages">

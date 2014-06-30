@@ -16,9 +16,6 @@
 
 package com.ternup.caddisfly.adapter;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.MainApp;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -27,6 +24,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.model.ColorInfo;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -50,25 +51,23 @@ public class SwatchesAdapter extends ArrayAdapter<Integer> {
         MainApp mainApp = ((MainApp) activity.getApplicationContext());
 
         if (mainApp != null && rowView != null) {
-            ArrayList<Integer> colorRange = mainApp.colorList;
+            ArrayList<ColorInfo> colorRange = mainApp.colorList;
 
             TextView ppmText = (TextView) rowView.findViewById(R.id.ppmText);
             TextView rgbText = (TextView) rowView.findViewById(R.id.rgbText);
             Button button = (Button) rowView.findViewById(R.id.button);
 
+            int color = colorRange.get(position).getColor();
+
             //paint the button with the color
-            button.setBackgroundColor(colorRange.get(position));
+            button.setBackgroundColor(color);
 
             //display ppm value
             ppmText.setText(doubleFormat
                     .format((position + mainApp.rangeStartIncrement)
                             * mainApp.rangeIncrementValue));
 
-            //display color name
-            //colorNameText.setText(colorNames.get(position));
-
             //display rgb value
-            int color = colorRange.get(position);
             int r = Color.red(color);
             int g = Color.green(color);
             int b = Color.blue(color);

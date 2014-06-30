@@ -17,79 +17,85 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:paddingEnd="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingStart="10dp">
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:background="?cardBackground">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="?cardBackground"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <TextView
-                tools:text="10 March 2013, 10:30 AM"
-                android:id="@+id/dateText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_gravity="center_horizontal"
-                android:focusable="false"
-                android:textSize="17sp"
-                android:layout_marginTop="5dp"
-                android:alpha="0.8"
-                android:textIsSelectable="false"/>
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:alpha="0.8"
+            android:focusable="false"
+            android:gravity="center_horizontal"
+            android:textIsSelectable="false"
+            android:textSize="17sp"
+            tools:text="10 March 2013, 10:30 AM" />
+
         <TextView
-                tools:text="Result : 2.5"
-                android:id="@+id/resultText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_gravity="center_horizontal"
-                android:focusable="false"
-                android:textSize="18sp"
-                android:layout_marginTop="5dp"
-                android:textIsSelectable="false"/>
+            android:id="@+id/resultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:focusable="false"
+            android:gravity="center_horizontal"
+            android:textIsSelectable="false"
+            android:textSize="18sp"
+            tools:text="Result : 2.5" />
+
         <ImageView
-                android:id="@+id/photoImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp"
-                android:layout_gravity="center_horizontal"
-                android:contentDescription="@null"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                android:background="#00000000"
-                android:visibility="gone"/>
+            android:id="@+id/photoImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:visibility="gone" />
 
         <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
-                android:layout_marginBottom="80dp"/>
-    </LinearLayout>
-    <RelativeLayout
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:layout_marginTop="80dp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
         <TextView
-                tools:text="1"
-                android:id="@+id/serialNumberText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:typeface="sans"
-                android:textStyle="bold"
-                android:textColor="#124248"
-                android:textSize="40sp"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical"
-                />
+            android:id="@+id/serialNumberText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#124248"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:typeface="sans"
+            tools:text="1" />
     </RelativeLayout>
 </RelativeLayout>

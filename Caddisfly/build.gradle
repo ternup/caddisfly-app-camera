@@ -14,7 +14,7 @@
  * The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
  */
 
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
@@ -23,6 +23,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 19
+        useOldManifestMerger true
         testApplicationId "com.ternup.caddisfly.test"
         testInstrumentationRunner "com.ternup.caddisfly.test.TestRunner"
     }
@@ -62,7 +63,7 @@ android {
 dependencies {
     internalFlavorCompile files('libs/android-async-http-1.4.5.jar')
     internalFlavorCompile 'com.google.android.gms:play-services:4.4.52'
-    internalFlavorCompile 'com.android.support:support-v13:+'
+    internalFlavorCompile 'com.android.support:support-v13:19.1.0'
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5+'
 }
 
