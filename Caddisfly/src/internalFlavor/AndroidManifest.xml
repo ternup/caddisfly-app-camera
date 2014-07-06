@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) TernUp Research Labs
   ~
   ~ This file is part of Caddisfly
@@ -15,84 +14,78 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.ternup.caddisfly">
+    package="com.ternup.caddisfly">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
     <uses-feature
-            android:name="android.hardware.location"
-            android:required="false"/>
+        android:name="android.hardware.location"
+        android:required="false" />
     <uses-feature
-            android:name="android.hardware.gps"
-            android:required="false"/>
+        android:name="android.hardware.gps"
+        android:required="false" />
     <uses-feature
-            android:name="android.hardware.network"
-            android:required="false"/>
+        android:name="android.hardware.network"
+        android:required="false" />
     <uses-feature
-            android:name="android.hardware.wifi"
-            android:required="false"/>
+        android:name="android.hardware.wifi"
+        android:required="false" />
 
     <application
-            android:name="com.ternup.caddisfly.app.MainApp"
+        android:name="com.ternup.caddisfly.app.MainApp"
+        android:label="@string/appName"
+        android:theme="@style/AppTheme.Dark">
+        <activity
+            android:name="com.ternup.caddisfly.activity.MainActivity"
             android:label="@string/appName"
-            android:theme="@style/AppTheme.Dark">
-        <activity
-                android:name="com.ternup.caddisfly.activity.MainActivity"
-                android:label="@string/appName"
-                android:screenOrientation="nosensor"
-                android:windowSoftInputMode="adjustResize">
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.ternup.caddisfly.action.IMPORT_CALIBRATE"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-                android:name="com.ternup.caddisfly.activity.SurveyActivity"
-                android:label="@string/locationDetails"
-                android:screenOrientation="nosensor"
-                android:windowSoftInputMode="adjustResize|stateHidden">
-        </activity>
+            android:name="com.ternup.caddisfly.activity.SurveyActivity"
+            android:label="@string/locationDetails"
+            android:screenOrientation="nosensor"
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
         <activity
-                android:name="com.ternup.caddisfly.activity.PhotoIntentActivity"
-                android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
-                android:label="Photo"
-                android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-        </activity>
+            android:name="com.ternup.caddisfly.activity.PhotoIntentActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize"
+            android:label="Photo"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
         <activity
-                android:name="com.ternup.caddisfly.activity.ProgressActivity"
-                android:label="@string/appName"
-                android:screenOrientation="nosensor"
-                android:showOnLockScreen="true">
+            android:name="com.ternup.caddisfly.activity.ProgressActivity"
+            android:label="@string/appName"
+            android:screenOrientation="nosensor"
+            android:showOnLockScreen="true">
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="text/plain"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
 
         <provider
-                android:name="com.ternup.caddisfly.provider.TestContentProvider"
-                android:authorities="com.ternup.caddisfly.provider"
-                android:exported="false"/>
+            android:name="com.ternup.caddisfly.provider.TestContentProvider"
+            android:authorities="com.ternup.caddisfly.provider"
+            android:exported="false" />
         <provider
-                android:name="com.ternup.caddisfly.provider.LocationContentProvider"
-                android:authorities="com.ternup.caddisfly.locationProvider"
-                android:exported="false"/>
+            android:name="com.ternup.caddisfly.provider.LocationContentProvider"
+            android:authorities="com.ternup.caddisfly.locationProvider"
+            android:exported="false" />
 
         <service
-                android:name="com.ternup.caddisfly.service.CameraService"
-                android:icon="@drawable/ic_launcher"
-                android:label="@string/appName"/>
+            android:name="com.ternup.caddisfly.service.CameraService"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/appName" />
 
-        <receiver android:name="com.ternup.caddisfly.service.CameraServiceReceiver"/>
+        <receiver android:name="com.ternup.caddisfly.service.CameraServiceReceiver" />
 
         <meta-data
-                android:name="com.google.android.gms.version"
-                android:value="@integer/google_play_services_version"/>
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
     </application>
 

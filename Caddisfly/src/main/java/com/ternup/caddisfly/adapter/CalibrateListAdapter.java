@@ -16,12 +16,6 @@
 
 package com.ternup.caddisfly.adapter;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.Globals;
-import com.ternup.caddisfly.app.MainApp;
-import com.ternup.caddisfly.model.ColorInfo;
-import com.ternup.caddisfly.util.PreferencesUtils;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -31,6 +25,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
+import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.model.ColorInfo;
 
 import java.util.ArrayList;
 
@@ -111,11 +110,14 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
                     errorImage.setVisibility(View.GONE);
                 }
 
-                if(color != -1) {
+                if (color != -1) {
                     button.setBackgroundColor(color);
+                    button.setText("");
                     rgbText.setText(
                             String.format("%s: %d  %d  %d", mainApp.getString(R.string.rgb), r, g, b));
-                }else{
+                } else {
+                    button.setBackgroundColor(Color.argb(0, 10, 10, 10));
+                    button.setText("?");
                     rgbText.setText("");
                 }
 

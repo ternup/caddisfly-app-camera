@@ -16,21 +16,22 @@
 
 package com.ternup.caddisfly.activity;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.util.DateUtils;
 import com.ternup.caddisfly.util.PreferencesUtils;
 import com.ternup.caddisfly.util.UpdateCheckTask;
-
-import android.app.Activity;
-import android.app.Fragment;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -79,6 +80,9 @@ public class MainActivityBase extends Activity {
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            conf.setLayoutDirection(myLocale);
+        }
         res.updateConfiguration(conf, dm);
     }
 
@@ -131,20 +135,5 @@ public class MainActivityBase extends Activity {
         }
         return -1;
     }
-
-    @Override
-    public void onBackPressed() {
-        try {
-            //int index = getCurrentFragmentIndex();
-
-            invalidateOptionsMenu();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        super.onBackPressed();
-    }
-
 
 }

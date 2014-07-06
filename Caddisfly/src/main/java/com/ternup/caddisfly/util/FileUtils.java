@@ -17,10 +17,17 @@
 package com.ternup.caddisfly.util;
 
 import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FileUtils {
 
@@ -28,7 +35,7 @@ public class FileUtils {
     }
 
     public static String getStoragePath(Context context, long locationId, String folderName,
-            boolean create) {
+                                        boolean create) {
 
         if (folderName != null && folderName.startsWith(File.separator)) {
             return folderName;
@@ -136,13 +143,13 @@ public class FileUtils {
 
     // Reading file paths from SDCard
     public static ArrayList<String> getFilePaths(Context context, String folderName,
-            long locationId) {
+                                                 long locationId) {
         return getFilePaths(context, folderName, "", locationId);
     }
 
     // Reading file paths from SDCard
     public static ArrayList<String> getFilePaths(Context context, String folderName,
-            String subFolder, long locationId) {
+                                                 String subFolder, long locationId) {
 
         ArrayList<String> filePaths = new ArrayList<String>();
 
@@ -172,4 +179,59 @@ public class FileUtils {
         return filePaths;
     }
 
+
+    public static void saveToFile(Context context, String name, String data) {
+        try {
+            File external = Environment.getExternalStorageDirectory();
+            String path = external.getPath() + "/com.ternup.caddisfly/calibrate/";
+
+            File folder = new File(path);
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            File file = new File(path + name);
+            file.createNewFile();
+            FileWriter filewriter = new FileWriter(file);
+            BufferedWriter out = new BufferedWriter(filewriter);
+
+            out.write(data);
+
+            out.close();
+            filewriter.close();
+        } catch (Exception e) {
+            Log.d("failed to save file", e.toString());
+        }
+    }
+
+    public static ArrayList<String> loadFromFile(Context context, String name) {
+        try {
+            File external = Environment.getExternalStorageDirectory();
+            String path = external.getPath() + "/com.ternup.caddisfly/calibrate/";
+            ArrayList<String> arrayList = null;
+
+            File folder = new File(path);
+            if (folder.exists()) {
+
+                File file = new File(path + name);
+
+                FileReader filereader = new FileReader(file);
+
+                BufferedReader in = new BufferedReader(filereader);
+
+                String data = in.readLine();
+                if (data != null) {
+                    arrayList = new ArrayList<String>(Arrays.asList(data.substring(1, data.length() - 1).split(",\\s*")));
+                }
+
+                in.close();
+                filereader.close();
+            }
+            return arrayList;
+        } catch (Exception e) {
+            Log.d("failed to load file", e.toString());
+        }
+
+        return null;
+    }
 }

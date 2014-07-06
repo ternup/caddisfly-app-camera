@@ -79,6 +79,8 @@
     <string name="connection_error_outdated">Google Play services is out of date</string>
     <string name="connection_error_sign_in_required">The user is not signed in</string>
     <string name="connection_error_unknown">An unknown error occurred</string>
+    <string name="twentyFourHourTime">HH:mm:ss</string>
+    <string name="twelveHourTime">h:mm:ss a</string>
 
     <string-array name="testTypes">
         <item>@string/fluoride</item>
@@ -88,12 +90,18 @@
 
     <string-array name="languages">
         <item>English</item>
+        <item>Esperanto</item>
+        <item>עברית</item>
         <item>हिंदी</item>
+        <item>ಕನ್ನಡ</item>
     </string-array>
 
     <string-array name="language_codes">
         <item>en</item>
+        <item>eo</item>
+        <item>iw</item>
         <item>hi</item>
+        <item>kn</item>
     </string-array>
 
 </resources>

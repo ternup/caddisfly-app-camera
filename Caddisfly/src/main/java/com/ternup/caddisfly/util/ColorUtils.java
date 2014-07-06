@@ -16,24 +16,17 @@
 
 package com.ternup.caddisfly.util;
 
-import com.ternup.caddisfly.R;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.SparseIntArray;
+
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.model.ColorInfo;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.BitmapRegionDecoder;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseIntArray;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -350,11 +343,23 @@ public class ColorUtils {
         boolean errorFound = false;
         boolean notCalibrated = false;
 
-        for (int i = 0; i < size - 1; i++) {
+
+        for (int i = 0; i < size; i++) {
             int index = i * increment;
-            if (colorList.get(index).getErrorCode() == Globals.ERROR_NOT_YET_CALIBRATED) {
+            if (colorList.get(index).getColor() == -1) {
+                colorList.get(index).setErrorCode(Globals.ERROR_NOT_YET_CALIBRATED);
                 notCalibrated = true;
-                break;
+            }
+        }
+
+        if (!notCalibrated) {
+
+            for (int i = 0; i < size; i++) {
+                int index = i * increment;
+                if (colorList.get(index).getErrorCode() == Globals.ERROR_NOT_YET_CALIBRATED) {
+                    notCalibrated = true;
+                    break;
+                }
             }
         }
 
@@ -368,7 +373,7 @@ public class ColorUtils {
                 double distance = getDistance(color1, color2);
                 //Log.i("ColorInfo", String.valueOf(distance));
                 //Invalid if color is too distant from previous color in list
-                if (distance > 60) {
+                if (distance > 70) {
                     //Only one color needs to be set as invalid
                     if (colorList.get(index1).getErrorCode() == 0) {
                         errorFound = true;
@@ -377,7 +382,7 @@ public class ColorUtils {
                             int index3 = (i + 2) * increment;
                             int color3 = colorList.get(index3).getColor();
                             distance = getDistance(color2, color3);
-                            if (distance < 61) {
+                            if (distance < 71) {
                                 colorList.get(index1).setErrorCode(Globals.ERROR_OUT_OF_RANGE);
                             } else {
                                 colorList.get(index2).setErrorCode(Globals.ERROR_OUT_OF_RANGE);
@@ -424,5 +429,11 @@ public class ColorUtils {
                 }
             }
         }
+    }
+
+    public static Integer getColorFromRgb(String rgb) {
+        String[] rgbArray = rgb.split("\\s+");
+        int color = Color.rgb(Integer.valueOf(rgbArray[0]), Integer.valueOf(rgbArray[1]), Integer.valueOf(rgbArray[2]));
+        return color;
     }
 }

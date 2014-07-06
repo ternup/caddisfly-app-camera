@@ -34,6 +34,7 @@ import android.widget.TextView;
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.util.ColorUtils;
 import com.ternup.caddisfly.util.FileUtils;
 
 public class CalibrateItemFragment extends CalibrateItemFragmentBase {
@@ -75,11 +76,8 @@ public class CalibrateItemFragment extends CalibrateItemFragmentBase {
                     -1);
 */
             int color = mainApp.colorList.get(index).getColor();
-            int r = Color.red(color);
-            int g = Color.green(color);
-            int b = Color.blue(color);
             mRgbText.setText(
-                    String.format("%s: %d  %d  %d", mainApp.getString(R.string.rgb), r, g, b));
+                    String.format("%s: %s", mainApp.getString(R.string.rgb), ColorUtils.getColorRgbString(color)));
         }
 /*
         if (accuracy == -1) {
@@ -102,6 +100,12 @@ public class CalibrateItemFragment extends CalibrateItemFragmentBase {
         alertDialogBuilder.setCancelable(false);
 
         alertDialogBuilder.setTitle(R.string.enterColorRgb);
+
+        final MainApp mainApp = ((MainApp) getActivity().getApplicationContext());
+        final int index = position * mainApp.rangeIncrementStep;
+        int color = mainApp.colorList.get(index).getColor();
+
+        alertDialogBuilder.setMessage(String.format("%s : %s", getString(R.string.current), ColorUtils.getColorRgbString(color)));
         alertDialogBuilder.setPositiveButton(R.string.ok, null);
         alertDialogBuilder
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -166,7 +170,6 @@ public class CalibrateItemFragment extends CalibrateItemFragmentBase {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
-
     }
 
     public boolean saveRgb(String value, int position) {

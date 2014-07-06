@@ -46,6 +46,19 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
     }
 
+    public void testScreenShots(){
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+        solo.takeScreenshot();
+
+        solo.clickOnMenuItem(solo.getString(R.string.language));
+        solo.waitForDialogToOpen();
+        solo.clickInList(3);
+        solo.waitForDialogToClose();
+        solo.takeScreenshot();
+
+    }
+
+
     public void testAStartSurvey() {
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
@@ -80,7 +93,7 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
         assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.HOME_SCREEN_INDEX)));
 
-        assertTrue(solo.searchText("7"));
+        assertTrue(solo.searchText("6"));
 
     }
 
@@ -153,7 +166,7 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
         solo.clickOnButton(solo.getString(R.string.ok));
 
-        solo.waitForDialogToOpen();
+        solo.waitForDialogToOpen(20000);
 
         solo.waitForDialogToClose(40000);
 
@@ -174,6 +187,7 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
         return ((ColorDrawable) solo.getButton(index).getBackground()).getColor();
 
     }
+
 
     @Override
     public void tearDown() throws Exception {

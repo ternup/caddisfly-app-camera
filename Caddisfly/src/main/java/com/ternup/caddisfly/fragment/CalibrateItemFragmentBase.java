@@ -16,16 +16,16 @@
 
 package com.ternup.caddisfly.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
@@ -39,6 +39,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.activity.ProgressActivity;
 import com.ternup.caddisfly.adapter.GalleryListAdapter;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
@@ -48,28 +49,22 @@ import com.ternup.caddisfly.util.ColorUtils;
 import com.ternup.caddisfly.util.DataHelper;
 import com.ternup.caddisfly.util.FileUtils;
 import com.ternup.caddisfly.util.ImageUtils;
-import com.ternup.caddisfly.util.PhotoHandler;
 import com.ternup.caddisfly.util.PreferencesHelper;
 import com.ternup.caddisfly.util.PreferencesUtils;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class CalibrateItemFragmentBase extends ListFragment {
 
-    private final PhotoTakenHandler mPhotoTakenHandler = new PhotoTakenHandler(this);
+    //private final PhotoTakenHandler mPhotoTakenHandler = new PhotoTakenHandler(this);
 
     protected int mTestType = Globals.FLUORIDE_INDEX;
 
     protected GalleryListAdapter mAdapter;
 
     protected View mListHeader;
-
-    CameraFragment mCameraFragment;
-
-    ArrayList<String> oldFilePaths;
 
     File calibrateFolder;
 
@@ -160,9 +155,6 @@ public class CalibrateItemFragmentBase extends ListFragment {
                 )
         );
 
-        oldFilePaths = FileUtils
-                .getFilePaths(getActivity(), calibrateFolder.getAbsolutePath(), -1);
-
         //deleteCalibration(position);
         if (wakeLock == null || !wakeLock.isHeld()) {
             PowerManager pm = (PowerManager) getActivity()
@@ -238,8 +230,10 @@ public class CalibrateItemFragmentBase extends ListFragment {
             mErrorLayout.setVisibility(View.VISIBLE);
             if (error == Globals.ERROR_NOT_YET_CALIBRATED) {
                 mErrorSummaryTextView.setVisibility(View.GONE);
+                mErrorTextView.setVisibility(View.GONE);
             } else {
                 mErrorSummaryTextView.setVisibility(View.VISIBLE);
+                mErrorTextView.setVisibility(View.VISIBLE);
             }
             mErrorTextView.setText(DataHelper.getSwatchError(getActivity(), error));
         } else {
@@ -250,7 +244,14 @@ public class CalibrateItemFragmentBase extends ListFragment {
         //mColorButton.setText(getActivity().getString(R.string.notCalibrated));
         //  color = Color.BLACK;
         //}
-        mColorButton.setBackgroundColor(color);
+
+        if (color != -1) {
+            mColorButton.setBackgroundColor(color);
+            mColorButton.setText("");
+        } else {
+            mColorButton.setBackgroundColor(Color.argb(0, 10, 10, 10));
+            mColorButton.setText("?");
+        }
 
         mValueButton.setText(mainApp.doubleFormat
                 .format((position + mainApp.rangeStartIncrement) * (mainApp.rangeIncrementStep
@@ -264,7 +265,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
      *
      * @param index The index of the value to be calibrated
      */
-    void startCalibration(final int index) {
+    /*void startCalibration(final int index) {
         (new AsyncTask<Void, Void, Void>() {
 
             @Override
@@ -295,6 +296,30 @@ public class CalibrateItemFragmentBase extends ListFragment {
             }
         }).execute();
 
+    }*/
+    public void startCalibration(final int index) {
+
+        Context context = getActivity();
+
+        MainApp mainApp = (MainApp) context.getApplicationContext();
+
+        final Intent intent = new Intent();
+        intent.setClass(context, ProgressActivity.class);
+        intent.putExtra("position", index);
+        intent.putExtra(PreferencesHelper.CURRENT_LOCATION_ID_KEY, -1);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivityForResult(intent, 200);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
+            //Bundle bundle = data.getExtras();
+            storeCalibratedData(data.getIntExtra("position", 0), data.getIntExtra(Globals.RESULT_COLOR_KEY, -1),
+                    data.getIntExtra(Globals.QUALITY_KEY, -1));
+        }
     }
 
     protected void storeCalibratedData(final int position, final int resultColor,
@@ -444,6 +469,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
         }
     }
 
+/*
     private boolean hasSamplingCompleted() {
         Context context = getActivity();
         int currentSamplingCount = PreferencesUtils
@@ -451,6 +477,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
         return currentSamplingCount >= PreferencesUtils
                 .getInt(context, R.string.samplingCountKey, Globals.SAMPLING_COUNT_DEFAULT);
     }
+*/
 
     private void releaseResources() {
         if (wakeLock != null && wakeLock.isHeld()) {
@@ -464,7 +491,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
         releaseResources();
     }
 
-    private static class PhotoTakenHandler extends Handler {
+/*    private static class PhotoTakenHandler extends Handler {
 
         private final WeakReference<CalibrateItemFragmentBase> mAdapter;
 
@@ -499,5 +526,5 @@ public class CalibrateItemFragmentBase extends ListFragment {
                 }
             }
         }
-    }
+    }*/
 }

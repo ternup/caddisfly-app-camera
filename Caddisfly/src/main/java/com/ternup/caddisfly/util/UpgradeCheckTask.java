@@ -16,13 +16,7 @@
 
 package com.ternup.caddisfly.util;
 
-import com.ternup.caddisfly.app.Globals;
-
 import android.os.AsyncTask;
-import android.os.Environment;
-
-import java.io.File;
-import java.io.IOException;
 
 public class UpgradeCheckTask extends AsyncTask<Void, Void, Void> {
 
@@ -32,6 +26,7 @@ public class UpgradeCheckTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
+/*
         File sdDir = Environment.getExternalStorageDirectory();
 
         File appDir = new File(sdDir, Globals.APP_FOLDER_NAME);
@@ -45,6 +40,7 @@ public class UpgradeCheckTask extends AsyncTask<Void, Void, Void> {
                 e.printStackTrace();
             }
         }
+*/
 
         return null;
     }

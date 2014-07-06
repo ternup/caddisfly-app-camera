@@ -17,96 +17,99 @@
   -->
 
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:stretchColumns="0"
-             android:shrinkColumns="0"
-             android:paddingLeft="@dimen/activity_horizontal_margin"
-             android:paddingRight="@dimen/activity_horizontal_margin"
-             android:background="?listSelector">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?listSelector"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:shrinkColumns="0"
+    android:stretchColumns="0">
 
     <TableRow
-            tools:ignore="UselessParent"
-            android:rowCount="1"
-            android:columnCount="2"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="2"
+        android:orientation="horizontal"
+        android:rowCount="1"
+        tools:ignore="UselessParent">
 
         <LinearLayout
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/dateText"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_column="0"
-                >
+                android:focusable="false"
+                android:lineSpacingExtra="4dp"
+                android:textAllCaps="true"
+                android:textIsSelectable="false"
+                android:textSize="13sp"
+                tools:text="20 minutes ago" />
 
             <TextView
-                    android:id="@+id/dateText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:textSize="13sp"
-                    android:textIsSelectable="false"
-                    android:lineSpacingExtra="4dp"
-                    android:textAllCaps="true"/>
+                android:id="@+id/placeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:lineSpacingExtra="4dp"
+                android:textIsSelectable="false"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="The Place text" />
 
             <TextView
-                    android:id="@+id/placeText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textIsSelectable="false"
-                    android:lineSpacingExtra="4dp"/>
+                android:id="@+id/addressText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:focusable="false"
+                android:lineSpacingExtra="4dp"
+                android:singleLine="true"
+                android:textIsSelectable="false"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:text="The Address text" />
 
             <TextView
-                    android:id="@+id/addressText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:focusable="false"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textIsSelectable="false"
-                    android:lineSpacingExtra="4dp"/>
-
-            <TextView
-                    android:id="@+id/resultText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAllCaps="false"
-                    android:focusable="false"
-                    android:textSize="16sp"
-                    android:textIsSelectable="false"
-                    android:lineSpacingExtra="4dp"/>
+                android:id="@+id/resultText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:lineSpacingExtra="4dp"
+                android:textAllCaps="false"
+                android:textIsSelectable="false"
+                android:textSize="16sp"
+                tools:text="The result text" />
         </LinearLayout>
 
         <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_column="1">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_column="1">
 
             <ImageView
-                    android:id="@+id/moreArrow"
-                    android:src="?arrowRight"
-                    android:layout_gravity="center_vertical|right"
-                    android:contentDescription="@null"
-                    android:visibility="visible"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                android:id="@+id/moreArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|right"
+                android:contentDescription="@null"
+                android:src="?arrowRight"
+                android:visibility="visible" />
 
             <CheckBox
-                    android:layout_gravity="center_vertical|right"
-                    android:id="@+id/checkBox"
-                    android:checked="false"
-                    android:visibility="visible"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"/>
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|right"
+                android:checked="false"
+                android:visibility="visible" />
         </FrameLayout>
 
     </TableRow>

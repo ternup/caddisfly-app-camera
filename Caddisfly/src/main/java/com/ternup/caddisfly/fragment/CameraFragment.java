@@ -16,10 +16,6 @@
 
 package com.ternup.caddisfly.fragment;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.Globals;
-import com.ternup.caddisfly.util.PreferencesUtils;
-
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
@@ -39,6 +35,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
+import com.ternup.caddisfly.util.PreferencesUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -94,7 +94,7 @@ public class CameraFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
 
         if (PreferencesUtils.getBoolean(getActivity(), R.string.autoAnalyzeKey, true)) {
             getDialog().setTitle(R.string.analysisInProgress);
@@ -166,18 +166,20 @@ public class CameraFragment extends DialogFragment {
             @Override
             public void run() {
 
-                final boolean shutterSound = PreferencesUtils
-                        .getBoolean(getActivity(), R.string.cameraSoundKey, true);
-                mPreview.startCameraPreview();
-                PictureCallback localCallback = new PictureCallback();
-                try {
-                    if (shutterSound && (makeShutterSound || hasTestCompleted(getActivity()))) {
-                        mCamera.takePicture(shutterCallback, null, localCallback);
-                    } else {
-                        mCamera.takePicture(null, null, localCallback);
+                if (getActivity() != null) {
+                    final boolean shutterSound = PreferencesUtils
+                            .getBoolean(getActivity(), R.string.cameraSoundKey, true);
+                    mPreview.startCameraPreview();
+                    PictureCallback localCallback = new PictureCallback();
+                    try {
+                        if (shutterSound && (makeShutterSound || hasTestCompleted(getActivity()))) {
+                            mCamera.takePicture(shutterCallback, null, localCallback);
+                        } else {
+                            mCamera.takePicture(null, null, localCallback);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         }, Globals.INITIAL_DELAY);

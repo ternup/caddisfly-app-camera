@@ -16,6 +16,16 @@
 
 package com.ternup.caddisfly.activity;
 
+import android.app.ActionBar;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
+import android.view.Menu;
+
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
@@ -26,23 +36,9 @@ import com.ternup.caddisfly.fragment.HomeFragment;
 import com.ternup.caddisfly.fragment.LocationListFragment;
 import com.ternup.caddisfly.fragment.NavigationDrawerFragment;
 import com.ternup.caddisfly.fragment.SettingsFragment;
-import com.ternup.caddisfly.model.ColorInfo;
 import com.ternup.caddisfly.util.DateUtils;
 import com.ternup.caddisfly.util.PreferencesUtils;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Intent;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.widget.DrawerLayout;
-import android.view.KeyEvent;
-import android.view.Menu;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -159,8 +155,6 @@ public class MainActivity extends MainActivityBase
         }
 
         Fragment fragment;
-
-        showCheckUpdateOption = false;
         showCheckUpdateOption = false;
         switch (position) {
             case Globals.HOME_SCREEN_INDEX:
@@ -227,31 +221,6 @@ public class MainActivity extends MainActivityBase
         ActionBar actionBar = getActionBar();
         assert actionBar != null;
         actionBar.setTitle(title);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        MainApp mainApp = (MainApp) getApplicationContext();
-
-        Intent currentIntent = getIntent();
-        String action = currentIntent.getAction();
-        String type = currentIntent.getType();
-
-        if (Globals.ACTION_IMPORT_CALIBRATION.equals(action)) {
-            mainApp.setFluorideSwatches();
-            Intent intent = new Intent();
-            ArrayList<Integer> exportList = new ArrayList<Integer>();
-            for (ColorInfo aColorList : mainApp.colorList) {
-                exportList.add(aColorList.getColor());
-            }
-            intent.putIntegerArrayListExtra("swatches", exportList);
-            this.setResult(Activity.RESULT_OK, intent);
-            finish();
-        }
-
-        //final String folderName = PreferencesUtils.getString(this, R.string.runningTestFolder, "");
-        //final int testType = PreferencesUtils.getInt(this, R.string.testType, 0);
     }
 
     @Override

@@ -16,19 +16,35 @@
 
 package com.ternup.caddisfly.fragment;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.MainApp;
-
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.model.ColorInfo;
+import com.ternup.caddisfly.util.ColorUtils;
+import com.ternup.caddisfly.util.FileUtils;
+
+import java.util.ArrayList;
 
 
 public class CalibrateFragment extends CalibrateFragmentBase {
@@ -60,7 +76,7 @@ public class CalibrateFragment extends CalibrateFragmentBase {
         testTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1,
-                    int position, long arg3) {
+                                       int position, long arg3) {
                 changeTestType(position);
             }
 
@@ -79,8 +95,77 @@ public class CalibrateFragment extends CalibrateFragmentBase {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        final MainApp mainApp = ((MainApp) getActivity().getApplicationContext());
         switch (item.getItemId()) {
+            case R.id.menu_save:
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                final EditText input = new EditText(getActivity());
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(22)});
+
+                alertDialogBuilder.setView(input);
+                alertDialogBuilder.setCancelable(false);
+
+                alertDialogBuilder.setTitle(R.string.saveCalibration);
+                alertDialogBuilder.setMessage(R.string.giveNameForCalibration);
+
+
+                alertDialogBuilder.setPositiveButton(R.string.ok, null);
+                alertDialogBuilder
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int i) {
+                                closeKeyboard(input);
+                                dialog.cancel();
+                            }
+                        });
+                final AlertDialog alertDialog = alertDialogBuilder.create(); //create the box
+
+                alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+
+                        Button b = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                        b.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View view) {
+
+                                if (!input.getText().toString().trim().isEmpty()) {
+                                    ArrayList<String> exportList = new ArrayList<String>();
+
+                                    for (ColorInfo aColorList : mainApp.colorList) {
+                                        exportList.add(ColorUtils.getColorRgbString(aColorList.getColor()));
+                                    }
+                                    FileUtils.saveToFile(getActivity(), input.getText().toString(), exportList.toString());
+                                    closeKeyboard(input);
+                                    alertDialog.dismiss();
+                                } else {
+                                    input.setError(getString(R.string.invalidName));
+                                }
+                            }
+                        });
+                    }
+                });
+
+                input.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId
+                                == EditorInfo.IME_ACTION_DONE)) {
+
+                        }
+                        return false;
+                    }
+                });
+
+                alertDialog.show();
+                input.requestFocus();
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+                return true;
             case R.id.menu_swatches:
                 SwatchFragment fragment = new SwatchFragment();
                 FragmentManager fragmentManager = getFragmentManager();
@@ -94,6 +179,13 @@ public class CalibrateFragment extends CalibrateFragmentBase {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    public void closeKeyboard(EditText input) {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(input.getWindowToken(), 0);
+    }
+
 
     @Override
     protected void displayCalibrateItem(int index) {

@@ -16,14 +16,12 @@
 
 package com.ternup.caddisfly.fragment;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.Globals;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -32,6 +30,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
 
 import java.util.Locale;
 
@@ -56,7 +57,7 @@ public class SettingsFragment extends PreferenceFragment
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
         if (v != null) {
             ListView lv = (ListView) v.findViewById(android.R.id.list);
@@ -91,6 +92,9 @@ public class SettingsFragment extends PreferenceFragment
                 DisplayMetrics dm = res.getDisplayMetrics();
                 Configuration conf = res.getConfiguration();
                 conf.locale = myLocale;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    conf.setLayoutDirection(myLocale);
+                }
                 res.updateConfiguration(conf, dm);
                 mActivity.recreate();
             }

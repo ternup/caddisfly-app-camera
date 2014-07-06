@@ -16,19 +16,30 @@
 
 package com.ternup.caddisfly.fragment;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ListFragment;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.adapter.CalibrateListAdapter;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.util.AlertUtils;
+import com.ternup.caddisfly.util.ColorUtils;
+import com.ternup.caddisfly.util.FileUtils;
 
-import android.app.Activity;
-import android.app.ListFragment;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-
+import java.io.File;
 import java.util.ArrayList;
 
 public class CalibrateFragmentBase extends ListFragment implements AdapterView.OnItemClickListener {
@@ -40,7 +51,7 @@ public class CalibrateFragmentBase extends ListFragment implements AdapterView.O
 
     @SuppressWarnings("NullableProblems")
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         //getActivity().getActionBar().hide();
         return inflater.inflate(R.layout.fragment_calibrate, container, false);
     }
@@ -101,5 +112,88 @@ public class CalibrateFragmentBase extends ListFragment implements AdapterView.O
     }
 
     protected void displayCalibrateItem(int index) {
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final MainApp mainApp = ((MainApp) getActivity().getApplicationContext());
+        switch (item.getItemId()) {
+            case R.id.menu_load:
+                try {
+
+                    AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
+                    builderSingle.setIcon(R.drawable.ic_launcher);
+                    builderSingle.setTitle(R.string.loadCalibration);
+
+                    final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
+                            android.R.layout.select_dialog_singlechoice);
+
+                    File external = Environment.getExternalStorageDirectory();
+                    String path = external.getPath() + "/com.ternup.caddisfly/calibrate/";
+                    File folder = new File(path);
+                    if (folder.exists()) {
+                        final File[] listFiles = folder.listFiles();
+                        for (int j = 0; j < listFiles.length; j++) {
+                            arrayAdapter.add(listFiles[j].getName());
+                        }
+
+                        builderSingle.setNegativeButton(R.string.cancel,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                }
+                        );
+                        builderSingle.setAdapter(arrayAdapter,
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String fileName = listFiles[which].getName();
+                                        final ArrayList<Integer> swatchList = new ArrayList<Integer>();
+
+                                        final ArrayList<String> rgbList = FileUtils.loadFromFile(getActivity(), fileName);
+                                        if (rgbList != null) {
+
+                                            for (String rgb : rgbList) {
+                                                swatchList.add(ColorUtils.getColorFromRgb(rgb));
+                                            }
+
+                                            (new AsyncTask<Void, Void, Void>() {
+
+                                                @Override
+                                                protected Void doInBackground(Void... params) {
+                                                    mainApp.saveCalibratedSwatches(mainApp.currentTestType, swatchList);
+                                                    return null;
+                                                }
+
+                                                @Override
+                                                protected void onPostExecute(Void result) {
+                                                    // TODO Auto-generated method stub
+                                                    super.onPostExecute(result);
+                                                    changeTestType(mainApp.currentTestType);
+                                                    CalibrateListAdapter adapter = (CalibrateListAdapter) getListAdapter();
+                                                    adapter.notifyDataSetChanged();
+                                                }
+                                            }).execute();
+                                        }
+                                    }
+                                }
+                        );
+                        builderSingle.show();
+                    } else {
+                        AlertUtils.showMessage(getActivity(), R.string.notFound, R.string.noSavedCalibrations);
+                    }
+
+                } catch (ActivityNotFoundException e) {
+                    AlertUtils.showMessage(getActivity(), R.string.error,
+                            R.string.updateRequired);
+
+                }
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

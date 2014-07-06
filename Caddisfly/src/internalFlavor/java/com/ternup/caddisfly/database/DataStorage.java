@@ -16,18 +16,18 @@
 
 package com.ternup.caddisfly.database;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.provider.TestContentProvider;
-import com.ternup.caddisfly.util.FileUtils;
-import com.ternup.caddisfly.util.PreferencesHelper;
-import com.ternup.caddisfly.util.PreferencesUtils;
-
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.provider.TestContentProvider;
+import com.ternup.caddisfly.util.FileUtils;
+import com.ternup.caddisfly.util.PreferencesHelper;
+import com.ternup.caddisfly.util.PreferencesUtils;
 
 import java.util.Date;
 
@@ -57,11 +57,13 @@ public class DataStorage {
         return id;
     }
 
-    public static void deleteRecord(Context context,long id, long locationId, String folderName) {
+    public static void deleteRecord(Context context, long id, long locationId, String folderName) {
 
         PreferencesUtils.removeKey(context, R.string.currentSamplingCountKey);
 
-        FileUtils.deleteFolder(context, locationId, folderName);
+        if (locationId > -1) {
+            FileUtils.deleteFolder(context, locationId, folderName);
+        }
         id = PreferencesHelper.getCurrentTestId(context, null, null);
         if (id > -1) {
             Uri uri = ContentUris.withAppendedId(TestContentProvider.CONTENT_URI, id);

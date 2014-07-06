@@ -21,7 +21,6 @@
     <application
         android:name="com.ternup.caddisfly.app.MainApp"
         android:label="@string/appName"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme.Dark">
         <activity
             android:name="org.akvo.mobile.caddisfly.activity.MainActivity"

@@ -16,10 +16,6 @@
 
 package com.ternup.caddisfly.adapter;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.MainApp;
-import com.ternup.caddisfly.model.NavigationDrawerItem;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
@@ -31,6 +27,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.model.NavigationDrawerItem;
+
 import java.util.ArrayList;
 
 public class NavDrawerListAdapter extends BaseAdapter {
@@ -40,7 +40,7 @@ public class NavDrawerListAdapter extends BaseAdapter {
     private final ArrayList<NavigationDrawerItem> navigationDrawerItems;
 
     public NavDrawerListAdapter(Context context,
-            ArrayList<NavigationDrawerItem> navigationDrawerItems) {
+                                ArrayList<NavigationDrawerItem> navigationDrawerItems) {
         this.context = context;
         this.navigationDrawerItems = navigationDrawerItems;
     }
@@ -106,6 +106,8 @@ public class NavDrawerListAdapter extends BaseAdapter {
 
         iconImage.setImageResource(navigationDrawerItems.get(position).getIcon());
         titleText.setText(navigationDrawerItems.get(position).getTitle());
+        //Drawable drawable = context.getResources().getDrawable(navigationDrawerItems.get(position).getIcon());
+        //titleText.setCompoundDrawables(drawable, null, null, null);
 
         return convertView;
     }

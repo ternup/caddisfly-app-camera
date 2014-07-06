@@ -16,12 +16,14 @@
 
 package com.ternup.caddisfly.util;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.MainApp;
-
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.widget.Button;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.MainApp;
 
 public class AlertUtils {
 
@@ -35,27 +37,27 @@ public class AlertUtils {
     }
 
     public static void askQuestion(Context context, int title, int message,
-            DialogInterface.OnClickListener callback,
-            DialogInterface.OnClickListener cancelListener) {
+                                   DialogInterface.OnClickListener callback,
+                                   DialogInterface.OnClickListener cancelListener) {
         showAlert(context, title, message, callback, cancelListener);
     }
 
     public static void askQuestion(Context context, int title, String message,
-            DialogInterface.OnClickListener callback,
-            DialogInterface.OnClickListener cancelListener) {
+                                   DialogInterface.OnClickListener callback,
+                                   DialogInterface.OnClickListener cancelListener) {
         showAlert(context, title, message, callback, cancelListener);
     }
 
     public static void showAlert(Context context, int title, int message,
-            DialogInterface.OnClickListener callback,
-            DialogInterface.OnClickListener cancelListener) {
+                                 DialogInterface.OnClickListener callback,
+                                 DialogInterface.OnClickListener cancelListener) {
 
         showAlert(context, title, context.getString(message), callback, cancelListener);
     }
 
-    public static void showAlert(Context context, int title, String message,
-            DialogInterface.OnClickListener callback,
-            DialogInterface.OnClickListener cancelListener) {
+    public static void showAlert(final Context context, int title, String message,
+                                 DialogInterface.OnClickListener callback,
+                                 DialogInterface.OnClickListener cancelListener) {
         //if ( title == null ) title = context.getResources().getString(R.string.app_name);
 
         //TODO: remove this
@@ -93,7 +95,21 @@ public class AlertUtils {
             builder.setNegativeButton(R.string.cancel, cancelListener);
         }
 
-        builder.create().show();
+        final AlertDialog alert = builder.create();
+        alert.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Button btnPositive = alert.getButton(Dialog.BUTTON_POSITIVE);
+                float textSize = context.getResources().getDimension(R.dimen.textSize);
+                btnPositive.setTextSize(textSize);
+
+                Button btnNegative = alert.getButton(Dialog.BUTTON_NEGATIVE);
+                btnNegative.setTextSize(textSize);
+            }
+        });
+
+        alert.show();
+
     }
 
     /**

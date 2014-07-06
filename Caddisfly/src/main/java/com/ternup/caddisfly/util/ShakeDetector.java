@@ -26,7 +26,7 @@ public class ShakeDetector implements SensorEventListener {
     private static final int MIN_SHAKE_ACCELERATION = 5;
 
     // Max to determine if the phone is not moving
-    private static final float MAX_SHAKE_ACCELERATION = 0.05f;
+    private static final float MAX_SHAKE_ACCELERATION = 0.07f;
 
     // Minimum number of movements to register a shake
     private static final int MIN_MOVEMENTS = 10;
@@ -87,7 +87,9 @@ public class ShakeDetector implements SensorEventListener {
         g[2] = g[2] / norm_Of_g;
 
         int inclination = (int) Math.round(Math.toDegrees(Math.acos(g[2])));
-        if (inclination < 3 || inclination > 178) {
+        //Log.i("Sensor", String.valueOf(inclination));
+        // check inclination to detect if the phone is placed on a flat surface with screen below
+        if (inclination > 175) {
             synchronized (this) {
                 long nowNoShake = System.currentTimeMillis();
                 if (Math.abs(maxLinearAcceleration) < MAX_SHAKE_ACCELERATION) {

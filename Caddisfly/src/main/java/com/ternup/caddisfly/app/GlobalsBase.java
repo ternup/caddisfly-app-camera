@@ -69,11 +69,7 @@ public class GlobalsBase {
 
     public static final int INITIAL_DELAY = 4000;
 
-    public static final int MINIMUM_PHOTO_QUALITY = 60;
-
-    // For external app connection
-    public static final String ACTION_IMPORT_CALIBRATION
-            = "com.ternup.caddisfly.action.IMPORT_CALIBRATE";
+    public static final int MINIMUM_PHOTO_QUALITY = 50;
 
     public static final int SAMPLING_COUNT_DEFAULT = 5;
 

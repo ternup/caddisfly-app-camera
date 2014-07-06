@@ -44,7 +44,7 @@
             android:key="@string/autoAnalyzeKey"
             android:title="@string/autoAnalyze" />
         <com.ternup.caddisfly.component.NumberPickerPreference
-            android:defaultValue="60"
+            android:defaultValue="50"
             android:dialogTitle="@string/minPhotoQuality"
             android:key="minPhotoQuality"
             android:max="100"
@@ -97,6 +97,7 @@
             android:entryValues="@array/language_codes"
             android:key="@string/currentLocale"
             android:negativeButtonText="@string/cancel"
+            android:summary="%s"
             android:title="@string/language" />
     </PreferenceCategory>
 

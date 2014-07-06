@@ -16,21 +16,6 @@
 
 package com.ternup.caddisfly.activity;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.Globals;
-import com.ternup.caddisfly.app.MainApp;
-import com.ternup.caddisfly.database.DataStorage;
-import com.ternup.caddisfly.fragment.CameraFragment;
-import com.ternup.caddisfly.service.CameraService;
-import com.ternup.caddisfly.service.CameraServiceReceiver;
-import com.ternup.caddisfly.util.AudioUtils;
-import com.ternup.caddisfly.util.FileUtils;
-import com.ternup.caddisfly.util.ImageUtils;
-import com.ternup.caddisfly.util.PhotoHandler;
-import com.ternup.caddisfly.util.PreferencesHelper;
-import com.ternup.caddisfly.util.PreferencesUtils;
-import com.ternup.caddisfly.util.ShakeDetector;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -70,6 +55,22 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
+import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.database.DataStorage;
+import com.ternup.caddisfly.fragment.CameraFragment;
+import com.ternup.caddisfly.service.CameraService;
+import com.ternup.caddisfly.service.CameraServiceReceiver;
+import com.ternup.caddisfly.util.AudioUtils;
+import com.ternup.caddisfly.util.FileUtils;
+import com.ternup.caddisfly.util.ImageUtils;
+import com.ternup.caddisfly.util.PhotoHandler;
+import com.ternup.caddisfly.util.PreferencesHelper;
+import com.ternup.caddisfly.util.PreferencesUtils;
+import com.ternup.caddisfly.util.ShakeDetector;
+
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -92,6 +93,9 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
     };
 
     CameraFragment mCameraFragment;
+
+    File calibrateFolder;
+    ArrayList<String> oldFilePaths;
 
     Timer timer;
 
@@ -267,12 +271,20 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
 
         mTestType = mainApp.currentTestType;
 
-        mLocationId = PreferencesHelper.getCurrentLocationId(this, intent);
 
         // Register receiver for service
         registerReceiver(receiver, new IntentFilter(CameraService.NOTIFICATION));
 
         getSharedPreferences();
+
+        mIndex = intent.getIntExtra("position", -1);
+        if (mIndex > -1) {
+            mLocationId = -1;
+            mFolderName = "";
+            mId = -1;
+        } else {
+            mLocationId = PreferencesHelper.getCurrentLocationId(this, intent);
+        }
 
         // If test is already completed go back to home page
         if (mTestCompleted) {
@@ -420,7 +432,20 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
 
     private void startNewTest(int testType) {
 
-        mFolderName = getNewFolderName();
+        if (mLocationId > -1) {
+            mFolderName = getNewFolderName();
+        } else if (mIndex > -1) {
+            calibrateFolder = new File(
+                    FileUtils.getStoragePath(this, -1,
+                            String.format("%s/%d/%d/small/", Globals.CALIBRATE_FOLDER, mTestType,
+                                    mIndex),
+                            false
+                    )
+            );
+
+            oldFilePaths = FileUtils
+                    .getFilePaths(this, calibrateFolder.getAbsolutePath(), -1);
+        }
 
         Context context = getApplicationContext();
         PreferencesUtils.setInt(context, R.string.currentSamplingCountKey, 0);
@@ -440,23 +465,32 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
         releaseResources();
 
         DataStorage.deleteRecord(this, mId, mLocationId, mFolderName);
+
+
+        if (mIndex > -1 && mLocationId == -1) {
+            FileUtils.deleteFilesExcepting(calibrateFolder, oldFilePaths);
+        }
+
     }
 
     private void sendResult(Message msg) {
 
         mId = PreferencesHelper.getCurrentTestId(this, null, msg.getData());
 
-        double result = msg.getData().getDouble(Globals.RESULT_VALUE_KEY, -1);
-        int accuracy = msg.getData().getInt(Globals.QUALITY_KEY, 0);
+        final double result = msg.getData().getDouble(Globals.RESULT_VALUE_KEY, -1);
+        final int quality = msg.getData().getInt(Globals.QUALITY_KEY, 0);
+        final int resultColor = msg.getData().getInt(Globals.RESULT_COLOR_KEY, 0);
         String message = getString(R.string.testFailedMessage);
 
         int minAccuracy = PreferencesUtils
                 .getInt(this, R.string.minPhotoQualityKey, Globals.MINIMUM_PHOTO_QUALITY);
-        if (accuracy < minAccuracy) {
+
+        if (quality < minAccuracy) {
             message = String.format(getString(R.string.testFailedQualityMessage), minAccuracy);
         }
 
-        if (mTestType != Globals.BACTERIA_INDEX && (result < 0 || accuracy < minAccuracy)) {
+
+        if (mTestType != Globals.BACTERIA_INDEX && (result < 0 || quality < minAccuracy)) {
 
             AlertDialog myDialog;
             View alertView;
@@ -497,6 +531,9 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                     DataStorage
                             .deleteRecord(getApplicationContext(), mId, mLocationId, mFolderName);
                     cancelService();
+                    Intent intent = new Intent(getIntent());
+                    setResult(Activity.RESULT_CANCELED, intent);
+
                     finish();
                 }
             });
@@ -511,6 +548,9 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
             releaseResources();
 
             Intent intent = new Intent(getIntent());
+            intent.putExtra(Globals.RESULT_COLOR_KEY, resultColor);
+            intent.putExtra(Globals.QUALITY_KEY, quality);
+
             if (mFolderName != null && !mFolderName.isEmpty()) {
                 if (msg != null && msg.getData() != null) {
                     intent.putExtra(PreferencesHelper.FOLDER_NAME_KEY, mFolderName);
@@ -522,6 +562,11 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                 }
             }
             this.setResult(Activity.RESULT_OK, intent);
+
+            //if calibration and old photos in the calibrate folder to be deleted
+            if (mIndex > -1 && mId == -1) {
+                FileUtils.deleteFiles(oldFilePaths);
+            }
 
             finish();
         }
@@ -816,6 +861,8 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
     public void onBackPressed() {
         if (mWaitingForFirstShake) {
             cancelService();
+            Intent intent = new Intent(getIntent());
+            this.setResult(Activity.RESULT_CANCELED, intent);
             finish();
         } else {
             //Clear the activity back stack
@@ -831,6 +878,8 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
         switch (item.getItemId()) {
             case R.id.menu_cancel:
                 cancelService();
+                Intent intent = new Intent(getIntent());
+                this.setResult(Activity.RESULT_CANCELED, intent);
                 finish();
                 return true;
             default:
@@ -848,6 +897,9 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
     @Override
     public void dialogCancelled() {
         cancelService();
+        Intent intent = new Intent(getIntent());
+        this.setResult(Activity.RESULT_CANCELED, intent);
+
         finish();
     }
 

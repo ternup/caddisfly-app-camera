@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) TernUp Research Labs
   ~
   ~ This file is part of Caddisfly
@@ -117,16 +116,6 @@
         <item>@string/help</item>
         <item>@string/about</item>
         <item>@string/nightTheme</item>
-    </string-array>
-
-    <string-array name="languages">
-        <item>English</item>
-        <item>हिंदी</item>
-    </string-array>
-
-    <string-array name="language_codes">
-        <item>en</item>
-        <item>hi</item>
     </string-array>
 
 </resources>

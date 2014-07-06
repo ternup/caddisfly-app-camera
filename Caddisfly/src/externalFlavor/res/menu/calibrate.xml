@@ -16,9 +16,10 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:id="@+id/menu_import"
-            android:enabled="true"
-            android:showAsAction="always"
-            android:orderInCategory="0"
-            android:title="@string/importAction"/>
+        android:id="@+id/menu_load"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_load_dark"
+        android:orderInCategory="0"
+        android:showAsAction="always"
+        android:title="@string/load" />
 </menu>

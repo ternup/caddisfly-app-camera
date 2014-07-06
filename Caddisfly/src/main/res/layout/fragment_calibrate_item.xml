@@ -18,7 +18,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp">
 
@@ -37,8 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/colorButton"
@@ -54,8 +53,7 @@
                 android:paddingEnd="8dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:paddingStart="8dp"
-                android:textColor="@android:color/holo_red_dark" />
+                android:paddingStart="8dp" />
 
             <Button
                 android:id="@+id/valueButton"
@@ -83,10 +81,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:paddingTop="20dp"
-            android:weightSum="2">
+            android:paddingTop="20dp">
 
             <Button
                 android:id="@+id/editButton"
@@ -118,7 +114,6 @@
                 android:background="@drawable/green_button"
                 android:text="@string/calibrate"
                 android:textColor="#eee" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -127,18 +122,16 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="?cardBackground"
-            android:gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="10dp">
 
             <TextView
                 android:id="@+id/errorTextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:drawableLeft="@drawable/error"
                 android:drawablePadding="10dp"
+                android:drawableStart="@drawable/error"
                 android:paddingTop="3dp"
                 android:text="@string/error"
                 android:textSize="20sp"

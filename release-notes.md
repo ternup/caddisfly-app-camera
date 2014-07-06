@@ -1,3 +1,22 @@
+v0.29
+-----
+1. Shake phone feature added to calibration
+2. Esperanto, Hebrew, Kannada language translations added
+3. Save and Load calibrations 
+4. Tweaks: Detect phone position is flat to the ground
+5. Tweaks: Image quality minimum reduced to 50%
+6. Tweaks: Calibration validation
+7. User app: Language menu added to home page
+
+v0.28
+-----
+1. Two variants of the app released (Internal and External User)
+2. Basic validation of calibration. Colors too similar or very different will be considered invalid
+3. Error number badge on Calibrate button on home screen
+4. Setting: Ignore calibration errors (default false)
+5. Setting: Crop to square only - (default false)
+6. Tweaks: Image quality algorithm
+
 v0.27
 -----
 1. Prevent camera preview from closing and opening during multiple analysis

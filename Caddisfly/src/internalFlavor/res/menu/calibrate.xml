@@ -14,12 +14,25 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 
-<menu
-        xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-            android:id="@+id/menu_swatches"
-            android:enabled="true"
-            android:showAsAction="always"
-            android:orderInCategory="0"
-            android:title="@string/swatches"/>
+        android:id="@+id/menu_load"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_load"
+        android:orderInCategory="0"
+        android:showAsAction="always"
+        android:title="@string/load" />
+    <item
+        android:id="@+id/menu_save"
+        android:enabled="true"
+        android:icon="@drawable/ic_action_save"
+        android:orderInCategory="0"
+        android:showAsAction="always"
+        android:title="@string/save" />
+    <item
+        android:id="@+id/menu_swatches"
+        android:enabled="true"
+        android:orderInCategory="0"
+        android:showAsAction="always"
+        android:title="@string/swatches" />
 </menu>

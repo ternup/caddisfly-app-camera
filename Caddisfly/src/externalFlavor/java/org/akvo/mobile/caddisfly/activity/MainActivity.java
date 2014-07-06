@@ -69,6 +69,7 @@ public class MainActivity extends MainActivityBase
     @Override
     protected void onResume() {
         super.onResume();
+        showCheckUpdateOption = false;
         mShouldFinish = false;
     }
 
@@ -188,7 +189,7 @@ public class MainActivity extends MainActivityBase
 
         Context context = this;
 
-        MainApp mainApp = (MainApp) this.getApplicationContext();
+        MainApp mainApp = (MainApp) context.getApplicationContext();
 
         // TODO: change according to test type
         mainApp.setFluorideSwatches();
@@ -210,12 +211,25 @@ public class MainActivity extends MainActivityBase
         }
 
         final Intent intent = new Intent(getIntent());
-        intent.setClass(this, ProgressActivity.class);
-        intent.putExtra(PreferencesHelper.CURRENT_TEST_TYPE_KEY, 0);
-        intent.putExtra(PreferencesHelper.CURRENT_LOCATION_ID_KEY, -1);
+        intent.setClass(context, ProgressActivity.class);
+        intent.putExtra(PreferencesHelper.CURRENT_LOCATION_ID_KEY, (long) 0);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        try {
+            int index = getCurrentFragmentIndex();
+            showCheckUpdateOption = index == Globals.HELP_SCREEN_INDEX;
+            invalidateOptionsMenu();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
