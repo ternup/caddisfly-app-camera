@@ -1,0 +1,194 @@
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+<resources>
+    <string name="settings">"הגדרות"</string>
+    <string name="calibrate">"כייל"</string>
+    <string name="analyzingWait">"ניתוח ..."</string>
+    <string name="calibrate_info">"ודא מחסנית מחוברת בצורה נכונה ולחץ על OK"</string>
+    <string name="appUpdate">"עדכון caddisfly"</string>
+    <string name="askForUpdate">"גרסה מעודכנת זמינה, האם אתה רוצה לעדכן עכשיו?"</string>
+    <string name="seconds">"שניות"</string>
+    <string name="minutes">"דקות"</string>
+    <string name="checkUpdate">"בדוק עדכון"</string>
+    <string name="internetConnectionRequired">"חיבור לאינטרנט נדרש. להתחבר לרשת הנתונים."</string>
+    <string name="dataConnection">"חיבור נתונים"</string>
+    <string name="testInProgress">"בדיקה בעיצומה"</string>
+    <string name="alreadyHaveLatest">"כבר יש לך את הגרסה האחרונה של caddisfly המותקן"</string>
+    <string name="remaining">"נותר"</string>
+    <string name="result">"תוצאה"</string>
+    <string name="rgb">"RGB"</string>
+    <string name="ppm">"עמודים לדקה"</string>
+    <string name="twentyFourHourTime">"HH: mm: ss"</string>
+    <string name="twelveHourTime">"h: mm: ss"</string>
+    <string name="checkingForUpdates">"בדיקת עדכונים ..."</string>
+    <string name="starting">"החל ..."</string>
+    <string name="error">"שגיאה"</string>
+    <string name="retry">"נסה שוב"</string>
+    <string name="outOfRange">"צבע מחוץ לטווח"</string>
+    <string name="help">"עזרה"</string>
+    <string name="placeDeviceInStand">"הנח את הטלפון על משטח שטוח כדי להמשיך"</string>
+    <string name="shakeToContinue">"לנער את המכשיר כדי להבטיח ערבוב נכון של הפתרון במחסנית"</string>
+    <string name="shakeMe">"לטלטל אותי"</string>
+    <string name="ok">"אשר"</string>
+    <string name="cancel">"בטל"</string>
+    <string name="prototype">"אב טיפוס"</string>
+    <string name="alpha">"אלפא"</string>
+
+    <string name="testFailedMessage">"צבע פתרון מחוץ לטווח. בדוק את מיקום מחסנית."</string>
+    <string name="testFailedQualityMessage">"איכות תמונה %d %% בדוק את מיקום מחסנית."</string>
+    <string name="done">"סיים"</string>
+    <string name="gettingUpdate">"קבלת עדכון caddisfly ..."</string>
+    <string name="calibrate_error">"Caddisfly עדיין לא מכויל או יש שגיאות. לכייל את המכשיר הזה לפני תחילת מבחן"</string>
+    <string name="enableInternet">"אנא אפשר לאינטרנט אלחוטי או חיבור נתונים סלולרי"</string>
+    <string name="noInternet">"חיבור לאינטרנט לא נמצא"</string>
+    <string name="photoQuality">"איכות תמונה"</string>
+    <string name="photoQualityError">"איכות תמונה נמוכה מדי"</string>
+    <string name="connecting">"מתחבר…"</string>
+    <string name="analyze">"לנתח"</string>
+    <string name="minPhotoQuality">"איכות תמונה מינימאלית"</string>
+    <string name="clickAnalyze">"לחץ על נתח להמשיך"</string>
+    <string name="notCalibrated">"לא מכויל"</string>
+    <string name="invalidColor">"ערך צבע לא חוקי"</string>
+    <string name="selectValueToCalibrate">"בחר ערך לכייל"</string>
+    <string name="startSurvey">"התחל סקר"</string>
+    <string name="startTest">"התחל מבחן"</string>
+    <string name="installAkvoFlow">"בבקשה להתקין Akvo זרימת אפליקציה"</string>
+    <string name="waterQualityTest">"לבדוק את איכות מים"</string>
+    <string name="attachStandardCartridge">"צרף מחסנית פתרון סטנדרטי עבור ערך זה ולחץ על כיול"</string>
+    <string name="analysisInProgress">"ניתוח בהתקדמות"</string>
+    <string name="importFromCaddisfly">"זה יאפשר יבוא של צבעי כיול מcaddisfly ולדרוס את הערכים הנוכחיים."</string>
+    <string name="importAction">"ייבא"</string>
+    <string name="updateRequired">"אנא עדכן לגרסה חדשה יותר כדי לאפשר תכונה זו"</string>
+
+    <string name="fluoride">"פלואוריד"</string>
+    <string name="fluoride2">"פלואוריד קל"</string>
+    <string name="bacteria">"בקטריה"</string>
+    <string name="pH">"pH"</string>
+    <string name="cropToSquare">"תמונה חתוך לכיכר"</string>
+    <string name="ignoreCalibrationErrors">"התעלם משגיאות כיול"</string>
+    <string name="calibrationColorError">"נראה הצבע המכויל להיות שגוי. לכייל מחדש עם הפתרונות סטנדרטיים שסופקו."</string>
+    <string name="outOfSequence">"מתוך רצף"</string>
+    <string name="duplicateSwatch">"לשכפל את הצבע"</string>
+
+    <string name="appName">"Caddisfly"</string>
+    <string name="about">"אודות"</string>
+    <string name="bacteriaTest">"מבחן חיידקים"</string>
+    <string name="swatches">"דוגמיות"</string>
+    <string name="working">"עבודה"</string>
+    <string name="send">"שלח"</string>
+    <string name="photo">"תמונה"</string>
+    <string name="delete">"מחק"</string>
+    <string name="noData">"אין מקומות עדיין. \ N כפתור \ n לחץ על 'החדש מיקום \""</string>
+    <string name="interval_info">"משך לחכות לאחר כל ניתוח"</string>
+    <string name="details">"פרטים:"</string>
+    <string name="selectNumberOfTests">"בחר כמה פעמים כדי לנתח"</string>
+    <string name="reset">"איפוס"</string>
+    <string name="drawer_open">"מגירת ניווט פתוחה"</string>
+    <string name="drawer_close">"מגירת ניווט קרובה"</string>
+    <string name="home">"בית"</string>
+    <string name="selectTestType">"בחר את הסוג"</string>
+    <string name="analysisCount">"ספירת ניתוח"</string>
+    <string name="place">"מקום"</string>
+    <string name="sourceType">"סוג המקור"</string>
+    <string name="selectSourceType">"בחר סוג המקור"</string>
+    <string name="waterQualitySystem">"מערכת איכות מים"</string>
+    <string name="general">"כללי"</string>
+    <string name="shakeDevice">"דורש לרעוד לנתח"</string>
+    <string name="shakeDeviceSummary">"כדי להבטיח ערבוב נכון של פתרון."</string>
+    <string name="soundAlarm">"אזעקה כאשר לרעוד דרוש"</string>
+    <string name="soundAlarmSummary">"אזעקה כדי להודיע ​​שייק יש צורך לפני כל ניתוח."</string>
+    <string name="selectedWillBeDeleted">"פריטים שנבחרו יימחקו"</string>
+    <string name="language">"שפה"</string>
+    <string name="interval">"תפוגה"</string>
+    <string name="intervalMinutes">"מרווח (דקות)"</string>
+    <string name="futureFeature">"תכונת עתיד"</string>
+    <string name="featureNotImplemented">"תכונה עדיין לא מיושם"</string>
+
+    <string name="just_now">"זה עתה"</string>
+    <string name="yesterday">"אתמול"</string>
+    <string name="locale">"אז"</string>
+    <string name="location">"מיקום"</string>
+    <string name="address">"כתובת"</string>
+    <string name="dayTheme">"ערכת היום"</string>
+    <string name="nightTheme">"Theme הלילה"</string>
+    <string name="newLocation">"מיקום חדש"</string>
+    <string name="notes">"הערות"</string>
+    <string name="selectLocation">"בחירת מיקום למבחן"</string>
+    <string name="locationDetails">"פרטי מיקום"</string>
+
+    <string-array name="source_types">
+        <item>"משאבת יד"</item>
+        <item>"ובכן Tube"</item>
+        <item>"נהר / זרם"</item>
+        <item>"ובכן פתוח"</item>
+        <item>"ברז מקומי"</item>
+        <item>"מאגר / בריכה / אגם"</item>
+        <item>"תעשייתי"</item>
+        <item>"אחר"</item>
+    </string-array>
+
+    <string name="camera">"מצלמה"</string>
+    <string name="cameraZoom">"המצלמה זום"</string>
+    <string name="zoom">"זום (מיושן)"</string>
+    <string name="other">"אחר"</string>
+    <string name="locations">"מיקומים"</string>
+    <string name="startNewTest">"התחלה חדשה מבחן"</string>
+    <string name="closeLocationSurvey">"סקר זה ייסגר והנתונים שהוזנו ייאבדו"</string>
+    <string name="closeSurvey">"סקר קרוב"</string>
+    <string name="incomplete">"לא שלם"</string>
+    <string name="incompleteMessage">"נא להזין את שם מקום"</string>
+    <string name="result_sent">"פרטי מבחן נשלחו בהצלחה לשרת"</string>
+    <string name="success">"הצלחה"</string>
+    <string name="send_failed">"שלח נכשלו עקב בעיה בשרת. נסה שוב מאוחר יותר."</string>
+    <string name="waterSourceLocation">"מיקום מקור מים"</string>
+    <string name="standNearWaterSource">"לעמוד ליד מקור המים."</string>
+    <string name="ensureClearViewForGPS">"ודא שיש תצוגה ברורה של השמים כדי לקבל אותות ה-GPS"</string>
+    <string name="getLocation">"קבל מיקום"</string>
+    <string name="gettingLocation">"מקבל מיקום ..."</string>
+    <string name="takeSourcePhoto">"קח את התמונה של מקור מים"</string>
+    <string name="playCameraSound">"צליל מצלמה"</string>
+    <string name="autoAnalyze">"אוטומטי לנתח בתצוגה מקדימה"</string>
+    <string name="street">"רחוב"</string>
+    <string name="town">"עיר"</string>
+    <string name="city">"עיר"</string>
+    <string name="state">"מצב"</string>
+    <string name="country">"ארץ"</string>
+    <string name="cloudy">"מעונן"</string>
+    <string name="torchMode">"לפיד מצב"</string>
+    <string name="infinity">"אין סוף"</string>
+    <string name="edit">"ערוך"</string>
+    <string name="samplingCount">"רוזן דגימה"</string>
+    <string name="selectNumberOfSamples">"מספר פעמים את הפתרון צריך להיות שנדגמו"</string>
+    <string name="developer">"מפתחים"</string>
+    <string name="samplingSummary">"תמונות תילקח לכל ניתוח. תוצאה תהיה ממוצעת."</string>
+    <string name="enterColorRgb">"הזן הצבע RGB"</string>
+    <string name="saveOriginalPhoto">"שמור מקורי תמונות"</string>
+    <string name="saveOriginalPhotoConfirm">"אזהרה: תמונות מקוריות שמירה תשתמש הרבה מקום בטלפון שלך."</string>
+    <string name="photoSampleDimensionMessage">"בחר באורך כדי לחתוך את התמונה לניתוח"</string>
+    <string name="photoSampleDimension">"ממד לדוגמא תמונה"</string>
+    <string name="sending">"שליחה"</string>
+    <string name="versionStringFormat">\u200F%1$s %2$s</string>
+    <string name="current">Current</string>
+    <string name="save">Save</string>
+    <string name="load">Load</string>
+    <string name="name">Name</string>
+    <string name="noSavedCalibrations">There are no previously saved calibrations</string>
+    <string name="notFound">Not Found</string>
+    <string name="giveNameForCalibration">Give a descriptive name for this calibration</string>
+    <string name="saveCalibration">Save Calibration</string>
+    <string name="loadCalibration">Load Calibration</string>
+    <string name="invalidName">Invalid name</string>
+</resources>

@@ -1,0 +1,193 @@
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+<resources>
+    <string name="settings">"Agordoj"</string>
+    <string name="calibrate">"Kalibri"</string>
+    <string name="analyzingWait">"Analizante ..."</string>
+    <string name="calibrate_info">"Certigu kartoĉo estas alfiksita korekte kaj alklaku OK"</string>
+    <string name="appUpdate">"Caddisfly ĝisdatigo"</string>
+    <string name="askForUpdate">"Ĝisdatigita versio estas havebla, Ĉu vi volas ĝisdatigi nun?"</string>
+    <string name="seconds">"sekundoj"</string>
+    <string name="minutes">"minutoj"</string>
+    <string name="checkUpdate">"Kontrolu ĝisdatigo"</string>
+    <string name="internetConnectionRequired">"Interreta konekto estas bezonata. Konekti al reto de datumoj."</string>
+    <string name="dataConnection">"Datumoj Konekto"</string>
+    <string name="testInProgress">"Testo progresanta"</string>
+    <string name="alreadyHaveLatest">"Vi jam havas la lastan version de Caddisfly instalita"</string>
+    <string name="remaining">"restantaj"</string>
+    <string name="result">"Rezulto"</string>
+    <string name="rgb">"RGB"</string>
+    <string name="ppm">"ppm"</string>
+    <string name="twentyFourHourTime">"HH:mm:ss"</string>
+    <string name="twelveHourTime">"h:mm:ss a"</string>
+    <string name="checkingForUpdates">"Checking aktualigojn ..."</string>
+    <string name="starting">"Startanta ..."</string>
+    <string name="error">"Eraro"</string>
+    <string name="retry">"Reprovi"</string>
+    <string name="outOfRange">"Koloro de gamo"</string>
+    <string name="help">"Helpu"</string>
+    <string name="placeDeviceInStand">"Metu la telefonon sur ebena surfaco por daŭrigi"</string>
+    <string name="shakeToContinue">"Skui tiun mekanismon garantii taŭgan miksado de la solvo en la kartoĉo"</string>
+    <string name="shakeMe">"Skui Me"</string>
+    <string name="ok">"OK"</string>
+    <string name="cancel">"Nuligu"</string>
+    <string name="prototype">"Prototipo"</string>
+    <string name="alpha">"Alfa"</string>
+
+    <string name="testFailedMessage">"Solvo koloron el gamo. Kontrolu kartoĉo lokigo."</string>
+    <string name="testFailedQualityMessage">"Foto kvalito malsupre %d%% . Kontrolu kartoĉo lokigo."</string>
+    <string name="done">"Farite"</string>
+    <string name="gettingUpdate">"Ricevi Caddisfly update ..."</string>
+    <string name="calibrate_error">"Caddisfly ankoraŭ ne kalibris aŭ estas eraroj. Kalibri ĉi aparaton antaŭ komenci testo"</string>
+    <string name="enableInternet">"Bonvolu aktivigi sendrata interreto aŭ telefonoj datumoj ligo"</string>
+    <string name="noInternet">"Interreta konekto ne trovita"</string>
+    <string name="photoQuality">"Foto kvalito"</string>
+    <string name="photoQualityError">"Foto kvalito tro malaltaj"</string>
+    <string name="connecting">"Konektante ..."</string>
+    <string name="analyze">"Analizi"</string>
+    <string name="minPhotoQuality">"Minimuma Foto Kvalito"</string>
+    <string name="clickAnalyze">"Klaku Analyse daŭrigi"</string>
+    <string name="notCalibrated">"Ne kalibritaj"</string>
+    <string name="invalidColor">"Nevalida Kolora valoro"</string>
+    <string name="selectValueToCalibrate">"Elektu valoron kalibri"</string>
+    <string name="startSurvey">"Komenco Enketo"</string>
+    <string name="startTest">"Komenci Testo"</string>
+    <string name="installAkvoFlow">"Bonvolu instali akvo Flow app"</string>
+    <string name="waterQualityTest">"Akvo Kvalito Testo"</string>
+    <string name="attachStandardCartridge">"Aligu norma solvo kartoĉo por ĉi tiu valoro kaj premi kalibri"</string>
+    <string name="analysisInProgress">"Analizo progresanta"</string>
+    <string name="importFromCaddisfly">"Tio importi calibración kolorojn el Caddisfly kaj anstataŭigi la nunan valoroj."</string>
+    <string name="importAction">"Importi"</string>
+    <string name="updateRequired">"Bonvolu aktualigi al pli nova versio por ebligi tiun funkcion"</string>
+
+    <string name="fluoride">"Fluoro"</string>
+    <string name="fluoride2">"Fluoro Facila"</string>
+    <string name="bacteria">"Bakterioj"</string>
+    <string name="pH">"ph"</string>
+    <string name="cropToSquare">"Kropo foton al kvadrato"</string>
+    <string name="ignoreCalibrationErrors">"Ignoru calibración eraroj"</string>
+    <string name="calibrationColorError">"La kalibris koloro ŝajnas esti malĝusta. Recalibrar per la provizitaj normo solvoj."</string>
+    <string name="outOfSequence">"El Sekvenco"</string>
+    <string name="duplicateSwatch">"Duobligi Koloro"</string>
+
+    <string name="appName">"Caddisfly"</string>
+    <string name="about">"Pri"</string>
+    <string name="bacteriaTest">"Bakterioj Testo"</string>
+    <string name="swatches">"Samploj"</string>
+    <string name="working">"Laborante"</string>
+    <string name="send">"Sendu"</string>
+    <string name="photo">"Foto"</string>
+    <string name="delete">"Forigi"</string>
+    <string name="noData">"Neniu lokoj ankoraŭ. \ N \ nPress 'Nova Loko' butono"</string>
+    <string name="interval_info">"Daŭro atendi post ĉiu analizo"</string>
+    <string name="details">"Detaloj"</string>
+    <string name="selectNumberOfTests">"Elektu kiom da fojoj por analizi"</string>
+    <string name="reset">"Restarigi"</string>
+    <string name="drawer_open">"Malferma navigado tirkesto"</string>
+    <string name="drawer_close">"Fermu navigado tirkesto"</string>
+    <string name="home">"Hejmpaĝo"</string>
+    <string name="selectTestType">"Elektu tipon"</string>
+    <string name="analysisCount">"Analizo grafo"</string>
+    <string name="place">"Loko"</string>
+    <string name="sourceType">"Fonto tipo"</string>
+    <string name="selectSourceType">"Elektu Fonto Tipo"</string>
+    <string name="waterQualitySystem">"Akvo Kvalito Sistemon"</string>
+    <string name="general">"Ĝenerala"</string>
+    <string name="shakeDevice">"Postulas shake analizi"</string>
+    <string name="shakeDeviceSummary">"Por certigi taŭgan miksado de solvo."</string>
+    <string name="soundAlarm">"Alarmo kiam shake bezonataj"</string>
+    <string name="soundAlarmSummary">"Alarmo por sciigi ke skuigxo necesas antaŭ ĉiu analizo."</string>
+    <string name="selectedWillBeDeleted">"Elektitaj eroj estos forigita"</string>
+    <string name="language">"Lingvo"</string>
+    <string name="interval">"Intervalo"</string>
+    <string name="intervalMinutes">"Intervalo (minutoj)"</string>
+    <string name="futureFeature">"Estonteco Feature"</string>
+    <string name="featureNotImplemented">"Feature ankoraŭ ne implementado"</string>
+
+    <string name="just_now">"jxus"</string>
+    <string name="yesterday">"hieraŭ"</string>
+    <string name="locale">"Lokaĵaro"</string>
+    <string name="location">"Loko"</string>
+    <string name="address">"Adreso"</string>
+    <string name="dayTheme">"Tago Temo"</string>
+    <string name="nightTheme">"Nokto Temo"</string>
+    <string name="newLocation">"Novaj Loko"</string>
+    <string name="notes">"Noto"</string>
+    <string name="selectLocation">"Elektu situon por testo"</string>
+    <string name="locationDetails">"Loko Detaloj"</string>
+
+    <string-array name="source_types">
+        <item>"Mano Bombo"</item>
+        <item>"Tubo Puto"</item>
+        <item>"Rivero / Rojo"</item>
+        <item>"Malferma Puto"</item>
+        <item>"Hejma Frapeto"</item>
+        <item>"Rezervujo / Pond / Lago"</item>
+        <item>"Industria"</item>
+        <item>"Aliaj"</item>
+    </string-array>
+
+    <string name="camera">"Filmilo"</string>
+    <string name="cameraZoom">"Fotilo Zoom"</string>
+    <string name="zoom">"Zoom (malaktuala)"</string>
+    <string name="other">"Aliaj"</string>
+    <string name="locations">"Lokoj"</string>
+    <string name="startNewTest">"Start New Testo"</string>
+    <string name="closeLocationSurvey">"Tiu enketo estos fermita kaj datumojn eniris perdiĝos"</string>
+    <string name="closeSurvey">"Fermu Survey"</string>
+    <string name="incomplete">"Nekompleta"</string>
+    <string name="incompleteMessage">"Bonvolu entajpi loknomon"</string>
+    <string name="result_sent">"Testo detaloj sukcese sendita al la servilo"</string>
+    <string name="success">"Sukceso"</string>
+    <string name="send_failed">"Sendu malsukcesis pro servilo problemon. Provu denove poste."</string>
+    <string name="waterSourceLocation">"Akvo Fonto Loko"</string>
+    <string name="standNearWaterSource">"Stariĝu apud la fonto de akvo."</string>
+    <string name="ensureClearViewForGPS">"Certigu ke ekzistas klara vido de la ĉielo ricevi GPS signaloj"</string>
+    <string name="getLocation">"Akiru Loko"</string>
+    <string name="gettingLocation">"Ricevi situo ..."</string>
+    <string name="takeSourcePhoto">"Prenu Foto de Akvo Fonto"</string>
+    <string name="playCameraSound">"Fotilo sonon"</string>
+    <string name="autoAnalyze">"Aŭto Analyse en Antaŭrigardo"</string>
+    <string name="street">"Strato"</string>
+    <string name="town">"Burgo"</string>
+    <string name="city">"Urbo"</string>
+    <string name="state">"Ŝtato"</string>
+    <string name="country">"Lando"</string>
+    <string name="cloudy">"Nuba"</string>
+    <string name="torchMode">"Torĉo Mode"</string>
+    <string name="infinity">"Malfinio"</string>
+    <string name="edit">"Redakti"</string>
+    <string name="samplingCount">"Specimenanta Grafo"</string>
+    <string name="selectNumberOfSamples">"Nombro da fojoj la solvo devus esti specimenis"</string>
+    <string name="developer">"Developer"</string>
+    <string name="samplingSummary">"fotoj estos prenita por ĉiu analizo. Rezulto estos mezala."</string>
+    <string name="enterColorRgb">"Entajpu koloro RGB"</string>
+    <string name="saveOriginalPhoto">"Konservi Originala Foto"</string>
+    <string name="saveOriginalPhotoConfirm">"Averto: Savante originalaj fotoj uzos multan spacon en via telefono."</string>
+    <string name="photoSampleDimensionMessage">"Elektu la longecon ekaperas la foton por analizo"</string>
+    <string name="photoSampleDimension">"Foto Specimena Dimensio"</string>
+    <string name="sending">"Sendado"</string>
+    <string name="current">Current</string>
+    <string name="save">Save</string>
+    <string name="load">Load</string>
+    <string name="name">Name</string>
+    <string name="noSavedCalibrations">There are no previously saved calibrations</string>
+    <string name="notFound">Not Found</string>
+    <string name="giveNameForCalibration">Give a descriptive name for this calibration</string>
+    <string name="saveCalibration">Save Calibration</string>
+    <string name="loadCalibration">Load Calibration</string>
+    <string name="invalidName">Invalid name</string>
+</resources>

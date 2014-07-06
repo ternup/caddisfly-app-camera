@@ -1,0 +1,188 @@
+<!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+<resources>
+    <string name="settings">"ಸೆಟ್ಟಿಂಗ್‌ಗಳು"</string>
+    <string name="calibrate">"ಮಾಪನಾಂಕ"</string>
+    <string name="analyzingWait">"ವಿಶ್ಲೇಷಣೆ ..."</string>
+    <string name="calibrate_info">"ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ ಕಾರ್ಟ್ರಿಡ್ಜ್ ಸರಿಯಾಗಿ ಲಗತ್ತಿಸಲಾಗಿದೆ, ನಂತರ ಓಕೆ ಒತ್ತಿ"</string>
+    <string name="appUpdate">"Caddisfly ಅಪ್ಡೇಟ್"</string>
+    <string name="askForUpdate">"ಒಂದು ಅಪ್ಡೇಟೆಡ್ ಆವೃತ್ತಿ ಲಭ್ಯವಿದೆ, ನೀವು ಈಗ ನವೀಕರಿಸಲು ಬಯಸುತ್ತೀರಾ?"</string>
+    <string name="seconds">"ಸೆಕೆಂಡುಗಳ"</string>
+    <string name="minutes">"ನಿಮಿಷಗಳು"</string>
+    <string name="checkUpdate">"ಅಪ್ಡೇಟ್ ಪರಿಶೀಲಿಸಿ"</string>
+    <string name="internetConnectionRequired">"ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಅಗತ್ಯವಿದೆ. ಡೇಟಾ ಜಾಲಕ್ಕೆ ಸಂಪರ್ಕ."</string>
+    <string name="dataConnection">"ಡೇಟಾ ಸಂಪರ್ಕ"</string>
+    <string name="testInProgress">"ಪರೀಕ್ಷೆ ನಡೆಯುತ್ತಿದೆ"</string>
+    <string name="alreadyHaveLatest">"ನೀವು ಈಗಾಗಲೇ Caddisfly ಇತ್ತೀಚಿನ ಆವೃತ್ತಿಯನ್ನು ಹೊಂದಿವೆ"</string>
+    <string name="remaining">"ಬಾಕಿ"</string>
+    <string name="result">"ಪರಿಣಾಮ"</string>
+    <string name="rgb">"RGB"</string>
+    <string name="ppm">"ppm"</string>
+    <string name="checkingForUpdates">"ಅಪ್ಡೇಟ್ಗಳಿಗಾಗಿ ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ ..."</string>
+    <string name="starting">"ಪ್ರಾರಂಭವಾಗುತ್ತಿದೆ ..."</string>
+    <string name="error">"ದೋಷ"</string>
+    <string name="retry">"ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ"</string>
+    <string name="outOfRange">"ವ್ಯಾಪ್ತಿಯ ಹೊರಗೆ ಬಣ್ಣ"</string>
+    <string name="help">"ಸಹಾಯ"</string>
+    <string name="placeDeviceInStand">"ಮುಂದುವರಿಸಲು ಒಂದು ಚಪ್ಪಟೆಯಾದ ಮೇಲ್ಮೈ ಮೇಲೆ ಫೋನ್ ಇರಿಸಿ"</string>
+    <string name="shakeToContinue">"ಕಾರ್ಟ್ರಿಡ್ಜ್ ಮಿಶ್ರಣವನ್ನು ಸರಿಯಾದ ಮಿಶ್ರಣ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಲು ಫೋನ್ ಅಲ್ಲಾಡಿಸಿ"</string>
+    <string name="shakeMe">"ನನ್ನ ಅಲ್ಲಾಡಿಸಿ"</string>
+    <string name="ok">"ಓಕೆ"</string>
+    <string name="cancel">"ರದ್ದುಮಾಡು "</string>
+    <string name="prototype">"ಮೊದಲ ಮಾದರಿ"</string>
+    <string name="alpha">"ಆಲ್ಫಾ"</string>
+
+    <string name="testFailedMessage">"ಮಿಶ್ರಣದ ಬಣ್ಣ ಶ್ರೇಣಿಯ ಹೊರಗಿದೆ"</string>
+    <string name="testFailedQualityMessage">"ಫೋಟೋ ಗುಣಮಟ್ಟ ಕೇವಲ %d%% ಆಗಿದೆ. ಕಾರ್ಟ್ರಿಡ್ಜ್ ಲಗತ್ತನ್ನು ಪರಿಶೀಲಿಸಿ."</string>
+    <string name="done">"ಒಕೆ"</string>
+    <string name="gettingUpdate">"Caddisfly ಅಪ್ಡೇಟ್ ನಡೆಯುತ್ತಿದೆ ..."</string>
+    <string name="calibrate_error">"Caddisfly ಮಾಪನಾಂಕ ಅಪೂರ್ಣ. ಪರೀಕ್ಷಾ ಪ್ರಾರಂಭಿಸುವ ಮೊದಲು ಮಾಪನಾಂಕ ಸರಿಪಡಿಸಿ."</string>
+    <string name="enableInternet">"ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಅಗತ್ಯವಿದೆ"</string>
+    <string name="noInternet">"ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಕಂಡುಬಂದಿಲ್ಲ"</string>
+    <string name="photoQuality">"ಫೋಟೋ ಗುಣಮಟ್ಟ"</string>
+    <string name="photoQualityError">"ಫೋಟೋ ಗುಣಮಟ್ಟ ತುಂಬಾ ಕಡಿಮೆ"</string>
+    <string name="connecting">"ಸಂಪರ್ಕಿಸಲಾಗುತ್ತಿದೆ ..."</string>
+    <string name="analyze">"ವಿಶ್ಲೇಷಿಸಿ"</string>
+    <string name="minPhotoQuality">"ಕನಿಷ್ಠ ಫೋಟೋ ಗುಣಮಟ್ಟ"</string>
+    <string name="clickAnalyze">"ಮುಂದುವರಿಸಲು ವಿಶ್ಲೇಷಿಸಿ ಕ್ಲಿಕ್ ಮಾಡಿ"</string>
+    <string name="notCalibrated">"ಮಾಪನಾಂಕ"</string>
+    <string name="invalidColor">"ಅಮಾನ್ಯವಾದ ಬಣ್ಣದ ಮೌಲ್ಯ"</string>
+    <string name="selectValueToCalibrate">"ಮಾಪನಾಂಕ ಮೌಲ್ಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ"</string>
+    <string name="startSurvey">"ಸಮೀಕ್ಷೆ ಪ್ರಾರಂಭಿಸಿ"</string>
+    <string name="startTest">"ಟೆಸ್ಟ್ ಪ್ರಾರಂಭಿಸಿ"</string>
+    <string name="installAkvoFlow">"Akvo ಫ್ಲೋ ಅಪ್ಲಿಕೇಶನ್ ಅನುಸ್ಥಾಪಿಸಿ"</string>
+    <string name="waterQualityTest">"ಜಲ ಗುಣಮಟ್ಟ ಟೆಸ್ಟ್"</string>
+    <string name="attachStandardCartridge">"ಈ ಮೌಲ್ಯದ ಪ್ರಮಾಣಿತ ಮಿಶ್ರಣ ಕಾರ್ಟ್ರಿಡ್ಜ್ ಲಗತ್ತಿಸಿ. ನಂತರ ಮಾಪನಾಂಕ ಒತ್ತಿ"</string>
+    <string name="analysisInProgress">"ವಿಶ್ಲೇಷಣೆ ನಡೆಯುತ್ತಿದೆ"</string>
+    <string name="importFromCaddisfly">"ಈ Caddisfly ರಿಂದ ಮಾಪನಾಂಕ ಬಣ್ಣಗಳು ಆಮದು ಮತ್ತು ಪ್ರಸ್ತುತ ಮೌಲ್ಯಗಳು ಬದಲಿಸಿ, ಮಾಡುತ್ತದೆ."</string>
+    <string name="importAction">"ಆಮದು "</string>
+    <string name="updateRequired">"ಈ ಲಕ್ಷಣವನ್ನು ಶಕ್ತಗೊಳಿಸಲು ಒಂದು ಹೊಸ ಆವೃತ್ತಿಗೆ ನವೀಕರಿಸಿ"</string>
+
+    <string name="fluoride">"ಫ್ಲೋರೈಡ್"</string>
+    <string name="fluoride2">"ಫ್ಲೋರೈಡ್ ಸುಲಭ"</string>
+    <string name="bacteria">"ಬ್ಯಾಕ್ಟೀರಿಯಾ"</string>
+    <string name="pH">"ಪಿಎಚ್"</string>
+    <string name="cropToSquare">"ಚದರ ಬೆಳೆ ಫೋಟೋ"</string>
+    <string name="ignoreCalibrationErrors">"ಮಾಪನಾಂಕ ದೋಷಗಳನ್ನು ನಿರ್ಲಕ್ಷಿಸು"</string>
+    <string name="calibrationColorError">"ಮಾಪನಾಂಕ ಬಣ್ಣ ತಪ್ಪು ತೋರುತ್ತದೆ. ಮಾಪನಾಂಕ ಮಾಡಲು ಒದಗಿಸಿದ ಪ್ರಮಾಣಿತ ಮಿಶ್ರಣಗಳನ್ನು ಬಳಸಿ."</string>
+    <string name="outOfSequence">"ಬಣ್ಣ ಅನುಕ್ರಮದ ಹೊರಗಿದೆ"</string>
+    <string name="duplicateSwatch">"ಬಣ್ಣ ನಕಲು"</string>
+
+    <string name="appName">"Caddisfly"</string>
+    <string name="about">"ಬಗ್ಗೆ"</string>
+    <string name="bacteriaTest">"ಬ್ಯಾಕ್ಟೀರಿಯಾ ಟೆಸ್ಟ್"</string>
+    <string name="swatches">"ಬಣ್ಣ ಮಾದರಿ"</string>
+    <string name="working">"ಕಾರ್ಯಾಚರಣೆ ನಡೆಯುತ್ತಿದೆ"</string>
+    <string name="send">"ಕಳುಹಿಸಿ"</string>
+    <string name="photo">"ಭಾವಚಿತ್ರ"</string>
+    <string name="delete">"ಅಳಿಸು"</string>
+    <string name="noData">"ಯಾವುದೇ ಸ್ಥಳಗಳಲ್ಲಿ"</string>
+    <string name="pressNewLocation">"ಪ್ರೆಸ್ 'ಹೊಸ ಸ್ಥಳ' ಬಟನ್"</string>
+    <string name="interval_info">"ಪ್ರತಿ ವಿಶ್ಲೇಷಣೆ ನಂತರ ನಿರೀಕ್ಷಿಸಿ ಅವಧಿ"</string>
+    <string name="details">"ವಿವರಗಳು"</string>
+    <string name="selectNumberOfTests">"ವಿಶ್ಲೇಷಿಸಲು ಎಷ್ಟು ಬಾರಿ ಆಯ್ಕೆ"</string>
+    <string name="reset">"ಮತ್ತೆ ಜೋಡಿಸಿ."</string>
+    <string name="drawer_open">"ಓಪನ್ ಸಂಚರಣೆ ಡ್ರಾಯರ್"</string>
+    <string name="drawer_close">"ಮುಚ್ಚಿ ಸಂಚರಣೆ ಡ್ರಾಯರ್"</string>
+    <string name="home">"ಮುಖಪುಟ"</string>
+    <string name="selectTestType">"ಮಾದರಿ ಆಯ್ಕೆ"</string>
+    <string name="analysisCount">"ಅನಾಲಿಸಿಸ್ ಎಣಿಕೆ"</string>
+    <string name="place">"ಸ್ಥಳಗಳು"</string>
+    <string name="sourceType">"ಮೂಲ ಮಾದರಿ"</string>
+    <string name="selectSourceType">"ಮೂಲ ಕೌಟುಂಬಿಕತೆ ಆಯ್ಕೆ"</string>
+    <string name="waterQualitySystem">"ವಾಟರ್ ಗುಣಮಟ್ಟ ವ್ಯವಸ್ಥೆ"</string>
+    <string name="general">"ಸಾಮಾನ್ಯ"</string>
+    <string name="shakeDevice">"ವಿಶ್ಲೇಷಿಸಲು ಶೇಕ್ ಅಗತ್ಯವಿದೆ"</string>
+    <string name="shakeDeviceSummary">"ಪರಿಹಾರ ಸರಿಯಾದ ಮಿಶ್ರಣ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಲು."</string>
+    <string name="soundAlarm">"ಅಲಾರ್ಮ್ ಮಾಡಿದಾಗ ಶೇಕ್ ಅಗತ್ಯವಿದೆ"</string>
+    <string name="soundAlarmSummary">"ಶೇಕ್ ಪ್ರತಿ ವಿಶ್ಲೇಷಣೆ ಮೊದಲು ಅಗತ್ಯವಿದೆ ಎಂದು ತಿಳಿಸಲು ಒಂದು ಎಚ್ಚರಿಕೆ."</string>
+    <string name="selectedWillBeDeleted">"ಆಯ್ಕೆಮಾಡಿದ ಐಟಂಗಳನ್ನು ಅಳಿಸಲಾಗುತ್ತದೆ"</string>
+    <string name="language">"ಭಾಷೆ"</string>
+    <string name="interval">"ಮಧ್ಯಂತರ"</string>
+    <string name="intervalMinutes">"ಇಂಟರ್ವಲ್ (ನಿಮಿಷಗಳು)"</string>
+    <string name="futureFeature">"ಫ್ಯೂಚರ್ ಫೀಚರ್"</string>
+    <string name="featureNotImplemented">"ವೈಶಿಷ್ಟ್ಯವು ಇನ್ನೂ ಕಾರ್ಯಗತಗೊಳಿಸಿಲ್ಲ"</string>
+
+    <string name="just_now">"ಇದೀಗ"</string>
+    <string name="yesterday">"ನಿನ್ನೆ"</string>
+    <string name="locale">"ಪ್ರದೇಶ"</string>
+    <string name="location">"ಸ್ಥಳ"</string>
+    <string name="address">"ವಿಳಾಸ"</string>
+    <string name="dayTheme">"ದಿನ ಥೀಮ್"</string>
+    <string name="nightTheme">"ನೈಟ್ ಥೀಮ್"</string>
+    <string name="newLocation">"ಹೊಸ ಸ್ಥಳ"</string>
+    <string name="notes">"ಟಿಪ್ಪಣಿಗಳು"</string>
+    <string name="selectLocation">"ಪರೀಕ್ಷೆಗೆ ಆಯ್ಕೆ ಸ್ಥಳ"</string>
+    <string name="locationDetails">"ಸ್ಥಳ ವಿವರಗಳು"</string>
+
+    <string-array name="source_types">
+        <item>"ಕೈ ಪಂಪು"</item>
+        <item>"ಟ್ಯೂಬ್ ವೆಲ್"</item>
+        <item>"ನದಿ / ಸ್ಟ್ರೀಮ್"</item>
+        <item>"ಓಪನ್ ವೆಲ್"</item>
+        <item>"ದೇಶೀಯ ಟ್ಯಾಪ್"</item>
+        <item>"ಜಲಾಶಯ / ಪಾಂಡ್ / ಲೇಕ್"</item>
+        <item>"ಕೈಗಾರಿಕಾ ಬಳಕೆ"</item>
+        <item>"ಇತರೆ"</item>
+    </string-array>
+
+    <string name="camera">"ಕ್ಯಾಮೆರಾ(ಛಾಯಾಚಿತ್ರಣ ಮಾಧ್ಯಮ)"</string>
+    <string name="cameraZoom">"ಕ್ಯಾಮೆರಾ ಜೂಮ್"</string>
+    <string name="zoom">"ಜೂಮ್ (ಬಳಕೆಯಲ್ಲಿಲ್ಲದ)"</string>
+    <string name="other">"ಇತರೆ"</string>
+    <string name="locations">"ತಾಣಗಳು"</string>
+    <string name="startNewTest">"ಹೊಸ ಟೆಸ್ಟ್ ಪ್ರಾರಂಭಿಸಿ"</string>
+    <string name="closeLocationSurvey">"ಈ ಸಮೀಕ್ಷೆ ಮುಚ್ಚಲಾಗುವುದು ಹಾಗೂ ಪ್ರವೇಶಿಸಿತು ಡೇಟಾ ಕಳೆದು ಹೋಗುತ್ತದೆ"</string>
+    <string name="closeSurvey">"ಮುಚ್ಚಿ ಸಮೀಕ್ಷೆ"</string>
+    <string name="incomplete">"ಅಪೂರ್ಣ"</string>
+    <string name="incompleteMessage">"ಸ್ಥಾನ ಹೆಸರು ನಮೂದಿಸಿ"</string>
+    <string name="result_sent">"ಟೆಸ್ಟ್ ವಿವರಗಳು ಯಶಸ್ವಿಯಾಗಿ ಸರ್ವರ್ ಕಳುಹಿಸಲಾಗುತ್ತದೆ"</string>
+    <string name="success">"ಯಶಸ್ಸು"</string>
+    <string name="send_failed">"ಕಾರಣ ಸರ್ವರ್ ಸಮಸ್ಯೆ ವಿಫಲವಾಗಿದೆ ಕಳುಹಿಸಿ. ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ."</string>
+    <string name="waterSourceLocation">"ವಾಟರ್ ಮೂಲ ಸ್ಥಳ"</string>
+    <string name="standNearWaterSource">"ನೀರಿನ ಮೂಲ ಬಳಿ ಸ್ಟ್ಯಾಂಡ್."</string>
+    <string name="ensureClearViewForGPS">"ಜಿಪಿಎಸ್ ಸಂಕೇತಗಳನ್ನು ಪಡೆಯಲು ಆಕಾಶ ಸ್ಪಷ್ಟ ನೋಟ ಲಭ್ಯವಿದೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ"</string>
+    <string name="getLocation">"ಸ್ಥಳ ಪಡೆಯಿರಿ"</string>
+    <string name="gettingLocation">"ಸ್ಥಳ ಗೆಟ್ಟಿಂಗ್ ..."</string>
+    <string name="takeSourcePhoto">"ನೀರಿನ ಮೂಲದ ಫೋಟೋ ತೆಗೆಯಿರಿ"</string>
+    <string name="playCameraSound">"ಕ್ಯಾಮೆರಾ ಧ್ವನಿ"</string>
+    <string name="autoAnalyze">"ಆಟೋ ಮುನ್ನೋಟ ಮೇಲೆ ವಿಶ್ಲೇಷಿಸಿ"</string>
+    <string name="street">"ರಸ್ತೆ"</string>
+    <string name="town">"ಪಟ್ಟಣ"</string>
+    <string name="city">"ನಗರ"</string>
+    <string name="state">"ರಾಜ್ಯ"</string>
+    <string name="country">"ರಾಷ್ಟ್ರ"</string>
+    <string name="cloudy">"ಮೋಡ"</string>
+    <string name="torchMode">"ಟಾರ್ಚ್ ಮೋಡ್"</string>
+    <string name="infinity">"ಅನಂತ"</string>
+    <string name="edit">"ಸಂಪಾದಿಸು"</string>
+    <string name="samplingCount">"ನಮೂನೆ ನ್ಯಾಷನಲ್"</string>
+    <string name="selectNumberOfSamples">"ಬಾರಿ ಸಂಖ್ಯೆ ಪರಿಹಾರ ರುಚಿ ಮಾಡಬೇಕು"</string>
+    <string name="developer">"ಡೆವಲಪರ್"</string>
+    <string name="samplingSummary">"ಫೋಟೋಗಳನ್ನು ಪ್ರತಿ ವಿಶ್ಲೇಷಣೆಗೆ ತೆಗೆದುಕೊಳ್ಳಲಾಗುವುದು. ಫಲಿತಾಂಶ ಸರಾಸರಿ ಇರುತ್ತದೆ."</string>
+    <string name="enterColorRgb">"ಬಣ್ಣ RGB ಯನ್ನು"</string>
+    <string name="saveOriginalPhoto">"ಉಳಿಸಿ ಮೂಲ ಫೋಟೋ"</string>
+    <string name="saveOriginalPhotoConfirm">"ಎಚ್ಚರಿಕೆ: ಉಳಿಸಲಾಗುತ್ತಿದೆ ಮೂಲ ಫೋಟೋಗಳನ್ನು ನಿಮ್ಮ ಫೋನ್ನಲ್ಲಿ ಜಾಗವನ್ನು ಸಾಕಷ್ಟು ಬಳಸುತ್ತದೆ."</string>
+    <string name="photoSampleDimensionMessage">"ವಿಶ್ಲೇಷಣೆಗೆ ಚಿತ್ರ ಕ್ರಾಪ್ ಉದ್ದ ಆಯ್ಕೆ"</string>
+    <string name="photoSampleDimension">"ಫೋಟೋ ಮಾದರಿ ಆಯಾಮ"</string>
+    <string name="sending">"ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ"</string>
+    <string name="noSavedCalibrations">There are no previously saved calibrations</string>
+    <string name="notFound">Not Found</string>
+    <string name="giveNameForCalibration">Give a descriptive name for this calibration</string>
+    <string name="saveCalibration">Save Calibration</string>
+    <string name="loadCalibration">Load Calibration</string>
+    <string name="invalidName">Invalid name</string>
+</resources>
