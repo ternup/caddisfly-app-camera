@@ -79,7 +79,7 @@
     <string name="ignoreCalibrationErrors">Ignore calibration errors</string>
     <string name="calibrationColorError">The calibrated color seems to be incorrect. Recalibrate with the provided standard solutions.</string>
     <string name="outOfSequence">Out of Sequence</string>
-    <string name="duplicateSwatch">Duplicate Color</string>
+    <string name="duplicateSwatch">Duplicate or similar color</string>
 
     <string name="appName">Caddisfly</string>
     <string name="about">About</string>
@@ -190,4 +190,6 @@
     <string name="saveCalibration">Save Calibration</string>
     <string name="loadCalibration">Load Calibration</string>
     <string name="invalidName">Invalid name</string>
+    <string name="overwriteFile">Overwrite File</string>
+    <string name="nameAlreadyExists">Name already exists. Overwrite file?</string>
 </resources>

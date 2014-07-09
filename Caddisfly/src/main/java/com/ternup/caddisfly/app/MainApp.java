@@ -169,6 +169,24 @@ public class MainApp extends Application {
         loadCalibratedSwatches(Globals.PH_INDEX);
     }
 
+
+    public void setSwatches(int testType) {
+        switch (testType) {
+            case Globals.FLUORIDE_INDEX:
+                setFluorideSwatches();
+                break;
+            case Globals.FLUORIDE_2_INDEX:
+                setFluoride2Swatches();
+                break;
+            case Globals.BACTERIA_INDEX:
+                break;
+            case Globals.PH_INDEX:
+                setPhSwatches();
+                break;
+
+        }
+    }
+
     /**
      * Load any user calibrated swatches which overrides factory preset swatches
      *

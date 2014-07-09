@@ -18,7 +18,6 @@ package com.ternup.caddisfly.fragment;
 
 import android.app.AlertDialog;
 import android.app.DialogFragment;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.ImageFormat;
@@ -134,7 +133,7 @@ public class CameraFragment extends DialogFragment {
     private void startTakingPictures() {
 
         Context context = getActivity();
-        progressDialog = new ProgressDialog(context);
+        progressDialog = new AlertDialog.Builder(context).create();
         progressDialog.setMessage(getString(R.string.analyzingWait));
         progressDialog.setCancelable(false);
 

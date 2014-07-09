@@ -16,6 +16,7 @@
 
 package com.ternup.caddisfly.util;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -335,6 +336,37 @@ public class ColorUtils {
         return mostFrequent;
     }
 
+    public static void autoGenerateColors(int index, int testType, ArrayList<ColorInfo> colorList, int incrementStep,
+                                          SharedPreferences.Editor editor) {
+
+        int startColor = colorList.get(index).getColor();
+        if (index < 30) {
+            for (int i = 1; i < incrementStep; i++) {
+                int nextColor = ColorUtils.getGradientColor(startColor,
+                        colorList.get(index + incrementStep).getColor(), incrementStep,
+                        i);
+                ColorInfo colorInfo = new ColorInfo(nextColor, 0, 0, 100);
+                colorList.set(index + i, colorInfo);
+
+                editor.putInt(String.format("%d-%s", testType, String.valueOf(index + i)),
+                        nextColor);
+            }
+        }
+
+        if (index > 0) {
+            for (int i = 1; i < incrementStep; i++) {
+                int nextColor = ColorUtils.getGradientColor(startColor,
+                        colorList.get(index - incrementStep).getColor(), incrementStep,
+                        i);
+                ColorInfo colorInfo = new ColorInfo(nextColor, 0, 0, 100);
+                colorList.set(index - i, colorInfo);
+
+                editor.putInt(String.format("%d-%s", testType, String.valueOf(index - i)),
+                        nextColor);
+            }
+        }
+    }
+
     public static void validateGradient(ArrayList<ColorInfo> colorList, int size, int increment, int minQuality) {
 
         int index1, index2;
@@ -343,11 +375,28 @@ public class ColorUtils {
         boolean errorFound = false;
         boolean notCalibrated = false;
 
+        for (int i = 1; i < colorList.size(); i++) {
+            int color1 = colorList.get(i - 1).getColor();
+            int color2 = colorList.get(i).getColor();
+            double distance = getDistance(color1, color2);
+            colorList.get(i).setDistance(distance);
+        }
+
+        for (int i = 1; i < size; i++) {
+            index1 = (i - 1) * increment;
+            index2 = i * increment;
+            int color1 = colorList.get(index1).getColor();
+            int color2 = colorList.get(index2).getColor();
+            double distance = getDistance(color1, color2);
+            colorList.get(index2).setmIncrementDistance(distance);
+        }
+
 
         for (int i = 0; i < size; i++) {
-            int index = i * increment;
-            if (colorList.get(index).getColor() == -1) {
-                colorList.get(index).setErrorCode(Globals.ERROR_NOT_YET_CALIBRATED);
+            index1 = i * increment;
+            int color1 = colorList.get(index1).getColor();
+            if (color1 == -1) {
+                colorList.get(index1).setErrorCode(Globals.ERROR_NOT_YET_CALIBRATED);
                 notCalibrated = true;
             }
         }
@@ -373,7 +422,7 @@ public class ColorUtils {
                 double distance = getDistance(color1, color2);
                 //Log.i("ColorInfo", String.valueOf(distance));
                 //Invalid if color is too distant from previous color in list
-                if (distance > 70) {
+                if (distance > 14 * increment) {
                     //Only one color needs to be set as invalid
                     if (colorList.get(index1).getErrorCode() == 0) {
                         errorFound = true;
@@ -382,10 +431,10 @@ public class ColorUtils {
                             int index3 = (i + 2) * increment;
                             int color3 = colorList.get(index3).getColor();
                             distance = getDistance(color2, color3);
-                            if (distance < 71) {
-                                colorList.get(index1).setErrorCode(Globals.ERROR_OUT_OF_RANGE);
-                            } else {
+                            if (distance < 20) {
                                 colorList.get(index2).setErrorCode(Globals.ERROR_OUT_OF_RANGE);
+                            } else {
+                                colorList.get(index1).setErrorCode(Globals.ERROR_OUT_OF_RANGE);
                             }
                         } else {
                             colorList.get(index2).setErrorCode(Globals.ERROR_OUT_OF_RANGE);
@@ -401,7 +450,7 @@ public class ColorUtils {
                     for (int j = 0; j < size; j++) {
                         index2 = j * increment;
                         int color2 = colorList.get(index2).getColor();
-                        if (color1 != color2) {
+                        if (index1 != index2) {
                             double distance = getDistance(color1, color2);
 
                             //Invalid if color gradient is in reverse
@@ -414,7 +463,7 @@ public class ColorUtils {
                             //Log.i("ColorInfo", distance + "  =   "  + getColorRgbString(color1) + "  -  " + getColorRgbString(color2));
 
                             //Invalid if the color is too close to any other color in the list
-                            if (distance < 10) {
+                            if (distance < 2 * increment) {
                                 colorList.get(index1).setErrorCode(Globals.ERROR_DUPLICATE_SWATCH);
                             }
                         }

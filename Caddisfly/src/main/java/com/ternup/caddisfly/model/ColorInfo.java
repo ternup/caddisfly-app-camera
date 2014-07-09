@@ -26,6 +26,10 @@ public class ColorInfo {
 
     final int mQuality;
 
+    double mDistance;
+
+    double mIncrementDistance;
+
     int mErrorCode = 0;
 
     public ColorInfo(int color, int count, int dominantCount, int quality) {
@@ -51,6 +55,23 @@ public class ColorInfo {
     public int getQuality() {
         return mQuality;
     }
+
+    public double getDistance() {
+        return mDistance;
+    }
+
+    public void setDistance(double value) {
+        mDistance = value;
+    }
+
+    public double getIncrementDistance() {
+        return mIncrementDistance;
+    }
+
+    public void setmIncrementDistance(double value) {
+        mIncrementDistance = value;
+    }
+
 
     public int getErrorCode() {
         return mErrorCode;

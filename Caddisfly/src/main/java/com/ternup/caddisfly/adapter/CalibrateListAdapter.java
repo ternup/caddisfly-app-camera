@@ -114,7 +114,7 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
                     button.setBackgroundColor(color);
                     button.setText("");
                     rgbText.setText(
-                            String.format("%s: %d  %d  %d", mainApp.getString(R.string.rgb), r, g, b));
+                            String.format("d:%.0f  %s: %d  %d  %d", colorRange.get(index).getIncrementDistance(), mainApp.getString(R.string.rgb), r, g, b));
                 } else {
                     button.setBackgroundColor(Color.argb(0, 10, 10, 10));
                     button.setText("?");

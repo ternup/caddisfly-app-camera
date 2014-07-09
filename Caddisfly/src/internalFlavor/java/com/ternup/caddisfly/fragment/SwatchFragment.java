@@ -16,17 +16,17 @@
 
 package com.ternup.caddisfly.fragment;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.adapter.SwatchesAdapter;
-import com.ternup.caddisfly.app.MainApp;
-import com.ternup.caddisfly.model.ColorInfo;
-
 import android.app.Activity;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.adapter.SwatchesAdapter;
+import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.model.ColorInfo;
 
 import java.util.ArrayList;
 
@@ -52,11 +52,11 @@ public class SwatchFragment extends ListFragment {
         Activity activity = getActivity();
         if (activity != null) {
 
-            MainApp context = (MainApp) activity.getApplicationContext();
+            MainApp mainApp = (MainApp) activity.getApplicationContext();
 
-            if (context != null) {
+            if (mainApp != null) {
                 ArrayList<Integer> swatchList = new ArrayList<Integer>();
-                for (ColorInfo aColorList : context.colorList) {
+                for (ColorInfo aColorList : mainApp.colorList) {
                     swatchList.add(aColorList.getColor());
                 }
 

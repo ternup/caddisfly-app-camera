@@ -27,11 +27,11 @@ public class Globals extends GlobalsBase {
 
     // Caddisfly update check path
     public static final String UPDATE_CHECK_URL
-            = "http://caddisfly.ternup.com/akvoapp/v.txt?check=29";
+            = "http://caddisfly.ternup.com/akvoapp/v.txt?check=30";
 
     // Caddisfly update path
     public static final String UPDATE_URL
-            = "http://caddisfly.ternup.com/akvoapp/akvo_caddisfly_update.apk?check=29";
+            = "http://caddisfly.ternup.com/akvoapp/akvo_caddisfly_update.apk?check=30";
 
     public static final String FLOW_SURVEY_PACKAGE_NAME = "com.gallatinsystems.survey.device";
 

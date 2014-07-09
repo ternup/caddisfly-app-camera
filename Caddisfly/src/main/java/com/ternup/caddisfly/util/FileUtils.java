@@ -80,17 +80,26 @@ public class FileUtils {
         }
     }
 
+    public static void deleteFile(String folder, String fileName) {
+        File external = Environment.getExternalStorageDirectory();
+        String path = external.getPath() + folder;
+        File file = new File(path + fileName);
+        file.delete();
+    }
+
     public static void deleteFiles(ArrayList<String> files) {
 
-        for (int i = 0; i < files.size(); i++) {
-            File file = new File(files.get(i));
-            file.delete();
+        if (files != null) {
+            for (int i = 0; i < files.size(); i++) {
+                File file = new File(files.get(i));
+                file.delete();
+            }
         }
     }
 
     public static void deleteFilesExcepting(File folder, ArrayList<String> files) {
 
-        if (folder.isDirectory()) {
+        if (folder != null && folder.isDirectory()) {
             File[] listFiles = folder.listFiles();
 
             if (listFiles != null && listFiles.length > 0) {
@@ -180,10 +189,8 @@ public class FileUtils {
     }
 
 
-    public static void saveToFile(Context context, String name, String data) {
+    public static void saveToFile(Context context, String path, String name, String data) {
         try {
-            File external = Environment.getExternalStorageDirectory();
-            String path = external.getPath() + "/com.ternup.caddisfly/calibrate/";
 
             File folder = new File(path);
             if (!folder.exists()) {

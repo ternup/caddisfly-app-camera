@@ -80,84 +80,52 @@ import java.util.Locale;
 
 public class ProgressActivityBase extends Activity implements CameraFragment.Cancelled {
 
-    final Handler delayHandler = new Handler();
-
-    private final PhotoTakenHandler mPhotoTakenHandler = new PhotoTakenHandler(this);
-
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+    protected final BroadcastReceiver receiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             InitializeTest(context);
         }
     };
-
+    final Handler delayHandler = new Handler();
+    private final PhotoTakenHandler mPhotoTakenHandler = new PhotoTakenHandler((ProgressActivity) this);
+    protected PowerManager.WakeLock wakeLock;
+    protected int mInterval;
+    protected int mTestType;
     CameraFragment mCameraFragment;
-
     File calibrateFolder;
     ArrayList<String> oldFilePaths;
 
-    Timer timer;
-
-    Runnable delayRunnable;
-
-    private LinearLayout mProgressLayout;
-
     //private ProgressBar mSingleProgress;
-
+    Timer timer;
+    Runnable delayRunnable;
+    private LinearLayout mProgressLayout;
     private LinearLayout mShakeLayout;
-
     private TextView mTitleText;
-
     private TextView mRemainingText;
-
     private ProgressBar mProgressBar;
-
-    private TextView mTimeText;
-
-    private long mNextAlarmTime;
-
-    private TextView mPlaceInStandText;
 
     //Vibrator mVibrator;
     //private MediaPlayer cameraMediaPlayer;
-
+    private TextView mTimeText;
+    private long mNextAlarmTime;
+    private TextView mPlaceInStandText;
     private SensorManager mSensorManager;
-
     private Sensor mAccelerometer;
-
     private ShakeDetector mShakeDetector;
-
-    private PowerManager.WakeLock wakeLock;
-
     private MediaPlayer mMediaPlayer;
-
     // The folder path where the photos will be stored
     private String mFolderName;
-
     private long mId = -1;
-
     private int mIndex = 0;
-
-    private int mInterval;
-
     private int mTestTotal;
-
     private boolean mShakeDevice;
-
     private boolean mTestCompleted;
-
     private boolean mSoundAlarm;
-
     // Track if the test was just started in which case it can be cancelled by back button
     private boolean mWaitingForFirstShake;
-
     private boolean mWaitingForShake = true;
-
     private boolean mWaitingForStillness = false;
-
-    private int mTestType;
-
     private long mLocationId;
 
     private TextView mRemainingValueText;
@@ -473,7 +441,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
 
     }
 
-    private void sendResult(Message msg) {
+    protected void sendResult(Message msg) {
 
         mId = PreferencesHelper.getCurrentTestId(this, null, msg.getData());
 
@@ -488,7 +456,6 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
         if (quality < minAccuracy) {
             message = String.format(getString(R.string.testFailedQualityMessage), minAccuracy);
         }
-
 
         if (mTestType != Globals.BACTERIA_INDEX && (result < 0 || quality < minAccuracy)) {
 
@@ -822,7 +789,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                 .getInt(context, R.string.samplingCountKey, Globals.SAMPLING_COUNT_DEFAULT);
     }
 
-    private boolean hasTestCompleted(String folderName) {
+    protected boolean hasTestCompleted(String folderName) {
 
         if (!hasSamplingCompleted() && mTestType != Globals.BACTERIA_INDEX) {
             return false;
@@ -905,16 +872,16 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
 
     private static class PhotoTakenHandler extends Handler {
 
-        private final WeakReference<ProgressActivityBase> mService;
+        private final WeakReference<ProgressActivity> mService;
 
-        public PhotoTakenHandler(ProgressActivityBase service) {
-            mService = new WeakReference<ProgressActivityBase>(service);
+        public PhotoTakenHandler(ProgressActivity service) {
+            mService = new WeakReference<ProgressActivity>(service);
         }
 
         @Override
         public void handleMessage(Message msg) {
 
-            ProgressActivityBase service = mService.get();
+            ProgressActivity service = mService.get();
 
             service.mCameraFragment.dismiss();
 

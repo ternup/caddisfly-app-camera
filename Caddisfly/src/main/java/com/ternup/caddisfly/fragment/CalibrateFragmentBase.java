@@ -21,15 +21,18 @@ import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.adapter.CalibrateListAdapter;
@@ -129,7 +132,8 @@ public class CalibrateFragmentBase extends ListFragment implements AdapterView.O
                             android.R.layout.select_dialog_singlechoice);
 
                     File external = Environment.getExternalStorageDirectory();
-                    String path = external.getPath() + "/com.ternup.caddisfly/calibrate/";
+                    final String folderName = "/com.ternup.caddisfly/calibrate/";
+                    String path = external.getPath() + folderName;
                     File folder = new File(path);
                     if (folder.exists()) {
                         final File[] listFiles = folder.listFiles();
@@ -145,6 +149,7 @@ public class CalibrateFragmentBase extends ListFragment implements AdapterView.O
                                     }
                                 }
                         );
+
                         builderSingle.setAdapter(arrayAdapter,
                                 new DialogInterface.OnClickListener() {
                                     @Override
@@ -164,6 +169,25 @@ public class CalibrateFragmentBase extends ListFragment implements AdapterView.O
                                                 @Override
                                                 protected Void doInBackground(Void... params) {
                                                     mainApp.saveCalibratedSwatches(mainApp.currentTestType, swatchList);
+
+                                                    mainApp.setSwatches(mainApp.currentTestType);
+
+                                                    SharedPreferences sharedPreferences = PreferenceManager
+                                                            .getDefaultSharedPreferences(getActivity());
+                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                                                    for (int i = 0; i < mainApp.rangeIntervals.size(); i++) {
+                                                        int index = i * mainApp.rangeIncrementStep;
+
+                                                        ColorUtils.autoGenerateColors(
+                                                                index,
+                                                                mainApp.currentTestType,
+                                                                mainApp.colorList,
+                                                                mainApp.rangeIncrementStep, editor);
+                                                    }
+                                                    editor.commit();
+
+
                                                     return null;
                                                 }
 
@@ -180,7 +204,37 @@ public class CalibrateFragmentBase extends ListFragment implements AdapterView.O
                                     }
                                 }
                         );
-                        builderSingle.show();
+                        //builderSingle.show();
+
+                        final AlertDialog alert = builderSingle.create();
+                        alert.setOnShowListener(new DialogInterface.OnShowListener() {
+                            @Override
+                            public void onShow(DialogInterface dialogInterface) {
+                                final ListView listView = alert.getListView();
+                                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                                    @Override
+                                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                        final int position = i;
+
+                                        AlertUtils.askQuestion(getActivity(), R.string.delete, R.string.selectedWillBeDeleted, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                String fileName = listFiles[position].getName();
+                                                FileUtils.deleteFile(folderName, fileName);
+                                                ArrayAdapter listAdapter = (ArrayAdapter) listView.getAdapter();
+                                                listAdapter.remove(listAdapter.getItem(position));
+                                            }
+                                        }, null);
+                                        return true;
+                                    }
+                                });
+
+                            }
+                        });
+
+                        alert.show();
+
+
                     } else {
                         AlertUtils.showMessage(getActivity(), R.string.notFound, R.string.noSavedCalibrations);
                     }

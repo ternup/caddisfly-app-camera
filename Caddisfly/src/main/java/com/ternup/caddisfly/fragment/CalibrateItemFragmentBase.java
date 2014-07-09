@@ -17,7 +17,6 @@
 package com.ternup.caddisfly.fragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,14 +25,12 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Message;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,7 +45,6 @@ import com.ternup.caddisfly.util.AlertUtils;
 import com.ternup.caddisfly.util.ColorUtils;
 import com.ternup.caddisfly.util.DataHelper;
 import com.ternup.caddisfly.util.FileUtils;
-import com.ternup.caddisfly.util.ImageUtils;
 import com.ternup.caddisfly.util.PreferencesHelper;
 import com.ternup.caddisfly.util.PreferencesUtils;
 
@@ -348,7 +344,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
                     editor.putInt(String.format("%d-a-%s", mTestType, String.valueOf(index)),
                             accuracy);
 
-                    autoGenerateColors(index, colorList, mainApp.rangeIncrementStep, editor);
+                    ColorUtils.autoGenerateColors(index, mTestType, colorList, mainApp.rangeIncrementStep, editor);
                     editor.commit();
                 }
                 return null;
@@ -365,7 +361,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
         }).execute();
     }
 
-    private boolean validateCalibration(final Message msg) {
+/*    private boolean validateCalibration(final Message msg) {
         Context context = getActivity();
 
         //double result = msg.getData().getDouble(MainApp.RESULT_VALUE_KEY, -1);
@@ -422,7 +418,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
         }
         return true;
 
-    }
+    }*/
 
     protected void updateListView(int position) {
         String folderName = FileUtils.getStoragePath(getActivity(), -1,
@@ -438,36 +434,6 @@ public class CalibrateItemFragmentBase extends ListFragment {
         setListAdapter(mAdapter);
     }
 
-    void autoGenerateColors(int index, ArrayList<ColorInfo> colorList, int incrementStep,
-                            SharedPreferences.Editor editor) {
-
-        int startColor = colorList.get(index).getColor();
-        if (index < 30) {
-            for (int i = 1; i < incrementStep; i++) {
-                int nextColor = ColorUtils.getGradientColor(startColor,
-                        colorList.get(index + incrementStep).getColor(), incrementStep,
-                        i);
-                ColorInfo colorInfo = new ColorInfo(nextColor, 0, 0, 100);
-                colorList.set(index + i, colorInfo);
-
-                editor.putInt(String.format("%d-%s", mTestType, String.valueOf(index + i)),
-                        nextColor);
-            }
-        }
-
-        if (index > 0) {
-            for (int i = 1; i < incrementStep; i++) {
-                int nextColor = ColorUtils.getGradientColor(startColor,
-                        colorList.get(index - incrementStep).getColor(), incrementStep,
-                        i);
-                ColorInfo colorInfo = new ColorInfo(nextColor, 0, 0, 100);
-                colorList.set(index - i, colorInfo);
-
-                editor.putInt(String.format("%d-%s", mTestType, String.valueOf(index - i)),
-                        nextColor);
-            }
-        }
-    }
 
 /*
     private boolean hasSamplingCompleted() {

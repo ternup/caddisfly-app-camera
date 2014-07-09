@@ -22,6 +22,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.KeyEvent;
@@ -41,9 +42,11 @@ import android.widget.TextView;
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.model.ColorInfo;
+import com.ternup.caddisfly.util.AlertUtils;
 import com.ternup.caddisfly.util.ColorUtils;
 import com.ternup.caddisfly.util.FileUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -133,12 +136,29 @@ public class CalibrateFragment extends CalibrateFragmentBase {
                             public void onClick(View view) {
 
                                 if (!input.getText().toString().trim().isEmpty()) {
-                                    ArrayList<String> exportList = new ArrayList<String>();
+                                    final ArrayList<String> exportList = new ArrayList<String>();
 
                                     for (ColorInfo aColorList : mainApp.colorList) {
                                         exportList.add(ColorUtils.getColorRgbString(aColorList.getColor()));
                                     }
-                                    FileUtils.saveToFile(getActivity(), input.getText().toString(), exportList.toString());
+
+                                    File external = Environment.getExternalStorageDirectory();
+                                    final String path = external.getPath() + "/com.ternup.caddisfly/calibrate/";
+
+                                    File file = new File(path + input.getText());
+                                    if (file.exists()) {
+                                        AlertUtils.askQuestion(getActivity(), R.string.overwriteFile,
+                                                R.string.nameAlreadyExists, new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        FileUtils.saveToFile(getActivity(), path, input.getText().toString(),
+                                                                exportList.toString());
+                                                    }
+                                                }, null
+                                        );
+                                    }
+
+
                                     closeKeyboard(input);
                                     alertDialog.dismiss();
                                 } else {

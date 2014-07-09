@@ -43,8 +43,7 @@
             android:layout_marginRight="7dp"
             android:layout_marginTop="7dp"
             android:clickable="false"
-            android:focusable="false"
-            />
+            android:focusable="false" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -67,7 +66,8 @@
                 android:layout_height="wrap_content"
                 android:textIsSelectable="false"
                 android:textSize="14sp"
-                tools:text="rgb: 234 56 120" />
+                tools:text="d:40 rgb: 234 56 120" />
+
         </LinearLayout>
 
         <ImageView

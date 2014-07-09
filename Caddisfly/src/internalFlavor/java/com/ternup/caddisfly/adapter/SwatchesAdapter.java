@@ -73,7 +73,7 @@ public class SwatchesAdapter extends ArrayAdapter<Integer> {
             int b = Color.blue(color);
 
             rgbText.setText(
-                    String.format("%s: %d  %d  %d", mainApp.getString(R.string.rgb), r, g, b));
+                    String.format("d:%.0f  %s: %d  %d  %d", colorRange.get(position).getDistance(), mainApp.getString(R.string.rgb), r, g, b));
         }
         return rowView;
     }
