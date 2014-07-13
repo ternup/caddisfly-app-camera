@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) TernUp Research Labs
   ~
@@ -14,12 +15,8 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/menu_load"
-        android:enabled="true"
-        android:icon="@drawable/ic_action_load_light"
-        android:orderInCategory="0"
-        android:showAsAction="always"
-        android:title="@string/load" />
-</menu>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@android:color/transparent" android:state_pressed="true" />
+    <item android:drawable="@android:color/transparent" android:state_focused="true" />
+    <item android:drawable="@color/background_alternate" />
+</selector>

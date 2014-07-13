@@ -54,11 +54,10 @@ public class MainActivity extends MainActivityBase
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setTheme(R.style.AppTheme_Dark);
+        this.setTheme(R.style.Flow_Theme);
 
         MainApp mainApp = (MainApp) this.getApplicationContext();
-
-        mainApp.CurrentTheme = R.style.AppTheme_Dark;
+        mainApp.CurrentTheme = R.style.Flow_Theme;
         setContentView(R.layout.activity_main);
 
         displayView(Globals.HOME_SCREEN_INDEX, false);

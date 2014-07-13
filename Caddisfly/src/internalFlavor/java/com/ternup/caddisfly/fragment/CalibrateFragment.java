@@ -40,6 +40,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.model.ColorInfo;
 import com.ternup.caddisfly.util.AlertUtils;
@@ -143,7 +144,7 @@ public class CalibrateFragment extends CalibrateFragmentBase {
                                     }
 
                                     File external = Environment.getExternalStorageDirectory();
-                                    final String path = external.getPath() + "/com.ternup.caddisfly/calibrate/";
+                                    final String path = external.getPath() + "/" + Globals.APP_FOLDER_NAME + "/calibrate/";
 
                                     File file = new File(path + input.getText());
                                     if (file.exists()) {
@@ -156,8 +157,10 @@ public class CalibrateFragment extends CalibrateFragmentBase {
                                                     }
                                                 }, null
                                         );
+                                    } else {
+                                        FileUtils.saveToFile(getActivity(), path, input.getText().toString(),
+                                                exportList.toString());
                                     }
-
 
                                     closeKeyboard(input);
                                     alertDialog.dismiss();

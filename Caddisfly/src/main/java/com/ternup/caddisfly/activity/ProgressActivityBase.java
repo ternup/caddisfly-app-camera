@@ -92,10 +92,11 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
     protected PowerManager.WakeLock wakeLock;
     protected int mInterval;
     protected int mTestType;
+    // The folder path where the photos will be stored
+    protected String mFolderName;
     CameraFragment mCameraFragment;
     File calibrateFolder;
     ArrayList<String> oldFilePaths;
-
     //private ProgressBar mSingleProgress;
     Timer timer;
     Runnable delayRunnable;
@@ -104,7 +105,6 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
     private TextView mTitleText;
     private TextView mRemainingText;
     private ProgressBar mProgressBar;
-
     //Vibrator mVibrator;
     //private MediaPlayer cameraMediaPlayer;
     private TextView mTimeText;
@@ -114,8 +114,6 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
     private MediaPlayer mMediaPlayer;
-    // The folder path where the photos will be stored
-    private String mFolderName;
     private long mId = -1;
     private int mIndex = 0;
     private int mTestTotal;
@@ -165,7 +163,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
         mShakeLayout = (LinearLayout) findViewById(R.id.shakeLayout);
         mRemainingValueText = (TextView) findViewById(R.id.remainingValueText);
         mRemainingText = (TextView) findViewById(R.id.remainingText);
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mProgressBar = (ProgressBar) findViewById(R.id.testProgressBar);
         mTimeText = (TextView) findViewById(R.id.timeText);
         mPlaceInStandText = (TextView) findViewById(R.id.placeInStandText);
         //mSingleProgress = (ProgressBar) findViewById(R.id.singleProgress);

@@ -16,8 +16,6 @@
 
 package com.ternup.caddisfly.util;
 
-import com.ternup.caddisfly.R;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -26,6 +24,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
+
+import com.ternup.caddisfly.R;
 
 
 public class NetworkUtils {
@@ -44,7 +44,7 @@ public class NetworkUtils {
 
         if (activeNetwork == null || !activeNetwork.isConnectedOrConnecting()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle(R.string.noInternet);
+            builder.setTitle(R.string.dataConnection);
             builder.setMessage(R.string.enableInternet);
             builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialogInterface, int i) {

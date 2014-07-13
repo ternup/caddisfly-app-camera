@@ -41,7 +41,7 @@ public class MainApp extends Application {
 
     public int rangeStartIncrement = 0;
 
-    public int CurrentTheme = R.style.AppTheme_Light;
+    public int CurrentTheme = R.style.Flow_Theme;
 
     public int currentTestType = Globals.FLUORIDE_INDEX;
 

@@ -21,7 +21,7 @@
     <application
         android:name="com.ternup.caddisfly.app.MainApp"
         android:label="@string/appName"
-        android:theme="@style/AppTheme.Dark">
+        android:theme="@style/Flow.Theme">
         <activity
             android:name="org.akvo.mobile.caddisfly.activity.MainActivity"
             android:label="@string/appName"

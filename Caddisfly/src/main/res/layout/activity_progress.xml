@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) TernUp Research Labs
   ~
   ~ This file is part of Caddisfly
@@ -16,151 +15,154 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="@dimen/activity_horizontal_margin"
-              android:weightSum="1"
-              android:id="@+id/linearLayout">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:weightSum="1">
+
     <TextView
-            android:id="@+id/placeInStandText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:textSize="30sp"
-            android:text="@string/placeDeviceInStand"
-            android:gravity="center"
-            android:layout_marginTop="100dp"
-            android:visibility="gone"/>
+        android:id="@+id/placeInStandText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:text="@string/placeDeviceInStand"
+        android:textSize="30sp"
+        android:visibility="gone" />
 
     <LinearLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <DigitalClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@+id/titleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible"
-            android:id="@+id/progressLayout">
-        <DigitalClock android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_gravity="center_horizontal"
-                />
-        <TextView
-                tools:text="@string/bacteria"
-                android:id="@+id/titleText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#454545"
-                android:textSize="40sp"/>
+            android:gravity="center_horizontal"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#454545"
+            android:textSize="40sp"
+            tools:text="@string/bacteria" />
 
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center_horizontal"
-                android:text="@string/testInProgress"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#777777"
-                android:textSize="17sp"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal"
+            android:text="@string/testInProgress"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#777777"
+            android:textSize="17sp" />
 
         <ProgressBar
-                android:id="@+id/singleProgress"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="50dp"
-                android:visibility="gone"
-                />
+            android:id="@+id/singleProgress"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="50dp"
+            android:visibility="gone" />
 
         <TextView
-                android:id="@+id/remainingValueText"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="-20dp"
-                android:layout_marginTop="25dp"
-                android:gravity="center_horizontal"
-                android:textSize="100sp"
-                tools:text="0"/>
+            android:id="@+id/remainingValueText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="-20dp"
+            android:layout_marginTop="25dp"
+            android:gravity="center_horizontal"
+            android:textSize="100sp"
+            android:visibility="gone"
+            tools:text="0" />
 
         <TextView
-                android:id="@+id/remainingText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center_horizontal"
-                android:text="@string/remaining"
-                android:alpha="0.5"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="17sp"/>
+            android:id="@+id/remainingText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:alpha="0.5"
+            android:gravity="center_horizontal"
+            android:text="@string/remaining"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="17sp" />
 
         <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:layout_marginTop="50dp"/>
+            android:id="@+id/testProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_marginTop="50dp" />
 
         <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:alpha="0.8"
-                android:contentDescription="@null"
-                android:src="?alarm"/>
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:alpha="0.8"
+            android:contentDescription="@null"
+            android:src="?alarm" />
 
         <TextView
-                android:id="@+id/timeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/starting"/>
+            android:id="@+id/timeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/starting"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 
     <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/shakeLayout"
-            android:visibility="gone">
+        android:id="@+id/shakeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:id="@+id/imageView"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/shake_phone"
-                android:visibility="visible"
-                android:contentDescription="@null"/>
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:contentDescription="@null"
+            android:src="@drawable/shake_phone"
+            android:visibility="visible" />
 
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/shakeMe"
-                android:textSize="50sp"
-                android:gravity="center_horizontal"
-                android:visibility="visible"/>
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/shakeToContinue"
-                android:textSize="18sp"
-                android:gravity="center"
-                android:visibility="visible"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:padding="5dp"/>
-    </LinearLayout>
-    <FrameLayout
-            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/shakeMe"
+            android:textSize="50sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/shakeToContinue"
+            android:textSize="18sp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

@@ -49,31 +49,32 @@ public class ProgressActivity extends ProgressActivityBase implements ResultFrag
     @Override
     protected void sendResult(final Message msg) {
 
-        if (msg != null && msg.getData() != null) {
+        if (mFolderName != null && !mFolderName.isEmpty()) {
+            if (msg != null && msg.getData() != null) {
 
-            final double result = msg.getData().getDouble(Globals.RESULT_VALUE_KEY, -1);
-            //final double result = 1;
+                final double result = msg.getData().getDouble(Globals.RESULT_VALUE_KEY, -1);
+                final int quality = msg.getData().getInt(Globals.QUALITY_KEY, 0);
 
-            final int quality = msg.getData().getInt(Globals.QUALITY_KEY, 0);
+                int minAccuracy = PreferencesUtils
+                        .getInt(this, R.string.minPhotoQualityKey, Globals.MINIMUM_PHOTO_QUALITY);
 
-            int minAccuracy = PreferencesUtils
-                    .getInt(this, R.string.minPhotoQualityKey, Globals.MINIMUM_PHOTO_QUALITY);
+                String title = DataHelper.getTestTitle(this, mTestType);
 
-            String title = DataHelper.getTestTitle(this, mTestType);
+                if (result >= 0 && quality >= minAccuracy) {
+                    mResultFragment = ResultFragment.newInstance(title, result, msg);
+                    final FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-            if (result >= 0 && quality >= minAccuracy) {
-                mResultFragment = ResultFragment.newInstance(title, result, msg);
-                final FragmentTransaction ft = getFragmentManager().beginTransaction();
-
-                Fragment prev = getFragmentManager().findFragmentByTag("resultDialog");
-                if (prev != null) {
-                    ft.remove(prev);
+                    Fragment prev = getFragmentManager().findFragmentByTag("resultDialog");
+                    if (prev != null) {
+                        ft.remove(prev);
+                    }
+                    mResultFragment.show(ft, "resultDialog");
                 }
-
-                mResultFragment.show(ft, "resultDialog");
+            } else {
+                super.sendResult(msg);
             }
-
-
+        }else {
+            super.sendResult(msg);
         }
     }
 

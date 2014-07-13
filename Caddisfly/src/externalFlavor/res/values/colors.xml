@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) TernUp Research Labs
   ~
   ~ This file is part of Caddisfly
@@ -20,4 +19,23 @@
     <color name="button_pressed_dark">#ff343434</color>
     <color name="panel_light">#ff1e1e1e</color>
     <color name="window_background_dark">#ff252525</color>
+
+    <!-- From Akvo Flow -->
+    <color name="white">#ffffff</color>
+
+    <color name="background_main">#fffef2e7</color>
+    <color name="background_alternate">#f1eae4</color>
+
+    <color name="black_main">#000000</color>
+    <color name="black_disabled">#8f8f8f</color>
+
+    <color name="orange_main">#e17e26</color>
+    <color name="orange_disabled">#80e17e26</color>
+
+    <color name="blue_main">#2bb5e6</color>
+    <color name="blue_disabled">#802bb5e6</color>
+
+    <color name="green_main">#00a79d</color>
+    <color name="green_disabled">#8000a79d</color>
+
 </resources>

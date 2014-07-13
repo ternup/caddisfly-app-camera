@@ -193,4 +193,7 @@
     <string name="invalidName">Invalid name</string>
     <string name="overwriteFile">Overwrite File</string>
     <string name="nameAlreadyExists">Name already exists. Overwrite file?</string>
+    <string name="calibrateNow">Calibrate Now</string>
+    <string name="calibrationRequired">Calibration Required</string>
+    <string name="backToSurvey">לחזור סקר</string>
 </resources>

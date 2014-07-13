@@ -1,3 +1,8 @@
+v0.31 alpha
+-----------
+1. User app: Light theme
+2. Fix: Calibration not saving
+
 v0.30 alpha
 -----------
 1. Gradient distance displayed along with swatch rgb value

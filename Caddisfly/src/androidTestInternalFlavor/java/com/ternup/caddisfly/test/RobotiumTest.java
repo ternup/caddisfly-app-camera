@@ -16,11 +16,6 @@
 
 package com.ternup.caddisfly.test;
 
-import com.robotium.solo.Solo;
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.activity.MainActivity;
-import com.ternup.caddisfly.app.Globals;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -28,6 +23,11 @@ import android.preference.PreferenceManager;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.ImageButton;
+
+import com.robotium.solo.Solo;
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.activity.MainActivity;
+import com.ternup.caddisfly.app.Globals;
 
 public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
@@ -74,7 +74,7 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
         int colorBefore = getButtonColor(0);
 
-        solo.clickOnText(solo.getString(R.string.calibrate), 2);
+        solo.clickOnText(solo.getString(R.string.calibrate), 3);
 
         solo.waitForDialogToOpen();
 
@@ -232,7 +232,15 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
         openHome();
 
-        openDrawer();
+        openSettings();
+
+//        assertTrue(solo.isCheckBoxChecked(solo.getString(R.string.shakeDevice)));
+
+        solo.clickOnText(solo.getString(R.string.shakeDevice));
+
+        assertFalse(solo.isCheckBoxChecked(solo.getString(R.string.shakeDevice)));
+
+        openHome();
 
         openCalibrate(2);
 
@@ -284,11 +292,11 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
         solo.clickOnButton(solo.getString(R.string.ok));
 
-        solo.waitForDialogToOpen();
+        solo.waitForDialogToOpen(40000);
 
 //        solo.clickOnButton(solo.getString(R.string.analyze));
 
-        solo.waitForDialogToClose(30000);
+        solo.waitForDialogToClose(40000);
 
         int colorAfter = getButtonColor(0);
 
@@ -385,7 +393,7 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
         solo.waitForDialogToOpen();
 
-        solo.clickOnText("हिंदी");
+        solo.clickOnText("Esperanto");
 
         solo.waitForDialogToClose();
 
@@ -432,8 +440,12 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
 
     private void openHome() {
+        openHome(false);
+    }
+
+    private void openHome(boolean isRtl) {
         solo.sleep(500);
-        openDrawer();
+        openDrawer(isRtl);
         solo.waitForView(R.id.navigation_drawer);
         solo.sleep(1000);
         solo.clickOnText(solo.getString(R.string.home));
@@ -486,7 +498,15 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
     }
 
     private void openDrawer() {
-        solo.drag(0, 400, 500, 500, 5);
+        openDrawer(false);
+    }
+
+    private void openDrawer(boolean isRtl) {
+        if (isRtl) {
+            solo.drag(1000, 400, 500, 500, 5);
+        } else {
+            solo.drag(0, 400, 500, 500, 5);
+        }
     }
 
     private void closeDrawer() {

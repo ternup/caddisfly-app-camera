@@ -17,7 +17,6 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -35,40 +34,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@string/calibrationRequired"
             android:textSize="30sp"
-            android:textStyle="bold"
-            tools:text="Fluoride" />
+            android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            tools:ignore="UseCompoundDrawables">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="Caddsifly needs to be calibrated before starting a test."
+            android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/result"
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="-40dp"
-                android:gravity="center_vertical"
-                android:textSize="80sp"
-                tools:text="0.00" />
-
-            <TextView
-                android:id="@+id/ppmText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="-40dp"
-                android:alpha="0.5"
-                android:textColor="#555"
-                android:textSize="20sp"
-                tools:text="@string/ppm" />
-
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="Use the standard solutions provided to calibrate this phone"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/endSurveyButton"
@@ -79,7 +63,7 @@
             android:layout_marginRight="3dp"
             android:layout_marginStart="3dp"
             android:background="@drawable/orange_button"
-            android:text="@string/backToSurvey" />
+            android:text="@string/calibrateNow" />
     </LinearLayout>
 
 </LinearLayout>

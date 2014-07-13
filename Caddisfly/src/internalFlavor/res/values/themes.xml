@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (C) TernUp Research Labs
+  ~
+  ~ This file is part of Caddisfly
+  ~
+  ~ Caddisfly is free software: you can redistribute it and modify it under the terms of
+  ~ the GNU Affero General Public License (AGPL) as published by the Free Software Foundation,
+  ~ either version 3 of the License or any later version.
+  ~
+  ~ Caddisfly is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+  ~ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  ~ See the GNU Affero General Public License included below for more details.
+  ~
+  ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
+  -->
+
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Light Theme -->
+    <style name="Flow.Theme" parent="android:Theme.Holo.Light"></style>
+
+    <style name="AppTheme.Light" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/ActionBar.Light</item>
+        <item name="backgroundColor">@color/window_background_light</item>
+        <item name="windowBackground">@drawable/gradient</item>
+        <item name="drawerBackground">@color/panel_light</item>
+        <item name="textColor">@color/textColorLight</item>
+        <item name="drawerText">@color/list_text_light</item>
+        <item name="drawerSelector">@drawable/drawer_item_light</item>
+        <item name="listSelector">@drawable/list_selector_light</item>
+        <item name="cardBackground">@drawable/card</item>
+        <item name="subtitleTextColor">@color/subtitle_light</item>
+        <item name="buttonStyle">@drawable/button_style_light</item>
+        <item name="listButton">@drawable/list_button_style_light</item>
+        <item name="arrowRight">@drawable/arrow_right_light</item>
+        <item name="alarm">@drawable/ic_action_alarms</item>
+        <item name="sendIcon">@drawable/ic_action_upload</item>
+        <item name="deleteIcon">@drawable/ic_action_discard</item>
+    </style>
+
+    <!-- Dark Theme -->
+    <style name="AppTheme.Dark" parent="@android:style/Theme.Holo">
+        <item name="android:actionBarStyle">@style/ActionBar.Dark</item>
+        <item name="backgroundColor">@color/window_background_dark</item>
+        <item name="windowBackground">@drawable/ab_transparent</item>
+        <item name="drawerBackground">@color/panel_dark</item>
+        <item name="textColor">@color/textColorDark</item>
+        <item name="drawerText">@color/list_text_dark</item>
+        <item name="drawerSelector">@drawable/list_selector_dark</item>
+        <item name="listSelector">@drawable/list_selector_dark</item>
+        <item name="cardBackground">@drawable/card_dark</item>
+        <item name="subtitleTextColor">@color/subtitle_dark</item>
+        <item name="buttonStyle">@drawable/button_style_dark</item>
+        <item name="listButton">@drawable/button_style_dark</item>
+        <item name="arrowRight">@drawable/arrow_right</item>
+        <item name="alarm">@drawable/ic_action_alarms_dark</item>
+        <item name="sendIcon">@drawable/ic_action_upload_dark</item>
+        <item name="deleteIcon">@drawable/ic_action_discard_dark</item>
+    </style>
+
+</resources>

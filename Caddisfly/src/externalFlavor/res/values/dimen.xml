@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) TernUp Research Labs
   ~
   ~ This file is part of Caddisfly
@@ -14,12 +14,6 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/menu_load"
-        android:enabled="true"
-        android:icon="@drawable/ic_action_load_light"
-        android:orderInCategory="0"
-        android:showAsAction="always"
-        android:title="@string/load" />
-</menu>
+<resources>
+    <dimen name="abc_action_bar_title_text_size">18dp</dimen>
+</resources>

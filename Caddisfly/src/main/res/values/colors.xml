@@ -56,4 +56,7 @@
     <color name="black_overlay">#66000000</color>
     <color name="errorText">#eee</color>
 
+    <color name="background_main">#fffef2e7</color>
+    <color name="background_alternate">#f1eae4</color>
+
 </resources>

@@ -55,6 +55,11 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
 
         final MainApp mainApp = ((MainApp) activity.getApplicationContext());
 
+        if (mainApp.CurrentTheme == R.style.Flow_Theme) {
+            rowView.setBackgroundResource(position % 2 == 0 ?
+                    R.drawable.listitem_row_2 : R.drawable.listitem_row_1);
+        }
+
         if (mainApp != null && rowView != null) {
             ArrayList<ColorInfo> colorRange = mainApp.colorList;
             TextView ppmText = (TextView) rowView.findViewById(R.id.ppmText);

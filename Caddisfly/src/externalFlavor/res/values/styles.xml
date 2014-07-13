@@ -16,6 +16,38 @@
 
 <resources>
 
+    <!-- Light Styles -->
+
+    <style name="Theme.AppCompat.Light.DarkActionBar" parent="@android:style/Widget.Holo.ActionBar" />
+
+    <style name="Widget.AppCompat.Base.ActionBar" parent="" />
+
+    <style name="Widget.AppCompat.Base.ActionBar.Solid" parent="ActionBar" />
+
+    <style name="Widget.AppCompat.ActionBar.Solid" parent="Widget.AppCompat.Base.ActionBar.Solid" />
+
+    <style name="Flow.ActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="android:background">@drawable/ab_solid_flow</item>
+        <item name="android:titleTextStyle">@style/Flow.ActionBar.Text</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Widget.Base.ActionBar.Title" parent="android:TextAppearance.Medium">
+        <item name="android:textSize">@dimen/abc_action_bar_title_text_size</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="TextAppearance.AppCompat.Widget.Base.ActionBar.Title" />
+
+    <style name="Flow.ActionBar.Text" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/orange_main</item>
+    </style>
+
+    <style name="Flow.ListView" parent="@android:style/Widget.ListView">
+        <item name="android:cacheColorHint">@android:color/transparent</item>
+        <item name="android:divider">@color/white</item>
+    </style>
+
+
+    <!-- Dark Styles -->
     <style name="ActionBar" parent="@android:style/Widget.Holo.ActionBar" />
 
     <style name="ActionBar.Dark" parent="@style/ActionBar">
@@ -31,24 +63,7 @@
         <item name="android:textSize">@dimen/menuTextSize</item>
     </style>
 
-    <style name="AppTheme.Dark" parent="@android:style/Theme.Holo">
-        <item name="android:actionBarStyle">@style/ActionBar.Dark</item>
-        <item name="android:actionMenuTextAppearance">@style/MenuStyle</item>
-        <item name="android:windowBackground">@color/window_background_dark</item>
-        <item name="android:actionMenuTextColor">@color/textColorDark</item>
-        <item name="android:textColor">@color/textColorDark</item>
-        <item name="arrowRight">@drawable/arrow_right</item>
-        <item name="alarm">@android:drawable/ic_lock_idle_alarm</item>
-        <item name="buttonStyle">@drawable/button_style_dark</item>
-    </style>
-
-    <style name="AppTheme.Light" parent="@android:style/Theme.Holo">
-        <item name="android:actionBarStyle">@style/ActionBar.Dark</item>
-        <item name="arrowRight">@drawable/arrow_right_light</item>
-        <item name="alarm">@android:drawable/ic_lock_idle_alarm</item>
-        <item name="buttonStyle">@drawable/button_style_dark</item>
-    </style>
-
+    <style name="AppTheme.Light" parent="@android:style/Theme.Holo"></style>
 
     <style name="button_text">
         <item name="android:layout_width">match_parent</item>
