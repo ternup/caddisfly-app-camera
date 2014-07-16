@@ -74,7 +74,7 @@ public class GlobalsBase {
     public static final int SAMPLING_COUNT_DEFAULT = 5;
 
     // width and height of cropped image
-    public static final int SAMPLE_CROP_LENGTH_DEFAULT = 200;
+    public static final int SAMPLE_CROP_LENGTH_DEFAULT = 150;
 
     public static final String RESULT_VALUE_KEY = "resultValue";
 

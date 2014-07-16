@@ -16,24 +16,24 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
-            android:id="@+id/group_1"
-            android:visible="true">
+        android:id="@+id/group_1"
+        android:visible="true">
         <item
-                android:id="@+id/menu_addLocation"
-                android:enabled="true"
-                android:showAsAction="always"
-                android:orderInCategory="0"
-                android:title="@string/newLocation"/>
+            android:id="@+id/menu_addLocation"
+            android:enabled="true"
+            android:orderInCategory="0"
+            android:showAsAction="always"
+            android:title="@string/newLocation" />
     </group>
     <group
-            android:id="@+id/group_2"
-            android:visible="false">
+        android:id="@+id/group_2"
+        android:visible="false">
         <item
-                android:id="@+id/menu_delete"
-                android:enabled="true"
-                android:showAsAction="ifRoom"
-                android:orderInCategory="0"
-                android:title="@string/delete"
-                android:icon="@android:drawable/ic_menu_delete"/>
+            android:id="@+id/menu_delete"
+            android:enabled="true"
+            android:icon="?deleteIcon"
+            android:orderInCategory="0"
+            android:showAsAction="ifRoom"
+            android:title="@string/delete" />
     </group>
 </menu>

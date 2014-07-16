@@ -24,11 +24,11 @@ public class Globals extends GlobalsBase {
 
     // Caddisfly update check path
     public static final String UPDATE_CHECK_URL
-            = "http://caddisfly.ternup.com/ternupapp/v.txt?check=31";
+            = "http://caddisfly.ternup.com/ternupapp/v.txt?check=32";
 
     // Caddisfly update path
     public static final String UPDATE_URL
-            = "http://caddisfly.ternup.com/ternupapp/cadapp_update.apk?check=31";
+            = "http://caddisfly.ternup.com/ternupapp/cadapp_update.apk?check=32";
 
     //TODO: remove this
     public static final String CONNECT = "";

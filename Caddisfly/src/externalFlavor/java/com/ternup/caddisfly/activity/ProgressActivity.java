@@ -69,11 +69,13 @@ public class ProgressActivity extends ProgressActivityBase implements ResultFrag
                         ft.remove(prev);
                     }
                     mResultFragment.show(ft, "resultDialog");
+                } else {
+                    super.sendResult(msg);
                 }
             } else {
                 super.sendResult(msg);
             }
-        }else {
+        } else {
             super.sendResult(msg);
         }
     }

@@ -76,12 +76,11 @@
             android:layout_marginStart="3dp"
             android:background="@drawable/green_button"
             android:text="@string/startTest"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/startSurveyButton"
             style="@style/button_text"
-            android:layout_gravity="center_vertical"
             android:layout_marginEnd="3dp"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"

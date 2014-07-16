@@ -48,6 +48,8 @@
     <attr name="alarm" format="integer" />
     <attr name="sendIcon" format="reference" />
     <attr name="deleteIcon" format="reference" />
+    <attr name="saveIcon" format="reference" />
+    <attr name="loadIcon" format="reference" />
 
     <declare-styleable name="ButtonBarContainerTheme">
         <attr name="metaButtonBarStyle" format="reference" />

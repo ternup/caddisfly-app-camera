@@ -36,6 +36,8 @@
         <item name="alarm">@drawable/ic_action_alarms</item>
         <item name="sendIcon">@drawable/ic_action_upload</item>
         <item name="deleteIcon">@drawable/ic_action_discard</item>
+        <item name="saveIcon">@drawable/ic_action_save</item>
+        <item name="loadIcon">@drawable/ic_action_load</item>
     </style>
 
     <!-- Dark Theme -->
@@ -56,6 +58,9 @@
         <item name="alarm">@drawable/ic_action_alarms_dark</item>
         <item name="sendIcon">@drawable/ic_action_upload_dark</item>
         <item name="deleteIcon">@drawable/ic_action_discard_dark</item>
+        <item name="saveIcon">@drawable/ic_action_save_dark</item>
+        <item name="loadIcon">@drawable/ic_action_load_dark</item>
+
     </style>
 
 </resources>

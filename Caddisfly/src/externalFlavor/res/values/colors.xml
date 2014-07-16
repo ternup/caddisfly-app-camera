@@ -26,7 +26,7 @@
     <color name="background_main">#fffef2e7</color>
     <color name="background_alternate">#f1eae4</color>
 
-    <color name="black_main">#000000</color>
+    <color name="black_main">#222</color>
     <color name="black_disabled">#8f8f8f</color>
 
     <color name="orange_main">#e17e26</color>

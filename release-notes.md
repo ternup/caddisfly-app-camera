@@ -1,3 +1,10 @@
+v0.32 alpha
+-----------
+1. Photo Sample Dimension default set to 150px
+2. Tweaks: Detection of Shake
+3. User app: Fix: Test failed error message not showing
+4. Load and Save icons brightened up for dark theme
+
 v0.31 alpha
 -----------
 1. User app: Light theme

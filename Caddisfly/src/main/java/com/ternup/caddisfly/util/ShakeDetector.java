@@ -26,7 +26,7 @@ public class ShakeDetector implements SensorEventListener {
     private static final int MIN_SHAKE_ACCELERATION = 5;
 
     // Max to determine if the phone is not moving
-    private static final float MAX_SHAKE_ACCELERATION = 0.07f;
+    private static final float MAX_SHAKE_ACCELERATION = 0.35f;
 
     // Minimum number of movements to register a shake
     private static final int MIN_MOVEMENTS = 10;

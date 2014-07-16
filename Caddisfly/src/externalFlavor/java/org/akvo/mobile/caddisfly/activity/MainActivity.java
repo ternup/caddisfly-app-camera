@@ -16,6 +16,15 @@
 
 package org.akvo.mobile.caddisfly.activity;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.activity.MainActivityBase;
 import com.ternup.caddisfly.activity.ProgressActivity;
@@ -25,18 +34,10 @@ import com.ternup.caddisfly.fragment.HelpFragment;
 import com.ternup.caddisfly.util.AlertUtils;
 import com.ternup.caddisfly.util.FileUtils;
 import com.ternup.caddisfly.util.PreferencesHelper;
+import com.ternup.caddisfly.util.PreferencesUtils;
 
 import org.akvo.mobile.caddisfly.fragment.CalibrateFragment;
 import org.akvo.mobile.caddisfly.fragment.StartFragment;
-
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
 
 
 public class MainActivity extends MainActivityBase
@@ -63,6 +64,13 @@ public class MainActivity extends MainActivityBase
         displayView(Globals.HOME_SCREEN_INDEX, false);
 
         FileUtils.trimFolders(this);
+
+        //TODO: temporary, to be removed
+        int sampleLength = PreferencesUtils.getInt(this, R.string.photoSampleDimensionKey,
+                Globals.SAMPLE_CROP_LENGTH_DEFAULT);
+        if (sampleLength > Globals.SAMPLE_CROP_LENGTH_DEFAULT) {
+            PreferencesUtils.setInt(this, R.string.photoSampleDimensionKey, Globals.SAMPLE_CROP_LENGTH_DEFAULT);
+        }
     }
 
     @Override
