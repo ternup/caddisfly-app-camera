@@ -19,6 +19,8 @@ package com.ternup.caddisfly.app;
 @SuppressWarnings("HardCodedStringLiteral")
 public class Globals extends GlobalsBase {
 
+    public static final boolean isExternalFlavor = true;
+
     // For external app connection
     public static final String ACTION_WATER_TEST = "org.akvo.flow.action.externalsource"; //NON-NLS
 
@@ -27,11 +29,11 @@ public class Globals extends GlobalsBase {
 
     // Caddisfly update check path
     public static final String UPDATE_CHECK_URL
-            = "http://caddisfly.ternup.com/akvoapp/v.txt?check=32";
+            = "http://caddisfly.ternup.com/akvoapp/v.txt?check=34";
 
     // Caddisfly update path
     public static final String UPDATE_URL
-            = "http://caddisfly.ternup.com/akvoapp/akvo_caddisfly_update.apk?check=32";
+            = "http://caddisfly.ternup.com/akvoapp/akvo_caddisfly_update.apk?check=34";
 
     public static final String FLOW_SURVEY_PACKAGE_NAME = "com.gallatinsystems.survey.device";
 

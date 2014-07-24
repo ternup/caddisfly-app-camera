@@ -192,7 +192,19 @@
     <string name="invalidName">Invalid name</string>
     <string name="overwriteFile">Overwrite File</string>
     <string name="nameAlreadyExists">Name already exists. Overwrite file?</string>
-    <string name="calibrateNow">Calibrate Now</string>
-    <string name="calibrationRequired">Calibration Required</string>
+    <string name="calibrateNow">अभी जांचना</string>
+    <string name="calibrationRequired">अंशांकन आवश्यक</string>
     <string name="backToSurvey">सर्वेक्षण को वापस</string>
+    <string name="testInterrupted">परीक्षण पूर्ण होने तक प्रतीक्षा करें.</string>
+    <string name="welcome">स्वागत</string>
+    <string name="toBeginCalibrate">शुरू करने के लिए Caddisfly जांचना कृपया</string>
+    <string name="useSolutionsProvided">किट में दिए गए गुलाबी और पीले मानक मिश्रण का प्रयोग करें</string>
+    <string name="pink">गुलाबी</string>
+    <string name="yellow">पीले</string>
+    <string name="revertVersion">Revert to previous version</string>
+    <string name="appVersion">App version</string>
+    <string name="revertingVersion">Reverting to previous version</string>
+    <string name="waitTillCameraSound">फिर एक मिनट के बारे में कैमरा ध्वनि के लिए इंतजार</string>
+    <string name="calibrateSummary">Use the standard color mixtures provided in the kit to calibrate this phone</string>
+    <string name="revertSummary">If the current version is not working correctly, temporarily revert to a previous version</string>
 </resources>

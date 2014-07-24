@@ -20,7 +20,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.MainApp;
@@ -45,17 +49,17 @@ public class AlertUtils {
     public static void askQuestion(Context context, int title, String message,
                                    DialogInterface.OnClickListener callback,
                                    DialogInterface.OnClickListener cancelListener) {
-        showAlert(context, title, message, callback, cancelListener);
+        showAlert(context, title, message, R.string.ok, callback, cancelListener);
     }
 
     public static void showAlert(Context context, int title, int message,
                                  DialogInterface.OnClickListener callback,
                                  DialogInterface.OnClickListener cancelListener) {
 
-        showAlert(context, title, context.getString(message), callback, cancelListener);
+        showAlert(context, title, context.getString(message), R.string.ok, callback, cancelListener);
     }
 
-    public static void showAlert(final Context context, int title, String message,
+    public static void showAlert(final Context context, int title, String message, int okButtonText,
                                  DialogInterface.OnClickListener callback,
                                  DialogInterface.OnClickListener cancelListener) {
         //if ( title == null ) title = context.getResources().getString(R.string.app_name);
@@ -77,13 +81,13 @@ public class AlertUtils {
                 .setCancelable(false);
 
         if (callback != null) {
-            builder.setPositiveButton(R.string.ok, callback);
+            builder.setPositiveButton(okButtonText, callback);
         }
 
         if (cancelListener == null) {
             int buttonText = R.string.cancel;
             if (callback == null) {
-                buttonText = R.string.ok;
+                buttonText = okButtonText;
             }
             builder.setNegativeButton(buttonText, new DialogInterface.OnClickListener() {
                 @Override
@@ -100,6 +104,7 @@ public class AlertUtils {
             @Override
             public void onShow(DialogInterface dialog) {
                 Button btnPositive = alert.getButton(Dialog.BUTTON_POSITIVE);
+
                 float textSize = context.getResources().getDimension(R.dimen.textSize);
                 btnPositive.setTextSize(textSize);
 
@@ -130,4 +135,59 @@ public class AlertUtils {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
+    public static void showError(Context context, int title, String message, Bitmap bitmap, int okButtonText,
+                                 DialogInterface.OnClickListener callback,
+                                 DialogInterface.OnClickListener cancelListener) {
+
+        if (bitmap == null) {
+            showAlert(context, title, message, okButtonText, callback, cancelListener);
+            return;
+        }
+
+        AlertDialog myDialog;
+        View alertView;
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        alertView = inflater.inflate(R.layout.dialog_error, null, false);
+        builder.setView(alertView);
+
+        builder.setTitle(R.string.error);
+
+        builder.setMessage(message);
+
+        ImageView image = (ImageView) alertView.findViewById(R.id.image);
+        //image.setImageResource(R.drawable.ic_launcher);
+        if (bitmap != null) {
+            image.setImageBitmap(bitmap);
+        }
+
+        if (callback != null) {
+            builder.setPositiveButton(okButtonText, callback);
+        }
+
+        if (cancelListener == null) {
+            int buttonText = R.string.cancel;
+            if (callback == null) {
+                buttonText = okButtonText;
+            }
+            builder.setNegativeButton(buttonText, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+        } else {
+            builder.setNegativeButton(R.string.cancel, cancelListener);
+        }
+
+        builder.setCancelable(false);
+        myDialog = builder.create();
+
+        myDialog.show();
+
+    }
+
 }

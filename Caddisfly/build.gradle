@@ -44,13 +44,13 @@ android {
     productFlavors {
         internalFlavor {
             applicationId "com.ternup.caddisfly"
-            versionName "prototype 0.32 alpha"
-            versionCode 32
+            versionName "prototype 0.34 alpha"
+            versionCode 34
         }
         externalFlavor {
             applicationId "org.akvo.mobile.caddisfly"
-            versionName "prototype 0.32 alpha"
-            versionCode 32
+            versionName "prototype 0.34 alpha"
+            versionCode 34
         }
     }
 
@@ -62,7 +62,7 @@ android {
 
 dependencies {
     internalFlavorCompile files('libs/android-async-http-1.4.5.jar')
-    internalFlavorCompile 'com.google.android.gms:play-services:4.4.52'
+    internalFlavorCompile 'com.google.android.gms:play-services:5.0.77'
     internalFlavorCompile 'com.android.support:support-v13:19.1.0'
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5+'
 }

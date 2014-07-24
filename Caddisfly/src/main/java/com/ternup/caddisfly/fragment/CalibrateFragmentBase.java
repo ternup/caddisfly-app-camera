@@ -90,8 +90,8 @@ public class CalibrateFragmentBase extends ListFragment implements AdapterView.O
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
     }
 
     public void setAdapter() {

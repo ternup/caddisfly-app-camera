@@ -89,6 +89,18 @@ public class MainApp extends Application {
 
     }
 
+    public static String getPreviousVersion(Context context) {
+        try {
+            int version = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0).versionCode;
+            return String.valueOf(version - 1);
+
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+        }
+
+    }
+
     /**
      * Factory preset values for Fluoride
      */
@@ -97,14 +109,14 @@ public class MainApp extends Application {
         colorList.clear();
         rangeIntervals.clear();
 
-        rangeIncrementStep = 5;
+        rangeIncrementStep = 30;
         rangeIncrementValue = 0.1;
         rangeStartIncrement = 0;
         doubleFormat = new DecimalFormat("0.0");
 
         currentTestType = Globals.FLUORIDE_INDEX;
 
-        for (double i = 0.0; i < 3.5; i += 0.5) {
+        for (double i = 0.0; i < 3.1; i += (rangeIncrementStep * rangeIncrementValue)) {
             rangeIntervals.add(i);
         }
 
@@ -123,7 +135,7 @@ public class MainApp extends Application {
         colorList.clear();
         rangeIntervals.clear();
 
-        rangeIncrementStep = 30;
+        rangeIncrementStep = 5;
         rangeIncrementValue = 0.1;
         rangeStartIncrement = 0;
         doubleFormat = new DecimalFormat("0.0");

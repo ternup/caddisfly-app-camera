@@ -24,6 +24,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.activity.MainActivityBase;
@@ -31,22 +33,27 @@ import com.ternup.caddisfly.activity.ProgressActivity;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.fragment.HelpFragment;
+import com.ternup.caddisfly.fragment.SettingsFragment;
 import com.ternup.caddisfly.util.AlertUtils;
 import com.ternup.caddisfly.util.FileUtils;
 import com.ternup.caddisfly.util.PreferencesHelper;
 import com.ternup.caddisfly.util.PreferencesUtils;
 
 import org.akvo.mobile.caddisfly.fragment.CalibrateFragment;
+import org.akvo.mobile.caddisfly.fragment.CalibrateMessageFragment;
 import org.akvo.mobile.caddisfly.fragment.StartFragment;
 
 
 public class MainActivity extends MainActivityBase
-        implements StartFragment.OnCalibrateListener, StartFragment.OnStartTestListener,
-        StartFragment.OnStartSurveyListener, StartFragment.OnHelpListener {
+        implements SettingsFragment.OnCalibrateListener, StartFragment.OnStartTestListener,
+        StartFragment.OnStartSurveyListener, StartFragment.OnHelpListener,
+        CalibrateMessageFragment.ResultDialogListener {
 
     private final int mTestType = Globals.FLUORIDE_INDEX;
 
     private CalibrateFragment mCalibrateFragment = null;
+
+    private SettingsFragment mSettingsFragment = null;
 
     private HelpFragment helpFragment = null;
 
@@ -61,7 +68,9 @@ public class MainActivity extends MainActivityBase
         mainApp.CurrentTheme = R.style.Flow_Theme;
         setContentView(R.layout.activity_main);
 
-        displayView(Globals.HOME_SCREEN_INDEX, false);
+        if (savedInstanceState == null) {
+            displayView(Globals.HOME_SCREEN_INDEX, false);
+        }
 
         FileUtils.trimFolders(this);
 
@@ -71,12 +80,17 @@ public class MainActivity extends MainActivityBase
         if (sampleLength > Globals.SAMPLE_CROP_LENGTH_DEFAULT) {
             PreferencesUtils.setInt(this, R.string.photoSampleDimensionKey, Globals.SAMPLE_CROP_LENGTH_DEFAULT);
         }
+
+        if (mainApp.getCalibrationErrorCount(mTestType) > 0) {
+            showWelcome();
+        }
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        showCheckUpdateOption = false;
+        invalidateOptionsMenu();
         mShouldFinish = false;
     }
 
@@ -113,23 +127,22 @@ public class MainActivity extends MainActivityBase
             case Globals.HOME_SCREEN_INDEX:
                 fragment = StartFragment.newInstance(external, mTestType);
                 break;
+            case Globals.SETTINGS_SCREEN_INDEX:
+                showCheckUpdateOption = true;
+                if (mSettingsFragment == null) {
+                    mSettingsFragment = new SettingsFragment();
+                }
+                fragment = mSettingsFragment;
+                break;
             case Globals.CALIBRATE_SCREEN_INDEX:
                 if (mCalibrateFragment == null) {
                     mCalibrateFragment = new CalibrateFragment();
                 }
                 fragment = mCalibrateFragment;
                 break;
-            case Globals.HELP_SCREEN_INDEX:
-                showCheckUpdateOption = true;
-                if (helpFragment == null) {
-                    helpFragment = new HelpFragment();
-                }
-                fragment = helpFragment;
-                break;
             default:
                 return;
         }
-        invalidateOptionsMenu();
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(R.id.container, fragment, String.valueOf(position));
@@ -138,8 +151,60 @@ public class MainActivity extends MainActivityBase
             ft.addToBackStack(null);
         }
         ft.commit();
+
+        invalidateOptionsMenu();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (getCurrentFragmentIndex() == Globals.HOME_SCREEN_INDEX) {
+            getMenuInflater().inflate(R.menu.home, menu);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_settings:
+                displayView(Globals.SETTINGS_SCREEN_INDEX, true);
+                //checkUpdate(false);
+/*
+                AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+                builderSingle.setIcon(R.drawable.ic_launcher);
+                final Context context = this;
+                //builderSingle.setTitle(R.string.selectTestType);
+
+                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
+                        android.R.layout.select_dialog_singlechoice);
+                arrayAdapter.addAll(getResources().getStringArray(R.array.languages));
+
+                builderSingle.setNegativeButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }
+                );
+                builderSingle.setAdapter(arrayAdapter,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String languageCode = getResources().getStringArray(R.array.language_codes)[which];
+                                PreferencesUtils.setString(context, R.string.currentLocale, languageCode);
+                                recreate();
+                            }
+                        }
+                );
+                builderSingle.show();
+*/
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     public void onCalibrate() {
@@ -150,6 +215,18 @@ public class MainActivity extends MainActivityBase
     public void onHelp() {
         displayView(Globals.HELP_SCREEN_INDEX, true);
     }
+
+    public void showWelcome() {
+        CalibrateMessageFragment calibrateMessageFragment = CalibrateMessageFragment.newInstance();
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        Fragment prev = getFragmentManager().findFragmentByTag("calibrateMessageFragment");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        calibrateMessageFragment.show(ft, "calibrateMessageFragment");
+    }
+
 
     @Override
     public void onStartSurvey() {
@@ -230,8 +307,7 @@ public class MainActivity extends MainActivityBase
     public void onBackPressed() {
         super.onBackPressed();
         try {
-            int index = getCurrentFragmentIndex();
-            showCheckUpdateOption = index == Globals.HELP_SCREEN_INDEX;
+            showCheckUpdateOption = getCurrentFragmentIndex() == Globals.SETTINGS_SCREEN_INDEX;
             invalidateOptionsMenu();
 
         } catch (Exception e) {
@@ -239,4 +315,8 @@ public class MainActivity extends MainActivityBase
         }
     }
 
+    @Override
+    public void onFinishDialog() {
+        displayView(Globals.CALIBRATE_SCREEN_INDEX, true);
+    }
 }

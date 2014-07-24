@@ -30,6 +30,7 @@ import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.model.ColorInfo;
+import com.ternup.caddisfly.util.ColorUtils;
 
 import java.util.ArrayList;
 
@@ -60,10 +61,11 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
                     R.drawable.listitem_row_2 : R.drawable.listitem_row_1);
         }
 
-        if (mainApp != null && rowView != null) {
+        if (rowView != null) {
             ArrayList<ColorInfo> colorRange = mainApp.colorList;
             TextView ppmText = (TextView) rowView.findViewById(R.id.ppmText);
             TextView rgbText = (TextView) rowView.findViewById(R.id.rgbText);
+            TextView brightnessText = (TextView) rowView.findViewById(R.id.brightnessText);
             ImageView errorImage = (ImageView) rowView.findViewById(R.id.error);
             Button button = (Button) rowView.findViewById(R.id.button);
 
@@ -73,41 +75,27 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
 
                 int color = colorRange.get(index).getColor();
 
-                // paint the button with the color
-
                 // display ppm value
                 ppmText.setText(mainApp.doubleFormat
                         .format((position + mainApp.rangeStartIncrement) * (
                                 mainApp.rangeIncrementValue
                                         * mainApp.rangeIncrementStep)));
 
-                // display color name
-                // colorNameText.setText(colorNames.get(currentPosition));
-                // display rgb value
-
-/*
-                int quality = Math.max(-1, PreferencesUtils.getInt(mainApp,
-                        String.format("%d-a-%d", mTestType, index), -1));
-*/
-
-                //int quality = colorRange.get(index).getQuality();
+                //TODO: some hard coding
+                if (Globals.isExternalFlavor) {
+                    switch (position) {
+                        case 0:
+                            ppmText.setText(R.string.pink);
+                            break;
+                        case 1:
+                            ppmText.setText(R.string.yellow);
+                            break;
+                    }
+                }
 
                 int r = Color.red(color);
                 int g = Color.green(color);
                 int b = Color.blue(color);
-
-                // eliminate white and black colors
-/*
-                if (r == 255 && g == 255 && b == 255) {
-                    quality = -1;
-                }
-
-                if (r == 0 && g == 0 && b == 0) {
-                    quality = -1;
-                }
-                int minAccuracy = PreferencesUtils.getInt(mainApp, R.string.minPhotoQualityKey,
-                        Globals.MINIMUM_PHOTO_QUALITY);
-*/
 
                 if (colorRange.get(index).getErrorCode() > 0) {
                     errorImage.setVisibility(View.VISIBLE);
@@ -119,13 +107,14 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
                     button.setBackgroundColor(color);
                     button.setText("");
                     rgbText.setText(
-                            String.format("d:%.0f  %s: %d  %d  %d", colorRange.get(index).getIncrementDistance(), mainApp.getString(R.string.rgb), r, g, b));
+                            String.format("D:%.0f  %s: %d  %d  %d", colorRange.get(index).getIncrementDistance(), mainApp.getString(R.string.rgb), r, g, b));
                 } else {
                     button.setBackgroundColor(Color.argb(0, 10, 10, 10));
                     button.setText("?");
                     rgbText.setText("");
                 }
 
+                brightnessText.setText(String.format("B: %d", ColorUtils.getBrightness(color)));
             }
         }
         return rowView;

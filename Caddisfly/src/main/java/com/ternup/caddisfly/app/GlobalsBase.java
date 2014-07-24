@@ -30,6 +30,8 @@ public class GlobalsBase {
     // Name of folder where app data will be stored
     public static final String APP_FOLDER_NAME = "com.ternup.caddisfly";
 
+    public static final String CADDISFLY_PACKAGE_NAME = "com.ternup.caddisfly";
+
     // Tag for debug log filtering
     public static final String DEBUG_TAG = "Caddisfly";
 
@@ -38,6 +40,8 @@ public class GlobalsBase {
 
     // Index of screens that gets displayed in the app
     public static final int HOME_SCREEN_INDEX = 0;
+
+    public static final int SETTINGS_SCREEN_INDEX = 3;
 
     public static final int CALIBRATE_SCREEN_INDEX = 2;
 

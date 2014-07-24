@@ -16,9 +16,6 @@
 
 package com.ternup.caddisfly.util;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.Globals;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +23,9 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -53,6 +53,8 @@ class DownloadManager extends AsyncTask<String, Integer, String> {
 
     private boolean installAfterDownload = true;
 
+    private boolean mPreviousVersion = false;
+
     private boolean downloaded = false;
 
     /**
@@ -63,7 +65,7 @@ class DownloadManager extends AsyncTask<String, Integer, String> {
      * @since API 1
      */
     public DownloadManager(Context context) {
-        this(context, true);
+        this(context, true, false);
     }
 
     /**
@@ -75,8 +77,9 @@ class DownloadManager extends AsyncTask<String, Integer, String> {
      *                             otherwise
      * @since API 2
      */
-    public DownloadManager(Context context, boolean installAfterDownload) {
+    public DownloadManager(Context context, boolean installAfterDownload, boolean previousVersion) {
         mContext = context;
+        mPreviousVersion = previousVersion;
         this.installAfterDownload = installAfterDownload;
     }
 
@@ -105,11 +108,8 @@ class DownloadManager extends AsyncTask<String, Integer, String> {
     protected String doInBackground(String... sUrl) {
         if (isOnline()) {
             try {
+
                 URL url = new URL(sUrl[0]);
-                URLConnection connection = url.openConnection();
-                connection.connect();
-                // this will be useful so that you can show a typical 0-100% progress bar
-                //int fileLength = connection.getContentLength();
 
                 File oldFile = new File(String.format("%s/%s", Environment
                         .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
@@ -118,6 +118,12 @@ class DownloadManager extends AsyncTask<String, Integer, String> {
                 if (oldFile.exists()) {
                     oldFile.delete();
                 }
+
+                URLConnection connection = url.openConnection();
+                connection.connect();
+                // this will be useful so that you can show a typical 0-100% progress bar
+                //int fileLength = connection.getContentLength();
+
 
                 // download the file
                 InputStream input = new BufferedInputStream(url.openStream());
@@ -178,7 +184,11 @@ class DownloadManager extends AsyncTask<String, Integer, String> {
     protected void onPreExecute() {
         progressDialog = new ProgressDialog(mContext);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(mContext.getString(R.string.gettingUpdate));
+        if (mPreviousVersion) {
+            progressDialog.setMessage(mContext.getString(R.string.revertingVersion));
+        } else {
+            progressDialog.setMessage(mContext.getString(R.string.gettingUpdate));
+        }
         progressDialog.setCancelable(false);
         progressDialog.show();
     }

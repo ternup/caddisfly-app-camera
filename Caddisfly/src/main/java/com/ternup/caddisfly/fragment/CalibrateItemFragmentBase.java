@@ -102,7 +102,6 @@ public class CalibrateItemFragmentBase extends ListFragment {
         mErrorTextView = (TextView) header.findViewById(R.id.errorTextView);
         mErrorSummaryTextView = (TextView) header.findViewById(R.id.errorSummaryTextView);
 
-
         final int position = getArguments().getInt(getString(R.string.swatchIndex));
         //final int index = position * INDEX_INCREMENT_STEP;
 
@@ -253,6 +252,19 @@ public class CalibrateItemFragmentBase extends ListFragment {
                 .format((position + mainApp.rangeStartIncrement) * (mainApp.rangeIncrementStep
                         * mainApp.rangeIncrementValue)));
 
+
+        if (Globals.isExternalFlavor) {
+            switch (position) {
+                case 0:
+                    mValueButton.setText(R.string.pink);
+                    break;
+                case 1:
+                    mValueButton.setText(R.string.yellow);
+                    break;
+            }
+        }
+
+
         mStartButton.setEnabled(true);
     }
 
@@ -311,10 +323,14 @@ public class CalibrateItemFragmentBase extends ListFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
-            //Bundle bundle = data.getExtras();
-            storeCalibratedData(data.getIntExtra("position", 0), data.getIntExtra(Globals.RESULT_COLOR_KEY, -1),
-                    data.getIntExtra(Globals.QUALITY_KEY, -1));
+        if (requestCode == 200) {
+            if (resultCode == Activity.RESULT_OK) {
+                //Bundle bundle = data.getExtras();
+                storeCalibratedData(data.getIntExtra("position", 0), data.getIntExtra(Globals.RESULT_COLOR_KEY, -1),
+                        data.getIntExtra(Globals.QUALITY_KEY, -1));
+            } else {
+                storeCalibratedData(data.getIntExtra("position", 0), -1, -1);
+            }
         }
     }
 
@@ -331,20 +347,23 @@ public class CalibrateItemFragmentBase extends ListFragment {
                     MainApp mainApp = ((MainApp) context.getApplicationContext());
                     ArrayList<ColorInfo> colorList = ((MainApp) context).colorList;
                     int index = position * mainApp.rangeIncrementStep;
-
-                    ColorInfo colorInfo = new ColorInfo(resultColor, 0, 0, accuracy);
-                    colorList.set(index, colorInfo);
-
                     SharedPreferences sharedPreferences = PreferenceManager
                             .getDefaultSharedPreferences(context);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
+                    String colorKey = String.format("%d-%s", mTestType, String.valueOf(index));
 
-                    editor.putInt(String.format("%d-%s", mTestType, String.valueOf(index)),
-                            resultColor);
-                    editor.putInt(String.format("%d-a-%s", mTestType, String.valueOf(index)),
-                            accuracy);
+                    if (resultColor == -1) {
+                        editor.remove(colorKey);
+                    } else {
+                        ColorInfo colorInfo = new ColorInfo(resultColor, 0, 0, accuracy);
+                        colorList.set(index, colorInfo);
 
-                    ColorUtils.autoGenerateColors(index, mTestType, colorList, mainApp.rangeIncrementStep, editor);
+                        editor.putInt(colorKey, resultColor);
+                        editor.putInt(String.format("%d-a-%s", mTestType, String.valueOf(index)),
+                                accuracy);
+
+                        ColorUtils.autoGenerateColors(index, mTestType, colorList, mainApp.rangeIncrementStep, editor);
+                    }
                     editor.commit();
                 }
                 return null;

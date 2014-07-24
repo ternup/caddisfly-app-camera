@@ -31,8 +31,6 @@
     <string name="result">"Rezulto"</string>
     <string name="rgb">"RGB"</string>
     <string name="ppm">"ppm"</string>
-    <string name="twentyFourHourTime">"HH:mm:ss"</string>
-    <string name="twelveHourTime">"h:mm:ss a"</string>
     <string name="checkingForUpdates">"Checking aktualigojn ..."</string>
     <string name="starting">"Startanta ..."</string>
     <string name="error">"Eraro"</string>
@@ -92,6 +90,7 @@
     <string name="photo">"Foto"</string>
     <string name="delete">"Forigi"</string>
     <string name="noData">"Neniu lokoj ankoraŭ. \ N \ nPress 'Nova Loko' butono"</string>
+    <string name="pressNewLocation">Press \'New Location\' button</string>
     <string name="interval_info">"Daŭro atendi post ĉiu analizo"</string>
     <string name="details">"Detaloj"</string>
     <string name="selectNumberOfTests">"Elektu kiom da fojoj por analizi"</string>
@@ -180,6 +179,7 @@
     <string name="photoSampleDimensionMessage">"Elektu la longecon ekaperas la foton por analizo"</string>
     <string name="photoSampleDimension">"Foto Specimena Dimensio"</string>
     <string name="sending">"Sendado"</string>
+    <string name="versionStringFormat">%1$s %2$s</string>
     <string name="current">Current</string>
     <string name="save">Save</string>
     <string name="load">Load</string>
@@ -195,4 +195,16 @@
     <string name="calibrateNow">Calibrate Now</string>
     <string name="calibrationRequired">Calibration Required</string>
     <string name="backToSurvey">Reen al enketo</string>
+    <string name="testInterrupted">Please wait until the test is completed.</string>
+    <string name="welcome">Welcome</string>
+    <string name="toBeginCalibrate">To begin please calibrate Caddisfly</string>
+    <string name="useSolutionsProvided">Use the pink and yellow standard solutions provided in the kit</string>
+    <string name="pink">Pink</string>
+    <string name="yellow">Yellow</string>
+    <string name="revertVersion">Revert to previous version</string>
+    <string name="appVersion">App version</string>
+    <string name="revertingVersion">Reverting to previous version</string>
+    <string name="waitTillCameraSound">Then wait for the camera sound</string>
+    <string name="calibrateSummary">Use the standard color mixtures provided in the kit to calibrate this phone</string>
+    <string name="revertSummary">If the current version is not working correctly, temporarily revert to a previous version</string>
 </resources>

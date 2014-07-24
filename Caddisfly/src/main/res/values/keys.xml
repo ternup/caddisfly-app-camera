@@ -53,4 +53,5 @@
     <string name="cameraInfinityKey">cameraInfinity</string>
     <string name="ignoreCalibrationErrorsKey">ignoreCalibrationErrors</string>
     <string name="cropToSquareKey">cropToSquare</string>
+    <string name="revertVersionKey">revertVersion</string>
 </resources>

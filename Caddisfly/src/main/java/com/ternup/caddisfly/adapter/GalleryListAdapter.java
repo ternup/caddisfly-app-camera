@@ -16,11 +16,6 @@
 
 package com.ternup.caddisfly.adapter;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.util.ColorUtils;
-import com.ternup.caddisfly.util.ImageUtils;
-import com.ternup.caddisfly.util.PreferencesUtils;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -33,6 +28,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.util.ColorUtils;
+import com.ternup.caddisfly.util.ImageUtils;
+import com.ternup.caddisfly.util.PreferencesUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -58,7 +58,7 @@ public class GalleryListAdapter extends BaseAdapter {
     private ArrayList<String> mFilePaths = new ArrayList<String>();
 
     public GalleryListAdapter(Activity activity, int testType, long testId,
-            ArrayList<String> filePaths, boolean showResult) {
+                              ArrayList<String> filePaths, boolean showResult) {
         mContext = activity;
         mInflater = activity.getLayoutInflater();
         mFilePaths = filePaths;
@@ -114,9 +114,10 @@ public class GalleryListAdapter extends BaseAdapter {
             holder.icon = (ImageView) view.findViewById(R.id.photoImageView);
             holder.timestamp = (TextView) view.findViewById(R.id.dateText);
             holder.result = (TextView) view.findViewById(R.id.resultText);
+            holder.brightness = (TextView) view.findViewById(R.id.brightnessText);
             //holder.color = (TextView) view.findViewById(R.id.rgbText);
             //holder.quality =(TextView) view.findViewById(R.id.qualityText);
-            holder.progress = (ProgressBar) view.findViewById(R.id.progressBar);
+            holder.progress = (ProgressBar) view.findViewById(R.id.imageProgressBar);
 
             view.setTag(holder);
 
@@ -185,6 +186,9 @@ public class GalleryListAdapter extends BaseAdapter {
                                         mTestType, mTestId,
                                         position), -2
                         );
+
+                        v.brightness.setText(String.format("Brightness: %d", ColorUtils.getBrightness(color)));
+
                         int quality = PreferencesUtils.getInt(mContext,
                                 String.format(mContext.getString(R.string.resultQualityKey),
                                         mTestType, mTestId,
@@ -242,7 +246,7 @@ public class GalleryListAdapter extends BaseAdapter {
 
         TextView result;
 
-        //TextView color;
+        TextView brightness;
 
         //TextView quality;
 
@@ -251,5 +255,6 @@ public class GalleryListAdapter extends BaseAdapter {
         ProgressBar progress;
 
         int position;
+
     }
 }

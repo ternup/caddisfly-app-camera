@@ -16,12 +16,12 @@
 
 package com.ternup.caddisfly.util;
 
-import com.ternup.caddisfly.app.Globals;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.ternup.caddisfly.app.Globals;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -135,9 +135,9 @@ class UpdateChecker {
      * @since API 1
      */
     @SuppressWarnings("SameParameterValue")
-    public void downloadAndInstall(String apkUrl) {
+    public void downloadAndInstall(String apkUrl, boolean previousVersion) {
         if (NetworkUtils.isOnline(mContext)) {
-            downloadManager = new DownloadManager(mContext, true);
+            downloadManager = new DownloadManager(mContext, true, previousVersion);
             downloadManager.execute(apkUrl);
         } else {
             makeToastFromString("Update failed. No internet connection available").show();

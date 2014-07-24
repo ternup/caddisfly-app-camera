@@ -19,7 +19,6 @@ package com.ternup.caddisfly.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
@@ -29,6 +28,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
@@ -43,14 +43,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -62,6 +59,7 @@ import com.ternup.caddisfly.database.DataStorage;
 import com.ternup.caddisfly.fragment.CameraFragment;
 import com.ternup.caddisfly.service.CameraService;
 import com.ternup.caddisfly.service.CameraServiceReceiver;
+import com.ternup.caddisfly.util.AlertUtils;
 import com.ternup.caddisfly.util.AudioUtils;
 import com.ternup.caddisfly.util.FileUtils;
 import com.ternup.caddisfly.util.ImageUtils;
@@ -102,6 +100,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
     Runnable delayRunnable;
     private LinearLayout mProgressLayout;
     private LinearLayout mShakeLayout;
+    private LinearLayout mStillnessLayout;
     private TextView mTitleText;
     private TextView mRemainingText;
     private ProgressBar mProgressBar;
@@ -160,6 +159,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                 new float[]{0, 1}, Shader.TileMode.CLAMP);
         mTitleText.getPaint().setShader(textShader);
         mProgressLayout = (LinearLayout) findViewById(R.id.progressLayout);
+        mStillnessLayout = (LinearLayout) findViewById(R.id.stillnessLayout);
         mShakeLayout = (LinearLayout) findViewById(R.id.shakeLayout);
         mRemainingValueText = (TextView) findViewById(R.id.remainingValueText);
         mRemainingText = (TextView) findViewById(R.id.remainingText);
@@ -171,30 +171,82 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
         //Set up the shake detector
         mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
         mShakeDetector = new ShakeDetector(new ShakeDetector.OnShakeListener() {
             @Override
             public void onShake() {
                 if (mWaitingForShake) {
                     mWaitingForShake = false;
+                    mWaitingForStillness = true;
 
                     mWaitingForFirstShake = false;
                     if (mMediaPlayer != null) {
                         mMediaPlayer.release();
                     }
-                    mPlaceInStandText.setVisibility(View.VISIBLE);
+                    mStillnessLayout.setVisibility(View.VISIBLE);
                     mShakeLayout.setVisibility(View.GONE);
+                    mProgressLayout.setVisibility(View.GONE);
+                } else {
+                    if (!mWaitingForStillness && mCameraFragment != null) {
+                        mWaitingForStillness = true;
+                        mStillnessLayout.setVisibility(View.VISIBLE);
+                        mShakeLayout.setVisibility(View.GONE);
+                        mProgressLayout.setVisibility(View.GONE);
+                        if (mCameraFragment != null) {
+                            try {
+                                mCameraFragment.stopCamera();
+                                mCameraFragment.dismiss();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            mStillnessLayout.setVisibility(View.GONE);
+                            mProgressLayout.setVisibility(View.GONE);
+                            mShakeLayout.setVisibility(View.GONE);
+
+                            showError(getString(R.string.testInterrupted), null);
+                        }
+
+                    }
                 }
             }
         }, new ShakeDetector.OnNoShakeListener() {
             @Override
             public void onNoShake() {
 
-                if (!mWaitingForShake && !mWaitingForStillness) {
-                    mWaitingForStillness = true;
+                if (!mWaitingForShake && mWaitingForStillness) {
+                    mWaitingForStillness = false;
                     dismissShakeAndStartTest();
                 }
             }
         });
+        mShakeDetector.minShakeAcceleration = 5;
+        mShakeDetector.maxShakeDuration = 2000;
+    }
+
+    private void showError(String message, Bitmap bitmap) {
+        cancelService();
+        AlertUtils.showError(this, R.string.error, message, bitmap, R.string.retry,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mIndex = 0;
+                        mStillnessLayout.setVisibility(View.VISIBLE);
+                        mProgressLayout.setVisibility(View.GONE);
+                        mShakeLayout.setVisibility(View.GONE);
+
+                        startNewTest(mTestType);
+                        InitializeTest(getApplicationContext());
+                    }
+                },
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(getIntent());
+                        setResult(Activity.RESULT_CANCELED, intent);
+                        finish();
+                    }
+                }
+        );
     }
 
     /**
@@ -205,9 +257,9 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
             mMediaPlayer.release();
         }
         mSensorManager.unregisterListener(mShakeDetector);
-        mShakeLayout.setVisibility(View.GONE);
-        mPlaceInStandText.setVisibility(View.GONE);
         mProgressLayout.setVisibility(View.VISIBLE);
+        mStillnessLayout.setVisibility(View.GONE);
+        mShakeLayout.setVisibility(View.GONE);
 
         startTest(getApplicationContext(), mFolderName);
     }
@@ -288,6 +340,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
 
             if (mShakeDevice) {
                 mShakeLayout.setVisibility(View.VISIBLE);
+                mStillnessLayout.setVisibility(View.GONE);
                 mProgressLayout.setVisibility(View.GONE);
                 mWaitingForFirstShake = true;
 
@@ -298,11 +351,19 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                 mSensorManager.registerListener(mShakeDetector, mAccelerometer,
                         SensorManager.SENSOR_DELAY_UI);
             } else {
-                mProgressLayout.setVisibility(View.VISIBLE);
-                mShakeLayout.setVisibility(View.GONE);
 
-                displayInfo();
-                startTest(getApplicationContext(), mFolderName);
+                mWaitingForStillness = true;
+                mWaitingForShake = false;
+                mWaitingForFirstShake = false;
+                mStillnessLayout.setVisibility(View.VISIBLE);
+                mShakeLayout.setVisibility(View.GONE);
+                mProgressLayout.setVisibility(View.GONE);
+
+                mSensorManager.registerListener(mShakeDetector, mAccelerometer,
+                        SensorManager.SENSOR_DELAY_UI);
+
+                //displayInfo();
+                //startTest(getApplicationContext(), mFolderName);
             }
         } else {
             startHomeActivity(getApplicationContext());
@@ -329,22 +390,23 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                 if (mIndex > 0) {
                     mMediaPlayer = AudioUtils.playAlarmSound(context);
                 }
-            } else {
             }
 
-            mProgressLayout.setVisibility(View.GONE);
             mShakeLayout.setVisibility(View.VISIBLE);
+            mStillnessLayout.setVisibility(View.GONE);
+            mProgressLayout.setVisibility(View.GONE);
             mWaitingForShake = true;
             mWaitingForStillness = false;
             mSensorManager.unregisterListener(mShakeDetector);
-            mSensorManager.registerListener(mShakeDetector, mAccelerometer,
-                    SensorManager.SENSOR_DELAY_UI);
+            mShakeDetector.minShakeAcceleration = 5;
+            mShakeDetector.maxShakeDuration = 2000;
         } else {
-            mProgressLayout.setVisibility(View.VISIBLE);
-            mShakeLayout.setVisibility(View.GONE);
-
-            startTest(context, mFolderName);
+            mWaitingForShake = false;
+            mWaitingForStillness = true;
         }
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer,
+                SensorManager.SENSOR_DELAY_UI);
+
     }
 
     private void getSharedPreferences() {
@@ -432,14 +494,13 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
 
         DataStorage.deleteRecord(this, mId, mLocationId, mFolderName);
 
-
         if (mIndex > -1 && mLocationId == -1) {
             FileUtils.deleteFilesExcepting(calibrateFolder, oldFilePaths);
         }
-
     }
 
     protected void sendResult(Message msg) {
+        mSensorManager.unregisterListener(mShakeDetector);
 
         mId = PreferencesHelper.getCurrentTestId(this, null, msg.getData());
 
@@ -456,58 +517,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
         }
 
         if (mTestType != Globals.BACTERIA_INDEX && (result < 0 || quality < minAccuracy)) {
-
-            AlertDialog myDialog;
-            View alertView;
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-            LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
-            ViewGroup parent = (ViewGroup) findViewById(R.id.linearLayout);
-
-            alertView = inflater.inflate(R.layout.dialog_error, parent, false);
-            builder.setView(alertView);
-
-            builder.setTitle(R.string.error);
-
-            builder.setMessage(message);
-
-            ImageView image = (ImageView) alertView.findViewById(R.id.image);
-            //image.setImageResource(R.drawable.ic_launcher);
-            image.setImageBitmap(
-                    ImageUtils.getAnalysedBitmap(msg.getData().getString("file"))
-            );
-
-            builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    mIndex = 0;
-                    DataStorage
-                            .deleteRecord(getApplicationContext(), mId, mLocationId, mFolderName);
-                    dialog.dismiss();
-                    releaseResources();
-                    startNewTest(mTestType);
-                    InitializeTest(getApplicationContext());
-                }
-            });
-
-            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    DataStorage
-                            .deleteRecord(getApplicationContext(), mId, mLocationId, mFolderName);
-                    cancelService();
-                    Intent intent = new Intent(getIntent());
-                    setResult(Activity.RESULT_CANCELED, intent);
-
-                    finish();
-                }
-            });
-
-            builder.setCancelable(false);
-            myDialog = builder.create();
-
-            myDialog.show();
-
+            showError(message, ImageUtils.getAnalysedBitmap(msg.getData().getString("file")));
         } else {
 
             releaseResources();
@@ -539,6 +549,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
 
     private void releaseResources() {
 
+        mSensorManager.unregisterListener(mShakeDetector);
         delayHandler.removeCallbacks(delayRunnable);
         try {
             unregisterReceiver(receiver);
@@ -554,17 +565,6 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
         editor.remove(getString(R.string.runningTestFolder)); //NON-NLS
         editor.remove(PreferencesHelper.CURRENT_TEST_ID_KEY);
         editor.commit();
-
-        mSensorManager.unregisterListener(mShakeDetector);
-/*
-        MainApp mainContext = (MainApp) context;
-
-        if (mainContext.camera != null) {
-            mainContext.camera.stopPreview();
-            mainContext.camera.release();
-            mainContext.camera = null;
-        }
-*/
 
         if (mMediaPlayer != null) {
             mMediaPlayer.release();
@@ -648,43 +648,28 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
     @Override
     protected void onPause() {
         super.onPause();
-/*
-
-        Context context = getApplicationContext();
-
-        MainApp mainContext = (MainApp) context;
-
-        if (mainContext.camera != null) {
-            mainContext.camera.stopPreview();
-            mainContext.camera.release();
-            mainContext.camera = null;
-        }
-*/
     }
 
     @Override
     protected void onDestroy() {
-
-/*
-        try {
-            unregisterReceiver(receiver);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-*/
-
         super.onDestroy();
-
-
     }
 
     void startTest(final Context context, final String folderName) {
+
+        mWaitingForShake = false;
+        mWaitingForFirstShake = false;
+        mWaitingForStillness = false;
+
+        mShakeDetector.minShakeAcceleration = 0.5;
+        mShakeDetector.maxShakeDuration = 3000;
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer,
+                SensorManager.SENSOR_DELAY_UI);
 
         (new AsyncTask<Void, Void, Void>() {
 
             @Override
             protected Void doInBackground(Void... params) {
-
 /*
                 try {
                     Thread.sleep(3000);
@@ -692,7 +677,6 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                     e.printStackTrace();
                 }
 */
-
                 return null;
             }
 
@@ -704,27 +688,8 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
 
                 if (!hasTestCompleted(folderName)) {
 
-                 /*   if (mainContext.camera == null) {
-                        mainContext.camera = CameraUtils.getCamera(mainContext);
-                    }
-
-                    Camera.Parameters parameters = mainContext.camera.getParameters();
-                    SharedPreferences sharedPreferences = PreferenceManager
-                            .getDefaultSharedPreferences(context);
-
-                    int zoom = sharedPreferences.getInt("camera_zoom", -1);
-
-                    if (zoom == -1) {
-                        parameters.setZoom(parameters.getMaxZoom());
-                    } else {
-                        parameters.setZoom(Math.min(zoom, parameters.getMaxZoom()));
-                    }
-                    mainContext.camera.setParameters(parameters);
-                    mainContext.camera.startPreview();
-*/
                     PhotoHandler photoHandler = new PhotoHandler(mainContext, mPhotoTakenHandler,
                             mIndex, folderName, mTestType);
-                    //mainContext.camera.takePicture(null, null, photoHandler);
 
                     final FragmentTransaction ft = getFragmentManager().beginTransaction();
 
@@ -762,10 +727,6 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                     };
 
                     delayHandler.postDelayed(delayRunnable, Globals.INITIAL_DELAY);
-
-                    //ft.add(mCameraFragment, "cameraDialog");
-                    //ft.commitAllowingStateLoss();
-
                 }
             }
         }).execute();
@@ -868,6 +829,10 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
         finish();
     }
 
+    public void unregisterShakeSensor() {
+        mSensorManager.unregisterListener(mShakeDetector);
+    }
+
     private static class PhotoTakenHandler extends Handler {
 
         private final WeakReference<ProgressActivity> mService;
@@ -890,6 +855,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                     String folderName = msg.getData()
                             .getString(PreferencesHelper.FOLDER_NAME_KEY); //NON-NLS
                     if (service.hasTestCompleted(folderName)) {
+                        service.unregisterShakeSensor();
                         service.sendResult(msg);
                     } else {
                         Calendar cal = Calendar.getInstance();

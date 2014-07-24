@@ -25,6 +25,7 @@
         <item name="android:textColor">@color/text_color_black</item>
         <item name="arrowRight">@drawable/arrow_right_light</item>
         <item name="alarm">@android:drawable/ic_lock_idle_alarm</item>
+        <item name="minute">@drawable/minute</item>
         <item name="buttonStyle">@drawable/button_style_dark</item>
 
         <item name="android:windowBackground">@color/background_main</item>
@@ -54,6 +55,7 @@
         <item name="android:textColor">@color/textColorDark</item>
         <item name="arrowRight">@drawable/arrow_right</item>
         <item name="alarm">@android:drawable/ic_lock_idle_alarm</item>
+        <item name="minute">@drawable/minute_dark</item>
         <item name="buttonStyle">@drawable/button_style_dark</item>
     </style>
 

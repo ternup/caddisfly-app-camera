@@ -485,4 +485,16 @@ public class ColorUtils {
         int color = Color.rgb(Integer.valueOf(rgbArray[0]), Integer.valueOf(rgbArray[1]), Integer.valueOf(rgbArray[2]));
         return color;
     }
+
+    public static int getBrightness(int color) {
+        int r = Color.red(color);
+        int g = Color.green(color);
+        int b = Color.blue(color);
+
+        return (int) Math.sqrt(
+                r * r * .241 +
+                        g * g * .691 +
+                        b * b * .068
+        );
+    }
 }

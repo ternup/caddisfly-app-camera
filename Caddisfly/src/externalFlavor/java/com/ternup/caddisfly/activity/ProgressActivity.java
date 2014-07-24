@@ -48,7 +48,6 @@ public class ProgressActivity extends ProgressActivityBase implements ResultFrag
 
     @Override
     protected void sendResult(final Message msg) {
-
         if (mFolderName != null && !mFolderName.isEmpty()) {
             if (msg != null && msg.getData() != null) {
 
@@ -86,4 +85,5 @@ public class ProgressActivity extends ProgressActivityBase implements ResultFrag
         msg.setData(bundle);
         super.sendResult(msg);
     }
+
 }

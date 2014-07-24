@@ -179,6 +179,11 @@
     <string name="photoSampleDimensionMessage">"ವಿಶ್ಲೇಷಣೆಗೆ ಚಿತ್ರ ಕ್ರಾಪ್ ಉದ್ದ ಆಯ್ಕೆ"</string>
     <string name="photoSampleDimension">"ಫೋಟೋ ಮಾದರಿ ಆಯಾಮ"</string>
     <string name="sending">"ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ"</string>
+    <string name="versionStringFormat">%1$s %2$s</string>
+    <string name="current">Current</string>
+    <string name="save">Save</string>
+    <string name="load">Load</string>
+    <string name="name">Name</string>
     <string name="noSavedCalibrations">There are no previously saved calibrations</string>
     <string name="notFound">Not Found</string>
     <string name="giveNameForCalibration">Give a descriptive name for this calibration</string>
@@ -187,7 +192,19 @@
     <string name="invalidName">Invalid name</string>
     <string name="overwriteFile">Overwrite File</string>
     <string name="nameAlreadyExists">Name already exists. Overwrite file?</string>
-    <string name="calibrateNow">Calibrate Now</string>
-    <string name="calibrationRequired">Calibration Required</string>
+    <string name="calibrateNow">ಮಾಪನಾಂಕ ಮಾಡಿ</string>
+    <string name="calibrationRequired">ಮಾಪನಾಂಕ ಅಗತ್ಯವಿದೆ</string>
     <string name="backToSurvey">ಉತ್ತರ ಬಳಸಿ</string>
+    <string name="testInterrupted">ಪರೀಕ್ಷೆ ಪೂರ್ಣಗೊಳ್ಳುವವರೆಗೂ ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ.</string>
+    <string name="welcome">ಸ್ವಾಗತ</string>
+    <string name="toBeginCalibrate">ಪ್ರಾರಂಭಿಸಲು Caddisfly ಮಾಪನಾಂಕ ಮಾಡಿ</string>
+    <string name="useSolutionsProvided">ಕಿಟ್ ಒದಗಿಸಿದ ಗುಲಾಬಿ ಮತ್ತು ಹಳದಿ ಪ್ರಮಾಣಿತ ಮಿಶ್ರಣಗಳನ್ನು ಬಳಸಿ</string>
+    <string name="pink">ಗುಲಾಬಿ</string>
+    <string name="yellow">ಹಳದಿ</string>
+    <string name="revertVersion">Revert to previous version</string>
+    <string name="appVersion">App version</string>
+    <string name="revertingVersion">Reverting to previous version</string>
+    <string name="waitTillCameraSound">ನಂತರ ಸುಮಾರು ಒಂದು ನಿಮಿಷದಲ್ಲಿ ಕ್ಯಾಮೆರಾ ಧ್ವನಿ ನಿರೀಕ್ಷಿಸಿ</string>
+    <string name="calibrateSummary">Use the standard color mixtures provided in the kit to calibrate this phone</string>
+    <string name="revertSummary">If the current version is not working correctly, temporarily revert to a previous version</string>
 </resources>

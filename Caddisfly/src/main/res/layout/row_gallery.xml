@@ -56,8 +56,21 @@
             android:focusable="false"
             android:gravity="center_horizontal"
             android:textIsSelectable="false"
-            android:textSize="18sp"
+            android:textSize="20sp"
             tools:text="Result : 2.5" />
+
+        <TextView
+            android:id="@+id/brightnessText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:alpha="0.8"
+            android:focusable="false"
+            android:gravity="center_horizontal"
+            android:textIsSelectable="false"
+            android:textSize="18sp"
+            tools:text="Brightness : 255" />
 
         <ImageView
             android:id="@+id/photoImageView"
@@ -73,7 +86,7 @@
             android:visibility="gone" />
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/imageProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"

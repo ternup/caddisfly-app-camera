@@ -57,8 +57,10 @@ public class MainActivityBase extends Activity {
 
         Calendar currentDate = Calendar.getInstance();
 
-        if (DateUtils.getDaysDifference(lastCheckDate, currentDate) > 0) {
-            checkUpdate(true);
+        if (!PreferencesUtils.getBoolean(this, R.string.revertVersionKey, false)) {
+            if (DateUtils.getDaysDifference(lastCheckDate, currentDate) > 0) {
+                checkUpdate(true);
+            }
         }
     }
 
@@ -90,8 +92,8 @@ public class MainActivityBase extends Activity {
     /**
      * @param background true: check for update silently, false: show messages to user
      */
-    void checkUpdate(boolean background) {
-        UpdateCheckTask updateCheckTask = new UpdateCheckTask(this, background);
+    protected void checkUpdate(boolean background) {
+        UpdateCheckTask updateCheckTask = new UpdateCheckTask(this, background, false);
         updateCheckTask.execute();
     }
 
@@ -111,6 +113,7 @@ public class MainActivityBase extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_update:
+                PreferencesUtils.setBoolean(this, R.string.revertVersionKey, false);
                 checkUpdate(false);
                 return true;
             default:

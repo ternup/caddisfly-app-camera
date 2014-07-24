@@ -53,12 +53,28 @@
             android:weightSum="2">
 
             <Button
-                android:id="@+id/colorButton"
+                android:id="@+id/valueButton"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:gravity="center"
+                android:paddingEnd="8dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingStart="8dp"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/colorButton"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:background="#ffff00"
                 android:clickable="false"
@@ -67,21 +83,6 @@
                 android:paddingRight="8dp"
                 android:paddingStart="8dp" />
 
-            <Button
-                android:id="@+id/valueButton"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_weight="1"
-                android:clickable="false"
-                android:gravity="center"
-                android:paddingEnd="8dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:paddingStart="8dp"
-                android:textSize="60sp" />
         </LinearLayout>
 
         <LinearLayout

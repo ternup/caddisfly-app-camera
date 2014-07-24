@@ -16,9 +16,9 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_language"
-        android:enabled="true"
-        android:orderInCategory="0"
+        android:id="@+id/menu_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:orderInCategory="10"
         android:showAsAction="always"
-        android:title="@string/language" />
+        android:title="@string/settings" />
 </menu>

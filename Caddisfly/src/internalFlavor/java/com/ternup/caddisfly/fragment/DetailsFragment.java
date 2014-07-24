@@ -16,28 +16,6 @@
 
 package com.ternup.caddisfly.fragment;
 
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.adapter.GalleryListAdapter;
-import com.ternup.caddisfly.app.Globals;
-import com.ternup.caddisfly.app.MainApp;
-import com.ternup.caddisfly.database.LocationTable;
-import com.ternup.caddisfly.database.TestTable;
-import com.ternup.caddisfly.provider.TestContentProvider;
-import com.ternup.caddisfly.util.AlertUtils;
-import com.ternup.caddisfly.util.DataHelper;
-import com.ternup.caddisfly.util.DateUtils;
-import com.ternup.caddisfly.util.FileUtils;
-import com.ternup.caddisfly.util.NetworkUtils;
-import com.ternup.caddisfly.util.PreferencesHelper;
-import com.ternup.caddisfly.util.PreferencesUtils;
-import com.ternup.caddisfly.util.WebClient;
-
-import org.apache.http.Header;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -65,6 +43,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.adapter.GalleryListAdapter;
+import com.ternup.caddisfly.app.Globals;
+import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.database.LocationTable;
+import com.ternup.caddisfly.database.TestTable;
+import com.ternup.caddisfly.provider.TestContentProvider;
+import com.ternup.caddisfly.util.AlertUtils;
+import com.ternup.caddisfly.util.DataHelper;
+import com.ternup.caddisfly.util.DateUtils;
+import com.ternup.caddisfly.util.FileUtils;
+import com.ternup.caddisfly.util.NetworkUtils;
+import com.ternup.caddisfly.util.PreferencesHelper;
+import com.ternup.caddisfly.util.PreferencesUtils;
+import com.ternup.caddisfly.util.WebClient;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -124,7 +124,7 @@ public class DetailsFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_gallery, container, false);
     }
 
@@ -417,7 +417,7 @@ public class DetailsFragment extends ListFragment {
                     WebClient.post("testresults", params, new AsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers,
-                                byte[] responseBody) {
+                                              byte[] responseBody) {
                             count++;
                             if (count >= totalCount) {
                                 getActivity().runOnUiThread(new Runnable() {
@@ -441,7 +441,7 @@ public class DetailsFragment extends ListFragment {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers,
-                                byte[] responseBody, Throwable error) {
+                                              byte[] responseBody, Throwable error) {
                             Log.d(Globals.DEBUG_TAG, "fail: " + error.getMessage());
                             getActivity().runOnUiThread(new Runnable() {
                                 public void run() {
@@ -517,7 +517,7 @@ public class DetailsFragment extends ListFragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody,
-                    final Throwable error) {
+                                  final Throwable error) {
                 Log.d(Globals.DEBUG_TAG, "fail: " + error.getMessage());
 
                 getActivity().runOnUiThread(new Runnable() {
@@ -530,7 +530,7 @@ public class DetailsFragment extends ListFragment {
                             wakeLock.release();
                         }
                         AlertUtils
-                                .showAlert(getActivity(), R.string.error, error.getMessage(), null,
+                                .showAlert(getActivity(), R.string.error, error.getMessage(), R.string.ok, null,
                                         null);
                     }
                 });

@@ -18,13 +18,16 @@ package com.ternup.caddisfly.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +44,8 @@ public class SettingsFragment extends PreferenceFragment
 
     private static final int HORIZONTAL_MARGIN = 16;
 
+    private OnCalibrateListener mOnCalibrateListener;
+
     private Activity mActivity;
 
     public SettingsFragment() {
@@ -53,6 +58,29 @@ public class SettingsFragment extends PreferenceFragment
 
         PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
                 .registerOnSharedPreferenceChangeListener(this);
+
+        Preference calibratePreference = findPreference("calibrate");
+        if (calibratePreference != null) {
+            calibratePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+
+                    mOnCalibrateListener.onCalibrate();
+                    return true;
+                }
+            });
+        }
+
+        Intent LaunchIntent = getActivity().getPackageManager()
+                .getLaunchIntentForPackage(Globals.CADDISFLY_PACKAGE_NAME);
+        if (LaunchIntent == null) {
+            PreferenceScreen screen = getPreferenceScreen();
+            Preference pref = screen.findPreference(getString(R.string.revertVersionKey));
+            //PreferenceCategory generalCategory = (PreferenceCategory) findPreference("otherKey");
+            if (screen != null) {
+                screen.removePreference(pref);
+            }
+        }
+
     }
 
     @Override
@@ -61,12 +89,14 @@ public class SettingsFragment extends PreferenceFragment
         View v = super.onCreateView(inflater, container, savedInstanceState);
         if (v != null) {
             ListView lv = (ListView) v.findViewById(android.R.id.list);
+            lv.setPadding(0, 0, 0, 0);
             ViewGroup parent = (ViewGroup) lv.getParent();
             if (parent != null) {
-                parent.setPadding(0, HORIZONTAL_MARGIN, 0, 0);
+                parent.setPadding(0, 0, 0, 0);
             }
         }
         mActivity = getActivity();
+
         return v;
     }
 
@@ -114,4 +144,26 @@ public class SettingsFragment extends PreferenceFragment
         PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
                 .registerOnSharedPreferenceChangeListener(this);
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mOnCalibrateListener = (OnCalibrateListener) activity;
+        } catch (ClassCastException e) {
+
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mOnCalibrateListener = null;
+    }
+
+    public interface OnCalibrateListener {
+
+        public void onCalibrate();
+    }
+
 }

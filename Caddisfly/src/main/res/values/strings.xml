@@ -72,7 +72,7 @@
     <string name="updateRequired">Please update to a newer version to enable this feature</string>
 
     <string name="fluoride">Fluoride</string>
-    <string name="fluoride2">Fluoride Easy</string>
+    <string name="fluoride2">Fluoride 7 Step</string>
     <string name="bacteria">Bacteria</string>
     <string name="pH">pH</string>
     <string name="cropToSquare">Crop photo to square</string>
@@ -195,4 +195,16 @@
     <string name="calibrateNow">Calibrate Now</string>
     <string name="calibrationRequired">Calibration Required</string>
     <string name="backToSurvey">Back to Survey</string>
+    <string name="testInterrupted">Test was interrupted. Please do not move the phone during the test.</string>
+    <string name="welcome">Welcome to Akvo Caddisfly</string>
+    <string name="toBeginCalibrate">To begin please calibrate Caddisfly</string>
+    <string name="useSolutionsProvided">Use the pink and yellow standard solutions provided in the kit</string>
+    <string name="pink">Pink</string>
+    <string name="yellow">Yellow</string>
+    <string name="revertVersion">Revert to previous version</string>
+    <string name="appVersion">App version</string>
+    <string name="revertingVersion">Reverting to previous version</string>
+    <string name="waitTillCameraSound">Then wait for the camera sound in about a minute</string>
+    <string name="calibrateSummary">Use the standard color mixtures provided in the kit to calibrate this phone</string>
+    <string name="revertSummary">If the current version is not working correctly, temporarily revert to a previous version</string>
 </resources>

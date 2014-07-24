@@ -16,13 +16,14 @@
 
 package com.ternup.caddisfly.util;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.Globals;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
 
 import java.util.Calendar;
 
@@ -34,11 +35,25 @@ public class UpdateCheckTask extends AsyncTask<Void, Void, Void> {
 
     private final boolean mBackground;
 
+    private final boolean mPreviousVersion;
+
     private ProgressDialog progressDialog;
 
-    public UpdateCheckTask(Context context, boolean background) {
+    public UpdateCheckTask(Context context, boolean background, boolean previousVersion) {
         mContext = context;
         mBackground = background;
+        mPreviousVersion = previousVersion;
+    }
+
+    public static String getPreviousVersion(Context context) {
+        try {
+            int version = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0).versionCode;
+            return String.valueOf(version - 1);
+
+        } catch (PackageManager.NameNotFoundException e) {
+            return "";
+        }
     }
 
     @Override
@@ -46,14 +61,21 @@ public class UpdateCheckTask extends AsyncTask<Void, Void, Void> {
         super.onPreExecute();
 
         if (NetworkUtils.isOnline(mContext)) {
-            if (!mBackground) {
-                progressDialog = new ProgressDialog(mContext);
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.setMessage(mContext.getString(R.string.checkingForUpdates));
-                progressDialog.setCancelable(false);
-                progressDialog.show();
-            }
             checker = new UpdateChecker(mContext, false);
+            if (mPreviousVersion) {
+                String url = Globals.UPDATE_URL.replace(".apk", "_prev" + ".apk");
+                checker.downloadAndInstall(url, true);
+                this.cancel(true);
+                return;
+            } else {
+                if (!mBackground) {
+                    progressDialog = new ProgressDialog(mContext);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.setMessage(mContext.getString(R.string.checkingForUpdates));
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                }
+            }
         } else {
             this.cancel(true);
             if (!mBackground) {
@@ -96,7 +118,7 @@ public class UpdateCheckTask extends AsyncTask<Void, Void, Void> {
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            checker.downloadAndInstall(Globals.UPDATE_URL);
+                            checker.downloadAndInstall(Globals.UPDATE_URL, false);
                             PreferencesUtils.removeKey(mContext, R.string.updateAvailable);
                         }
                     }, null

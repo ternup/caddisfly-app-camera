@@ -130,6 +130,13 @@
             android:dialogTitle="@string/cameraZoom"
             android:key="camera_zoom"
             android:title="@string/zoom" />
+        <com.ternup.caddisfly.component.ConfirmPreference
+            android:defaultValue="false"
+            android:dialogTitle="@string/appVersion"
+            android:key="@string/revertVersionKey"
+            android:summary="@string/revertSummary"
+            android:title="@string/revertVersion" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

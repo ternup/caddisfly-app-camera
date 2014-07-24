@@ -1,3 +1,19 @@
+v0.34 alpha
+-----------
+1. Fix: detect interruption of test by phone movement
+2. Revert to previous version option
+3. One minute image displayed on screen to user
+4. User App: Preferences screen added
+
+v0.33 alpha
+-----------
+1. Two step calibration for fluoride will be default
+2. Stop test if phone is shaken during test
+3. Calibration error will now reset the color to null
+4. Display brightness value for calibration and test images
+5. User App: Welcome dialog if calibration not done
+6. User App: ppm values for calibration changed to color names
+
 v0.32 alpha
 -----------
 1. Photo Sample Dimension default set to 150px

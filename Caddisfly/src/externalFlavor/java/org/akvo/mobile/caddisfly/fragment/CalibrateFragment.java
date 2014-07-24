@@ -38,13 +38,13 @@ public class CalibrateFragment extends CalibrateFragmentBase {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         File external = Environment.getExternalStorageDirectory();
         String path = external.getPath() + "/com.ternup.caddisfly/calibrate/";
         File folder = new File(path);
         if (folder.exists()) {
             inflater.inflate(R.menu.calibrate, menu);
         }
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

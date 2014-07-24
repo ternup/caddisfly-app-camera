@@ -46,6 +46,7 @@
     <attr name="bath" format="integer" />
     <attr name="wash" format="integer" />
     <attr name="alarm" format="integer" />
+    <attr name="minute" format="integer" />
     <attr name="sendIcon" format="reference" />
     <attr name="deleteIcon" format="reference" />
     <attr name="saveIcon" format="reference" />

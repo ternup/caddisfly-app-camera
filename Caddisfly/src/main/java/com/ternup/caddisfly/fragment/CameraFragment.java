@@ -65,11 +65,9 @@ public class CameraFragment extends DialogFragment {
     public Boolean makeShutterSound = false;
 
     public Camera.PictureCallback pictureCallback;
-
+    boolean mCancelled = false;
     private AlertDialog progressDialog;
-
     private Camera mCamera;
-
     // View to display the camera output.
     private CameraPreview mPreview;
 
@@ -182,7 +180,11 @@ public class CameraFragment extends DialogFragment {
                 }
             }
         }, Globals.INITIAL_DELAY);
+    }
 
+    public void stopCamera() {
+        mCancelled = true;
+        releaseCameraAndPreview();
     }
 
     private boolean hasTestCompleted(Context context) {
@@ -249,7 +251,6 @@ public class CameraFragment extends DialogFragment {
     }
 
     public interface Cancelled {
-
         public void dialogCancelled();
     }
 
@@ -332,7 +333,9 @@ public class CameraFragment extends DialogFragment {
 
         public void surfaceCreated(SurfaceHolder holder) {
             try {
-                mCamera.setPreviewDisplay(holder);
+                if (mCamera != null) {
+                    mCamera.setPreviewDisplay(holder);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -409,11 +412,13 @@ public class CameraFragment extends DialogFragment {
 
         @Override
         public void onPictureTaken(byte[] bytes, Camera camera) {
-            if (!hasTestCompleted(getActivity())) {
-                pictureCallback.onPictureTaken(bytes, camera);
-                takePicture();
-            } else {
-                pictureCallback.onPictureTaken(bytes, camera);
+            if (!mCancelled) {
+                if (!hasTestCompleted(getActivity())) {
+                    pictureCallback.onPictureTaken(bytes, camera);
+                    takePicture();
+                } else {
+                    pictureCallback.onPictureTaken(bytes, camera);
+                }
             }
         }
     }

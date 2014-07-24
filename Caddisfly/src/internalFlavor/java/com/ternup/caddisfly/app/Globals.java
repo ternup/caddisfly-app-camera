@@ -19,16 +19,18 @@ package com.ternup.caddisfly.app;
 @SuppressWarnings("HardCodedStringLiteral")
 public class Globals extends GlobalsBase {
 
+    public static final boolean isExternalFlavor = false;
+
     // Caddisfly update file name
     public static final String UPDATE_FILE_NAME = "caddisfly_update.apk";
 
     // Caddisfly update check path
     public static final String UPDATE_CHECK_URL
-            = "http://caddisfly.ternup.com/ternupapp/v.txt?check=32";
+            = "http://caddisfly.ternup.com/ternupapp/v.txt?check=34";
 
     // Caddisfly update path
     public static final String UPDATE_URL
-            = "http://caddisfly.ternup.com/ternupapp/cadapp_update.apk?check=32";
+            = "http://caddisfly.ternup.com/ternupapp/cadapp_update.apk?check=34";
 
     //TODO: remove this
     public static final String CONNECT = "";
@@ -39,8 +41,6 @@ public class Globals extends GlobalsBase {
 
     // Index of screens that gets displayed in the app
     public static final int LOCATION_LIST_SCREEN_INDEX = 1;
-
-    public static final int SETTINGS_SCREEN_INDEX = 3;
 
     public static final int ABOUT_SCREEN_INDEX = 5;
 

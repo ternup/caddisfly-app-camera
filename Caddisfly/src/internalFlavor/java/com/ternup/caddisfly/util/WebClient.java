@@ -28,7 +28,7 @@ import android.util.Base64;
 
 public class WebClient {
 
-    final static int DEFAULT_TIMEOUT = 60 * 6000;
+    final static int DEFAULT_TIMEOUT = 60 * 2000;
 
     private static final AsyncHttpClient client = new AsyncHttpClient();
 

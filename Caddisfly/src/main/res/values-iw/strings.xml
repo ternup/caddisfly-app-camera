@@ -31,8 +31,6 @@
     <string name="result">"תוצאה"</string>
     <string name="rgb">"RGB"</string>
     <string name="ppm">"עמודים לדקה"</string>
-    <string name="twentyFourHourTime">"HH: mm: ss"</string>
-    <string name="twelveHourTime">"h: mm: ss"</string>
     <string name="checkingForUpdates">"בדיקת עדכונים ..."</string>
     <string name="starting">"החל ..."</string>
     <string name="error">"שגיאה"</string>
@@ -92,6 +90,7 @@
     <string name="photo">"תמונה"</string>
     <string name="delete">"מחק"</string>
     <string name="noData">"אין מקומות עדיין. \ N כפתור \ n לחץ על 'החדש מיקום \""</string>
+    <string name="pressNewLocation">Press \'New Location\' button</string>
     <string name="interval_info">"משך לחכות לאחר כל ניתוח"</string>
     <string name="details">"פרטים:"</string>
     <string name="selectNumberOfTests">"בחר כמה פעמים כדי לנתח"</string>
@@ -193,7 +192,19 @@
     <string name="invalidName">Invalid name</string>
     <string name="overwriteFile">Overwrite File</string>
     <string name="nameAlreadyExists">Name already exists. Overwrite file?</string>
-    <string name="calibrateNow">Calibrate Now</string>
-    <string name="calibrationRequired">Calibration Required</string>
+    <string name="calibrateNow">כייל עכשיו</string>
+    <string name="calibrationRequired">כיול הנדרש</string>
     <string name="backToSurvey">לחזור סקר</string>
+    <string name="testInterrupted">אנא המתן עד תום הבדיקה</string>
+    <string name="welcome">ברוכים הבאים</string>
+    <string name="toBeginCalibrate">כדי להתחיל בבקשה לכייל ylfsiddaC</string>
+    <string name="useSolutionsProvided">השתמש בתערובות הוורודות וצהוב סטנדרטיים המסופקות בערכה</string>
+    <string name="pink">ורוד</string>
+    <string name="yellow">צהוב</string>
+    <string name="revertVersion">Revert to previous version</string>
+    <string name="appVersion">App version</string>
+    <string name="revertingVersion">Reverting to previous version</string>
+    <string name="waitTillCameraSound">ואז לחכות לצליל המצלמה כבדקה</string>
+    <string name="calibrateSummary">Use the standard color mixtures provided in the kit to calibrate this phone</string>
+    <string name="revertSummary">If the current version is not working correctly, temporarily revert to a previous version</string>
 </resources>

@@ -22,36 +22,25 @@ import android.hardware.SensorEventListener;
 
 public class ShakeDetector implements SensorEventListener {
 
-    // Minimum acceleration needed to count as a shake movement
-    private static final int MIN_SHAKE_ACCELERATION = 5;
-
     // Max to determine if the phone is not moving
     private static final float MAX_SHAKE_ACCELERATION = 0.35f;
-
     // Minimum number of movements to register a shake
     private static final int MIN_MOVEMENTS = 10;
-
-    // Maximum time (in milliseconds) for the whole shake to occur
-    private static final int MAX_SHAKE_DURATION = 2000;
-
     // Indexes for x, y, and z values
     private static final int X = 0;
-
     private static final int Y = 1;
-
     private static final int Z = 2;
-
     // Arrays to store gravity and linear acceleration values
     private final float[] mGravity = {0.0f, 0.0f, 0.0f};
-
     private final float[] mLinearAcceleration = {0.0f, 0.0f, 0.0f};
-
     // OnShakeListener that will be notified when the shake is detected
     private final OnShakeListener mShakeListener;
-
     // OnShakeListener that will be notified when the no shake is detected
     private final OnNoShakeListener mNoShakeListener;
-
+    // Minimum acceleration needed to count as a shake movement
+    public double minShakeAcceleration = 5;
+    // Maximum time (in milliseconds) for the whole shake to occur
+    public int maxShakeDuration = 2000;
     // Start time for the shake detection
     private long startTime = 0;
 
@@ -89,13 +78,13 @@ public class ShakeDetector implements SensorEventListener {
         int inclination = (int) Math.round(Math.toDegrees(Math.acos(g[2])));
         //Log.i("Sensor", String.valueOf(inclination));
         // check inclination to detect if the phone is placed on a flat surface with screen below
-        if (inclination > 175) {
+        if (inclination > 174) {
             synchronized (this) {
                 long nowNoShake = System.currentTimeMillis();
                 if (Math.abs(maxLinearAcceleration) < MAX_SHAKE_ACCELERATION) {
                     long elapsedNoShakeTime = nowNoShake - noShakeStartTime;
 
-                    if (elapsedNoShakeTime > MAX_SHAKE_DURATION) {
+                    if (elapsedNoShakeTime > maxShakeDuration) {
                         //elapsedNoShakeTime = 0;
                         noShakeStartTime = nowNoShake;
 
@@ -113,7 +102,7 @@ public class ShakeDetector implements SensorEventListener {
         synchronized (this) {
 
             // Check if the acceleration is greater than our minimum threshold
-            if (maxLinearAcceleration > MIN_SHAKE_ACCELERATION) {
+            if (maxLinearAcceleration > minShakeAcceleration) {
                 long now = System.currentTimeMillis();
 
                 // Set the startTime if it was reset to zero
@@ -124,7 +113,7 @@ public class ShakeDetector implements SensorEventListener {
                 long elapsedTime = now - startTime;
 
                 // Check if we're still in the shake window we defined
-                if (elapsedTime > MAX_SHAKE_DURATION) {
+                if (elapsedTime > maxShakeDuration) {
                     // Too much time has passed. Start over!
                     resetShakeDetection();
                 } else {
@@ -146,7 +135,6 @@ public class ShakeDetector implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 
     private void setCurrentAcceleration(SensorEvent event) {

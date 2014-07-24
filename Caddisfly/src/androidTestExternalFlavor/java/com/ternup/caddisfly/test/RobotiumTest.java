@@ -16,17 +16,17 @@
 
 package com.ternup.caddisfly.test;
 
-import com.robotium.solo.Solo;
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.Globals;
-
-import org.akvo.mobile.caddisfly.activity.MainActivity;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
 import android.test.ActivityInstrumentationTestCase2;
+
+import com.robotium.solo.Solo;
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
+
+import org.akvo.mobile.caddisfly.activity.MainActivity;
 
 public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
@@ -46,7 +46,7 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
 
     }
 
-    public void testScreenShots(){
+    public void testScreenShots() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
         solo.takeScreenshot();
 
@@ -101,12 +101,8 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
     public void testNavigationDrawer() {
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
-        solo.clickOnButton(solo.getString(R.string.calibrate));
-        assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.CALIBRATE_SCREEN_INDEX)));
-        solo.goBack();
-
-        solo.clickOnButton(solo.getString(R.string.help));
-        assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.HELP_SCREEN_INDEX)));
+        solo.clickOnMenuItem(solo.getString(R.string.settings));
+        assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.SETTINGS_SCREEN_INDEX)));
         solo.goBack();
 
         //assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.HOME_SCREEN_INDEX)));
@@ -117,10 +113,6 @@ public class RobotiumTest extends ActivityInstrumentationTestCase2<MainActivity>
     public void testDashboard() {
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-
-        solo.clickOnButton(solo.getString(R.string.help));
-
-        assertTrue(solo.waitForFragmentByTag(String.valueOf(Globals.HELP_SCREEN_INDEX)));
 
         solo.goBack();
 

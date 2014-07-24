@@ -23,23 +23,48 @@
     android:padding="@dimen/activity_horizontal_margin"
     android:weightSum="1">
 
-    <TextView
-        android:id="@+id/placeInStandText"
+    <LinearLayout
+        android:id="@+id/stillnessLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
-        android:text="@string/placeDeviceInStand"
-        android:textSize="30sp"
-        android:visibility="gone" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/placeInStandText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/placeDeviceInStand"
+            android:textSize="26sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@null"
+            android:src="?minute" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/waitTillCameraSound"
+            android:textSize="24sp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/progressLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <DigitalClock
             android:layout_width="wrap_content"
@@ -138,16 +163,14 @@
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:contentDescription="@null"
-            android:src="@drawable/shake_phone"
-            android:visibility="visible" />
+            android:src="@drawable/shake_phone" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/shakeMe"
-            android:textSize="50sp"
-            android:visibility="visible" />
+            android:textSize="50sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -157,8 +180,7 @@
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/shakeToContinue"
-            android:textSize="18sp"
-            android:visibility="visible" />
+            android:textSize="18sp" />
     </LinearLayout>
 
     <FrameLayout

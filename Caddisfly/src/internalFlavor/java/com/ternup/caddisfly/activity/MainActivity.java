@@ -92,7 +92,7 @@ public class MainActivity extends MainActivityBase
         PreferenceManager.setDefaultValues(this, R.xml.fragmented_preferences, false);
 
         if (savedInstanceState == null) {
-            displayView(0, false);
+            displayView(Globals.HOME_SCREEN_INDEX, false);
         }
 
         // last update check date
