@@ -188,7 +188,7 @@
     <string name="notFound">Not Found</string>
     <string name="giveNameForCalibration">Give a descriptive name for this calibration</string>
     <string name="saveCalibration">Save Calibration</string>
-    <string name="loadCalibration">Load Calibration</string>
+    <string name="loadCalibration">ಮಾಪನಾಂಕ ಬಳಸಿ</string>
     <string name="invalidName">Invalid name</string>
     <string name="overwriteFile">Overwrite File</string>
     <string name="nameAlreadyExists">Name already exists. Overwrite file?</string>
@@ -201,10 +201,19 @@
     <string name="useSolutionsProvided">ಕಿಟ್ ಒದಗಿಸಿದ ಗುಲಾಬಿ ಮತ್ತು ಹಳದಿ ಪ್ರಮಾಣಿತ ಮಿಶ್ರಣಗಳನ್ನು ಬಳಸಿ</string>
     <string name="pink">ಗುಲಾಬಿ</string>
     <string name="yellow">ಹಳದಿ</string>
-    <string name="revertVersion">Revert to previous version</string>
-    <string name="appVersion">App version</string>
-    <string name="revertingVersion">Reverting to previous version</string>
+    <string name="revertVersion">ಹಿಂದಿನ ಆವೃತ್ತಿ ಬಳಸಿ</string>
+    <string name="appVersion">ಅಪ್ಲಿಕೇಶನ್ ಆವೃತ್ತಿ</string>
+    <string name="revertingVersion">ಹಿಂದಿನ ಆವೃತ್ತಿ ಡೌನ್ಲೋಡ್</string>
     <string name="waitTillCameraSound">ನಂತರ ಸುಮಾರು ಒಂದು ನಿಮಿಷದಲ್ಲಿ ಕ್ಯಾಮೆರಾ ಧ್ವನಿ ನಿರೀಕ್ಷಿಸಿ</string>
-    <string name="calibrateSummary">Use the standard color mixtures provided in the kit to calibrate this phone</string>
-    <string name="revertSummary">If the current version is not working correctly, temporarily revert to a previous version</string>
+    <string name="calibrateSummary">ಈ ಫೋನ್ ಮಾಪನಾಂಕ ಕಿಟ್ ಒದಗಿಸಿದ ಗುಣಮಟ್ಟದ ಬಣ್ಣ ಮಿಶ್ರಣಗಳನ್ನು ಬಳಸಿ</string>
+    <string name="revertSummary">ಪ್ರಸ್ತುತ ಆವೃತ್ತಿ ಸರಿಯಾಗಿ ಕಾರ್ಯನಿರ್ವಹಿಸದಿದ್ದರೆ, ತಾತ್ಕಾಲಿಕವಾಗಿ ಹಿಂದಿನ ಆವೃತ್ತಿಯನ್ನು ಬಳಸಿ</string>
+    <string name="aboutSummary">ಆವೃತ್ತಿ ಸಂಖ್ಯೆ ಪ್ರದರ್ಶಿಸುತ್ತದೆ</string>
+    <string name="checkUpdateSummary">ಅಪ್ಡೇಟ್ Akvo Caddisfly ಲಭ್ಯವಿದೆ ಎಂಬುದನ್ನು ಪರಿಶೀಲಿಸಿ</string>
+    <string name="next">ಮುಂದುವರಿಸಿ</string>
+    <string name="sevenStepCalibration">ಏಳು ಮಾಪನಾಂಕ</string>
+    <string name="preparation">ಸಿದ್ದತೆ</string>
+    <string name="fillCartridge">ಮಾದರಿ ನೀರು ಕಾರ್ಟ್ರಿಡ್ಜ್ ಭರ್ತಿ ಮಾಡಿ</string>
+    <string name="placeReagent">ಕಾರ್ಟ್ರಿಡ್ಜ್ ಒಳಗೆ ಹೊಸ ಬಳಕೆಯಾಗದ ಕಾರಕ ವಿತರಕ ಇರಿಸಿ ನಂತರ ಮುಚ್ಚಳ ಮುಚ್ಚಿ</string>
+    <string name="attachBackCase">ಫೋನ್ ಪ್ರಕರಣವನ್ನು ಲಗತ್ತಿಸಿ</string>
+    <string name="attachCartridge">ಪ್ರಕರಣಕ್ಕೆ ಕಾರ್ಟ್ರಿಡ್ಜ್ ಲಗತ್ತಿಸಿ ನಂತರ ಬಾಣಗಳನ್ನು ಹೊಂದಾಣಿಕೆ ಮಾಡಿ</string>
 </resources>

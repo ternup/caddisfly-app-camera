@@ -1,3 +1,11 @@
+v0.35 alpha
+-----------
+1. Added Preparation screen with instructions steps
+2. Sliding animation added for progress steps screens
+3. Photo Sample Dimension default set to 100px
+4. About dialog added to Settings screen options
+5. Developer: Setting to use 7 step calibration
+
 v0.34 alpha
 -----------
 1. Fix: detect interruption of test by phone movement

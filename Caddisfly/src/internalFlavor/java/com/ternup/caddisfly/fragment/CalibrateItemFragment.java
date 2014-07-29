@@ -35,7 +35,13 @@ import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.util.ColorUtils;
+import com.ternup.caddisfly.util.DataHelper;
 import com.ternup.caddisfly.util.FileUtils;
+import com.ternup.caddisfly.util.PreferencesHelper;
+import com.ternup.caddisfly.util.PreferencesUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class CalibrateItemFragment extends CalibrateItemFragmentBase {
 
@@ -57,6 +63,59 @@ public class CalibrateItemFragment extends CalibrateItemFragmentBase {
                 editCalibration(position);
             }
         });
+
+        Button analyzeButton = (Button) mListHeader.findViewById(R.id.analyzeButton);
+        analyzeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                analyzeImages(position);
+            }
+        });
+    }
+
+    private void analyzeImages(int index) {
+        Context context = getActivity();
+        MainApp mainApp = (MainApp) context.getApplicationContext();
+
+        String folderName = FileUtils.getStoragePath(getActivity(), -1,
+                String.format("%s/%d/%d/small/", Globals.CALIBRATE_FOLDER, mTestType,
+                        index), false
+        );
+
+        ArrayList<String> files = FileUtils.getFilePaths(context, folderName, -1);
+        Collections.sort(files);
+
+        int sampleLength = PreferencesUtils.getInt(context, R.string.photoSampleDimensionKey,
+                Globals.SAMPLE_CROP_LENGTH_DEFAULT);
+
+        int position = 0;
+        PreferencesUtils.setInt(context, R.string.currentSamplingCountKey, 0);
+        Bundle bundle;
+        for (String file : files) {
+            bundle = ColorUtils.getPpmValue(file, mainApp.colorList,
+                    mainApp.rangeIncrementValue,
+                    mainApp.rangeStartIncrement, sampleLength);
+
+            DataHelper.saveTempResult(context,
+                    bundle.getDouble(Globals.RESULT_VALUE_KEY),
+                    bundle.getInt(Globals.RESULT_COLOR_KEY),
+                    bundle.getInt(Globals.QUALITY_KEY));
+
+            PreferencesHelper.incrementPhotoTakenCount(context);
+
+            if(position == files.size() - 1) {
+                DataHelper.getAverageResult(context, bundle);
+
+                DataHelper.saveResultToPreferences(context, mTestType, index);
+
+                storeCalibratedData(index,
+                        bundle.getInt(Globals.RESULT_COLOR_KEY),
+                        bundle.getInt(Globals.QUALITY_KEY));
+
+            }
+            position++;
+        }
+
 
     }
 

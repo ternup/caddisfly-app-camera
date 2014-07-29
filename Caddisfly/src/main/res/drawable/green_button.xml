@@ -17,12 +17,20 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true"
-          android:drawable="@color/green_button_pressed"/>
-    <!-- pressed -->
-    <item android:state_focused="true"
-          android:drawable="@color/green_button_pressed"/>
-    <!-- focused -->
-    <item android:drawable="@color/green_button"/>
-    <!-- default -->
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="@color/green_button_pressed" />
+            <stroke android:width="1dp" android:color="@color/green_button_pressed" />
+            <corners android:radius="1dp" />
+            <padding android:bottom="15dp" android:left="10dp" android:right="10dp" android:top="15dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <gradient android:angle="270" android:endColor="@color/green_button" android:startColor="@color/green_button" />
+            <stroke android:width="1dp" android:color="@color/green_button" />
+            <corners android:radius="1dp" />
+            <padding android:bottom="15dp" android:left="10dp" android:right="10dp" android:top="15dp" />
+        </shape>
+    </item>
 </selector>

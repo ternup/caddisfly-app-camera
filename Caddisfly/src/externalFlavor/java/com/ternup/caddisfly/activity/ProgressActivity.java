@@ -67,6 +67,7 @@ public class ProgressActivity extends ProgressActivityBase implements ResultFrag
                     if (prev != null) {
                         ft.remove(prev);
                     }
+                    mResultFragment.setCancelable(false);
                     mResultFragment.show(ft, "resultDialog");
                 } else {
                     super.sendResult(msg);

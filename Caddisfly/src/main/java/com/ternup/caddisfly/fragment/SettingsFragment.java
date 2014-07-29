@@ -36,15 +36,22 @@ import android.widget.ListView;
 
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
+import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.util.PreferencesUtils;
 
 import java.util.Locale;
 
 public class SettingsFragment extends PreferenceFragment
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private static final int HORIZONTAL_MARGIN = 16;
+    //private static final int HORIZONTAL_MARGIN = 16;
 
     private OnCalibrateListener mOnCalibrateListener;
+
+    private OnAboutListener mOnAboutListener;
+
+    private OnCheckUpdateListener mOnCheckUpdateListener;
+
 
     private Activity mActivity;
 
@@ -63,8 +70,27 @@ public class SettingsFragment extends PreferenceFragment
         if (calibratePreference != null) {
             calibratePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-
                     mOnCalibrateListener.onCalibrate();
+                    return true;
+                }
+            });
+        }
+
+        Preference aboutPreference = findPreference("about");
+        if (aboutPreference != null) {
+            aboutPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    mOnAboutListener.onAbout();
+                    return true;
+                }
+            });
+        }
+
+        Preference updatePreference = findPreference("checkUpdate");
+        if (updatePreference != null) {
+            updatePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    mOnCheckUpdateListener.onCheckUpdate();
                     return true;
                 }
             });
@@ -76,11 +102,20 @@ public class SettingsFragment extends PreferenceFragment
             PreferenceScreen screen = getPreferenceScreen();
             Preference pref = screen.findPreference(getString(R.string.revertVersionKey));
             //PreferenceCategory generalCategory = (PreferenceCategory) findPreference("otherKey");
-            if (screen != null) {
+            if (pref != null) {
+                screen.removePreference(pref);
+            }
+
+            pref = screen.findPreference(getString(R.string.languageKey));
+            if (pref != null) {
+                screen.removePreference(pref);
+            }
+
+            pref = screen.findPreference("sevenStepCalibration");
+            if (pref != null) {
                 screen.removePreference(pref);
             }
         }
-
     }
 
     @Override
@@ -110,9 +145,10 @@ public class SettingsFragment extends PreferenceFragment
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
         if (mActivity != null) {
             Context context = mActivity.getApplicationContext();
+            MainApp mainApp = (MainApp) context;
             assert context != null;
             //noinspection CallToStringEquals
-            if (context.getString(R.string.currentLocale).equals(s)) {
+            if (context.getString(R.string.languageKey).equals(s)) {
 
                 PreferenceManager.getDefaultSharedPreferences(mActivity.getApplicationContext())
                         .unregisterOnSharedPreferenceChangeListener(this);
@@ -127,6 +163,12 @@ public class SettingsFragment extends PreferenceFragment
                 }
                 res.updateConfiguration(conf, dm);
                 mActivity.recreate();
+            } else if (context.getString(R.string.sevenStepCalibrationKey).equals(s)) {
+                if (PreferencesUtils.getBoolean(context, R.string.sevenStepCalibrationKey, false)) {
+                    mainApp.setFluoride2Swatches();
+                } else {
+                    mainApp.setFluorideSwatches();
+                }
             }
         }
     }
@@ -150,7 +192,17 @@ public class SettingsFragment extends PreferenceFragment
         super.onAttach(activity);
         try {
             mOnCalibrateListener = (OnCalibrateListener) activity;
-        } catch (ClassCastException e) {
+        } catch (ClassCastException ignored) {
+
+        }
+        try {
+            mOnCheckUpdateListener = (OnCheckUpdateListener) activity;
+        } catch (ClassCastException ignored) {
+
+        }
+        try {
+            mOnAboutListener = (OnAboutListener) activity;
+        } catch (ClassCastException ignored) {
 
         }
     }
@@ -159,11 +211,23 @@ public class SettingsFragment extends PreferenceFragment
     public void onDetach() {
         super.onDetach();
         mOnCalibrateListener = null;
+        mOnAboutListener = null;
+        mOnCheckUpdateListener = null;
     }
 
     public interface OnCalibrateListener {
 
         public void onCalibrate();
+    }
+
+    public interface OnCheckUpdateListener {
+
+        public void onCheckUpdate();
+    }
+
+    public interface OnAboutListener {
+
+        public void onAbout();
     }
 
 }

@@ -82,6 +82,7 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
                                         * mainApp.rangeIncrementStep)));
 
                 //TODO: some hard coding
+/*
                 if (Globals.isExternalFlavor) {
                     switch (position) {
                         case 0:
@@ -92,6 +93,7 @@ public class CalibrateListAdapter extends ArrayAdapter<Double> {
                             break;
                     }
                 }
+*/
 
                 int r = Color.red(color);
                 int g = Color.green(color);

@@ -95,7 +95,7 @@
             android:dialogTitle="@string/language"
             android:entries="@array/languages"
             android:entryValues="@array/language_codes"
-            android:key="@string/currentLocale"
+            android:key="@string/languageKey"
             android:negativeButtonText="@string/cancel"
             android:summary="%s"
             android:title="@string/language" />
@@ -103,7 +103,7 @@
 
     <PreferenceCategory android:title="@string/developer">
         <com.ternup.caddisfly.component.NumberPickerPreference
-            android:defaultValue="150"
+            android:defaultValue="100"
             android:dialogMessage="@string/photoSampleDimensionMessage"
             android:dialogTitle="@string/photoSampleDimension"
             android:key="photoSampleDimension"

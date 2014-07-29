@@ -70,14 +70,14 @@ public class MainActivityBase extends Activity {
     private void loadSavedPreferences() {
         assert getApplicationContext() != null;
 
-        MainApp context = ((MainApp) getApplicationContext());
+        MainApp mainApp = ((MainApp) getApplicationContext());
 
         // Default app to Fluoride swatches
-        context.setFluorideSwatches();
+        mainApp.setFluorideSwatches();
 
         // Set the locale according to preference
         Locale myLocale = new Locale(
-                PreferencesUtils.getString(this, R.string.currentLocale, Globals.DEFAULT_LOCALE));
+                PreferencesUtils.getString(this, R.string.languageKey, Globals.DEFAULT_LOCALE));
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();

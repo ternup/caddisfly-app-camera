@@ -253,6 +253,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
                         * mainApp.rangeIncrementValue)));
 
 
+/*
         if (Globals.isExternalFlavor) {
             switch (position) {
                 case 0:
@@ -263,7 +264,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
                     break;
             }
         }
-
+*/
 
         mStartButton.setEnabled(true);
     }
@@ -442,8 +443,7 @@ public class CalibrateItemFragmentBase extends ListFragment {
     protected void updateListView(int position) {
         String folderName = FileUtils.getStoragePath(getActivity(), -1,
                 String.format("%s/%d/%d/small/", Globals.CALIBRATE_FOLDER, mTestType,
-                        position),
-                false
+                        position), false
         );
 
         ArrayList<String> files = FileUtils
@@ -452,7 +452,6 @@ public class CalibrateItemFragmentBase extends ListFragment {
         mAdapter = new GalleryListAdapter(getActivity(), mTestType, position, files, false);
         setListAdapter(mAdapter);
     }
-
 
 /*
     private boolean hasSamplingCompleted() {

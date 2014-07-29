@@ -84,11 +84,13 @@ public class StartFragment extends Fragment {
             mOnCalibrateListener.onCalibrate();
         }
 */
+/*
 
         TextView versionTextView = (TextView) view.findViewById(R.id.versionTextView);
 
         versionTextView.setText(String.format(getString(R.string.versionStringFormat), getString(R.string.appName),
                 MainApp.getVersion(getActivity())));
+*/
 
         MainApp mainApp = (MainApp) getActivity().getApplicationContext();
         int errorCount = mainApp.getCalibrationErrorCount(mTestType);
@@ -120,11 +122,11 @@ public class StartFragment extends Fragment {
                 public void onClick(View view) {
                     if (mOnStartTestListener != null) {
                         mOnStartTestListener.onStartTest();
-
                     }
                 }
             });
         } else {
+            //mOnStartSurveyListener.onStartSurvey();
             startSurveyButton.setVisibility(View.VISIBLE);
             startButton.setVisibility(View.GONE);
         }

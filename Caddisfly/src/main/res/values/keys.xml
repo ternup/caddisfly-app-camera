@@ -16,7 +16,7 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="currentTheme">currentTheme</string>
-    <string name="currentLocale">currentLocale</string>
+    <string name="languageKey">language</string>
 
     <string name="lastUpdateCheck">lastUpdateCheck</string>
     <string name="updateAvailable">updateAvailable</string>
@@ -54,4 +54,5 @@
     <string name="ignoreCalibrationErrorsKey">ignoreCalibrationErrors</string>
     <string name="cropToSquareKey">cropToSquare</string>
     <string name="revertVersionKey">revertVersion</string>
+    <string name="sevenStepCalibrationKey">sevenStepCalibration</string>
 </resources>

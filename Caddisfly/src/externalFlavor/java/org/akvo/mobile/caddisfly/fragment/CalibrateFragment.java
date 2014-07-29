@@ -18,6 +18,7 @@ package org.akvo.mobile.caddisfly.fragment;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -38,11 +39,16 @@ public class CalibrateFragment extends CalibrateFragmentBase {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        File external = Environment.getExternalStorageDirectory();
-        String path = external.getPath() + "/com.ternup.caddisfly/calibrate/";
-        File folder = new File(path);
-        if (folder.exists()) {
-            inflater.inflate(R.menu.calibrate, menu);
+
+        Intent LaunchIntent = getActivity().getPackageManager()
+                .getLaunchIntentForPackage(Globals.CADDISFLY_PACKAGE_NAME);
+        if (LaunchIntent != null) {
+            File external = Environment.getExternalStorageDirectory();
+            String path = external.getPath() + "/com.ternup.caddisfly/calibrate/";
+            File folder = new File(path);
+            if (folder.exists()) {
+                inflater.inflate(R.menu.calibrate, menu);
+            }
         }
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -50,7 +56,8 @@ public class CalibrateFragment extends CalibrateFragmentBase {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        changeTestType(Globals.FLUORIDE_INDEX);
+        MainApp mainApp = (MainApp) getActivity().getApplicationContext();
+        changeTestType(mainApp.currentTestType);
     }
 
     @Override

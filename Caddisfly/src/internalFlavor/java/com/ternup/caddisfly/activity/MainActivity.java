@@ -30,6 +30,7 @@ import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.fragment.AboutFragment;
+import com.ternup.caddisfly.fragment.AboutItFragment;
 import com.ternup.caddisfly.fragment.CalibrateFragment;
 import com.ternup.caddisfly.fragment.HelpFragment;
 import com.ternup.caddisfly.fragment.HomeFragment;
@@ -55,7 +56,7 @@ public class MainActivity extends MainActivityBase
 
     private HelpFragment helpFragment = null;
 
-    private AboutFragment aboutFragment = null;
+    private AboutItFragment aboutFragment = null;
 
     private SettingsFragment settingsFragment = null;
 
@@ -192,7 +193,7 @@ public class MainActivity extends MainActivityBase
             case Globals.ABOUT_SCREEN_INDEX:
                 showCheckUpdateOption = true;
                 if (aboutFragment == null) {
-                    aboutFragment = new AboutFragment();
+                    aboutFragment = new AboutItFragment();
                 }
                 fragment = aboutFragment;
                 break;
@@ -252,9 +253,6 @@ public class MainActivity extends MainActivityBase
         try {
             int index = getCurrentFragmentIndex();
 
-            showCheckUpdateOption = index == Globals.SETTINGS_SCREEN_INDEX;
-            showCheckUpdateOption = index == Globals.ABOUT_SCREEN_INDEX;
-
             if (index == Globals.LOCATION_LIST_SCREEN_INDEX) {
                 Fragment fragment = getFragmentManager().findFragmentById(R.id.container);
                 if (((LocationListFragment) fragment).backPressHandled()) {
@@ -266,6 +264,10 @@ public class MainActivity extends MainActivityBase
 
             index = getCurrentFragmentIndex();
 
+            showCheckUpdateOption = index == Globals.SETTINGS_SCREEN_INDEX;
+            showCheckUpdateOption = index == Globals.ABOUT_SCREEN_INDEX;
+
+            invalidateOptionsMenu();
             mNavigationDrawerFragment.checkItem(index);
 
         } catch (Exception e) {

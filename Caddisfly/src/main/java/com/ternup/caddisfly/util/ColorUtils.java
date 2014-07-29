@@ -19,13 +19,17 @@ package com.ternup.caddisfly.util;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapRegionDecoder;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.SparseIntArray;
 
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.model.ColorInfo;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,20 +41,20 @@ public class ColorUtils {
 
     private static final int GRAY_TOLERANCE = 10;
 
-    private static final double MAX_COLOR_DISTANCE = 50.0;
+    private static final double MAX_COLOR_DISTANCE = 70.0;
 
-    private static final double LM_RED_COEFFICIENT = 0.2126;
+    //private static final double LM_RED_COEFFICIENT = 0.2126;
 
-    private static final double LM_GREEN_COEFFICIENT = 0.7152;
+    //private static final double LM_GREEN_COEFFICIENT = 0.7152;
 
-    private static final double LM_BLUE_COEFFICIENT = 0.0722;
+    //private static final double LM_BLUE_COEFFICIENT = 0.0722;
 
     public static Bundle getPpmValue(byte[] data, ArrayList<ColorInfo> colorRange,
                                      double rangeStepUnit, int rangeStartUnit, int length) {
         ColorInfo photoColor = getColorFromByteArray(data, length);
         return analyzeColor(photoColor, colorRange, rangeStepUnit, rangeStartUnit);
     }
-/*
+
     public static Bundle getPpmValue(String filePath, ArrayList<ColorInfo> colorRange,
                                      double rangeStepUnit, int rangeStartUnit, int length) {
         ColorInfo photoColor = getColorFromImage(filePath, length);
@@ -67,7 +71,6 @@ public class ColorUtils {
 
         return blob.toByteArray();
     }
-*/
 
     static ColorInfo getColorFromByteArray(byte[] data, int length) {
         //byte[] imageData = resizeImage(data, length);
@@ -144,7 +147,7 @@ public class ColorUtils {
      * @param filename The path to image file that is to be analyzed
      * @return The dominant color
      */
-/*
+
     static ColorInfo getColorFromImage(String filename, int length) {
 
         final BitmapFactory.Options options = new BitmapFactory.Options();
@@ -178,7 +181,7 @@ public class ColorUtils {
 
         return getColorFromBitmap(bitmap, length);
     }
-*/
+
 
     /**
      * Analyzes the color and returns a bundle with various result values

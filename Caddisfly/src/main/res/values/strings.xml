@@ -38,7 +38,7 @@
     <string name="outOfRange">Color out of range</string>
     <string name="help">Help</string>
     <string name="placeDeviceInStand">Place the phone on a flat surface to continue</string>
-    <string name="shakeToContinue">Shake this device to ensure proper mixing of the solution in the cartridge</string>
+    <string name="shakeToContinue">Shake the phone to ensure proper mixing of the solution</string>
     <string name="shakeMe">Shake Me</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -207,4 +207,13 @@
     <string name="waitTillCameraSound">Then wait for the camera sound in about a minute</string>
     <string name="calibrateSummary">Use the standard color mixtures provided in the kit to calibrate this phone</string>
     <string name="revertSummary">If the current version is not working correctly, temporarily revert to a previous version</string>
+    <string name="aboutSummary">Displays version number</string>
+    <string name="checkUpdateSummary">Check if an update is available for Akvo Caddisfly</string>
+    <string name="next">Next</string>
+    <string name="sevenStepCalibration">Seven step calibration</string>
+    <string name="preparation">Preparation</string>
+    <string name="fillCartridge">Fill cartridge with source water</string>
+    <string name="placeReagent">Place an unused reagent dispenser into the cartridge and close lid</string>
+    <string name="attachBackCase">Attach back case to the phone</string>
+    <string name="attachCartridge">Attach cartridge to the back case and align to the arrow mark</string>
 </resources>

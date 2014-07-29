@@ -48,9 +48,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ViewAnimator;
 
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
@@ -98,6 +102,8 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
     //private ProgressBar mSingleProgress;
     Timer timer;
     Runnable delayRunnable;
+    Animation mSlideInRight;
+    Animation mSlideOutLeft;
     private LinearLayout mProgressLayout;
     private LinearLayout mShakeLayout;
     private LinearLayout mStillnessLayout;
@@ -124,8 +130,9 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
     private boolean mWaitingForShake = true;
     private boolean mWaitingForStillness = false;
     private long mLocationId;
-
     private TextView mRemainingValueText;
+    private ViewAnimator mViewAnimator;
+    private Button mNextButton;
 
     @Override
     public void onAttachedToWindow() {
@@ -166,6 +173,26 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
         mProgressBar = (ProgressBar) findViewById(R.id.testProgressBar);
         mTimeText = (TextView) findViewById(R.id.timeText);
         mPlaceInStandText = (TextView) findViewById(R.id.placeInStandText);
+        mNextButton = (Button) findViewById(R.id.nextButton);
+
+        mViewAnimator = (ViewAnimator) findViewById(R.id.viewAnimator);
+        mSlideInRight = AnimationUtils.loadAnimation(this, R.anim.slide_in_right);
+        mSlideOutLeft = AnimationUtils.loadAnimation(this, R.anim.slide_out_left);
+
+
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewAnimator.showNext();
+                mSensorManager.registerListener(mShakeDetector, mAccelerometer,
+                        SensorManager.SENSOR_DELAY_UI);
+
+            }
+        });
+
+        mViewAnimator.setInAnimation(mSlideInRight);
+        mViewAnimator.setOutAnimation(mSlideOutLeft);
+
         //mSingleProgress = (ProgressBar) findViewById(R.id.singleProgress);
 
         //Set up the shake detector
@@ -183,15 +210,19 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                     if (mMediaPlayer != null) {
                         mMediaPlayer.release();
                     }
-                    mStillnessLayout.setVisibility(View.VISIBLE);
-                    mShakeLayout.setVisibility(View.GONE);
-                    mProgressLayout.setVisibility(View.GONE);
+                    mViewAnimator.showNext();
+                    //mStillnessLayout.setVisibility(View.VISIBLE);
+                    //mShakeLayout.setVisibility(View.GONE);
+                    //mProgressLayout.setVisibility(View.GONE);
                 } else {
                     if (!mWaitingForStillness && mCameraFragment != null) {
                         mWaitingForStillness = true;
+                        mViewAnimator.showNext();
+/*
                         mStillnessLayout.setVisibility(View.VISIBLE);
                         mShakeLayout.setVisibility(View.GONE);
                         mProgressLayout.setVisibility(View.GONE);
+*/
                         if (mCameraFragment != null) {
                             try {
                                 mCameraFragment.stopCamera();
@@ -199,9 +230,11 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                            mStillnessLayout.setVisibility(View.GONE);
-                            mProgressLayout.setVisibility(View.GONE);
-                            mShakeLayout.setVisibility(View.GONE);
+
+                            //mViewAnimator.setVisibility(View.GONE);
+                            //mStillnessLayout.setVisibility(View.GONE);
+                            //mProgressLayout.setVisibility(View.GONE);
+                            //mShakeLayout.setVisibility(View.GONE);
 
                             showError(getString(R.string.testInterrupted), null);
                         }
@@ -230,9 +263,11 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         mIndex = 0;
+/*
                         mStillnessLayout.setVisibility(View.VISIBLE);
                         mProgressLayout.setVisibility(View.GONE);
                         mShakeLayout.setVisibility(View.GONE);
+*/
 
                         startNewTest(mTestType);
                         InitializeTest(getApplicationContext());
@@ -257,9 +292,11 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
             mMediaPlayer.release();
         }
         mSensorManager.unregisterListener(mShakeDetector);
+/*
         mProgressLayout.setVisibility(View.VISIBLE);
         mStillnessLayout.setVisibility(View.GONE);
         mShakeLayout.setVisibility(View.GONE);
+*/
 
         startTest(getApplicationContext(), mFolderName);
     }
@@ -339,29 +376,35 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
             startNewTest(mTestType);
 
             if (mShakeDevice) {
+                mViewAnimator.setInAnimation(null);
+                mViewAnimator.setOutAnimation(null);
+                mViewAnimator.setDisplayedChild(0);
+                mViewAnimator.setInAnimation(mSlideInRight);
+                mViewAnimator.setOutAnimation(mSlideOutLeft);
+
+/*
                 mShakeLayout.setVisibility(View.VISIBLE);
                 mStillnessLayout.setVisibility(View.GONE);
                 mProgressLayout.setVisibility(View.GONE);
+*/
                 mWaitingForFirstShake = true;
 
                 mSensorManager.unregisterListener(mShakeDetector);
 
                 mWaitingForShake = true;
                 mWaitingForStillness = false;
-                mSensorManager.registerListener(mShakeDetector, mAccelerometer,
-                        SensorManager.SENSOR_DELAY_UI);
             } else {
 
                 mWaitingForStillness = true;
                 mWaitingForShake = false;
                 mWaitingForFirstShake = false;
+
+                mViewAnimator.showNext();
+/*
                 mStillnessLayout.setVisibility(View.VISIBLE);
                 mShakeLayout.setVisibility(View.GONE);
                 mProgressLayout.setVisibility(View.GONE);
-
-                mSensorManager.registerListener(mShakeDetector, mAccelerometer,
-                        SensorManager.SENSOR_DELAY_UI);
-
+*/
                 //displayInfo();
                 //startTest(getApplicationContext(), mFolderName);
             }
@@ -392,9 +435,12 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                 }
             }
 
+
+/*
             mShakeLayout.setVisibility(View.VISIBLE);
             mStillnessLayout.setVisibility(View.GONE);
             mProgressLayout.setVisibility(View.GONE);
+*/
             mWaitingForShake = true;
             mWaitingForStillness = false;
             mSensorManager.unregisterListener(mShakeDetector);
@@ -404,8 +450,17 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
             mWaitingForShake = false;
             mWaitingForStillness = true;
         }
+
+        mViewAnimator.setInAnimation(null);
+        mViewAnimator.setOutAnimation(null);
+        mViewAnimator.setDisplayedChild(0);
+        mViewAnimator.setInAnimation(mSlideInRight);
+        mViewAnimator.setOutAnimation(mSlideOutLeft);
+
+/*
         mSensorManager.registerListener(mShakeDetector, mAccelerometer,
                 SensorManager.SENSOR_DELAY_UI);
+*/
 
     }
 

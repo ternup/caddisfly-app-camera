@@ -32,6 +32,7 @@ import com.ternup.caddisfly.activity.MainActivityBase;
 import com.ternup.caddisfly.activity.ProgressActivity;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
+import com.ternup.caddisfly.fragment.AboutFragment;
 import com.ternup.caddisfly.fragment.HelpFragment;
 import com.ternup.caddisfly.fragment.SettingsFragment;
 import com.ternup.caddisfly.util.AlertUtils;
@@ -45,7 +46,8 @@ import org.akvo.mobile.caddisfly.fragment.StartFragment;
 
 
 public class MainActivity extends MainActivityBase
-        implements SettingsFragment.OnCalibrateListener, StartFragment.OnStartTestListener,
+        implements SettingsFragment.OnCalibrateListener, SettingsFragment.OnAboutListener,
+        SettingsFragment.OnCheckUpdateListener, StartFragment.OnStartTestListener,
         StartFragment.OnStartSurveyListener, StartFragment.OnHelpListener,
         CalibrateMessageFragment.ResultDialogListener {
 
@@ -67,6 +69,16 @@ public class MainActivity extends MainActivityBase
         MainApp mainApp = (MainApp) this.getApplicationContext();
         mainApp.CurrentTheme = R.style.Flow_Theme;
         setContentView(R.layout.activity_main);
+
+        Intent LaunchIntent = getPackageManager()
+                .getLaunchIntentForPackage(Globals.CADDISFLY_PACKAGE_NAME);
+        if (LaunchIntent != null) {
+            if (PreferencesUtils.getBoolean(this, R.string.sevenStepCalibrationKey, false)) {
+                mainApp.setFluoride2Swatches();
+            } else {
+                mainApp.setFluorideSwatches();
+            }
+        }
 
         if (savedInstanceState == null) {
             displayView(Globals.HOME_SCREEN_INDEX, false);
@@ -122,13 +134,13 @@ public class MainActivity extends MainActivityBase
 
         Fragment fragment;
 
-        showCheckUpdateOption = false;
+        //showCheckUpdateOption = false;
         switch (position) {
             case Globals.HOME_SCREEN_INDEX:
                 fragment = StartFragment.newInstance(external, mTestType);
                 break;
             case Globals.SETTINGS_SCREEN_INDEX:
-                showCheckUpdateOption = true;
+                //showCheckUpdateOption = true;
                 if (mSettingsFragment == null) {
                     mSettingsFragment = new SettingsFragment();
                 }
@@ -258,6 +270,8 @@ public class MainActivity extends MainActivityBase
         } else {
             startActivity(LaunchIntent);
             mShouldFinish = true;
+            //finish();
+
             (new Handler()).postDelayed(new Runnable() {
                 public void run() {
                     if (mShouldFinish) {
@@ -265,6 +279,7 @@ public class MainActivity extends MainActivityBase
                     }
                 }
             }, 6000);
+
         }
     }
 
@@ -274,9 +289,6 @@ public class MainActivity extends MainActivityBase
         Context context = this;
 
         MainApp mainApp = (MainApp) context.getApplicationContext();
-
-        // TODO: change according to test type
-        mainApp.setFluorideSwatches();
 
         if (mainApp.getCalibrationErrorCount(mTestType) > 0) {
             AlertUtils.showAlert(context, R.string.error,
@@ -307,7 +319,7 @@ public class MainActivity extends MainActivityBase
     public void onBackPressed() {
         super.onBackPressed();
         try {
-            showCheckUpdateOption = getCurrentFragmentIndex() == Globals.SETTINGS_SCREEN_INDEX;
+            //showCheckUpdateOption = getCurrentFragmentIndex() == Globals.SETTINGS_SCREEN_INDEX;
             invalidateOptionsMenu();
 
         } catch (Exception e) {
@@ -318,5 +330,23 @@ public class MainActivity extends MainActivityBase
     @Override
     public void onFinishDialog() {
         displayView(Globals.CALIBRATE_SCREEN_INDEX, true);
+    }
+
+    @Override
+    public void onAbout() {
+        AboutFragment aboutFragment = AboutFragment.newInstance();
+        final FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        Fragment prev = getFragmentManager().findFragmentByTag("aboutDialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        aboutFragment.show(ft, "aboutDialog");
+
+    }
+
+    @Override
+    public void onCheckUpdate() {
+        checkUpdate(false);
     }
 }

@@ -115,8 +115,6 @@ public class GalleryListAdapter extends BaseAdapter {
             holder.timestamp = (TextView) view.findViewById(R.id.dateText);
             holder.result = (TextView) view.findViewById(R.id.resultText);
             holder.brightness = (TextView) view.findViewById(R.id.brightnessText);
-            //holder.color = (TextView) view.findViewById(R.id.rgbText);
-            //holder.quality =(TextView) view.findViewById(R.id.qualityText);
             holder.progress = (ProgressBar) view.findViewById(R.id.imageProgressBar);
 
             view.setTag(holder);
@@ -153,7 +151,7 @@ public class GalleryListAdapter extends BaseAdapter {
                     //v.icon.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
                     Pattern pattern = Pattern
-                            .compile("pic-(\\d{4})(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})");
+                            .compile("pic-(\\d{4})(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})-s");
                     Matcher matcher = pattern.matcher(file);
                     if (matcher.find()) {
                         int year = Integer.parseInt(matcher.group(1));
@@ -187,7 +185,9 @@ public class GalleryListAdapter extends BaseAdapter {
                                         position), -2
                         );
 
-                        v.brightness.setText(String.format("Brightness: %d", ColorUtils.getBrightness(color)));
+                        if (color != -2) {
+                            v.brightness.setText(String.format("Brightness: %d", ColorUtils.getBrightness(color)));
+                        }
 
                         int quality = PreferencesUtils.getInt(mContext,
                                 String.format(mContext.getString(R.string.resultQualityKey),

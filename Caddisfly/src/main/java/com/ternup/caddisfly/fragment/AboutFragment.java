@@ -16,32 +16,87 @@
 
 package com.ternup.caddisfly.fragment;
 
-import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.app.Globals;
-import com.ternup.caddisfly.app.MainApp;
-
-import android.app.Fragment;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class AboutFragment extends Fragment {
+import com.ternup.caddisfly.R;
+import com.ternup.caddisfly.app.Globals;
+import com.ternup.caddisfly.app.MainApp;
+
+public class AboutFragment extends DialogFragment {
 
     public AboutFragment() {
     }
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_about, container, false);
+    public static AboutFragment newInstance() {
+        return new AboutFragment();
+    }
 
-        assert getActivity() != null;
-        assert getActivity().getPackageManager() != null;
+    /*
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.fragment_about, container, false);
+
+
+            getDialog().setTitle(R.string.about);
+
+            if (view != null) {
+                TextView productView = (TextView) view.findViewById(R.id.textVersion);
+                productView.setText(MainApp.getVersion(getActivity()));
+                ImageView organizationView = (ImageView) view.findViewById(R.id.organizationImage);
+
+                productView.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        openWebBrowser(Globals.PRODUCT_WEBSITE);
+                    }
+                });
+
+                organizationView.setOnClickListener(new OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        openWebBrowser(Globals.ORG_WEBSITE);
+                    }
+                });
+            }
+            if (((MainApp) getActivity().getApplicationContext()).CurrentTheme
+                    == R.style.AppTheme_Dark) {
+                view.findViewById(R.id.layoutAboutCompany).setAlpha(0.5f);
+            }
+
+
+            return view;
+        }
+    */
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.about)
+                .setPositiveButton(R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                            }
+                        }
+                );
+
+
+        LayoutInflater i = getActivity().getLayoutInflater();
+
+        View view = i.inflate(R.layout.fragment_about, null);
 
         if (view != null) {
             TextView productView = (TextView) view.findViewById(R.id.textVersion);
@@ -64,14 +119,13 @@ public class AboutFragment extends Fragment {
                 }
             });
         }
-        assert getActivity().getApplicationContext() != null;
         if (((MainApp) getActivity().getApplicationContext()).CurrentTheme
                 == R.style.AppTheme_Dark) {
-            assert view != null;
             view.findViewById(R.id.layoutAboutCompany).setAlpha(0.5f);
         }
 
-        return view;
+        builder.setView(view);
+        return builder.create();
     }
 
     @Override
