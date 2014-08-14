@@ -74,7 +74,9 @@ public class FileUtils {
             File[] files = directory.listFiles();
             if (files != null && files.length > 5) {
                 for (int i = files.length - 1; i > 4; i--) {
-                    deleteFolder(files[i]);
+                    if (files[i].isDirectory()) {
+                        deleteFolder(files[i]);
+                    }
                 }
             }
         }

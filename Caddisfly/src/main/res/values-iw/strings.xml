@@ -216,4 +216,5 @@
     <string name="placeReagent">Place a new unused reagent dispenser into the cartridge and close lid</string>
     <string name="attachBackCase">Attach back case to the phone</string>
     <string name="attachCartridge">Attach cartridge to the back case and align to the arrow mark</string>
+    <string name="caddisflyTraining">Akvo Caddisfly Training</string>
 </resources>

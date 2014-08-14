@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
 
-            android:text="@string/toBeginCalibrate"
+            android:text="Welcome to Akvo Caddisfly"
             android:textSize="20sp" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/useSolutionsProvided"
+            android:text="If you are using Akvo Caddisfly for the first time please view the training video"
             android:textSize="20sp" />
 
         <Button
@@ -55,7 +55,7 @@
             android:layout_marginStart="3dp"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@drawable/orange_button"
-            android:text="@string/calibrateNow" />
+            android:text="Play Training Video" />
     </LinearLayout>
 
 </LinearLayout>

@@ -88,5 +88,17 @@
             android:layout_marginStart="3dp"
             android:background="@drawable/orange_button"
             android:text="@string/startSurvey" />
+
+        <Button
+            android:id="@+id/videoButton"
+            style="@style/button_text"
+            android:layout_marginEnd="3dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/orange_button"
+            android:text="Play Training Video" />
+
     </LinearLayout>
 </LinearLayout>

@@ -389,6 +389,26 @@ public class LocationDetailsFragment extends Fragment implements ResultListFragm
                     }
                 }
                 break;
+            default:
+/*
+                try {
+                    FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+                    ft.remove(resultListFragment);
+                    ft.commit();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                resultListFragment = new ResultListFragment();
+                resultListFragment.parentFragment = this;
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+
+                ft.replace(R.id.resultPanel, resultListFragment, "resultListFragment");
+                ft.setTransition(FragmentTransaction.TRANSIT_NONE);
+                ft.commit();
+*/
+
         }
     }
 

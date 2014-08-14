@@ -13,7 +13,6 @@
   ~
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
-
 <resources>
 
     <style name="button_text">
@@ -31,4 +30,22 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:alpha">0.7</item>
     </style>
+
+    <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">@style/ButtonBar</item>
+        <item name="metaButtonBarButtonStyle">@style/ButtonBarButton</item>
+    </style>
+
+    <style name="ButtonBar">
+        <item name="android:paddingLeft">2dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingRight">2dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:background">@android:drawable/bottom_bar</item>
+    </style>
+
+    <style name="ButtonBarButton" />
+
 </resources>

@@ -94,7 +94,7 @@ public class MainActivity extends MainActivityBase
         }
 
         if (mainApp.getCalibrationErrorCount(mTestType) > 0) {
-            showWelcome();
+            //showWelcome();
         }
 
     }

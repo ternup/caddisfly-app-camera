@@ -103,7 +103,7 @@
 
     <PreferenceCategory android:title="@string/developer">
         <com.ternup.caddisfly.component.NumberPickerPreference
-            android:defaultValue="100"
+            android:defaultValue="50"
             android:dialogMessage="@string/photoSampleDimensionMessage"
             android:dialogTitle="@string/photoSampleDimension"
             android:key="photoSampleDimension"

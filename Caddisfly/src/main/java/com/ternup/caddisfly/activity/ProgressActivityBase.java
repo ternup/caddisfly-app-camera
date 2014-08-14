@@ -98,7 +98,6 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
     protected String mFolderName;
     CameraFragment mCameraFragment;
     File calibrateFolder;
-    ArrayList<String> oldFilePaths;
     //private ProgressBar mSingleProgress;
     Timer timer;
     Runnable delayRunnable;
@@ -183,7 +182,13 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 mViewAnimator.showNext();
+
+                if (!mShakeDevice) {
+                    mViewAnimator.showNext();
+                }
+
                 mSensorManager.registerListener(mShakeDetector, mAccelerometer,
                         SensorManager.SENSOR_DELAY_UI);
 
@@ -278,6 +283,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent intent = new Intent(getIntent());
                         setResult(Activity.RESULT_CANCELED, intent);
+                        cancelService();
                         finish();
                     }
                 }
@@ -400,6 +406,10 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                 mWaitingForFirstShake = false;
 
                 mViewAnimator.showNext();
+                mViewAnimator.showNext();
+                mSensorManager.registerListener(mShakeDetector, mAccelerometer,
+                        SensorManager.SENSOR_DELAY_UI);
+
 /*
                 mStillnessLayout.setVisibility(View.VISIBLE);
                 mShakeLayout.setVisibility(View.GONE);
@@ -517,6 +527,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
 
         if (mLocationId > -1) {
             mFolderName = getNewFolderName();
+            FileUtils.deleteFolder(new File(mFolderName));
         } else if (mIndex > -1) {
             calibrateFolder = new File(
                     FileUtils.getStoragePath(this, -1,
@@ -526,8 +537,7 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
                     )
             );
 
-            oldFilePaths = FileUtils
-                    .getFilePaths(this, calibrateFolder.getAbsolutePath(), -1);
+            FileUtils.deleteFolder(calibrateFolder);
         }
 
         Context context = getApplicationContext();
@@ -544,14 +554,9 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
     }
 
     private void cancelService() {
-
-        releaseResources();
-
         DataStorage.deleteRecord(this, mId, mLocationId, mFolderName);
 
-        if (mIndex > -1 && mLocationId == -1) {
-            FileUtils.deleteFilesExcepting(calibrateFolder, oldFilePaths);
-        }
+        releaseResources();
     }
 
     protected void sendResult(Message msg) {
@@ -593,10 +598,6 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
             }
             this.setResult(Activity.RESULT_OK, intent);
 
-            //if calibration and old photos in the calibrate folder to be deleted
-            if (mIndex > -1 && mId == -1) {
-                FileUtils.deleteFiles(oldFilePaths);
-            }
 
             finish();
         }

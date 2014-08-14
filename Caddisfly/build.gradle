@@ -44,13 +44,13 @@ android {
     productFlavors {
         internalFlavor {
             applicationId "com.ternup.caddisfly"
-            versionName "prototype 0.35 alpha"
-            versionCode 35
+            versionName "prototype 0.36 alpha"
+            versionCode 36
         }
         externalFlavor {
             applicationId "org.akvo.mobile.caddisfly"
-            versionName "prototype 0.35 alpha"
-            versionCode 35
+            versionName "prototype 0.36 alpha"
+            versionCode 36
         }
     }
 
@@ -63,8 +63,8 @@ android {
 dependencies {
     internalFlavorCompile files('libs/android-async-http-1.4.5.jar')
     internalFlavorCompile 'com.google.android.gms:play-services:5.0.77'
-    internalFlavorCompile 'com.android.support:support-v13:19.1.0'
-    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5+'
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
+    compile 'com.android.support:support-v4:20.0.0'
 }
 
 def props = new Properties()
