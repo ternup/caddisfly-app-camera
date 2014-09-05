@@ -17,40 +17,40 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_gravity="center_horizontal">
-    <TextView
-            android:id="@+id/testTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/selectLocation"
-            android:textSize="18sp"
-            android:padding="10dp"
-            android:textColor="#eee"/>
-    <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@android:id/list"
-            android:clickable="true"
-            tools:listitem="@android:layout/simple_list_item_1"
-            android:longClickable="true"
-            />
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
 
     <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@android:id/empty"
-            android:layout_gravity="center"
-            android:text="@string/noData"
-            android:drawablePadding="30dp"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="50dp"
-            android:textSize="18sp"
-            android:visibility="gone"
-            />
+        android:id="@+id/testTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="@string/selectLocation"
+        android:textColor="#eee"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:longClickable="true"
+        tools:listitem="@android:layout/simple_list_item_1" />
+
+    <TextView
+        android:id="@android:id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:drawablePadding="30dp"
+        android:gravity="center_horizontal"
+        android:text="@string/noData"
+        android:textSize="18sp"
+        android:visibility="gone" />
 
 </LinearLayout>
 

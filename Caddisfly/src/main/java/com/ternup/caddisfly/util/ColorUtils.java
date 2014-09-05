@@ -370,6 +370,94 @@ public class ColorUtils {
         }
     }
 
+    public static void autoGenerateColorCurve(int testType, ArrayList<ColorInfo> colorList,
+                                              int startColor, int size, int incrementStep,
+                                              SharedPreferences.Editor editor) {
+
+        int[] greenDeviation = {
+                0,
+                5,
+                10,
+                15,
+                20,
+                25,
+                30,
+                35,
+                40,
+                45,
+                50,
+                55,
+                60,
+                65,
+                70,
+                75,
+                78,
+                81,
+                84,
+                87,
+                90,
+                92,
+                94,
+                96,
+                98,
+                100,
+                102,
+                104,
+                106,
+                108,
+                110};
+
+        int[] blueDeviation = {
+                0,
+                -7,
+                -14,
+                -21,
+                -28,
+                -35,
+                -43,
+                -51,
+                -59,
+                -67,
+                -75,
+                -83,
+                -89,
+                -96,
+                -103,
+                -109,
+                -112,
+                -114,
+                -116,
+                -118,
+                -120,
+                -122,
+                -124,
+                -126,
+                -128,
+                -130,
+                -131,
+                -132,
+                -133,
+                -134,
+                -135};
+
+        for (int i = 0; i < size; i++) {
+
+            int g = Color.green(startColor) + greenDeviation[i];
+            int b = Color.blue(startColor) + blueDeviation[i];
+            int nextColor = Color.rgb(Color.red(startColor),
+                    Math.min(Math.max(g, 0), 255),
+                    Math.min(Math.max(b, 0), 255)
+            );
+
+            ColorInfo colorInfo = new ColorInfo(nextColor, 0, 0, 100);
+            colorList.set(i, colorInfo);
+
+            editor.putInt(String.format("%d-%s", testType, String.valueOf(i)),
+                    nextColor);
+        }
+    }
+
+
     public static void validateGradient(ArrayList<ColorInfo> colorList, int size, int increment, int minQuality) {
 
         int index1, index2;

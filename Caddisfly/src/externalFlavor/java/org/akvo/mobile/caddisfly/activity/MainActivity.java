@@ -16,6 +16,7 @@
 
 package org.akvo.mobile.caddisfly.activity;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -30,35 +31,38 @@ import android.view.MenuItem;
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.activity.MainActivityBase;
 import com.ternup.caddisfly.activity.ProgressActivity;
+import com.ternup.caddisfly.activity.VideoActivity;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.fragment.AboutFragment;
-import com.ternup.caddisfly.fragment.HelpFragment;
 import com.ternup.caddisfly.fragment.SettingsFragment;
 import com.ternup.caddisfly.util.AlertUtils;
 import com.ternup.caddisfly.util.FileUtils;
+import com.ternup.caddisfly.util.NetworkUtils;
 import com.ternup.caddisfly.util.PreferencesHelper;
 import com.ternup.caddisfly.util.PreferencesUtils;
 
 import org.akvo.mobile.caddisfly.fragment.CalibrateFragment;
+import org.akvo.mobile.caddisfly.fragment.CalibrateItemFragment;
 import org.akvo.mobile.caddisfly.fragment.CalibrateMessageFragment;
+import org.akvo.mobile.caddisfly.fragment.HelpFragment;
+import org.akvo.mobile.caddisfly.fragment.ItemFragment;
 import org.akvo.mobile.caddisfly.fragment.StartFragment;
+
+import java.io.File;
 
 
 public class MainActivity extends MainActivityBase
         implements SettingsFragment.OnCalibrateListener, SettingsFragment.OnAboutListener,
         SettingsFragment.OnCheckUpdateListener, StartFragment.OnStartTestListener,
-        StartFragment.OnStartSurveyListener, StartFragment.OnHelpListener,
+        StartFragment.OnStartSurveyListener, HelpFragment.OnHelpListener, HelpFragment.OnChecklistListener,
         CalibrateMessageFragment.ResultDialogListener {
 
+    private static final int REQUEST_TEST = 1;
     private final int mTestType = Globals.FLUORIDE_INDEX;
-
-    private CalibrateFragment mCalibrateFragment = null;
-
+    private CalibrateItemFragment mCalibrateFragment = null;
     private SettingsFragment mSettingsFragment = null;
-
     private HelpFragment helpFragment = null;
-
     private boolean mShouldFinish = false;
 
     @Override
@@ -139,6 +143,12 @@ public class MainActivity extends MainActivityBase
             case Globals.HOME_SCREEN_INDEX:
                 fragment = StartFragment.newInstance(external, mTestType);
                 break;
+            case Globals.HELP_SCREEN_INDEX:
+                fragment = HelpFragment.newInstance();
+                break;
+            case Globals.CHECKLIST_SCREEN_INDEX:
+                fragment = ItemFragment.newInstance();
+                break;
             case Globals.SETTINGS_SCREEN_INDEX:
                 //showCheckUpdateOption = true;
                 if (mSettingsFragment == null) {
@@ -147,10 +157,21 @@ public class MainActivity extends MainActivityBase
                 fragment = mSettingsFragment;
                 break;
             case Globals.CALIBRATE_SCREEN_INDEX:
-                if (mCalibrateFragment == null) {
-                    mCalibrateFragment = new CalibrateFragment();
+                //if (mCalibrateFragment == null) {
+                if (PreferencesUtils.getBoolean(this, R.string.sevenStepCalibrationKey, false)) {
+                    fragment = new CalibrateFragment();
+                } else {
+                    mCalibrateFragment = new CalibrateItemFragment();
+
+                    Bundle args = new Bundle();
+                    args.putInt(getString(R.string.swatchIndex), 0);
+                    MainApp mainApp = (MainApp) this.getApplicationContext();
+                    args.putInt(getString(R.string.currentTestTypeId), mainApp.currentTestType);
+                    mCalibrateFragment.setArguments(args);
+                    fragment = mCalibrateFragment;
                 }
-                fragment = mCalibrateFragment;
+                //}
+                //fragment = mCalibrateFragment;
                 break;
             default:
                 return;
@@ -178,6 +199,9 @@ public class MainActivity extends MainActivityBase
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_help:
+                displayView(Globals.HELP_SCREEN_INDEX, true);
+                return true;
             case R.id.menu_settings:
                 displayView(Globals.SETTINGS_SCREEN_INDEX, true);
                 //checkUpdate(false);
@@ -225,7 +249,23 @@ public class MainActivity extends MainActivityBase
 
     @Override
     public void onHelp() {
-        displayView(Globals.HELP_SCREEN_INDEX, true);
+        File sdDir = getExternalFilesDir(null);
+        final File videoFile = new File(sdDir, "training.mp4");
+
+        if (!videoFile.exists()) {
+            if (NetworkUtils.checkInternetConnection(this)) {
+                final Intent intent = new Intent(this, VideoActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+            }
+        } else {
+            final Intent intent = new Intent(this, VideoActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        }
+
     }
 
     public void showWelcome() {
@@ -306,13 +346,36 @@ public class MainActivity extends MainActivityBase
             return;
         }
 
-        final Intent intent = new Intent(getIntent());
+        //final Intent intent = new Intent(getIntent());
+        final Intent intent = new Intent(context, ProgressActivity.class);
         intent.setClass(context, ProgressActivity.class);
         intent.putExtra(PreferencesHelper.CURRENT_LOCATION_ID_KEY, (long) 0);
+        intent.getBooleanExtra("skipInfo", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-        finish();
+        startActivityForResult(intent, REQUEST_TEST);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQUEST_TEST:
+                if (resultCode == Activity.RESULT_OK) {
+                    Intent intent = new Intent(getIntent());
+                    intent.putExtra("result", data.getDoubleExtra("result", -1));
+                    //intent.putExtra("questionId", mQuestionId);
+                    intent.putExtra("response", String.valueOf(data.getDoubleExtra("result", -1)));
+                    this.setResult(Activity.RESULT_OK, intent);
+                    finish();
+                } else {
+                    displayView(Globals.CHECKLIST_SCREEN_INDEX, true);
+                }
+                break;
+            default:
+        }
     }
 
     @Override
@@ -348,5 +411,10 @@ public class MainActivity extends MainActivityBase
     @Override
     public void onCheckUpdate() {
         checkUpdate(false);
+    }
+
+    @Override
+    public void onChecklist() {
+        displayView(Globals.CHECKLIST_SCREEN_INDEX, true);
     }
 }

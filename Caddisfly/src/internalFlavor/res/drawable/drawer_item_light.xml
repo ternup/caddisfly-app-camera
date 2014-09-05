@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) TernUp Research Labs
   ~
   ~ This file is part of Caddisfly
@@ -16,8 +15,7 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/drawer_item_bg_inactive_light" android:state_pressed="true"/>
-    <item android:drawable="@drawable/drawer_item_bg_selected_light"
-          android:state_activated="true"/>
-    <item android:drawable="@drawable/drawer_item_bg_selected_light" android:state_selected="true"/>
+    <item android:drawable="@drawable/drawer_item_bg_inactive_light" android:state_pressed="true" />
+    <item android:drawable="@drawable/drawer_item_bg_selected_light" android:state_activated="true" />
+    <item android:drawable="@drawable/drawer_item_bg_selected_light" android:state_selected="true" />
 </selector>

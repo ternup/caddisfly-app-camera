@@ -16,14 +16,14 @@
 
 package com.ternup.caddisfly.util;
 
-import com.ternup.caddisfly.app.Globals;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.Rect;
+
+import com.ternup.caddisfly.app.Globals;
 
 import java.io.File;
 import java.io.FileInputStream;

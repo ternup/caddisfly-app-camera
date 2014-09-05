@@ -332,7 +332,6 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
 
         mTestType = mainApp.currentTestType;
 
-
         // Register receiver for service
         registerReceiver(receiver, new IntentFilter(CameraService.NOTIFICATION));
 
@@ -399,6 +398,13 @@ public class ProgressActivityBase extends Activity implements CameraFragment.Can
 
                 mWaitingForShake = true;
                 mWaitingForStillness = false;
+
+                if (Globals.isExternalFlavor) {
+                    mViewAnimator.showNext();
+                    mSensorManager.registerListener(mShakeDetector, mAccelerometer,
+                            SensorManager.SENSOR_DELAY_UI);
+                }
+
             } else {
 
                 mWaitingForStillness = true;

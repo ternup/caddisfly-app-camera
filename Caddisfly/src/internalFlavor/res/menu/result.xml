@@ -18,25 +18,25 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
-            android:id="@+id/group_1"
-            android:visible="true">
+        android:id="@+id/group_1"
+        android:visible="true">
         <item
-                android:id="@+id/menu_sendResult"
-                android:enabled="true"
-                android:showAsAction="always"
-                android:orderInCategory="0"
-                android:title="@string/send"
-                android:icon="?sendIcon"/>
+            android:id="@+id/menu_sendResult"
+            android:enabled="true"
+            android:icon="?sendIcon"
+            android:orderInCategory="0"
+            android:showAsAction="always"
+            android:title="@string/send" />
     </group>
     <group
-            android:id="@+id/group_2"
-            android:visible="true">
+        android:id="@+id/group_2"
+        android:visible="true">
         <item
-                android:id="@+id/menu_delete"
-                android:enabled="true"
-                android:showAsAction="always"
-                android:orderInCategory="0"
-                android:title="@string/delete"
-                android:icon="?deleteIcon"/>
+            android:id="@+id/menu_delete"
+            android:enabled="true"
+            android:icon="?deleteIcon"
+            android:orderInCategory="0"
+            android:showAsAction="always"
+            android:title="@string/delete" />
     </group>
 </menu>

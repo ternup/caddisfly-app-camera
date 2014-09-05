@@ -17,79 +17,85 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:padding="@dimen/activity_horizontal_margin">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin">
 
-    <TextView android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:textSize="18sp"
-              android:lineSpacingExtra="8sp"
-              android:text="@string/waterSourceLocation"
-              android:layout_marginBottom="15dp"
-              android:gravity="center_vertical"
-              android:drawablePadding="4dp"
-              android:textStyle="bold"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="8sp"
+        android:text="@string/waterSourceLocation"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:textSize="18sp"
-              android:lineSpacingExtra="8sp"
-              android:text="@string/standNearWaterSource"
-              android:layout_marginBottom="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:lineSpacingExtra="8sp"
+        android:text="@string/standNearWaterSource"
+        android:textSize="18sp" />
 
-    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-              android:textSize="18sp"
-              android:lineSpacingExtra="8sp"
-              android:text="@string/ensureClearViewForGPS"
-              android:layout_marginBottom="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:lineSpacingExtra="8sp"
+        android:text="@string/ensureClearViewForGPS"
+        android:textSize="18sp" />
 
     <Button
-            android:id="@+id/locationButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/getLocation"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:textColor="#eee"
-            android:background="@drawable/blue_button"/>
+        android:id="@+id/locationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/blue_button"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/getLocation"
+        android:textColor="#eee" />
 
 
     <TextView
-            android:id="@+id/lat_lng"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textIsSelectable="true"
-            android:layout_marginTop="10dp"
-            android:textSize="20sp"/>
+        android:id="@+id/lat_lng"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textIsSelectable="true"
+        android:textSize="20sp" />
 
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical"
-                  android:id="@+id/progressBar"
-                  android:visibility="gone"
-            >
+    <LinearLayout
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textIsSelectable="false"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:text="@string/gettingLocation"
-                tools:ignore="UnusedAttribute"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/gettingLocation"
+            android:textAlignment="center"
+            android:textIsSelectable="false"
+            android:textSize="20sp"
+            tools:ignore="UnusedAttribute" />
 
         <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:visibility="visible"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:layout_gravity="center"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:visibility="visible" />
 
     </LinearLayout>
 

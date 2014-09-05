@@ -19,28 +19,75 @@ package com.ternup.caddisfly.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.VideoView;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.activity.util.SystemUiHider;
+import com.ternup.caddisfly.util.NetworkUtils;
+
+import org.apache.http.Header;
 
 import java.io.File;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- *
- * @see SystemUiHider
- */
 public class VideoActivity extends Activity {
+
+    boolean downloading = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_video);
+
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
         File sdDir = this.getExternalFilesDir(null);
-        File videoFile = new File(sdDir, "training.mp4");
+        final File videoFile = new File(sdDir, "training.mp4");
+
+        if (videoFile.exists()) {
+            playVideo(videoFile);
+        } else {
+
+            if (NetworkUtils.checkInternetConnection(this)) {
+                progressBar.setVisibility(View.VISIBLE);
+                downloading = true;
+                AsyncHttpClient client = new AsyncHttpClient();
+                client.get("http://caddisfly.ternup.com/akvoapp/caddisfly-training.mp4", new FileAsyncHttpResponseHandler(videoFile) {
+                    @Override
+                    public void onFailure(int i, Header[] headers, Throwable throwable, File file) {
+                        progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, File response) {
+                        playVideo(response);
+                        progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onProgress(int bytesWritten, int totalSize) {
+                        //int progressPercentage = (int)100*bytesWritten/totalSize;
+                        progressBar.setMax(totalSize);
+                        progressBar.setProgress(bytesWritten);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        progressBar.setVisibility(View.GONE);
+                        downloading = false;
+                    }
+                });
+            }
+        }
+
+
+    }
+
+    private void playVideo(File videoFile) {
         DisplayMetrics dm = new DisplayMetrics();
         this.getWindowManager().getDefaultDisplay().getMetrics(dm);
         int height = dm.heightPixels;
@@ -56,7 +103,13 @@ public class VideoActivity extends Activity {
         videoHolder.requestFocus();
         videoHolder.start();
 
-
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!downloading) {
+            super.onBackPressed();
+        }
+
+    }
 }

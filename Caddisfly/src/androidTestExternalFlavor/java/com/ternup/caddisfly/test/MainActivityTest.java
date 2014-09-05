@@ -16,13 +16,13 @@
 
 package com.ternup.caddisfly.test;
 
-import com.ternup.caddisfly.R;
-
-import org.akvo.mobile.caddisfly.activity.MainActivity;
-
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
 import android.widget.Button;
+
+import com.ternup.caddisfly.R;
+
+import org.akvo.mobile.caddisfly.activity.MainActivity;
 
 public class MainActivityTest extends ActivityUnitTestCase<MainActivity> {
 

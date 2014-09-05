@@ -217,4 +217,6 @@
     <string name="attachBackCase">Attach back case to the phone</string>
     <string name="attachCartridge">Attach cartridge to the back case and align to the arrow mark</string>
     <string name="caddisflyTraining">Akvo Caddisfly Training</string>
+    <string name="watchTrainingVideo">Watch Training Video</string>
+    <string name="checkList">Check List</string>
 </resources>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) TernUp Research Labs
   ~
   ~ This file is part of Caddisfly
@@ -26,5 +25,7 @@
         <!-- BACKGROUND -->
         <attr name="listitem_bg1" format="reference|color" />
         <attr name="listitem_bg2" format="reference|color" />
+
+
     </declare-styleable>
 </resources>

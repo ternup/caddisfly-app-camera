@@ -29,7 +29,6 @@ import android.view.Menu;
 import com.ternup.caddisfly.R;
 import com.ternup.caddisfly.app.Globals;
 import com.ternup.caddisfly.app.MainApp;
-import com.ternup.caddisfly.fragment.AboutFragment;
 import com.ternup.caddisfly.fragment.AboutItFragment;
 import com.ternup.caddisfly.fragment.CalibrateFragment;
 import com.ternup.caddisfly.fragment.HelpFragment;

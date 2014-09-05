@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) TernUp Research Labs
   ~
   ~ This file is part of Caddisfly
@@ -16,9 +15,9 @@
   -->
 
 <android.webkit.WebView xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/helpView"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        android:layerType="software"/>
+    android:id="@+id/helpView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:layerType="software" />
 

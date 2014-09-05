@@ -56,6 +56,71 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/prepareLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:visibility="gone">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:lineSpacingExtra="2.5sp"
+            android:padding="5dp"
+            android:text="@string/fillCartridge"
+            android:textSize="19sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="2.5sp"
+            android:padding="5dp"
+            android:text="@string/placeReagent"
+            android:textSize="19sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="2.5sp"
+            android:padding="5dp"
+            android:text="@string/attachBackCase"
+            android:textSize="19sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="2.5sp"
+            android:padding="5dp"
+            android:text="@string/attachCartridge"
+            android:textSize="19sp" />
+
+        <Button
+            android:id="@+id/startButton"
+            style="@style/button_text"
+            android:layout_marginEnd="3dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="@drawable/green_button"
+            android:text="@string/next" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/surveyLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="fill_vertical"
@@ -69,17 +134,6 @@
         android:paddingStart="@dimen/activity_horizontal_margin">
 
         <Button
-            android:id="@+id/startButton"
-            style="@style/button_text"
-            android:layout_marginEnd="3dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginStart="3dp"
-            android:background="@drawable/green_button"
-            android:text="@string/startTest"
-            android:visibility="gone" />
-
-        <Button
             android:id="@+id/startSurveyButton"
             style="@style/button_text"
             android:layout_marginEnd="3dp"
@@ -89,16 +143,6 @@
             android:background="@drawable/orange_button"
             android:text="@string/startSurvey" />
 
-        <Button
-            android:id="@+id/videoButton"
-            style="@style/button_text"
-            android:layout_marginEnd="3dp"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="3dp"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/orange_button"
-            android:text="Play Training Video" />
-
     </LinearLayout>
+
 </LinearLayout>

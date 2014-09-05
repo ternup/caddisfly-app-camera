@@ -16,10 +16,10 @@
 
 package com.ternup.caddisfly.test;
 
-import junit.framework.TestSuite;
-
 import android.test.InstrumentationTestRunner;
 import android.test.InstrumentationTestSuite;
+
+import junit.framework.TestSuite;
 
 @SuppressWarnings("WeakerAccess")
 public class TestRunner extends InstrumentationTestRunner {

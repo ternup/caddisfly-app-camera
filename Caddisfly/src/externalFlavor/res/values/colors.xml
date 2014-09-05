@@ -23,8 +23,8 @@
     <!-- From Akvo Flow -->
     <color name="white">#ffffff</color>
 
-    <color name="background_main">#fffef2e7</color>
-    <color name="background_alternate">#f1eae4</color>
+    <color name="background_main">#f8ebf6ff</color>
+    <color name="background_alternate">#ffdef1e9</color>
 
     <color name="black_main">#222</color>
     <color name="black_disabled">#8f8f8f</color>

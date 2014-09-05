@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) TernUp Research Labs
   ~
   ~ This file is part of Caddisfly
@@ -16,9 +15,7 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true"
-          android:drawable="@color/button_pressed_dark"/>
-    <item android:state_focused="true"
-          android:drawable="@color/button_pressed_dark"/>
-    <item android:drawable="@color/button_default_dark"/>
+    <item android:drawable="@color/button_pressed_dark" android:state_pressed="true" />
+    <item android:drawable="@color/button_pressed_dark" android:state_focused="true" />
+    <item android:drawable="@color/button_default_dark" />
 </selector>

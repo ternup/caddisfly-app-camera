@@ -16,11 +16,11 @@
 
 package com.ternup.caddisfly.util;
 
-import com.ternup.caddisfly.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.ternup.caddisfly.R;
 
 public class PreferencesHelper {
 

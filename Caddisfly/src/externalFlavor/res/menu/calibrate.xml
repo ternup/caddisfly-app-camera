@@ -22,4 +22,10 @@
         android:orderInCategory="0"
         android:showAsAction="always"
         android:title="@string/load" />
+    <item
+        android:id="@+id/menu_swatches"
+        android:enabled="true"
+        android:orderInCategory="0"
+        android:showAsAction="always"
+        android:title="@string/swatches" />
 </menu>

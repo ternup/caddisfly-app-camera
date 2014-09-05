@@ -363,7 +363,8 @@ public class CalibrateItemFragmentBase extends ListFragment {
                         editor.putInt(String.format("%d-a-%s", mTestType, String.valueOf(index)),
                                 accuracy);
 
-                        ColorUtils.autoGenerateColors(index, mTestType, colorList, mainApp.rangeIncrementStep, editor);
+                        //ColorUtils.autoGenerateColors(index, mTestType, colorList, mainApp.rangeIncrementStep, editor);
+                        ColorUtils.autoGenerateColorCurve(mTestType, colorList, resultColor, 31, mainApp.rangeIncrementStep, editor);
                     }
                     editor.commit();
                 }

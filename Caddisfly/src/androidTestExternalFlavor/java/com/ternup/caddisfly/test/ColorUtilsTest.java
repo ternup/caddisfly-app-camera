@@ -18,14 +18,10 @@ package com.ternup.caddisfly.test;
 
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.model.ColorInfo;
-import com.ternup.caddisfly.util.ColorUtils;
 import com.ternup.caddisfly.util.FileUtils;
 
 import junit.framework.TestCase;
 
-import android.os.Bundle;
-
-import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 

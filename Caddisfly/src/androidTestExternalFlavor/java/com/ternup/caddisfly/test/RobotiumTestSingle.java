@@ -16,15 +16,15 @@
 
 package com.ternup.caddisfly.test;
 
-import com.robotium.solo.Solo;
-
-import org.akvo.mobile.caddisfly.activity.MainActivity;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.preference.PreferenceManager;
 import android.test.ActivityInstrumentationTestCase2;
+
+import com.robotium.solo.Solo;
+
+import org.akvo.mobile.caddisfly.activity.MainActivity;
 
 public class RobotiumTestSingle extends ActivityInstrumentationTestCase2<MainActivity> {
 

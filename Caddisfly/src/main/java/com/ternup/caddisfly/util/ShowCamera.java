@@ -44,7 +44,7 @@ public class ShowCamera extends SurfaceView implements SurfaceHolder.Callback {
 
 
     private static void setCameraDisplayOrientation(Activity activity,
-            int cameraId, android.hardware.Camera camera) {
+                                                    int cameraId, android.hardware.Camera camera) {
         android.hardware.Camera.CameraInfo info =
                 new android.hardware.Camera.CameraInfo();
         android.hardware.Camera.getCameraInfo(cameraId, info);

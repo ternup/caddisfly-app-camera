@@ -18,16 +18,15 @@ package org.akvo.mobile.caddisfly.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ternup.caddisfly.R;
-import com.ternup.caddisfly.activity.VideoActivity;
 import com.ternup.caddisfly.app.MainApp;
 import com.ternup.caddisfly.util.DataHelper;
 
@@ -36,8 +35,6 @@ public class StartFragment extends Fragment {
     private static final String EXTERNAL_PARAM = "external";
 
     private static final String TEST_TYPE_PARAM = "testType";
-
-    private OnHelpListener mOnHelpListener;
 
     private OnStartSurveyListener mOnStartSurveyListener;
 
@@ -112,24 +109,41 @@ public class StartFragment extends Fragment {
             }
         });
 
-        final Button videoButton = (Button) view.findViewById(R.id.videoButton);
+    /*    final Button videoButton = (Button) view.findViewById(R.id.videoButton);
         videoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Intent intent = new Intent(getActivity(), VideoActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+
+                File sdDir = getActivity().getExternalFilesDir(null);
+                final File videoFile = new File(sdDir, "training.mp4");
+
+                if (!videoFile.exists()) {
+                    if(NetworkUtils.checkInternetConnection(getActivity())) {
+                        final Intent intent = new Intent(getActivity(), VideoActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                    }
+                }else{
+                    final Intent intent = new Intent(getActivity(), VideoActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                }
             }
-        });
+        });*/
 
         //TextView startTestText = (TextView) view.findViewById(R.id.startTestText);
         //startTestText.setText(getString(R.string.attachFilledCartridge), true);
 
+        LinearLayout surveyLayout = (LinearLayout) view.findViewById(R.id.surveyLayout);
+        LinearLayout prepareLayout = (LinearLayout) view.findViewById(R.id.prepareLayout);
+
+
         Button startButton = (Button) view.findViewById(R.id.startButton);
         if (mIsExternal) {
-            startSurveyButton.setVisibility(View.GONE);
-            startButton.setVisibility(View.VISIBLE);
+            surveyLayout.setVisibility(View.GONE);
+            prepareLayout.setVisibility(View.VISIBLE);
             startButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -140,8 +154,8 @@ public class StartFragment extends Fragment {
             });
         } else {
             //mOnStartSurveyListener.onStartSurvey();
-            startSurveyButton.setVisibility(View.VISIBLE);
-            startButton.setVisibility(View.GONE);
+            surveyLayout.setVisibility(View.VISIBLE);
+            prepareLayout.setVisibility(View.GONE);
         }
 
         return view;
@@ -151,7 +165,6 @@ public class StartFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mOnHelpListener = (OnHelpListener) activity;
             mOnStartTestListener = (OnStartTestListener) activity;
             mOnStartSurveyListener = (OnStartSurveyListener) activity;
         } catch (ClassCastException e) {
@@ -161,9 +174,14 @@ public class StartFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        //mOnStartTestListener.onStartTest();
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
-        mOnHelpListener = null;
         mOnStartSurveyListener = null;
         mOnStartTestListener = null;
     }
@@ -172,10 +190,6 @@ public class StartFragment extends Fragment {
      * Reference: http://developer.android.com/training/basics/fragments/communicating.html
      */
 
-    public interface OnHelpListener {
-
-        public void onHelp();
-    }
 
     public interface OnStartSurveyListener {
 

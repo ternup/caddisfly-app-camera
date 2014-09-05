@@ -16,128 +16,132 @@
   ~ The full license text can also be seen at <http://www.gnu.org/licenses/agpl.html>.
   -->
 
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="?cardBackground"
+        android:orientation="vertical"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/titleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:background="?cardBackground">
+            android:gravity="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:text="Fluoride" />
 
         <TextView
-                tools:text="Fluoride"
-                android:id="@+id/titleView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textSize="30sp"/>
-        <TextView
-                tools:text="10 March 2013, 10:30 AM"
-                android:id="@+id/testDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:textSize="15sp"/>
+            android:id="@+id/testDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="10 March 2013, 10:30 AM" />
 
         <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="110dp"
-                android:layout_gravity="center_horizontal"
-                tools:ignore="UseCompoundDrawables"
-                android:layout_marginTop="20dp">
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            tools:ignore="UseCompoundDrawables">
 
             <TextView
-                    tools:text="0.00"
-                    android:id="@+id/result"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="-40dp"
-                    android:layout_height="150dp"
-                    android:layout_gravity="center"
-                    android:textSize="80sp"
-                    android:gravity="center_vertical"/>
+                android:id="@+id/result"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="-40dp"
+                android:gravity="center_vertical"
+                android:textSize="80sp"
+                tools:text="0.00" />
+
             <TextView
-                    android:id="@+id/ppmText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="-40dp"
-                    android:textSize="20sp"
-                    android:textColor="#555"
-                    tools:text="@string/ppm"
-                    android:alpha="0.5"
-                    />
+                android:id="@+id/ppmText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="-40dp"
+                android:alpha="0.5"
+                android:textColor="#555"
+                android:textSize="20sp"
+                tools:text="@string/ppm" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="?cardBackground"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/sourceType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:layout_marginTop="5dp"
-            android:visibility="visible"
-            android:background="?cardBackground">
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center_vertical|center_horizontal"
+            android:maxLines="2"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textSize="20sp"
+            tools:text="Domestic Tap" />
+
         <TextView
-                tools:text="Domestic Tap"
-                android:id="@+id/sourceType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ellipsize="end"
-                android:gravity="center_vertical|center_horizontal"
-                android:maxLines="2"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:textSize="20sp"/>
+            android:id="@+id/address1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center_vertical|center_horizontal"
+            android:maxLines="2"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:textSize="17sp"
+            tools:text="Trinity Circle, MG Road" />
+
         <TextView
-                tools:text="Trinity Circle, MG Road"
-                android:id="@+id/address1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ellipsize="end"
-                android:gravity="center_vertical|center_horizontal"
-                android:maxLines="2"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
-                android:textSize="17sp"/>
+            android:id="@+id/address2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center_vertical|center_horizontal"
+            android:maxLines="2"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:textSize="17sp"
+            tools:text="Bangalore, India" />
+
         <TextView
-                tools:text="Bangalore, India"
-                android:id="@+id/address2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ellipsize="end"
-                android:gravity="center_vertical|center_horizontal"
-                android:maxLines="2"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
-                android:textSize="17sp"/>
-        <TextView
-                tools:text="Bangalore, India"
-                android:id="@+id/address3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
-                android:textSize="17sp"/>
+            android:id="@+id/address3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_horizontal"
+            android:maxLines="2"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:textSize="17sp"
+            tools:text="Bangalore, India" />
     </LinearLayout>
 </LinearLayout>
