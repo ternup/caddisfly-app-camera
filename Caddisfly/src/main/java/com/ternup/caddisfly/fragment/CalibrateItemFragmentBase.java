@@ -329,8 +329,11 @@ public class CalibrateItemFragmentBase extends ListFragment {
                 //Bundle bundle = data.getExtras();
                 storeCalibratedData(data.getIntExtra("position", 0), data.getIntExtra(Globals.RESULT_COLOR_KEY, -1),
                         data.getIntExtra(Globals.QUALITY_KEY, -1));
+                displayInfo(false);
+
             } else {
                 storeCalibratedData(data.getIntExtra("position", 0), -1, -1);
+                displayInfo(false);
             }
         }
     }
@@ -363,8 +366,11 @@ public class CalibrateItemFragmentBase extends ListFragment {
                         editor.putInt(String.format("%d-a-%s", mTestType, String.valueOf(index)),
                                 accuracy);
 
-                        //ColorUtils.autoGenerateColors(index, mTestType, colorList, mainApp.rangeIncrementStep, editor);
-                        ColorUtils.autoGenerateColorCurve(mTestType, colorList, resultColor, 31, mainApp.rangeIncrementStep, editor);
+                        if (Globals.isExternalFlavor) {
+                            ColorUtils.autoGenerateColorCurve(mTestType, colorList, resultColor, 31, mainApp.rangeIncrementStep, editor);
+                        } else {
+                            ColorUtils.autoGenerateColors(index, mTestType, colorList, mainApp.rangeIncrementStep, editor);
+                        }
                     }
                     editor.commit();
                 }

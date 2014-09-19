@@ -55,6 +55,7 @@ import java.io.File;
 public class MainActivity extends MainActivityBase
         implements SettingsFragment.OnCalibrateListener, SettingsFragment.OnAboutListener,
         SettingsFragment.OnCheckUpdateListener, StartFragment.OnStartTestListener,
+        StartFragment.OnVideoListener,
         StartFragment.OnStartSurveyListener, HelpFragment.OnHelpListener, HelpFragment.OnChecklistListener,
         CalibrateMessageFragment.ResultDialogListener {
 
@@ -249,6 +250,11 @@ public class MainActivity extends MainActivityBase
 
     @Override
     public void onHelp() {
+        playVideo();
+
+    }
+
+    private void playVideo() {
         File sdDir = getExternalFilesDir(null);
         final File videoFile = new File(sdDir, "training.mp4");
 
@@ -265,7 +271,6 @@ public class MainActivity extends MainActivityBase
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(intent);
         }
-
     }
 
     public void showWelcome() {
@@ -416,5 +421,10 @@ public class MainActivity extends MainActivityBase
     @Override
     public void onChecklist() {
         displayView(Globals.CHECKLIST_SCREEN_INDEX, true);
+    }
+
+    @Override
+    public void onVideo() {
+        playVideo();
     }
 }

@@ -276,7 +276,7 @@ public class MainApp extends Application {
                     .format("%d-a-%d", testType, index), -1));
 */
             if (mainApp.colorList.get(index).getErrorCode() > 0 ||
-                    mainApp.colorList.get(index).getQuality() < minAccuracy) {
+                    (mainApp.colorList.get(index).getQuality() > -1 && mainApp.colorList.get(index).getQuality() < minAccuracy)) {
                 count++;
             }
         }

@@ -40,6 +40,8 @@ public class StartFragment extends Fragment {
 
     private OnStartTestListener mOnStartTestListener;
 
+    private OnVideoListener mOnVideoListener;
+
     private boolean mIsExternal = false;
 
     private int mTestType;
@@ -139,24 +141,40 @@ public class StartFragment extends Fragment {
         LinearLayout surveyLayout = (LinearLayout) view.findViewById(R.id.surveyLayout);
         LinearLayout prepareLayout = (LinearLayout) view.findViewById(R.id.prepareLayout);
 
+        Button videoButton = (Button) view.findViewById(R.id.videoButton);
+        videoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnVideoListener != null) {
+                    mOnVideoListener.onVideo();
+                }
+            }
+        });
 
-        Button startButton = (Button) view.findViewById(R.id.startButton);
+        Button startButton = (Button) view.findViewById(R.id.skipButton);
         if (mIsExternal) {
-            surveyLayout.setVisibility(View.GONE);
-            prepareLayout.setVisibility(View.VISIBLE);
-            startButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mOnStartTestListener != null) {
+            startButton.setText(R.string.skip);
+            //surveyLayout.setVisibility(View.GONE);
+            //prepareLayout.setVisibility(View.VISIBLE);
+        } else {
+            startButton.setText(R.string.startSurvey);
+            ////mOnStartSurveyListener.onStartSurvey();
+            //surveyLayout.setVisibility(View.VISIBLE);
+            //startSurveyButton.setVisibility(View.VISIBLE);
+            //prepareLayout.setVisibility(View.GONE);
+        }
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mOnStartTestListener != null) {
+                    if (mIsExternal) {
                         mOnStartTestListener.onStartTest();
+                    } else {
+                        mOnStartSurveyListener.onStartSurvey();
                     }
                 }
-            });
-        } else {
-            //mOnStartSurveyListener.onStartSurvey();
-            surveyLayout.setVisibility(View.VISIBLE);
-            prepareLayout.setVisibility(View.GONE);
-        }
+            }
+        });
 
         return view;
     }
@@ -167,6 +185,7 @@ public class StartFragment extends Fragment {
         try {
             mOnStartTestListener = (OnStartTestListener) activity;
             mOnStartSurveyListener = (OnStartSurveyListener) activity;
+            mOnVideoListener = (OnVideoListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -184,6 +203,7 @@ public class StartFragment extends Fragment {
         super.onDetach();
         mOnStartSurveyListener = null;
         mOnStartTestListener = null;
+        mOnVideoListener = null;
     }
 
     /**
@@ -199,5 +219,10 @@ public class StartFragment extends Fragment {
     public interface OnStartTestListener {
 
         public void onStartTest();
+    }
+
+    public interface OnVideoListener {
+
+        public void onVideo();
     }
 }

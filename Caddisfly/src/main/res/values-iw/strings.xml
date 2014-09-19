@@ -219,4 +219,5 @@
     <string name="caddisflyTraining">Akvo Caddisfly Training</string>
     <string name="watchTrainingVideo">Watch Training Video</string>
     <string name="checkList">Check List</string>
+    <string name="skip">Skip</string>
 </resources>

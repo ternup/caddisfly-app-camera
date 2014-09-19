@@ -74,12 +74,12 @@ public class CalibrateItemFragment extends CalibrateItemFragmentBase {
         Intent LaunchIntent = getActivity().getPackageManager()
                 .getLaunchIntentForPackage(Globals.CADDISFLY_PACKAGE_NAME);
         if (LaunchIntent != null) {
-            File external = Environment.getExternalStorageDirectory();
-            String path = external.getPath() + "/com.ternup.caddisfly/calibrate/";
-            File folder = new File(path);
-            if (folder.exists()) {
-                inflater.inflate(R.menu.calibrate, menu);
-            }
+            //File external = Environment.getExternalStorageDirectory();
+            //String path = external.getPath() + "/com.ternup.caddisfly/calibrate/";
+            //File folder = new File(path);
+            //if (folder.exists()) {
+            inflater.inflate(R.menu.calibrate, menu);
+            //}
         }
         super.onCreateOptionsMenu(menu, inflater);
     }

@@ -60,5 +60,4 @@
         android:summary="@string/revertSummary"
         android:title="@string/revertVersion" />
 
-
 </PreferenceScreen>

@@ -68,7 +68,7 @@
 
     <PreferenceCategory android:title="@string/general">
         <com.ternup.caddisfly.component.NumberPickerPreference
-            android:defaultValue="5"
+            android:defaultValue="6"
             android:dialogMessage="@string/selectNumberOfSamples"
             android:dialogTitle="@string/samplingCount"
             android:key="@string/samplingCountKey"

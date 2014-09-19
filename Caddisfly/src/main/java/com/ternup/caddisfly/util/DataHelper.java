@@ -133,7 +133,7 @@ public class DataHelper {
         double commonResult = 0;
         double[] results = new double[samplingCount];
         int[] colors = new int[samplingCount];
-        for (int i = 0; i < samplingCount; i++) {
+        for (int i = 1; i < samplingCount; i++) {
             String key = String.format(context.getString(R.string.samplingIndexKey), i);
             results[i] = PreferencesUtils.getDouble(context, key);
             key = String.format(context.getString(R.string.samplingColorIndexKey), i);
@@ -144,7 +144,7 @@ public class DataHelper {
         int red = 0;
         int green = 0;
         int blue = 0;
-        for (int i = 0; i < results.length; i++) {
+        for (int i = 1; i < results.length; i++) {
             if (results[i] >= 0 && colors[i] != -1) {
                 if (Math.abs(results[i] - commonResult) < 0.5) {
                     counter++;

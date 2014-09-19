@@ -105,11 +105,11 @@ public class AlertUtils {
             public void onShow(DialogInterface dialog) {
                 Button btnPositive = alert.getButton(Dialog.BUTTON_POSITIVE);
 
-                float textSize = context.getResources().getDimension(R.dimen.textSize);
-                btnPositive.setTextSize(textSize);
+                //float textSize = context.getResources().getDimension(R.dimen.textSize);
+                // btnPositive.setTextSize(textSize);
 
-                Button btnNegative = alert.getButton(Dialog.BUTTON_NEGATIVE);
-                btnNegative.setTextSize(textSize);
+                //Button btnNegative = alert.getButton(Dialog.BUTTON_NEGATIVE);
+                //btnNegative.setTextSize(textSize);
             }
         });
 

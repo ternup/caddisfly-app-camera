@@ -373,8 +373,7 @@ public class ColorUtils {
     public static void autoGenerateColorCurve(int testType, ArrayList<ColorInfo> colorList,
                                               int startColor, int size, int incrementStep,
                                               SharedPreferences.Editor editor) {
-
-        int[] greenDeviation = {
+        /*int[] greenDeviation = {
                 0,
                 5,
                 10,
@@ -407,7 +406,7 @@ public class ColorUtils {
                 108,
                 110};
 
-        int[] blueDeviation = {
+                 int[] blueDeviation = {
                 0,
                 -7,
                 -14,
@@ -438,16 +437,115 @@ public class ColorUtils {
                 -132,
                 -133,
                 -134,
-                -135};
+                -135};*/
+
+        int[] redDeviation = {
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                -1,
+                -2,
+                -3,
+                -4,
+                -4,
+                -8,
+                -11,
+                -14,
+                -17,
+                -20,
+                -21,
+                -22,
+                -23,
+                -24,
+                -25};
+
+        int[] greenDeviation = {
+                0,
+                6,
+                12,
+                19,
+                25,
+                32,
+                38,
+                45,
+                51,
+                58,
+                65,
+                71,
+                77,
+                83,
+                89,
+                95,
+                101,
+                107,
+                113,
+                119,
+                125,
+                129,
+                133,
+                137,
+                141,
+                145,
+                146,
+                148,
+                149,
+                151,
+                153};
+
+        int[] blueDeviation = {
+                0,
+                -9,
+                -17,
+                -26,
+                -34,
+                -42,
+                -49,
+                -56,
+                -63,
+                -70,
+                -76,
+                -85,
+                -93,
+                -102,
+                -110,
+                -118,
+                -124,
+                -130,
+                -135,
+                -141,
+                -146,
+                -146,
+                -146,
+                -146,
+                -146,
+                -146,
+                -151,
+                -156,
+                -161,
+                -166,
+                -171};
 
         for (int i = 0; i < size; i++) {
 
+            int r = Color.red(startColor) + redDeviation[i];
             int g = Color.green(startColor) + greenDeviation[i];
             int b = Color.blue(startColor) + blueDeviation[i];
-            int nextColor = Color.rgb(Color.red(startColor),
+            int nextColor = Color.rgb(Math.min(Math.max(r, 0), 255),
                     Math.min(Math.max(g, 0), 255),
-                    Math.min(Math.max(b, 0), 255)
-            );
+                    Math.min(Math.max(b, 0), 255));
 
             ColorInfo colorInfo = new ColorInfo(nextColor, 0, 0, 100);
             colorList.set(i, colorInfo);

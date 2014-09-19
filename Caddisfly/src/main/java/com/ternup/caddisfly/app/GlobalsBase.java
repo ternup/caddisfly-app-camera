@@ -75,7 +75,7 @@ public class GlobalsBase {
 
     public static final int MINIMUM_PHOTO_QUALITY = 50;
 
-    public static final int SAMPLING_COUNT_DEFAULT = 5;
+    public static final int SAMPLING_COUNT_DEFAULT = 6;
 
     // width and height of cropped image
     public static final int SAMPLE_CROP_LENGTH_DEFAULT = 50;

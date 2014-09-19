@@ -1,3 +1,8 @@
+v0.36 - v0.38 alpha
+-----------
+1. UI Changes
+2. Bug Fixes
+
 v0.35 alpha
 -----------
 1. Added Preparation screen with instructions steps
